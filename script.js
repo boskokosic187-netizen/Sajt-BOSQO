@@ -261,11 +261,14 @@
   const iconEls = iconNames.map(name => {
     const div = document.createElement('div');
     div.className = 'floating-icon';
+    const inner = document.createElement('div');
+    inner.className = 'floating-icon-inner';
     const img = document.createElement('img');
     img.src = `assets/svg/${name}.svg`;
     img.alt = name;
     img.draggable = false;
-    div.appendChild(img);
+    inner.appendChild(img);
+    div.appendChild(inner);
     wrapper.appendChild(div);
     return div;
   });

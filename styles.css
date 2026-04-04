@@ -276,6 +276,8 @@ body {
   transform: translate(-50%, -50%);
   width: 106%;
   height: 106%;
+  z-index: 4;
+  pointer-events: none;
   border-radius: 50%;
   border: 1px solid transparent;
   background:
@@ -352,7 +354,17 @@ body {
   width: 46px;
   height: 46px;
   cursor: pointer;
+}
+
+.floating-icon-inner {
+  width: 100%;
+  height: 100%;
   transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.floating-icon:hover .floating-icon-inner {
+  transform: scale(1.45);
+  filter: drop-shadow(0 0 10px rgba(29, 233, 182, 0.95)) drop-shadow(0 0 22px rgba(29, 233, 182, 0.45));
 }
 
 .floating-icon img {
@@ -364,12 +376,6 @@ body {
   display: block;
 }
 
-.floating-icon:hover {
-  transform: scale(1.45) !important;
-  filter: drop-shadow(0 0 10px rgba(29, 233, 182, 0.95)) drop-shadow(0 0 22px rgba(29, 233, 182, 0.45));
-  z-index: 10 !important;
-}
-
 
 .avatar {
   position: relative;
@@ -378,6 +384,7 @@ body {
   border-radius: 50%;
   overflow: hidden;
   z-index: 1;
+  pointer-events: none;
   background: radial-gradient(circle at 50% 50%, rgba(14, 16, 21, 0.4), rgba(5, 5, 7, 0.4));
   display: flex;
   align-items: center;
