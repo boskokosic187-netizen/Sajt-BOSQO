@@ -240,6 +240,34 @@
 })();
 
 /* ============================================
+   SCROLL HINT
+   ============================================ */
+
+(function () {
+  const hint = document.getElementById('scrollHint');
+  if (!hint) return;
+
+  let timer = null;
+  const DELAY = 4000;
+
+  function show() { hint.classList.add('visible'); }
+  function hide() { hint.classList.remove('visible'); }
+
+  function resetTimer() {
+    hide();
+    clearTimeout(timer);
+    timer = setTimeout(show, DELAY);
+  }
+
+  window.addEventListener('wheel',      resetTimer, { passive: true });
+  window.addEventListener('touchmove',  resetTimer, { passive: true });
+  window.addEventListener('keydown',    resetTimer);
+
+  // Start the initial countdown
+  timer = setTimeout(show, DELAY);
+})();
+
+/* ============================================
    FLOATING ICONS
    ============================================ */
 
