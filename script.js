@@ -171,13 +171,24 @@
   }
 
   function createDrop() {
-    const angle = (Math.random() * 40 + 50) * (Math.PI / 180);
+    // Spawn on a random screen edge
+    let x, y;
+    const edge = Math.floor(Math.random() * 4);
+    if (edge === 0) { x = Math.random() * w; y = -10; }
+    else if (edge === 1) { x = Math.random() * w; y = h + 10; }
+    else if (edge === 2) { x = -10; y = Math.random() * h; }
+    else                 { x = w + 10; y = Math.random() * h; }
+
+    // Direction toward screen center (where avatar is)
+    const toCx = w / 2 - x;
+    const toCy = h / 2 - y;
+    const dist  = Math.sqrt(toCx * toCx + toCy * toCy);
     const speed = Math.random() * 3 + 2;
+
     return {
-      x: Math.random() * w,
-      y: -10,
-      dx: Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1),
-      dy: Math.sin(angle) * speed,
+      x, y,
+      dx: (toCx / dist) * speed,
+      dy: (toCy / dist) * speed,
       length: Math.random() * 100 + 60,
       opacity: Math.random() * 0.6 + 0.3,
       life: 1,
@@ -204,7 +215,7 @@
       d.y += d.dy;
       d.life -= d.decay;
 
-      if (d.life <= 0 || d.y > h + 50) {
+      if (d.life <= 0 || d.x < -50 || d.x > w + 50 || d.y < -50 || d.y > h + 50) {
         drops.splice(i, 1);
         continue;
       }
@@ -368,7 +379,7 @@
 
   // Canvas overlay for arc pulses on the stroke
   const pulseCanvas = document.createElement('canvas');
-  pulseCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:4;';
+  pulseCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
   wrapper.appendChild(pulseCanvas);
   const pCtx = pulseCanvas.getContext('2d');
 
@@ -399,19 +410,21 @@
   measure();
   window.addEventListener('resize', measure);
 
-  // Init physics state
+  // Init physics state — random front/back layer
   const state = iconEls.map((el, i) => {
     const angle = (i / iconEls.length) * Math.PI * 2;
     const r = circleR * (0.12 + Math.random() * 0.42);
     const speed = 0.45 + Math.random() * 0.4;
     const dir = Math.random() * Math.PI * 2;
-    el.style.zIndex = '2';
+    const front = Math.random() > 0.5;
+    el.style.zIndex = front ? '4' : '2';
     return {
       el,
       x: Math.cos(angle) * r,
       y: Math.sin(angle) * r,
       vx: Math.cos(dir) * speed,
-      vy: Math.sin(dir) * speed
+      vy: Math.sin(dir) * speed,
+      front
     };
   });
 
@@ -484,6 +497,12 @@
         s.y = ny * (boundary - 1);
 
         spawnArcPulse(nx, ny);
+
+        // Randomly flip layer on bounce — never during hover
+        if (!document.body.classList.contains('avatar-hovered') && Math.random() > 0.5) {
+          s.front = !s.front;
+          s.el.style.zIndex = s.front ? '4' : '2';
+        }
       }
 
       s.el.style.left = (circleR + s.x - ICON_HALF) + 'px';
