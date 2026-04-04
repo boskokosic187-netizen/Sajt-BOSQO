@@ -1,4 +1,65 @@
 /* ============================================
+   NAVBAR INTERACTION
+   ============================================ */
+
+(function () {
+  const nav = document.querySelector('.nav-inner');
+  const logoWrap = document.querySelector('.nav-logo-wrap');
+  if (!nav || !logoWrap) return;
+
+  let closeTimeout = null;
+  let cleanupTimeout = null;
+  let mouseReady = false;
+  const rect  = nav.querySelector('.nf-rect');
+  const frame = nav.querySelector('.nav-frame');
+
+  // mousemove ne puca na page load — okida se samo kad korisnik zaista pomjeri mis
+  document.addEventListener('mousemove', () => { mouseReady = true; }, { once: true, passive: true });
+
+  function open() {
+    if (!mouseReady) return;
+    clearTimeout(closeTimeout);
+    clearTimeout(cleanupTimeout);
+    if (rect)  rect.style.strokeDashoffset = '';
+    if (frame) { frame.style.left = ''; frame.style.right = ''; frame.style.width = ''; }
+    nav.classList.remove('nav-closing');
+    nav.classList.add('nav-opening');
+  }
+
+  function startClose() {
+    // Freeze the fully-open visual state as inline styles BEFORE switching classes
+    // so the animation doesn't snap to CSS base values on class removal
+    if (rect)  rect.style.strokeDashoffset = '0';
+    if (frame) {
+      frame.style.left  = '-180px';
+      frame.style.right = '-180px';
+      frame.style.width = 'calc(100% + 360px)';
+    }
+
+    // Force reflow so inline styles are painted before class change
+    nav.getBoundingClientRect();
+
+    nav.classList.remove('nav-opening');
+    nav.classList.add('nav-closing');
+
+    // Clean up inline styles after close animation finishes (~1.6s)
+    cleanupTimeout = setTimeout(() => {
+      if (rect)  rect.style.strokeDashoffset = '';
+      if (frame) { frame.style.left = ''; frame.style.right = ''; frame.style.width = ''; }
+    }, 1800);
+  }
+
+  function scheduleClose() {
+    clearTimeout(closeTimeout);
+    closeTimeout = setTimeout(startClose, 2000);
+  }
+
+  logoWrap.addEventListener('mouseenter', open);
+  nav.addEventListener('mouseenter', () => clearTimeout(closeTimeout));
+  nav.addEventListener('mouseleave', scheduleClose);
+})();
+
+/* ============================================
    STAR FIELD
    ============================================ */
 
