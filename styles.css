@@ -8,6 +8,12 @@
   initial-value: 0deg;
 }
 
+@property --fill-alpha {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0.4;
+}
+
 @keyframes spinBorder {
   to { --bg: 360deg; }
 }
@@ -98,6 +104,8 @@ body {
   display: flex;
   align-items: center;
   text-decoration: none;
+  transform: scale(1);
+  transition: transform 0.5s ease-out, filter 0.5s ease-out;
   filter: drop-shadow(0 0 12px rgba(0, 255, 200, 0.15));
   transition: filter 0.3s ease;
   position: relative;
@@ -283,11 +291,10 @@ body {
   background:
     transparent padding-box,
     linear-gradient(var(--bg), #0D0D0F, #1de9b6, #0D0D0F) border-box;
-  animation: ringRotate 25s linear infinite, spinBorder 4s linear infinite;
+  animation: spinBorder 4s linear infinite;
 }
 
-.avatar-ring::before {
-  content: '';
+.ring-dot {
   position: absolute;
   top: -4px;
   left: 50%;
@@ -297,6 +304,35 @@ body {
   border-radius: 50%;
   background: #1de9b6;
   box-shadow: 0 0 10px #1de9b6, 0 0 25px rgba(29, 233, 182, 0.5);
+  pointer-events: none;
+}
+
+.ring-dot.bursting {
+  animation: dotBurst 0.55s ease-out forwards;
+}
+
+.ring-dot.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ring-dot.appearing {
+  animation: dotAppear 0.6s ease-out forwards;
+}
+
+@keyframes dotBurst {
+  0%   { transform: translateX(-50%) scale(1);   opacity: 1;
+         box-shadow: 0 0 10px #1de9b6, 0 0 25px rgba(29,233,182,0.5); }
+  40%  { transform: translateX(-50%) scale(4);   opacity: 0.8;
+         box-shadow: 0 0 20px #1de9b6, 0 0 55px rgba(29,233,182,0.9), 0 0 90px rgba(29,233,182,0.4); }
+  100% { transform: translateX(-50%) scale(6.5); opacity: 0;
+         box-shadow: 0 0 5px #1de9b6, 0 0 15px rgba(29,233,182,0); }
+}
+
+@keyframes dotAppear {
+  0%   { transform: translateX(-50%) scale(0.2); opacity: 0; }
+  60%  { transform: translateX(-50%) scale(1.3); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1);   opacity: 1; }
 }
 
 .avatar-border {
@@ -385,15 +421,25 @@ body {
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(14, 16, 21, 0.4), rgba(5, 5, 7, 0.4));
+  background: radial-gradient(circle at 50% 50%, rgba(14, 16, 21, var(--fill-alpha)), rgba(5, 5, 7, var(--fill-alpha)));
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: --fill-alpha 0.5s ease-out;
+}
+
+.avatar-img-wrap {
+  width: 85%;
+  height: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s ease-out;
 }
 
 .avatar img {
-  width: 85%;
-  height: 85%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 0 30px rgba(29, 233, 182, 0.08));
@@ -506,6 +552,54 @@ body {
   pointer-events: none;
   z-index: -1;
 }
+
+/* ============================================
+   AVATAR CIRCLE HOVER EFFECTS
+   ============================================ */
+
+.avatar-hover-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 170%;
+  height: 170%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(29, 233, 182, 0.28) 0%,
+    rgba(29, 233, 182, 0.1) 35%,
+    transparent 65%
+  );
+  filter: blur(22px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+body.avatar-hovered .avatar-hover-glow {
+  opacity: 1;
+  transition: opacity 0.35s ease-in;
+}
+
+body.avatar-hovered .avatar {
+  --fill-alpha: 1;
+  transition: --fill-alpha 0.35s ease-in;
+}
+
+body.avatar-hovered .avatar-img-wrap {
+  transform: scale(1.14);
+  transition: transform 0.4s ease-in;
+}
+
+body.avatar-hovered .nav-logo {
+  transform: scale(1.16);
+  filter: drop-shadow(0 0 14px rgba(29, 233, 182, 0.9)) drop-shadow(0 0 32px rgba(29, 233, 182, 0.45));
+  transition: transform 0.4s ease-in, filter 0.4s ease-in;
+}
+
+
 
 /* ============================================
    SCROLL HINT

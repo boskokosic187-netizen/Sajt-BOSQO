@@ -240,6 +240,93 @@
 })();
 
 /* ============================================
+   AVATAR CIRCLE HOVER + RING ROTATION
+   ============================================ */
+
+(function () {
+  const wrapper = document.querySelector('.avatar-wrapper');
+  const ring    = document.querySelector('.avatar-ring');
+  const dot     = document.querySelector('.ring-dot');
+  if (!wrapper || !ring || !dot) return;
+
+  // --- Hover detection ---
+  let hovered      = false;
+  let hoverStart   = null;
+  let dotBurst     = false;
+  let reappearTimer = null;
+
+  function onHoverEnter() {
+    hovered    = true;
+    hoverStart = performance.now();
+    document.body.classList.add('avatar-hovered');
+  }
+
+  function onHoverLeave() {
+    hovered    = false;
+    hoverStart = null;
+    document.body.classList.remove('avatar-hovered');
+
+    if (dotBurst) {
+      // Reappear at a random orbital position after a short random delay
+      clearTimeout(reappearTimer);
+      reappearTimer = setTimeout(() => {
+        angle = Math.random() * 360;          // random position on the orbit
+        dot.classList.remove('hidden');
+        dot.classList.remove('bursting');
+        dot.classList.add('appearing');
+        dot.addEventListener('animationend', () => {
+          dot.classList.remove('appearing');
+        }, { once: true });
+        dotBurst = false;
+      }, 400 + Math.random() * 800);
+    }
+  }
+
+  function check(e) {
+    const r  = wrapper.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width  / 2);
+    const dy = e.clientY - (r.top  + r.height / 2);
+    const inside = Math.sqrt(dx * dx + dy * dy) <= r.width / 2;
+    if (inside && !hovered) onHoverEnter();
+    if (!inside && hovered) onHoverLeave();
+  }
+
+  window.addEventListener('mousemove', check, { passive: true });
+  wrapper.addEventListener('mouseleave', () => { if (hovered) onHoverLeave(); });
+
+  // --- Smooth ring rotation with burst check ---
+  const SPEED_NORMAL = 360 / (25 * 60);
+  const SPEED_FAST   = SPEED_NORMAL * 2;
+  const LERP         = 0.025;
+
+  let angle = 0;
+  let speed = SPEED_NORMAL;
+
+  function rotateTick() {
+    // Burst after 3s of continuous hover
+    if (hovered && !dotBurst && hoverStart !== null) {
+      if (performance.now() - hoverStart >= 3000) {
+        dotBurst = true;
+        dot.classList.add('bursting');
+        dot.addEventListener('animationend', () => {
+          dot.classList.add('hidden');
+          dot.classList.remove('bursting');
+        }, { once: true });
+      }
+    }
+
+    const target = hovered ? SPEED_FAST : SPEED_NORMAL;
+    speed += (target - speed) * LERP;
+    angle  = (angle + speed) % 360;
+    ring.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+
+    requestAnimationFrame(rotateTick);
+  }
+
+  requestAnimationFrame(rotateTick);
+})();
+
+/* ============================================
    SCROLL HINT
    ============================================ */
 
@@ -318,15 +405,13 @@
     const r = circleR * (0.12 + Math.random() * 0.42);
     const speed = 0.45 + Math.random() * 0.4;
     const dir = Math.random() * Math.PI * 2;
-    const above = Math.random() > 0.5;
-    el.style.zIndex = above ? '2' : '0';
+    el.style.zIndex = '2';
     return {
       el,
       x: Math.cos(angle) * r,
       y: Math.sin(angle) * r,
       vx: Math.cos(dir) * speed,
-      vy: Math.sin(dir) * speed,
-      above
+      vy: Math.sin(dir) * speed
     };
   });
 
@@ -399,11 +484,6 @@
         s.y = ny * (boundary - 1);
 
         spawnArcPulse(nx, ny);
-
-        if (Math.random() > 0.45) {
-          s.above = !s.above;
-          s.el.style.zIndex = s.above ? '2' : '0';
-        }
       }
 
       s.el.style.left = (circleR + s.x - ICON_HALF) + 'px';
