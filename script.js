@@ -238,3 +238,150 @@
   resize();
   requestAnimationFrame(draw);
 })();
+
+/* ============================================
+   FLOATING ICONS
+   ============================================ */
+
+(function () {
+  const wrapper = document.querySelector('.avatar-wrapper');
+  if (!wrapper) return;
+
+  const iconNames = ['after', 'animate', 'illustrator', 'lightroom', 'photoshop', 'premiere', 'indesign'];
+  const ICON_SIZE = 46;
+  const ICON_HALF = ICON_SIZE / 2;
+
+  // Canvas overlay for arc pulses on the stroke
+  const pulseCanvas = document.createElement('canvas');
+  pulseCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:4;';
+  wrapper.appendChild(pulseCanvas);
+  const pCtx = pulseCanvas.getContext('2d');
+
+  // Create icon elements
+  const iconEls = iconNames.map(name => {
+    const div = document.createElement('div');
+    div.className = 'floating-icon';
+    const img = document.createElement('img');
+    img.src = `assets/svg/${name}.svg`;
+    img.alt = name;
+    img.draggable = false;
+    div.appendChild(img);
+    wrapper.appendChild(div);
+    return div;
+  });
+
+  let circleR = 0;
+
+  function measure() {
+    circleR = wrapper.offsetWidth / 2;
+    pulseCanvas.width  = wrapper.offsetWidth;
+    pulseCanvas.height = wrapper.offsetHeight;
+  }
+
+  measure();
+  window.addEventListener('resize', measure);
+
+  // Init physics state
+  const state = iconEls.map((el, i) => {
+    const angle = (i / iconEls.length) * Math.PI * 2;
+    const r = circleR * (0.12 + Math.random() * 0.42);
+    const speed = 0.45 + Math.random() * 0.4;
+    const dir = Math.random() * Math.PI * 2;
+    const above = Math.random() > 0.5;
+    el.style.zIndex = above ? '2' : '0';
+    return {
+      el,
+      x: Math.cos(angle) * r,
+      y: Math.sin(angle) * r,
+      vx: Math.cos(dir) * speed,
+      vy: Math.sin(dir) * speed,
+      above
+    };
+  });
+
+  // Active arc pulses
+  const arcPulses = [];
+
+  function spawnArcPulse(nx, ny) {
+    arcPulses.push({ angle: Math.atan2(ny, nx), life: 1.0 });
+  }
+
+  function drawArcPulses() {
+    const size = pulseCanvas.width;
+    pCtx.clearRect(0, 0, size, size);
+
+    if (arcPulses.length === 0) return;
+
+    const cx = circleR;
+    const cy = circleR;
+    const r  = circleR - 1; // sit right on the stroke
+    const span = 0.2;       // ±~11° arc half-span
+    const steps = 20;
+
+    for (let i = arcPulses.length - 1; i >= 0; i--) {
+      const p = arcPulses[i];
+      p.life -= 0.032;
+      if (p.life <= 0) { arcPulses.splice(i, 1); continue; }
+
+      for (let j = 0; j < steps; j++) {
+        const t     = j / (steps - 1);
+        const tNext = (j + 1) / (steps - 1);
+        const a     = p.angle - span + span * 2 * t;
+        const aNext = p.angle - span + span * 2 * tNext;
+
+        const bell  = Math.sin(t * Math.PI);
+        const alpha = bell * p.life;
+
+        pCtx.beginPath();
+        pCtx.arc(cx, cy, r, a, aNext);
+        pCtx.strokeStyle = `rgba(29, 233, 182, ${alpha * 0.85})`;
+        pCtx.lineWidth   = 1 + bell * 5;
+        pCtx.shadowBlur  = 10 * bell * p.life;
+        pCtx.shadowColor = 'rgba(29, 233, 182, 1)';
+        pCtx.stroke();
+      }
+    }
+
+    pCtx.shadowBlur = 0;
+  }
+
+  function tick() {
+    if (circleR === 0) { requestAnimationFrame(tick); return; }
+
+    const boundary = circleR - ICON_HALF - 5;
+
+    state.forEach(s => {
+      s.x += s.vx;
+      s.y += s.vy;
+
+      const dist = Math.sqrt(s.x * s.x + s.y * s.y);
+
+      if (dist >= boundary) {
+        const nx = s.x / dist;
+        const ny = s.y / dist;
+
+        const dot = s.vx * nx + s.vy * ny;
+        s.vx -= 2 * dot * nx;
+        s.vy -= 2 * dot * ny;
+
+        s.x = nx * (boundary - 1);
+        s.y = ny * (boundary - 1);
+
+        spawnArcPulse(nx, ny);
+
+        if (Math.random() > 0.45) {
+          s.above = !s.above;
+          s.el.style.zIndex = s.above ? '2' : '0';
+        }
+      }
+
+      s.el.style.left = (circleR + s.x - ICON_HALF) + 'px';
+      s.el.style.top  = (circleR + s.y - ICON_HALF) + 'px';
+    });
+
+    drawArcPulses();
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
