@@ -255,10 +255,35 @@
    ============================================ */
 
 (function () {
-  const wrapper = document.querySelector('.avatar-wrapper');
-  const ring    = document.querySelector('.avatar-ring');
-  const dot     = document.querySelector('.ring-dot');
+  const wrapper    = document.querySelector('.avatar-wrapper');
+  const ring       = document.querySelector('.avatar-ring');
+  const dot        = document.querySelector('.ring-dot');
   if (!wrapper || !ring || !dot) return;
+
+  // --- Info panels ---
+  const allPanels   = Array.from(document.querySelectorAll('.info-panel'));
+  const PANEL_DELAY = 1000;                    // initial delay after hover
+  const PANEL_STEP  = 333;                     // ms between each panel
+  let panelTimers   = [];
+  let panelsVisible = false;
+
+  function showPanels() {
+    if (panelsVisible) return;
+    panelsVisible = true;
+    allPanels.forEach((panel, i) => {
+      const t = setTimeout(() => {
+        panel.classList.add('ip-visible');
+      }, PANEL_DELAY + i * PANEL_STEP);
+      panelTimers.push(t);
+    });
+  }
+
+  function hidePanels() {
+    panelTimers.forEach(clearTimeout);
+    panelTimers   = [];
+    panelsVisible = false;
+    allPanels.forEach(panel => panel.classList.remove('ip-visible'));
+  }
 
   // --- Hover detection ---
   let hovered      = false;
@@ -270,12 +295,14 @@
     hovered    = true;
     hoverStart = performance.now();
     document.body.classList.add('avatar-hovered');
+    showPanels();
   }
 
   function onHoverLeave() {
     hovered    = false;
     hoverStart = null;
     document.body.classList.remove('avatar-hovered');
+    hidePanels();
 
     if (dotBurst) {
       // Reappear at a random orbital position after a short random delay
@@ -293,17 +320,47 @@
     }
   }
 
-  function check(e) {
+  const leftPanelsEl  = document.querySelector('.info-panels-left');
+  const rightPanelsEl = document.querySelector('.info-panels-right');
+
+  function inRect(el, x, y) {
+    if (!el) return false;
+    const rr = el.getBoundingClientRect();
+    return x >= rr.left && x <= rr.right && y >= rr.top && y <= rr.bottom;
+  }
+
+  function isActive(x, y) {
+    // Inside avatar circle
     const r  = wrapper.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width  / 2);
-    const dy = e.clientY - (r.top  + r.height / 2);
-    const inside = Math.sqrt(dx * dx + dy * dy) <= r.width / 2;
-    if (inside && !hovered) onHoverEnter();
-    if (!inside && hovered) onHoverLeave();
+    const cx = r.left + r.width  / 2;
+    const cy = r.top  + r.height / 2;
+    if (Math.sqrt((x - cx) ** 2 + (y - cy) ** 2) <= r.width / 2) return true;
+
+    // Over left or right panels (includes dropdown text inside the wrap)
+    if (inRect(leftPanelsEl, x, y) || inRect(rightPanelsEl, x, y)) return true;
+
+    // Gap between left panels and circle (same vertical band as circle)
+    if (leftPanelsEl) {
+      const lpr = leftPanelsEl.getBoundingClientRect();
+      if (x >= lpr.right && x <= r.left && y >= r.top && y <= r.bottom) return true;
+    }
+
+    // Gap between circle and right panels (same vertical band as circle)
+    if (rightPanelsEl) {
+      const rpr = rightPanelsEl.getBoundingClientRect();
+      if (x >= r.right && x <= rpr.left && y >= r.top && y <= r.bottom) return true;
+    }
+
+    return false;
+  }
+
+  function check(e) {
+    const active = isActive(e.clientX, e.clientY);
+    if (active && !hovered) onHoverEnter();
+    if (!active && hovered) onHoverLeave();
   }
 
   window.addEventListener('mousemove', check, { passive: true });
-  wrapper.addEventListener('mouseleave', () => { if (hovered) onHoverLeave(); });
 
   // --- Smooth ring rotation with burst check ---
   const SPEED_NORMAL = 360 / (25 * 60);
