@@ -628,3 +628,50 @@
 
   requestAnimationFrame(tick);
 })();
+
+
+/* ============================================
+   SCROLL STAGE ENGINE
+   ============================================ */
+(function () {
+  const MAX_STAGE  = 6;
+  const COOLDOWN   = 950; // ms between stage steps
+  let   stage      = 0;
+  let   cooling    = false;
+
+  function applyStage(n) {
+    stage = Math.max(0, Math.min(MAX_STAGE, n));
+    document.body.dataset.stage = stage;
+  }
+
+  function step(dir) {
+    if (cooling) return;
+    applyStage(stage + dir);
+    cooling = true;
+    setTimeout(() => { cooling = false; }, COOLDOWN);
+  }
+
+  // Mouse wheel
+  window.addEventListener('wheel', (e) => {
+    step(e.deltaY > 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Keyboard
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') step(1);
+    if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) step(-1);
+  });
+
+  // Touch
+  let touchY = 0;
+  window.addEventListener('touchstart', (e) => {
+    touchY = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', (e) => {
+    const dy = touchY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 50) step(dy > 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Init
+  applyStage(0);
+})();

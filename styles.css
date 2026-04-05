@@ -870,3 +870,120 @@ body.avatar-hovered .nav-logo {
   color: rgba(29, 233, 182, 0.45);
   text-transform: uppercase;
 }
+
+
+/* ============================================
+   SCROLL STAGE SYSTEM
+   ============================================ */
+
+/* Hero content transition base */
+.hero-content,
+.navbar {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity   0.9s ease,
+              filter    0.9s ease;
+}
+
+/* --- Stage 1: hero starts dissolving --- */
+body[data-stage="1"] .hero-content {
+  transform: scale(1.06);
+  opacity: 0.45;
+  filter: blur(5px) brightness(0.55);
+}
+body[data-stage="1"] .navbar {
+  opacity: 0.35;
+}
+
+/* --- Stage 2: hero mostly gone --- */
+body[data-stage="2"] .hero-content {
+  transform: scale(1.15);
+  opacity: 0.07;
+  filter: blur(18px) brightness(0.2);
+}
+body[data-stage="2"] .navbar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Stage 3+: hero completely gone --- */
+body[data-stage="3"] .hero-content,
+body[data-stage="4"] .hero-content,
+body[data-stage="5"] .hero-content,
+body[data-stage="6"] .hero-content {
+  transform: scale(1.25);
+  opacity: 0;
+  filter: blur(28px);
+  pointer-events: none;
+}
+body[data-stage="3"] .navbar,
+body[data-stage="4"] .navbar,
+body[data-stage="5"] .navbar,
+body[data-stage="6"] .navbar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hide scroll hint after stage 0 */
+body:not([data-stage="0"]) .scroll-hint {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* ============================================
+   JOURNEY SECTION
+   ============================================ */
+
+.journey-section {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.journey-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.6rem, 4.5vw, 4.2rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+  transform: scale(0.04);
+  opacity: 0;
+  filter: blur(32px);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity   0.95s ease,
+              filter    0.95s ease;
+}
+
+/* Stage 3: barely a glimmer in the distance */
+body[data-stage="3"] .journey-title {
+  transform: scale(0.06);
+  opacity: 0.08;
+  filter: blur(26px);
+}
+
+/* Stage 4: emerging */
+body[data-stage="4"] .journey-title {
+  transform: scale(0.22);
+  opacity: 0.3;
+  filter: blur(14px);
+}
+
+/* Stage 5: approaching */
+body[data-stage="5"] .journey-title {
+  transform: scale(0.58);
+  opacity: 0.72;
+  filter: blur(5px);
+}
+
+/* Stage 6: fully arrived */
+body[data-stage="6"] .journey-title {
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0px);
+}
