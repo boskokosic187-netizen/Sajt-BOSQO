@@ -703,9 +703,9 @@ body.avatar-hovered .nav-logo {
 }
 
 .ip-skills-inner {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  width: 260px;
 }
 
 .ip-skills-title {
@@ -720,14 +720,10 @@ body.avatar-hovered .nav-logo {
 
 .ip-skill-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  width: 100%;
   margin-bottom: 4px;
-}
-
-.ip-skill-name {
-  width: 148px;
-  flex-shrink: 0;
 }
 
 .ip-skill-name {
@@ -735,6 +731,7 @@ body.avatar-hovered .nav-logo {
   font-family: 'Inter', 'Segoe UI', sans-serif;
   color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.02em;
+  flex-shrink: 0;
 }
 
 .ip-stars {
