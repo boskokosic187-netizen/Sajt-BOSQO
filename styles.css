@@ -1039,3 +1039,22 @@ body[data-stage="6"] .journey-title-wrap {
   from { stroke-dashoffset: 6000; }
   to   { stroke-dashoffset: 0; }
 }
+
+/* ============================================
+   JOURNEY TITLE FLOAT
+   ============================================ */
+
+@keyframes journeyFloat {
+  0%   { transform: translateY(0px)   translateX(0px)   rotate(0deg);    }
+  25%  { transform: translateY(-22px) translateX(11px)  rotate(0.65deg); }
+  55%  { transform: translateY(-12px) translateX(-9px)  rotate(-0.55deg); }
+  78%  { transform: translateY(-28px) translateX(6px)   rotate(0.75deg); }
+  100% { transform: translateY(0px)   translateX(0px)   rotate(0deg);    }
+}
+
+/* Float only after title has fully arrived (JS adds journey-floating) */
+.journey-title-wrap.journey-floating {
+  animation: journeyFloat 9s ease-in-out infinite;
+}
+
+/* animation-play-state controlled via JS */

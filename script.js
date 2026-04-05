@@ -649,8 +649,26 @@
   let lastDir      = 0;  // direction of accumulated scrolls
   const SCROLLS_NEEDED = 1;
 
+  const journeyWrap = document.querySelector('.journey-title-wrap');
+
   function applyStage(n) {
+    const prev = stage;
     stage = Math.max(0, Math.min(MAX_STAGE, n));
+
+    if (journeyWrap) {
+      if (stage === 6) {
+        if (!journeyWrap.classList.contains('journey-floating')) {
+          // First arrival — start animation from beginning (center)
+          void journeyWrap.offsetWidth;
+          journeyWrap.classList.add('journey-floating');
+        }
+        journeyWrap.style.animationPlayState = 'running';
+      } else if (prev === 6) {
+        // Pause exactly where it is — no snapping, no inline style
+        journeyWrap.style.animationPlayState = 'paused';
+      }
+    }
+
     document.body.dataset.stage = stage;
   }
 
@@ -722,11 +740,15 @@
 
   wrap.addEventListener('mouseenter', () => {
     wrap.classList.add('journey-hovered');
+    wrap.style.animationPlayState = 'paused';
     window._stardropBoost = 7;
   });
 
   wrap.addEventListener('mouseleave', () => {
     wrap.classList.remove('journey-hovered');
+    if (document.body.dataset.stage === '6') {
+      wrap.style.animationPlayState = 'running';
+    }
     window._stardropBoost = 1;
   });
 })();
