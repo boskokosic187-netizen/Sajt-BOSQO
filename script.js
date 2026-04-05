@@ -322,6 +322,8 @@
 
   const leftPanelsEl  = document.querySelector('.info-panels-left');
   const rightPanelsEl = document.querySelector('.info-panels-right');
+  const allWraps      = Array.from(document.querySelectorAll('.info-panel-wrap'));
+  let hoveredWrap     = null;
 
   function inRect(el, x, y) {
     if (!el) return false;
@@ -329,23 +331,48 @@
     return x >= rr.left && x <= rr.right && y >= rr.top && y <= rr.bottom;
   }
 
-  function isActive(x, y) {
-    // Inside avatar circle
+  function updateWrapHover(x, y) {
+    let found = null;
+    for (const wrap of allWraps) {
+      const rr = wrap.getBoundingClientRect();
+      if (x >= rr.left && x <= rr.right && y >= rr.top && y <= rr.bottom) {
+        found = wrap;
+        break;
+      }
+    }
+    if (found !== hoveredWrap) {
+      if (hoveredWrap) hoveredWrap.classList.remove('ip-hovered');
+      hoveredWrap = found;
+      if (hoveredWrap) hoveredWrap.classList.add('ip-hovered');
+    }
+  }
+
+  function isInsideCircle(x, y) {
     const r  = wrapper.getBoundingClientRect();
     const cx = r.left + r.width  / 2;
     const cy = r.top  + r.height / 2;
-    if (Math.sqrt((x - cx) ** 2 + (y - cy) ** 2) <= r.width / 2) return true;
+    return Math.sqrt((x - cx) ** 2 + (y - cy) ** 2) <= r.width / 2;
+  }
 
-    // Over left or right panels (includes dropdown text inside the wrap)
-    if (inRect(leftPanelsEl, x, y) || inRect(rightPanelsEl, x, y)) return true;
+  function isOverExtended(x, y) {
+    // Panels (exact bounds, includes expanded dropdown as wrap grows)
+    if (leftPanelsEl) {
+      const lpr = leftPanelsEl.getBoundingClientRect();
+      if (x >= lpr.left && x <= lpr.right && y >= lpr.top && y <= lpr.bottom) return true;
+    }
+    if (rightPanelsEl) {
+      const rpr = rightPanelsEl.getBoundingClientRect();
+      if (x >= rpr.left && x <= rpr.right && y >= rpr.top && y <= rpr.bottom) return true;
+    }
 
-    // Gap between left panels and circle (same vertical band as circle)
+    // Gap between left panels and circle
+    const r = wrapper.getBoundingClientRect();
     if (leftPanelsEl) {
       const lpr = leftPanelsEl.getBoundingClientRect();
       if (x >= lpr.right && x <= r.left && y >= r.top && y <= r.bottom) return true;
     }
 
-    // Gap between circle and right panels (same vertical band as circle)
+    // Gap between circle and right panels
     if (rightPanelsEl) {
       const rpr = rightPanelsEl.getBoundingClientRect();
       if (x >= r.right && x <= rpr.left && y >= r.top && y <= r.bottom) return true;
@@ -354,10 +381,39 @@
     return false;
   }
 
+  let leaveTimer    = null;
+  let wrapLeaveTimer = null;
+  const LEAVE_DELAY = 1000;
+
   function check(e) {
-    const active = isActive(e.clientX, e.clientY);
-    if (active && !hovered) onHoverEnter();
-    if (!active && hovered) onHoverLeave();
+    const x = e.clientX, y = e.clientY;
+    const inCircle  = isInsideCircle(x, y);
+    // Extended zone only keeps hover alive — never triggers it
+    const inExtended = hovered && isOverExtended(x, y);
+    const active = inCircle || inExtended;
+
+    if (active) {
+      // Cancel any pending leave
+      if (leaveTimer)    { clearTimeout(leaveTimer);    leaveTimer    = null; }
+      if (wrapLeaveTimer){ clearTimeout(wrapLeaveTimer); wrapLeaveTimer = null; }
+      // Only enter hover if cursor is on the circle
+      if (inCircle && !hovered) onHoverEnter();
+      updateWrapHover(x, y);
+    } else {
+      // Schedule leave after 1s if not already scheduled
+      if (hovered && !leaveTimer) {
+        leaveTimer = setTimeout(() => {
+          onHoverLeave();
+          leaveTimer = null;
+        }, LEAVE_DELAY);
+      }
+      if (hoveredWrap && !wrapLeaveTimer) {
+        wrapLeaveTimer = setTimeout(() => {
+          if (hoveredWrap) { hoveredWrap.classList.remove('ip-hovered'); hoveredWrap = null; }
+          wrapLeaveTimer = null;
+        }, LEAVE_DELAY);
+      }
+    }
   }
 
   window.addEventListener('mousemove', check, { passive: true });

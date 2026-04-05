@@ -629,12 +629,6 @@ body.avatar-hovered .nav-logo {
 .info-panel-wrap {
   display: flex;
   flex-direction: column;
-  pointer-events: none;
-}
-
-.info-panel-wrap .info-panel.ip-visible,
-.info-panel-wrap .ip-dropdown {
-  pointer-events: auto;
 }
 
 .info-panel {
@@ -661,14 +655,14 @@ body.avatar-hovered .nav-logo {
   pointer-events: auto;
 }
 
-/* Panel hover — fill goes fully opaque, glow intensifies */
-.info-panel-wrap:hover .info-panel.ip-visible {
+/* Panel hover — JS adds ip-hovered class on the wrap */
+.info-panel-wrap.ip-hovered .info-panel.ip-visible {
   background: rgba(13, 13, 15, 1);
 }
 
-.info-panel-wrap:hover .ip-rect {
-  filter: drop-shadow(0 0 10px rgba(29, 233, 182, 0.8))
-          drop-shadow(0 0 30px rgba(29, 233, 182, 0.35));
+.info-panel-wrap.ip-hovered .ip-rect {
+  filter: drop-shadow(0 0 12px rgba(29, 233, 182, 0.85))
+          drop-shadow(0 0 35px rgba(29, 233, 182, 0.4));
 }
 
 /* Dropdown text below each panel */
@@ -676,6 +670,7 @@ body.avatar-hovered .nav-logo {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
+  pointer-events: none;
   transition: max-height 0.45s ease, opacity 0.35s ease, margin-top 0.45s ease;
   margin-top: 0;
   padding: 0 52px;
@@ -688,10 +683,11 @@ body.avatar-hovered .nav-logo {
   text-align: center;
 }
 
-.info-panel-wrap:hover .ip-dropdown {
+.info-panel-wrap.ip-hovered .ip-dropdown {
   max-height: 120px;
   opacity: 1;
   margin-top: 14px;
+  pointer-events: auto;
 }
 
 /* SVG frame — identical to navbar */
@@ -710,6 +706,7 @@ body.avatar-hovered .nav-logo {
   stroke-width: 1;
   filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5))
           drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
+  transition: filter 0.35s ease;
 }
 
 /* Gradient stop animations — same keyframes as navbar */
