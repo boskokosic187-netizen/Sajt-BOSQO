@@ -924,10 +924,6 @@ body[data-stage="6"] .navbar {
 }
 
 /* Hide scroll hint after stage 0 */
-body:not([data-stage="0"]) .scroll-hint {
-  opacity: 0 !important;
-  pointer-events: none;
-}
 
 /* ============================================
    JOURNEY SECTION
@@ -986,4 +982,60 @@ body[data-stage="6"] .journey-title {
   transform: scale(1);
   opacity: 1;
   filter: blur(0px);
+}
+
+/* Fast scroll — shorten all stage transitions */
+body.scroll-fast .hero-content,
+body.scroll-fast .navbar,
+body.scroll-fast .journey-title {
+  transition-duration: 0.18s !important;
+}
+
+/* ============================================
+   JOURNEY TITLE HOVER
+   ============================================ */
+
+.journey-title-wrap {
+  position: relative;
+  padding: 32px 72px;
+  border-radius: 55px;
+  pointer-events: none;
+  transition: box-shadow 0.35s ease;
+}
+
+body[data-stage="6"] .journey-title-wrap {
+  pointer-events: auto;
+}
+
+.journey-frame {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.journey-rect {
+  fill: none;
+  stroke-width: 1;
+  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5))
+          drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
+}
+
+/* JS adds journey-hovered on mouseenter */
+.journey-title-wrap.journey-hovered .journey-rect {
+  animation: journeyDraw 1.5s ease-in forwards;
+  filter: drop-shadow(0 0 12px rgba(29, 233, 182, 0.85))
+          drop-shadow(0 0 38px rgba(29, 233, 182, 0.4));
+}
+
+.journey-title-wrap.journey-hovered {
+  box-shadow:
+    0 0 18px rgba(29, 233, 182, 0.45),
+    0 0 55px rgba(29, 233, 182, 0.18);
+}
+
+@keyframes journeyDraw {
+  from { stroke-dashoffset: 6000; }
+  to   { stroke-dashoffset: 0; }
 }

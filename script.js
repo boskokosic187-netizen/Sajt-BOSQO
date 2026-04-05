@@ -204,8 +204,11 @@
     ctx.clearRect(0, 0, w, h);
 
     if (!spawnTimer) spawnTimer = timestamp;
-    if (timestamp - spawnTimer > SPAWN_INTERVAL) {
-      drops.push(createDrop());
+    const boost    = window._stardropBoost || 1;
+    const interval = SPAWN_INTERVAL / boost;
+    if (timestamp - spawnTimer > interval) {
+      const count = Math.ceil(boost);
+      for (let i = 0; i < count; i++) drops.push(createDrop());
       spawnTimer = timestamp;
     }
 
@@ -459,7 +462,7 @@
   if (!hint) return;
 
   let timer = null;
-  const DELAY = 4000;
+  const DELAY = 2500;
 
   function show() { hint.classList.add('visible'); }
   function hide() { hint.classList.remove('visible'); }
@@ -470,9 +473,9 @@
     timer = setTimeout(show, DELAY);
   }
 
-  window.addEventListener('wheel',      resetTimer, { passive: true });
-  window.addEventListener('touchmove',  resetTimer, { passive: true });
-  window.addEventListener('keydown',    resetTimer);
+  window.addEventListener('wheel',     resetTimer, { passive: true });
+  window.addEventListener('touchmove', resetTimer, { passive: true });
+  window.addEventListener('keydown',   resetTimer);
 
   // Start the initial countdown
   timer = setTimeout(show, DELAY);
@@ -634,10 +637,17 @@
    SCROLL STAGE ENGINE
    ============================================ */
 (function () {
-  const MAX_STAGE  = 6;
-  const COOLDOWN   = 950; // ms between stage steps
-  let   stage      = 0;
-  let   cooling    = false;
+  const MAX_STAGE       = 6;
+  const MIN_STEP        = 160;  // minimum ms between any two stage changes (prevents wheel spam)
+  const RAPID_THRESHOLD = 700;  // if next scroll within this ms → fast mode
+  const RAPID_RESTORE   = 800;  // ms after last fast scroll to restore normal speed
+
+  let stage        = 0;
+  let lastStepTime = 0;
+  let rapidTimer   = null;
+  let scrollCount  = 0;  // accumulates toward SCROLLS_NEEDED
+  let lastDir      = 0;  // direction of accumulated scrolls
+  const SCROLLS_NEEDED = 1;
 
   function applyStage(n) {
     stage = Math.max(0, Math.min(MAX_STAGE, n));
@@ -645,10 +655,36 @@
   }
 
   function step(dir) {
-    if (cooling) return;
+    const now  = Date.now();
+    const prev = lastStepTime;
+    if (now - prev < MIN_STEP) return; // debounce wheel spam
+    lastStepTime = now;
+
+    // Reset count if direction changed
+    if (dir !== lastDir) {
+      scrollCount = 0;
+      lastDir = dir;
+    }
+
+    scrollCount++;
+    if (scrollCount < SCROLLS_NEEDED) return; // wait for second scroll
+    scrollCount = 0; // reset for next stage
+
+    // Rapid = second scroll arrived before previous animation finished
+    const isRapid = prev > 0 && (now - prev) < RAPID_THRESHOLD;
+
+    if (isRapid) {
+      document.body.classList.add('scroll-fast');
+      clearTimeout(rapidTimer);
+      rapidTimer = setTimeout(() => {
+        document.body.classList.remove('scroll-fast');
+      }, RAPID_RESTORE);
+    } else {
+      clearTimeout(rapidTimer);
+      document.body.classList.remove('scroll-fast');
+    }
+
     applyStage(stage + dir);
-    cooling = true;
-    setTimeout(() => { cooling = false; }, COOLDOWN);
   }
 
   // Mouse wheel
@@ -674,4 +710,23 @@
 
   // Init
   applyStage(0);
+})();
+
+
+/* ============================================
+   JOURNEY TITLE HOVER
+   ============================================ */
+(function () {
+  const wrap = document.querySelector('.journey-title-wrap');
+  if (!wrap) return;
+
+  wrap.addEventListener('mouseenter', () => {
+    wrap.classList.add('journey-hovered');
+    window._stardropBoost = 7;
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    wrap.classList.remove('journey-hovered');
+    window._stardropBoost = 1;
+  });
 })();
