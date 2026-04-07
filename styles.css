@@ -38,6 +38,32 @@ body {
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+}
+
+/* Hide native cursor everywhere */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+/* Custom cursor element */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 96px;
+  pointer-events: none;
+  z-index: 999999;
+  will-change: transform;
+}
+
+#custom-cursor img {
+  display: block;
+  width: 96px;
+  height: 96px;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* ============================================
@@ -389,7 +415,6 @@ body {
   position: absolute;
   width: 46px;
   height: 46px;
-  cursor: pointer;
 }
 
 .floating-icon-inner {
@@ -629,6 +654,11 @@ body.avatar-hovered .nav-logo {
 .info-panel-wrap {
   display: flex;
   flex-direction: column;
+  pointer-events: none;
+}
+
+.info-panel-wrap.ip-interactive {
+  pointer-events: auto;
 }
 
 .info-panel {

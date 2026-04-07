@@ -270,6 +270,8 @@
   let panelTimers   = [];
   let panelsVisible = false;
 
+  const STROKE_DURATION = 900; // matches ipDraw 0.9s
+
   function showPanels() {
     if (panelsVisible) return;
     panelsVisible = true;
@@ -279,13 +281,22 @@
       }, PANEL_DELAY + i * PANEL_STEP);
       panelTimers.push(t);
     });
+    // All panels interactive only after the LAST panel's stroke completes
+    const lastDelay = PANEL_DELAY + (allPanels.length - 1) * PANEL_STEP + STROKE_DURATION;
+    const tAll = setTimeout(() => {
+      document.querySelectorAll('.info-panel-wrap').forEach(w => w.classList.add('ip-interactive'));
+    }, lastDelay);
+    panelTimers.push(tAll);
   }
 
   function hidePanels() {
     panelTimers.forEach(clearTimeout);
     panelTimers   = [];
     panelsVisible = false;
-    allPanels.forEach(panel => panel.classList.remove('ip-visible'));
+    allPanels.forEach(panel => {
+      panel.classList.remove('ip-visible');
+      panel.parentElement.classList.remove('ip-interactive');
+    });
   }
 
   // --- Hover detection ---
@@ -328,15 +339,10 @@
   const allWraps      = Array.from(document.querySelectorAll('.info-panel-wrap'));
   let hoveredWrap     = null;
 
-  function inRect(el, x, y) {
-    if (!el) return false;
-    const rr = el.getBoundingClientRect();
-    return x >= rr.left && x <= rr.right && y >= rr.top && y <= rr.bottom;
-  }
-
   function updateWrapHover(x, y) {
     let found = null;
     for (const wrap of allWraps) {
+      if (!wrap.classList.contains('ip-interactive')) continue;
       const rr = wrap.getBoundingClientRect();
       if (x >= rr.left && x <= rr.right && y >= rr.top && y <= rr.bottom) {
         found = wrap;
@@ -750,5 +756,62 @@
       wrap.style.animationPlayState = 'running';
     }
     window._stardropBoost = 1;
+  });
+})();
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+(function () {
+  const cursor = document.getElementById('custom-cursor');
+  const cursorImg = document.getElementById('cursor-img');
+  if (!cursor || !cursorImg) return;
+
+  const SRC_DEFAULT = 'assets/Cursor.svg';
+  const SRC_HOVER   = 'assets/Hover cursor.svg';
+  let currentHover = false;
+
+  function isHoverable(el) {
+    let node = el;
+    while (node && node !== document.body && node !== document.documentElement) {
+      if (!node.tagName) { node = node.parentElement; continue; }
+      const tag = node.tagName.toLowerCase();
+      if (tag === 'a' || tag === 'button') return true;
+      if (node.getAttribute && node.getAttribute('role') === 'button') return true;
+      const cl = node.classList;
+      if (cl) {
+        if (
+          cl.contains('nav-logo') ||
+          cl.contains('nav-logo-wrap') ||
+          cl.contains('nav-link') ||
+          cl.contains('avatar-wrapper') ||
+          cl.contains('journey-title-wrap')
+        ) return true;
+        // Info panels only hoverable after stroke animation completes
+        if (cl.contains('info-panel-wrap')) {
+          return cl.contains('ip-interactive');
+        }
+      }
+      node = node.parentElement;
+    }
+    return false;
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    cursor.style.transform = `translate(${x - 36}px, ${y - 33}px)`;
+
+    // Use elementFromPoint for reliable hit detection (ignores pointer-events:none elements)
+    const el = document.elementFromPoint(x, y);
+    const hover = isHoverable(el);
+    if (hover !== currentHover) {
+      currentHover = hover;
+      cursorImg.src = hover ? SRC_HOVER : SRC_DEFAULT;
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-200px, -200px)';
   });
 })();
