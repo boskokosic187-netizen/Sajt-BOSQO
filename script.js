@@ -672,6 +672,9 @@
       } else if (prev === 6) {
         // Pause exactly where it is — no snapping, no inline style
         journeyWrap.style.animationPlayState = 'paused';
+        // Kill hover state immediately on scroll-away
+        journeyWrap.classList.remove('journey-hovered');
+        window._stardropBoost = 1;
       }
     }
 
