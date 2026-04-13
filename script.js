@@ -643,7 +643,7 @@
    SCROLL STAGE ENGINE
    ============================================ */
 (function () {
-  const MAX_STAGE       = 6;
+  const MAX_STAGE       = 9;
   const MIN_STEP        = 160;  // minimum ms between any two stage changes (prevents wheel spam)
   const RAPID_THRESHOLD = 700;  // if next scroll within this ms → fast mode
   const RAPID_RESTORE   = 800;  // ms after last fast scroll to restore normal speed
@@ -662,23 +662,27 @@
     stage = Math.max(0, Math.min(MAX_STAGE, n));
 
     if (journeyWrap) {
-      if (stage === 6) {
+      if (stage >= 6 && stage <= 8) {
+        // Stages 6-8: float running, hover available
         if (!journeyWrap.classList.contains('journey-floating')) {
-          // First arrival — start animation from beginning (center)
           void journeyWrap.offsetWidth;
           journeyWrap.classList.add('journey-floating');
         }
         journeyWrap.style.animationPlayState = 'running';
-      } else if (prev === 6) {
-        // Pause exactly where it is — no snapping, no inline style
+      } else if (prev <= 8 && stage >= 9) {
+        // Entering stage 9: letters start dissolving — kill hover immediately
         journeyWrap.style.animationPlayState = 'paused';
-        // Kill hover state immediately on scroll-away
         journeyWrap.classList.remove('journey-hovered');
         window._stardropBoost = 1;
+      } else if (prev >= 9 && stage <= 8) {
+        // Scrolling back from stage 9 → restore float
+        journeyWrap.style.animationPlayState = 'running';
       }
     }
 
     document.body.dataset.stage = stage;
+    if (window._setLetterStage) window._setLetterStage(stage);
+    if (window._setProjectsStage) window._setProjectsStage(stage);
   }
 
   function step(dir) {
@@ -741,6 +745,31 @@
 
 
 /* ============================================
+   PROJECTS ROADMAP
+   ============================================ */
+(function () {
+  const section = document.getElementById('projectsSection');
+  if (!section) return;
+
+  let activated = false;
+  let activateTimer = null;
+
+  window._setProjectsStage = function (stage) {
+    if (stage >= 9 && !activated) {
+      activated = true;
+      // Wait for journey title letters to fully dissolve (~1.5s), then activate
+      activateTimer = setTimeout(function () {
+        section.classList.add('projects-active');
+      }, 1500);
+    } else if (stage < 9) {
+      activated = false;
+      clearTimeout(activateTimer);
+      section.classList.remove('projects-active');
+    }
+  };
+})();
+
+/* ============================================
    JOURNEY TITLE HOVER
    ============================================ */
 (function () {
@@ -755,7 +784,8 @@
 
   wrap.addEventListener('mouseleave', () => {
     wrap.classList.remove('journey-hovered');
-    if (document.body.dataset.stage === '6') {
+    const s = +document.body.dataset.stage;
+    if (s >= 6 && s <= 8) {
       wrap.style.animationPlayState = 'running';
     }
     window._stardropBoost = 1;
@@ -817,4 +847,79 @@
   document.addEventListener('mouseleave', () => {
     cursor.style.transform = 'translate(-200px, -200px)';
   });
+})();
+
+/* ============================================
+   JOURNEY TITLE — LETTER BY LETTER DISSOLVE
+   ============================================ */
+(function () {
+  const titleEl = document.querySelector('.journey-title');
+  if (!titleEl) return;
+
+  // Split into individual letter spans
+  const text = titleEl.textContent.trim();
+  titleEl.innerHTML = text.split('').map((ch, i) =>
+    `<span class="jt-letter" data-i="${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`
+  ).join('');
+
+  const letters = Array.from(titleEl.querySelectorAll('.jt-letter'));
+  const N = letters.length;
+
+  // Randomised batches — generated fresh each time stage 9 is first entered
+  let batches = null; // [ [indices...], [indices...], [indices...] ]
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function buildBatches() {
+    const order = shuffle(Array.from({ length: N }, (_, i) => i));
+    const third = Math.ceil(N / 3);
+    batches = [
+      order.slice(0, third),
+      order.slice(third, third * 2),
+      order.slice(third * 2)
+    ];
+  }
+
+  function applyBatch(batchIdx, gone) {
+    const batch = batches[batchIdx];
+    batch.forEach((letterIdx, pos) => {
+      const letter = letters[letterIdx];
+      if (gone) {
+        letter.style.transitionDelay = (pos * 55) + 'ms';
+        letter.classList.add('jt-gone');
+      } else {
+        letter.style.transitionDelay = '0ms';
+        letter.classList.remove('jt-gone');
+      }
+    });
+  }
+
+  window._setLetterStage = function (stage) {
+    // Build randomised order on first entry to stage 9
+    if (stage >= 9 && !batches) buildBatches();
+    // Reset if scrolled back
+    if (stage < 9 && batches) batches = null;
+
+    if (!batches) {
+      // Stages 6-8: all letters visible
+      letters.forEach(l => { l.style.transitionDelay = '0ms'; l.classList.remove('jt-gone'); });
+      return;
+    }
+
+    // Stage 9: all letters dissolve in one go, staggered in random order
+    const allOrdered = [...batches[0], ...batches[1], ...batches[2]];
+    allOrdered.forEach((letterIdx, pos) => {
+      const letter = letters[letterIdx];
+      if (!letter.classList.contains('jt-gone')) {
+        letter.style.transitionDelay = (pos * 55) + 'ms';
+        letter.classList.add('jt-gone');
+      }
+    });
+  };
 })();

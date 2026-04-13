@@ -1014,12 +1014,58 @@ body[data-stage="6"] .journey-title {
   filter: blur(0px);
 }
 
+/* Stages 7-11: hero and navbar stay gone */
+body[data-stage="7"] .hero-content,
+body[data-stage="8"] .hero-content,
+body[data-stage="9"] .hero-content,
+body[data-stage="10"] .hero-content,
+body[data-stage="11"] .hero-content {
+  transform: scale(1.25);
+  opacity: 0;
+  filter: blur(28px);
+  pointer-events: none;
+}
+body[data-stage="7"] .navbar,
+body[data-stage="8"] .navbar,
+body[data-stage="9"] .navbar,
+body[data-stage="10"] .navbar,
+body[data-stage="11"] .navbar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Stages 7-11: journey title container stays at full size; letters handle their own animation */
+body[data-stage="7"] .journey-title,
+body[data-stage="8"] .journey-title,
+body[data-stage="9"] .journey-title,
+body[data-stage="10"] .journey-title,
+body[data-stage="11"] .journey-title {
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0px);
+}
+
+/* Individual letters — dissolve like hero scene (scale up = rush toward viewer) */
+.jt-letter {
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 1, 1),
+              opacity   0.3s ease-in,
+              filter    0.33s ease;
+}
+
+.jt-letter.jt-gone {
+  transform: scale(2.2);
+  opacity: 0;
+  filter: blur(28px) brightness(2.5);
+}
+
 /* Fast scroll — shorten all stage transitions */
 body.scroll-fast .hero-content,
 body.scroll-fast .navbar,
 body.scroll-fast .journey-title {
   transition-duration: 0.18s !important;
 }
+
 
 /* ============================================
    JOURNEY TITLE HOVER
@@ -1033,7 +1079,9 @@ body.scroll-fast .journey-title {
   transition: box-shadow 0.35s ease;
 }
 
-body[data-stage="6"] .journey-title-wrap {
+body[data-stage="6"] .journey-title-wrap,
+body[data-stage="7"] .journey-title-wrap,
+body[data-stage="8"] .journey-title-wrap {
   pointer-events: auto;
 }
 
@@ -1088,3 +1136,171 @@ body[data-stage="6"] .journey-title-wrap {
 }
 
 /* animation-play-state controlled via JS */
+
+/* ============================================
+   PROJECTS ROADMAP SECTION
+   ============================================ */
+
+.projects-section {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* shift content upward so title sits higher on screen */
+  padding-bottom: 18vh;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.projects-section.projects-active {
+  opacity: 1;
+}
+
+/* Title */
+.projects-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.6rem, 4.5vw, 4.2rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 160px;
+  opacity: 0;
+}
+
+.projects-section.projects-active .projects-title {
+  animation: projectsTitleIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+@keyframes projectsTitleIn {
+  from { opacity: 0; transform: translateY(-22px); filter: blur(12px); }
+  to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
+}
+
+/* Roadmap container */
+.roadmap {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each row: left column (circle + line) + label */
+/* align-items: flex-start so label top-aligns with node top,
+   then label uses its own height + flex centering to sit at circle midpoint */
+.roadmap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+/* Left column: circle node stacked above connecting line */
+.roadmap-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 80px;
+}
+
+/* Node wrapper — starts hidden; 80px matches SVG */
+.roadmap-node-wrap {
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.projects-section.projects-active .roadmap-node-wrap {
+  animation: nodeAppear 0.3s ease-out var(--appear-delay) both;
+}
+
+@keyframes nodeAppear {
+  from { opacity: 0; transform: scale(0.5); filter: blur(8px); }
+  to   { opacity: 1; transform: scale(1);   filter: blur(0); }
+}
+
+.roadmap-node-svg {
+  width: 80px;
+  height: 80px;
+  display: block;
+  overflow: visible;
+}
+
+/* Subtle fill inside circle */
+.node-bg-circle {
+  fill: rgba(29, 233, 182, 0.07);
+}
+
+/* Number text — circumference for r=36: 2π×36 ≈ 226.2 */
+.node-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  fill: rgba(29, 233, 182, 0.92);
+}
+
+/* Stroke circle — draws clockwise from 12 o'clock */
+.node-stroke-circle {
+  fill: none;
+  stroke: #1de9b6;
+  stroke-width: 1.5;
+  stroke-dasharray: 226.2;
+  stroke-dashoffset: 226.2;
+  filter: drop-shadow(0 0 5px rgba(29, 233, 182, 0.8))
+          drop-shadow(0 0 14px rgba(29, 233, 182, 0.35));
+}
+
+.projects-section.projects-active .node-stroke-circle {
+  animation: circleStrokeDraw 0.6s ease-in-out var(--stroke-delay) both;
+}
+
+@keyframes circleStrokeDraw {
+  from { stroke-dashoffset: 226.2; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Vertical connecting line between nodes */
+.roadmap-line {
+  width: 1.5px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(29, 233, 182, 0.75), rgba(29, 233, 182, 0.12));
+  transform-origin: top center;
+  transform: scaleY(0);
+  box-shadow: 0 0 5px rgba(29, 233, 182, 0.35);
+}
+
+.projects-section.projects-active .roadmap-line {
+  animation: lineExtend 0.32s ease-out var(--line-delay) both;
+}
+
+@keyframes lineExtend {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* Project name label — height matches node so flex centering
+   puts the text exactly at the circle's vertical midpoint */
+.roadmap-label {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(14px, 1.55vw, 22px);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.07em;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.projects-section.projects-active .roadmap-label {
+  animation: labelIn 0.35s ease-out var(--appear-delay) both;
+}
+
+@keyframes labelIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
