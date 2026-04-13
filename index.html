@@ -162,9 +162,16 @@
   <!-- Projects roadmap section -->
   <div class="projects-section" id="projectsSection">
     <h2 class="projects-title">PROJECTS ROADMAP</h2>
+
+    <!-- Typewriter text — appears below title -->
+    <div class="roadmap-typewriter" id="roadmapTypewriter">
+      <p class="tw-line" id="twLine1"></p>
+      <p class="tw-line" id="twLine2"></p>
+    </div>
+
     <div class="roadmap">
 
-      <div class="roadmap-item" style="--appear-delay:0.3s;--stroke-delay:0.50s;--line-delay:1.0s">
+      <div class="roadmap-item roadmap-item-link" id="rmItem1" style="--appear-delay:0.3s;--stroke-delay:0.50s;--line-delay:1.0s">
         <div class="roadmap-left">
           <div class="roadmap-node-wrap">
             <svg class="roadmap-node-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
@@ -233,6 +240,72 @@
         <div class="roadmap-label">La Boo</div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Faculty of Contemporary Arts page -->
+  <div class="project-page" id="fcaPage">
+    <button class="pp-back" id="fcaBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad1)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">Faculty of Contemporary Arts</h1>
+    </div>
+
+    <!-- Digital Billboard -->
+    <div class="bb-wrap" id="bbWrap1">
+      <div class="bb-housing">
+        <div class="bb-top-bar">
+          <div class="bb-dot bb-dot-red"></div>
+          <div class="bb-dot bb-dot-amber"></div>
+          <div class="bb-dot bb-dot-green"></div>
+          <span class="bb-label">DIGITAL BILLBOARD &nbsp;•&nbsp; FACULTY OF CONTEMPORARY ARTS</span>
+          <div class="bb-signal">
+            <span class="bb-signal-bar"></span>
+            <span class="bb-signal-bar"></span>
+            <span class="bb-signal-bar"></span>
+          </div>
+        </div>
+        <div class="bb-screen-wrap">
+          <div class="bb-overlay" id="bbOverlay1">
+            <div class="bb-scanlines"></div>
+            <button class="bb-play-btn" id="bbPlayBtn1" aria-label="Play video">
+              <svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="35" cy="35" r="32" stroke="#1de9b6" stroke-width="1.2" opacity="0.55"/>
+                <circle cx="35" cy="35" r="32" stroke="#1de9b6" stroke-width="1" opacity="0.2" class="bb-ring-pulse"/>
+                <polygon points="28,21 53,35 28,49" fill="#1de9b6" opacity="0.92"/>
+              </svg>
+              <span class="bb-play-label">PLAY</span>
+            </button>
+            <div class="bb-corner bb-corner-tl"></div>
+            <div class="bb-corner bb-corner-tr"></div>
+            <div class="bb-corner bb-corner-bl"></div>
+            <div class="bb-corner bb-corner-br"></div>
+          </div>
+          <iframe
+            class="bb-iframe"
+            id="bbIframe1"
+            data-src="https://www.youtube.com/embed/SdKwfFNssWk?si=5FpizLLsC4QuzWl6&autoplay=1&mute=1&controls=1&modestbranding=1&rel=0"
+            title="Faculty of Contemporary Arts — Digital Billboard"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="bb-bottom-bar">
+          <div class="bb-led-strip"></div>
+        </div>
+      </div>
+      <div class="bb-glow-floor"></div>
+      <div class="bb-reflection"></div>
     </div>
   </div>
 

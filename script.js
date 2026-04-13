@@ -686,6 +686,7 @@
   }
 
   function step(dir) {
+    if (window._pageOpen) return; // block scroll when a project page is open
     const now  = Date.now();
     const prev = lastStepTime;
     if (now - prev < MIN_STEP) return; // debounce wheel spam
@@ -739,6 +740,9 @@
     if (Math.abs(dy) > 50) step(dy > 0 ? 1 : -1);
   }, { passive: true });
 
+  // Expose for external use (e.g. nav click)
+  window._applyStage = applyStage;
+
   // Init
   applyStage(0);
 })();
@@ -748,24 +752,96 @@
    PROJECTS ROADMAP
    ============================================ */
 (function () {
-  const section = document.getElementById('projectsSection');
+  const section    = document.getElementById('projectsSection');
+  const twWrap     = document.getElementById('roadmapTypewriter');
+  const twLine1    = document.getElementById('twLine1');
+  const twLine2    = document.getElementById('twLine2');
   if (!section) return;
 
-  let activated = false;
-  let activateTimer = null;
+  let activated      = false;
+  let activateTimer  = null;
+  let twTimer        = null;
+  let twCharTimer    = null;
+
+  var TEXT1 = 'Welcome to a curated journey through my selected work across multiple collaborations.';
+  var TEXT2 = "Here, you'll experience a full spectrum of visual solutions, formats, and creative disciplines.";
+  var SPEED = 36; // ms per character
+
+  function resetTypewriter() {
+    clearTimeout(twTimer);
+    clearTimeout(twCharTimer);
+    if (!twWrap) return;
+    twWrap.classList.remove('tw-visible');
+    if (twLine1) twLine1.textContent = '';
+    if (twLine2) twLine2.textContent = '';
+    // Remove cursor if it exists
+    var cur = twWrap.querySelector('.tw-cursor');
+    if (cur) cur.remove();
+  }
+
+  function startTypewriter() {
+    if (!twWrap || !twLine1 || !twLine2) return;
+
+    // Create blinking cursor element
+    var cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+
+    twWrap.classList.add('tw-visible');
+    twLine1.appendChild(cursor);
+
+    var i = 0;
+
+    function typeChar() {
+      var allText = TEXT1 + '\n' + TEXT2;
+      if (i < TEXT1.length) {
+        twLine1.insertBefore(document.createTextNode(TEXT1[i]), cursor);
+      } else if (i === TEXT1.length) {
+        // Switch cursor to line 2
+        twLine2.appendChild(cursor);
+      } else {
+        var idx = i - TEXT1.length - 1;
+        twLine2.insertBefore(document.createTextNode(TEXT2[idx]), cursor);
+      }
+      i++;
+      if (i < TEXT1.length + 1 + TEXT2.length) {
+        twCharTimer = setTimeout(typeChar, SPEED);
+      }
+      // cursor stays blinking at the end
+    }
+
+    typeChar();
+  }
+
+  function activate(delay) {
+    clearTimeout(activateTimer);
+    activated = true;
+    activateTimer = setTimeout(function () {
+      section.classList.add('projects-active');
+      // Last item stroke ends at ~4.3s (delay 3.70s + 0.6s duration); start at 4.5s
+      twTimer = setTimeout(startTypewriter, 4500);
+    }, delay);
+  }
 
   window._setProjectsStage = function (stage) {
     if (stage >= 9 && !activated) {
-      activated = true;
-      // Wait for journey title letters to fully dissolve (~1.5s), then activate
-      activateTimer = setTimeout(function () {
-        section.classList.add('projects-active');
-      }, 1500);
+      activate(1500);
     } else if (stage < 9) {
       activated = false;
       clearTimeout(activateTimer);
       section.classList.remove('projects-active');
+      resetTypewriter();
+      // Clean up click-exit class and nav-hide when scrolling back
+      var jWrap = document.querySelector('.journey-title-wrap');
+      if (jWrap) {
+        jWrap.classList.remove('journey-click-exit');
+        jWrap.style.visibility = '';
+      }
     }
+  };
+
+  // Direct activation — called by click-to-skip, bypasses scroll delay
+  window._activateProjectsDirect = function (delay) {
+    activate(delay);
   };
 })();
 
@@ -777,18 +853,93 @@
   if (!wrap) return;
 
   wrap.addEventListener('mouseenter', () => {
+    if (wrap.classList.contains('journey-click-exit')) return;
     wrap.classList.add('journey-hovered');
     wrap.style.animationPlayState = 'paused';
     window._stardropBoost = 7;
   });
 
   wrap.addEventListener('mouseleave', () => {
+    if (wrap.classList.contains('journey-click-exit')) return;
     wrap.classList.remove('journey-hovered');
     const s = +document.body.dataset.stage;
     if (s >= 6 && s <= 8) {
       wrap.style.animationPlayState = 'running';
     }
     window._stardropBoost = 1;
+  });
+})();
+
+/* ============================================
+   JOURNEY TITLE — CLICK TO SKIP TO PROJECTS
+   ============================================ */
+(function () {
+  const wrap = document.querySelector('.journey-title-wrap');
+  if (!wrap) return;
+
+  wrap.addEventListener('click', function () {
+    var stage = +document.body.dataset.stage;
+    // Only active when title is fully visible (stages 6-8)
+    if (stage < 6 || stage > 8) return;
+    // Prevent double-trigger
+    if (wrap.classList.contains('journey-click-exit')) return;
+
+    // Stop hover/float states
+    wrap.classList.remove('journey-hovered');
+    wrap.classList.remove('journey-floating');
+    wrap.style.animationPlayState = 'paused';
+    window._stardropBoost = 1;
+
+    // Trigger futuristic exit flash animation
+    wrap.classList.add('journey-click-exit');
+
+    // Update body stage to 9 (hero/navbar already gone at 6+, this keeps CSS consistent)
+    document.body.dataset.stage = '9';
+
+    // Projects appear after 700ms — duration of the exit animation
+    if (window._activateProjectsDirect) {
+      window._activateProjectsDirect(700);
+    }
+  });
+})();
+
+/* ============================================
+   NAV WORK LINK — JUMP TO PROJECTS ROADMAP
+   ============================================ */
+(function () {
+  var workLink = document.querySelector('.nav-work');
+  if (!workLink) return;
+
+  workLink.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // Already showing projects — nothing to do
+    var section = document.getElementById('projectsSection');
+    if (section && section.classList.contains('projects-active')) return;
+
+    // Instantly hide the journey title — no fade, no flash at all
+    var jWrap = document.querySelector('.journey-title-wrap');
+    if (jWrap) {
+      jWrap.style.visibility = 'hidden';
+      jWrap.classList.remove('journey-hovered');
+      jWrap.classList.remove('journey-floating');
+      jWrap.style.animationPlayState = 'paused';
+      window._stardropBoost = 1;
+    }
+
+    // Fast-forward all stage CSS transitions
+    document.body.classList.add('scroll-fast');
+
+    // Jump stage machinery to 9 (hero + navbar gone)
+    if (window._applyStage) window._applyStage(9);
+
+    // Projects appear after a brief pause
+    if (window._activateProjectsDirect) window._activateProjectsDirect(600);
+
+    // Remove fast mode after transitions settle
+    setTimeout(function () {
+      document.body.classList.remove('scroll-fast');
+    }, 400);
   });
 })();
 
@@ -818,7 +969,9 @@
           cl.contains('nav-logo-wrap') ||
           cl.contains('nav-link') ||
           cl.contains('avatar-wrapper') ||
-          cl.contains('journey-title-wrap')
+          cl.contains('journey-title-wrap') ||
+          cl.contains('roadmap-item-link') ||
+          cl.contains('pp-back')
         ) return true;
         // Info panels only hoverable after stroke animation completes
         if (cl.contains('info-panel-wrap')) {
@@ -922,4 +1075,87 @@
       }
     });
   };
+})();
+
+/* ============================================
+   FACULTY OF CONTEMPORARY ARTS PAGE
+   ============================================ */
+(function () {
+  var item1   = document.getElementById('rmItem1');
+  var fcaPage = document.getElementById('fcaPage');
+  var fcaBack = document.getElementById('fcaBack');
+  var projects = document.getElementById('projectsSection');
+  if (!item1 || !fcaPage) return;
+
+  function openFCA() {
+    window._pageOpen = true;
+    fcaPage.classList.add('pp-active');
+    // Softly fade projects behind
+    if (projects) projects.style.opacity = '0';
+  }
+
+  function closeFCA() {
+    window._pageOpen = false;
+    fcaPage.classList.remove('pp-active');
+    if (projects) projects.style.opacity = '1';
+    // Reset billboard when page closes
+    if (window._resetBillboard1) window._resetBillboard1();
+  }
+
+  item1.addEventListener('click', function () {
+    // Only clickable after roadmap has appeared (item 1 is visible)
+    if (!projects || !projects.classList.contains('projects-active')) return;
+    openFCA();
+  });
+
+  if (fcaBack) {
+    fcaBack.addEventListener('click', closeFCA);
+  }
+
+  // ESC key also closes
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && window._pageOpen) closeFCA();
+  });
+})();
+
+/* ============================================
+   DIGITAL BILLBOARD — FCA
+   ============================================ */
+(function () {
+  var wrap    = document.getElementById('bbWrap1');
+  var overlay = document.getElementById('bbOverlay1');
+  var playBtn = document.getElementById('bbPlayBtn1');
+  var iframe  = document.getElementById('bbIframe1');
+  if (!wrap || !overlay || !playBtn || !iframe) return;
+
+  var loaded = false;
+
+  function loadVideo() {
+    if (loaded) return;
+    loaded = true;
+    iframe.src = iframe.dataset.src;
+    // Small delay so iframe starts loading before hiding overlay
+    setTimeout(function () {
+      overlay.classList.add('bb-hidden');
+    }, 320);
+  }
+
+  // Hover: autoplay muted
+  wrap.addEventListener('mouseenter', loadVideo);
+
+  // Click on play button: same (already loading on hover, this is fallback)
+  playBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    loadVideo();
+  });
+
+  // Reset: called when the project page is closed
+  window._resetBillboard1 = function () {
+    loaded = false;
+    iframe.src = '';
+    overlay.classList.remove('bb-hidden');
+  };
+
+  // Also register the billboard play button for custom cursor hover detection
+  // (handled via generic 'button' selector in cursor code — no extra work needed)
 })();

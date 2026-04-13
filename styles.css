@@ -1148,8 +1148,6 @@ body[data-stage="8"] .journey-title-wrap {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* shift content upward so title sits higher on screen */
-  padding-bottom: 18vh;
   z-index: 6;
   pointer-events: none;
   opacity: 0;
@@ -1168,7 +1166,7 @@ body[data-stage="8"] .journey-title-wrap {
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin: 0 0 160px;
+  margin: 0 0 36px;
   opacity: 0;
 }
 
@@ -1265,7 +1263,7 @@ body[data-stage="8"] .journey-title-wrap {
 /* Vertical connecting line between nodes */
 .roadmap-line {
   width: 1.5px;
-  height: 48px;
+  height: 68px;
   background: linear-gradient(to bottom, rgba(29, 233, 182, 0.75), rgba(29, 233, 182, 0.12));
   transform-origin: top center;
   transform: scaleY(0);
@@ -1303,4 +1301,500 @@ body[data-stage="8"] .journey-title-wrap {
 @keyframes labelIn {
   from { opacity: 0; transform: translateX(-14px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================
+   JOURNEY TITLE — CLICK-TO-SKIP EXIT ANIMATION
+   ============================================ */
+
+/* Stop float, block interaction */
+.journey-title-wrap.journey-click-exit {
+  animation: none !important;
+  pointer-events: none !important;
+}
+
+/* Freeze individual letters — prevent normal random dissolve */
+.journey-title-wrap.journey-click-exit .jt-letter {
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Remove border rect */
+.journey-title-wrap.journey-click-exit .journey-rect {
+  animation: none !important;
+  transition: opacity 0.2s ease !important;
+  opacity: 0 !important;
+}
+
+/* Clean fade-out on the whole title */
+.journey-title-wrap.journey-click-exit .journey-title {
+  transition: none !important;
+  animation: journeyClickExit 0.7s ease-in forwards !important;
+}
+
+@keyframes journeyClickExit {
+  0%   { opacity: 1; transform: scale(1);    filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.06); filter: blur(10px); }
+}
+
+/* ============================================
+   ROADMAP TYPEWRITER TEXT
+   ============================================ */
+
+.roadmap-typewriter {
+  margin-top: 0;
+  margin-bottom: 72px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.roadmap-typewriter.tw-visible {
+  opacity: 1;
+}
+
+.tw-line {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+  line-height: 1.75;
+  margin: 0;
+  min-height: 1.75em;
+  white-space: nowrap;
+}
+
+.tw-cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 0.85em;
+  background: rgba(29, 233, 182, 0.75);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  box-shadow: 0 0 6px rgba(29, 233, 182, 0.5);
+  animation: twBlink 0.75s ease-in-out infinite;
+}
+
+@keyframes twBlink {
+  0%, 48% { opacity: 1; }
+  52%, 100% { opacity: 0; }
+}
+
+/* ============================================
+   ROADMAP CLICKABLE ITEM
+   ============================================ */
+
+.projects-section.projects-active .roadmap-item-link {
+  pointer-events: auto;
+}
+
+.roadmap-item-link .roadmap-node-wrap,
+.roadmap-item-link .roadmap-label {
+  transition: filter 0.25s ease, color 0.25s ease;
+}
+
+.roadmap-item-link:hover .roadmap-node-wrap {
+  filter: drop-shadow(0 0 10px rgba(29, 233, 182, 0.7))
+          drop-shadow(0 0 22px rgba(29, 233, 182, 0.3));
+}
+
+.roadmap-item-link:hover .roadmap-label {
+  color: rgba(29, 233, 182, 0.92);
+}
+
+/* ============================================
+   PROJECT PAGE (FCA + future pages)
+   ============================================ */
+
+.project-page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-top: 80px;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-page.pp-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Back button — matches nav link style */
+.pp-back {
+  position: absolute;
+  top: 38px;
+  left: 58px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: rgba(29, 233, 182, 0.75);
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.pp-back:hover {
+  color: rgba(29, 233, 182, 1);
+}
+
+.project-page.pp-active .pp-back {
+  animation: linkIn 0.35s ease-out 0.9s both;
+}
+
+/* Title wrap — same structure as journey-title-wrap */
+.pp-title-wrap {
+  position: relative;
+  padding: 32px 72px;
+  border-radius: 55px;
+}
+
+/* SVG frame */
+.pp-frame {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.pp-rect {
+  fill: none;
+  stroke-width: 1;
+  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5))
+          drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
+  stroke-dasharray: 6000;
+  stroke-dashoffset: 6000;
+}
+
+.project-page.pp-active .pp-rect {
+  animation: ppFrameDraw 1.5s ease-in 0.5s forwards;
+}
+
+@keyframes ppFrameDraw {
+  from { stroke-dashoffset: 6000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Main title — same style as journey-title */
+.pp-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.6rem, 4.5vw, 4.2rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+  transform: scale(0.08);
+  filter: blur(28px);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity   0.95s ease,
+              filter    0.95s ease;
+}
+
+.project-page.pp-active .pp-title {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+/* ============================================
+   DIGITAL BILLBOARD
+   ============================================ */
+
+@keyframes bbFloat {
+  0%, 100% { transform: translateY(0px); }
+  38%       { transform: translateY(-10px); }
+  68%       { transform: translateY(-5px); }
+}
+
+@keyframes bbRingPulse {
+  0%   { r: 32; opacity: 0.2; }
+  70%  { r: 46; opacity: 0; }
+  100% { r: 46; opacity: 0; }
+}
+
+@keyframes bbLedShimmer {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; filter: brightness(1.6); }
+}
+
+@keyframes bbFadeIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); filter: blur(8px); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);    filter: blur(0); }
+}
+
+/* Outer wrapper — carries the float */
+.bb-wrap {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  animation: none;
+}
+
+.project-page.pp-active .bb-wrap {
+  animation: bbFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.2s both,
+             bbFloat   7s ease-in-out 2s infinite;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 20px rgba(29, 233, 182, 0.22));
+  transition: filter 0.4s ease;
+}
+
+.project-page.pp-active .bb-wrap:hover {
+  filter: drop-shadow(0 0 40px rgba(29, 233, 182, 0.55))
+          drop-shadow(0 0 90px rgba(29, 233, 182, 0.18));
+  animation-play-state: paused, paused;
+}
+
+/* Main housing */
+.bb-housing {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(155deg, #0f1319 0%, #090b0e 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(29, 233, 182, 0.18);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(29, 233, 182, 0.06),
+    0 10px 50px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+}
+
+.bb-wrap:hover .bb-housing {
+  transform: scale(1.018);
+  border-color: rgba(29, 233, 182, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(29, 233, 182, 0.12),
+    0 18px 70px rgba(0, 0, 0, 0.9),
+    0 0 48px rgba(29, 233, 182, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Top chrome bar */
+.bb-top-bar {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: rgba(29, 233, 182, 0.035);
+  border-bottom: 1px solid rgba(29, 233, 182, 0.1);
+}
+
+.bb-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.bb-dot-red   { background: rgba(255, 80, 80, 0.7); }
+.bb-dot-amber { background: rgba(255, 190, 50, 0.65); }
+.bb-dot-green { background: rgba(29, 233, 182, 0.75);
+                box-shadow: 0 0 6px rgba(29, 233, 182, 0.6); }
+
+.bb-label {
+  flex: 1;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: rgba(29, 233, 182, 0.45);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.bb-signal {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.bb-signal-bar {
+  display: block;
+  width: 3px;
+  background: rgba(29, 233, 182, 0.55);
+  border-radius: 1px;
+}
+.bb-signal-bar:nth-child(1) { height: 5px; }
+.bb-signal-bar:nth-child(2) { height: 8px; }
+.bb-signal-bar:nth-child(3) { height: 11px; }
+
+/* Screen area — 16:9 */
+.bb-screen-wrap {
+  position: relative;
+  height: min(42vh, 430px);
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Overlay — shown before video loads */
+.bb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(0,30,25,0.7) 0%, rgba(0,0,0,0.82) 100%);
+  z-index: 3;
+  transition: opacity 0.4s ease;
+}
+
+.bb-overlay.bb-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Scanline effect */
+.bb-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+}
+
+/* Corner brackets */
+.bb-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(29, 233, 182, 0.6);
+  border-style: solid;
+}
+.bb-corner-tl { top: 12px; left: 12px;  border-width: 1.5px 0 0 1.5px; }
+.bb-corner-tr { top: 12px; right: 12px; border-width: 1.5px 1.5px 0 0; }
+.bb-corner-bl { bottom: 12px; left: 12px;  border-width: 0 0 1.5px 1.5px; }
+.bb-corner-br { bottom: 12px; right: 12px; border-width: 0 1.5px 1.5px 0; }
+
+/* Play button */
+.bb-play-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  z-index: 1;
+}
+
+.bb-play-btn:hover {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 18px rgba(29, 233, 182, 0.95));
+}
+
+.bb-play-btn svg {
+  width: 70px;
+  height: 70px;
+}
+
+.bb-ring-pulse {
+  animation: bbRingPulse 1.8s ease-out infinite;
+  transform-origin: center;
+}
+
+.bb-play-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: rgba(29, 233, 182, 0.65);
+  text-transform: uppercase;
+}
+
+/* iframe */
+.bb-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 2;
+}
+
+/* Bottom LED bar */
+.bb-bottom-bar {
+  height: 18px;
+  background: rgba(29, 233, 182, 0.025);
+  border-top: 1px solid rgba(29, 233, 182, 0.09);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.bb-led-strip {
+  flex: 1;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(29, 233, 182, 0.5) 15%,
+    rgba(29, 233, 182, 0.95) 50%,
+    rgba(29, 233, 182, 0.5) 85%,
+    transparent
+  );
+  border-radius: 2px;
+  animation: bbLedShimmer 2.4s ease-in-out infinite;
+}
+
+/* Ambient glow on the floor */
+.bb-glow-floor {
+  width: 75%;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(29, 233, 182, 0.18) 0%, transparent 70%);
+  margin-top: -4px;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.bb-wrap:hover .bb-glow-floor {
+  opacity: 1.5;
+}
+
+/* Reflection */
+.bb-reflection {
+  width: 80%;
+  height: 44px;
+  background: linear-gradient(
+    to bottom,
+    rgba(29, 233, 182, 0.06) 0%,
+    transparent 100%
+  );
+  border-radius: 0 0 6px 6px;
+  transform: scaleY(-0.35) translateY(-22px);
+  transform-origin: top center;
+  filter: blur(5px);
+  opacity: 0.6;
+  pointer-events: none;
 }
