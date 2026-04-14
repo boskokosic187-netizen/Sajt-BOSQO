@@ -816,9 +816,11 @@
     clearTimeout(activateTimer);
     activated = true;
     activateTimer = setTimeout(function () {
-      section.classList.add('projects-active');
-      // Last item stroke ends at ~4.3s (delay 3.70s + 0.6s duration); start at 4.5s
-      twTimer = setTimeout(startTypewriter, 4500);
+      document.fonts.ready.then(function () {
+        section.classList.add('projects-active');
+        // Last item stroke ends at ~4.3s (delay 3.70s + 0.6s duration); start at 4.5s
+        twTimer = setTimeout(startTypewriter, 4500);
+      });
     }, delay);
   }
 

@@ -1205,6 +1205,7 @@ body[data-stage="8"] .journey-title-wrap {
 
 /* Node wrapper — starts hidden; 80px matches SVG */
 .roadmap-node-wrap {
+  position: relative;
   width: 80px;
   height: 80px;
   opacity: 0;
@@ -1232,12 +1233,18 @@ body[data-stage="8"] .journey-title-wrap {
   fill: rgba(29, 233, 182, 0.07);
 }
 
-/* Number text — circumference for r=36: 2π×36 ≈ 226.2 */
+/* Number overlay — absolutely centered over SVG circle */
 .node-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Orbitron', sans-serif;
   font-size: 28px;
   font-weight: 700;
-  fill: rgba(29, 233, 182, 0.92);
+  color: rgba(29, 233, 182, 0.92);
+  pointer-events: none;
 }
 
 /* Stroke circle — draws clockwise from 12 o'clock */
