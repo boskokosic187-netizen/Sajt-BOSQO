@@ -1148,6 +1148,7 @@ body[data-stage="8"] .journey-title-wrap {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 96px;
   z-index: 6;
   pointer-events: none;
   opacity: 0;
@@ -1160,13 +1161,18 @@ body[data-stage="8"] .journey-title-wrap {
 
 /* Title */
 .projects-title {
+  position: absolute;
+  top: 112px;
+  left: 0;
+  right: 0;
+  text-align: center;
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.6rem, 4.5vw, 4.2rem);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin: 0 0 36px;
+  margin: 0;
   opacity: 0;
 }
 

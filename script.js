@@ -765,7 +765,7 @@
 
   var TEXT1 = 'Welcome to a curated journey through my selected work across multiple collaborations.';
   var TEXT2 = "Here, you'll experience a full spectrum of visual solutions, formats, and creative disciplines.";
-  var SPEED = 36; // ms per character
+  var SPEED = 18; // ms per character
 
   function resetTypewriter() {
     clearTimeout(twTimer);
