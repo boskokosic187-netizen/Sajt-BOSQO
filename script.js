@@ -467,8 +467,9 @@
   const hint = document.getElementById('scrollHint');
   if (!hint) return;
 
-  let timer = null;
-  const DELAY = 2500;
+  let timer       = null;
+  let activeDelay = 2500; // default; overridden per-context
+  const DEFAULT_DELAY = 2500;
 
   function show() { hint.classList.add('visible'); }
   function hide() { hint.classList.remove('visible'); }
@@ -476,15 +477,31 @@
   function resetTimer() {
     hide();
     clearTimeout(timer);
-    timer = setTimeout(show, DELAY);
+    timer = setTimeout(show, activeDelay);
   }
 
   window.addEventListener('wheel',     resetTimer, { passive: true });
   window.addEventListener('touchmove', resetTimer, { passive: true });
   window.addEventListener('keydown',   resetTimer);
 
-  // Start the initial countdown
-  timer = setTimeout(show, DELAY);
+  // Called externally once the page is ready to accept scroll (hero)
+  window._startScrollHint = function () {
+    activeDelay = DEFAULT_DELAY;
+    timer = setTimeout(show, activeDelay);
+  };
+
+  // Called externally to cancel current timer and restart with a new delay
+  window._resetScrollHint = function (delayMs) {
+    hide();
+    clearTimeout(timer);
+    activeDelay = (delayMs !== undefined) ? delayMs : DEFAULT_DELAY;
+    timer = setTimeout(show, activeDelay);
+  };
+
+  // Called externally to update the delay used by subsequent scroll resets
+  window._setScrollHintDelay = function (delayMs) {
+    activeDelay = delayMs;
+  };
 })();
 
 /* ============================================
@@ -655,6 +672,9 @@
   let lastDir      = 0;  // direction of accumulated scrolls
   const SCROLLS_NEEDED = 1;
 
+  let scrollEnabled = false;
+  window._enableScroll = function () { scrollEnabled = true; };
+
   const journeyWrap = document.querySelector('.journey-title-wrap');
 
   function applyStage(n) {
@@ -686,6 +706,7 @@
   }
 
   function step(dir) {
+    if (!scrollEnabled) return;   // block scroll until page animations complete
     if (window._pageOpen) return; // block scroll when a project page is open
     const now  = Date.now();
     const prev = lastStepTime;
@@ -747,6 +768,13 @@
   applyStage(0);
 })();
 
+// Save current stage before refresh/close
+window.addEventListener('beforeunload', function () {
+  var s = +document.body.dataset.stage;
+  if (s > 0) sessionStorage.setItem('lastStage', s);
+  else sessionStorage.removeItem('lastStage');
+});
+
 
 /* ============================================
    PROJECTS ROADMAP
@@ -762,6 +790,9 @@
   let activateTimer  = null;
   let twTimer        = null;
   let twCharTimer    = null;
+  let readyTimer     = null;
+
+  const roadmap = section.querySelector('.roadmap');
 
   var TEXT1 = 'Welcome to a curated journey through my selected work across multiple collaborations.';
   var TEXT2 = "Here, you'll experience a full spectrum of visual solutions, formats, and creative disciplines.";
@@ -820,6 +851,20 @@
         section.classList.add('projects-active');
         // Last item stroke ends at ~4.3s (delay 3.70s + 0.6s duration); start at 4.5s
         twTimer = setTimeout(startTypewriter, 4500);
+        // Scroll hint: cancel pending timer, schedule for content-ready + 3s
+        // Last roadmap item fully drawn at ~4.3s from projects-active
+        if (window._resetScrollHint) {
+          window._resetScrollHint(4300 + 3000); // initial: 7.3s from now
+          setTimeout(function () {
+            // Content is now fully on screen — switch to 3s for scroll resets
+            if (window._setScrollHintDelay) window._setScrollHintDelay(3000);
+          }, 4300);
+        }
+        // Enable hover on roadmap items only after all animations finish (~4.3s)
+        clearTimeout(readyTimer);
+        readyTimer = setTimeout(function () {
+          if (roadmap) roadmap.classList.add('roadmap-ready');
+        }, 4300);
       });
     }, delay);
   }
@@ -830,6 +875,8 @@
     } else if (stage < 9) {
       activated = false;
       clearTimeout(activateTimer);
+      clearTimeout(readyTimer);
+      if (roadmap) roadmap.classList.remove('roadmap-ready');
       section.classList.remove('projects-active');
       resetTypewriter();
       // Clean up click-exit class and nav-hide when scrolling back
@@ -1178,4 +1225,49 @@
 
   // Also register the billboard play button for custom cursor hover detection
   // (handled via generic 'button' selector in cursor code — no extra work needed)
+})();
+
+/* ============================================
+   STAGE RESTORE ON REFRESH
+   ============================================ */
+(function () {
+  var saved = parseInt(sessionStorage.getItem('lastStage'), 10);
+  if (!saved || saved <= 0) return;
+
+  // Suppress CSS transitions so elements snap to restored state instantly
+  document.body.classList.add('stage-restore');
+
+  // Apply the saved stage — triggers all stage handlers (_setLetterStage, _setProjectsStage, etc.)
+  if (window._applyStage) window._applyStage(saved);
+
+  // For stage 9 (projects roadmap): bypass the 1500ms activation delay
+  if (saved >= 9 && window._activateProjectsDirect) {
+    window._activateProjectsDirect(100);
+  }
+
+  // Re-enable transitions after two frames (elements have snapped into place)
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      document.body.classList.remove('stage-restore');
+    });
+  });
+
+  // Restored page: enable scroll quickly (no hint — user is past the hero)
+  setTimeout(function () {
+    if (window._enableScroll) window._enableScroll();
+  }, 300);
+})();
+
+/* ============================================
+   PAGE READY — enable scroll after hero animations complete
+   ============================================ */
+(function () {
+  var saved = parseInt(sessionStorage.getItem('lastStage'), 10);
+  if (saved > 0) return; // restored pages handled above
+
+  // Hero animations finish at ~1.65s; wait 1800ms to be safe
+  setTimeout(function () {
+    if (window._enableScroll)    window._enableScroll();
+    if (window._startScrollHint) window._startScrollHint();
+  }, 1800);
 })();

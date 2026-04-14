@@ -9,6 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Exo+2:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<script>
+  (function () {
+    var s = parseInt(sessionStorage.getItem('lastStage'), 10);
+    if (s > 0) document.body.dataset.stage = s;
+  })();
+</script>
 
   <!-- Custom cursor -->
   <div id="custom-cursor">

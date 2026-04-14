@@ -28,6 +28,12 @@
   box-sizing: border-box;
 }
 
+/* Snap all elements to their restored state instantly — class removed after 2 frames */
+body.stage-restore,
+body.stage-restore * {
+  transition-duration: 0s !important;
+}
+
 html, body {
   overflow: hidden;
   height: 100%;
@@ -1441,8 +1447,8 @@ body[data-stage="8"] .journey-title-wrap {
    ROADMAP ITEM HOVER
    ============================================ */
 
-/* Enable pointer events on all items when active */
-.projects-section.projects-active .roadmap-item {
+/* Enable pointer events only after all items have finished appearing */
+.roadmap.roadmap-ready .roadmap-item {
   pointer-events: auto;
 }
 
