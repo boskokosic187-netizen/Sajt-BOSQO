@@ -1599,6 +1599,7 @@ body[data-stage="8"] .journey-title-wrap {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
+  white-space: nowrap;
   margin: 0;
   opacity: 0;
   transform: scale(0.08);
@@ -1632,8 +1633,8 @@ body[data-stage="8"] .journey-title-wrap {
     "g5 g5 g6 g7"
     "g5 g5 g8 g8";
   gap: 6px;
-  width: min(92vw, 1100px);
-  margin-top: 24px;
+  width: min(90vw, 1300px);
+  margin-top: 56px;
   margin-bottom: 20px;
 }
 
@@ -1655,22 +1656,59 @@ body[data-stage="8"] .journey-title-wrap {
   border: 1px solid rgba(29, 233, 182, 0.18);
   overflow: hidden;
   cursor: pointer;
-  /* entry state — CSS transition triggered by pp-active (avoids animation fill-mode locking opacity) */
-  opacity: 0;
-  transform: translateY(16px);
-  filter: blur(7px);
-  transition: opacity      0.55s ease,
-              transform    0.55s ease,
-              filter       0.55s ease,
-              scale        0.35s cubic-bezier(0.16, 1, 0.3, 1),
+  opacity: 0; /* hidden until pp-active */
+  transition: opacity      0.3s ease,
+              filter       0.3s ease,
+              scale        0.38s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.3s ease;
-  transition-delay: calc((var(--gi) - 1) * 0.08s + 0.3s);
 }
 
+/* inner wrapper — simple flex fill, no animation */
+.fca-work-inner {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* entry animation on the whole item rectangle */
 .project-page.pp-active .fca-work-item {
   opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+  animation: fcaItemFromDist 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/*
+  fill-mode: backwards — applies 'from' keyframe during the delay (keeps item hidden).
+  After animation ends, NO forward fill → opacity returns to CSS cascade value (1 from above),
+  so hover dimming (opacity: 0.28) can override it normally.
+*/
+
+/* pseudo-random stagger — last item starts at 1.75s, finishes at 1.75+0.75=2.5s */
+.project-page.pp-active .fca-work-item:nth-child(1) { animation-delay: 0.00s; }
+.project-page.pp-active .fca-work-item:nth-child(2) { animation-delay: 0.75s; }
+.project-page.pp-active .fca-work-item:nth-child(3) { animation-delay: 0.30s; }
+.project-page.pp-active .fca-work-item:nth-child(4) { animation-delay: 1.20s; }
+.project-page.pp-active .fca-work-item:nth-child(5) { animation-delay: 0.55s; }
+.project-page.pp-active .fca-work-item:nth-child(6) { animation-delay: 1.75s; }
+.project-page.pp-active .fca-work-item:nth-child(7) { animation-delay: 1.00s; }
+.project-page.pp-active .fca-work-item:nth-child(8) { animation-delay: 0.15s; }
+
+@keyframes fcaItemFromDist {
+  from {
+    opacity: 0;
+    transform: scale(0.08);
+    filter: blur(18px);
+  }
+  60% {
+    opacity: 0.85;
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
 }
 
 /* futuristic corner brackets */
@@ -1710,7 +1748,8 @@ body[data-stage="8"] .journey-title-wrap {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter    0.5s ease;
   filter: brightness(0.82) saturate(0.9);
 }
 
@@ -1739,21 +1778,11 @@ body[data-stage="8"] .journey-title-wrap {
 
 /* ---- HOVER STATES ---- */
 
-/* reset transition-delay once items are visible (hover should be instant, not delayed) */
-.project-page.pp-active .fca-work-item {
-  transition-delay: calc((var(--gi) - 1) * 0.08s + 0.3s),
-                    calc((var(--gi) - 1) * 0.08s + 0.3s),
-                    calc((var(--gi) - 1) * 0.08s + 0.3s),
-                    0s,
-                    0s;
-}
-
 /* hovered item */
 .fca-gallery:hover .fca-work-item:hover {
   scale: 1.07;
   z-index: 10;
   border-color: rgba(29, 233, 182, 0.65);
-  transition-delay: 0s, 0s, 0s, 0s, 0s;
 }
 
 .fca-gallery:hover .fca-work-item:hover::before,
@@ -1776,7 +1805,6 @@ body[data-stage="8"] .journey-title-wrap {
 .fca-gallery:hover .fca-work-item:not(:hover) {
   opacity: 0.28;
   filter: blur(1.5px);
-  transition-delay: 0s, 0s, 0s, 0s, 0s;
 }
 
 
