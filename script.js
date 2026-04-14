@@ -707,7 +707,19 @@
 
   function step(dir) {
     if (!scrollEnabled) return;   // block scroll until page animations complete
-    if (window._pageOpen) return; // block scroll when a project page is open
+
+    // Scroll UP while a project page is open → close it and return to roadmap
+    if (window._pageOpen && dir === -1) {
+      if (window._closeFCA) window._closeFCA();
+      return;
+    }
+    if (window._pageOpen) return; // block all other scroll when a project page is open
+
+    // Scroll DOWN on projects roadmap after all items have appeared → open FCA
+    if (stage === 9 && dir === 1 && document.querySelector('.roadmap.roadmap-ready')) {
+      if (window._openFCA) window._openFCA();
+      return;
+    }
     const now  = Date.now();
     const prev = lastStepTime;
     if (now - prev < MIN_STEP) return; // debounce wheel spam
@@ -768,11 +780,14 @@
   applyStage(0);
 })();
 
-// Save current stage before refresh/close
+// Save current stage and open page before refresh/close
 window.addEventListener('beforeunload', function () {
   var s = +document.body.dataset.stage;
   if (s > 0) sessionStorage.setItem('lastStage', s);
   else sessionStorage.removeItem('lastStage');
+
+  if (window._pageOpen) sessionStorage.setItem('lastPage', 'fca');
+  else sessionStorage.removeItem('lastPage');
 });
 
 
@@ -843,12 +858,13 @@ window.addEventListener('beforeunload', function () {
     typeChar();
   }
 
-  function activate(delay) {
+  function activate(delay, onActive) {
     clearTimeout(activateTimer);
     activated = true;
     activateTimer = setTimeout(function () {
       document.fonts.ready.then(function () {
         section.classList.add('projects-active');
+        if (onActive) onActive();
         // Last item stroke ends at ~4.3s (delay 3.70s + 0.6s duration); start at 4.5s
         twTimer = setTimeout(startTypewriter, 4500);
         // Scroll hint: cancel pending timer, schedule for content-ready + 3s
@@ -889,8 +905,8 @@ window.addEventListener('beforeunload', function () {
   };
 
   // Direct activation — called by click-to-skip, bypasses scroll delay
-  window._activateProjectsDirect = function (delay) {
-    activate(delay);
+  window._activateProjectsDirect = function (delay, onActive) {
+    activate(delay, onActive);
   };
 })();
 
@@ -933,6 +949,24 @@ window.addEventListener('beforeunload', function () {
 
   wrap.addEventListener('mouseleave', () => {
     wrap.classList.remove('projects-title-hovered');
+    window._stardropBoost = 1;
+  });
+})();
+
+/* ============================================
+   FCA TITLE HOVER
+   ============================================ */
+(function () {
+  const wrap = document.querySelector('.pp-title-wrap');
+  if (!wrap) return;
+
+  wrap.addEventListener('mouseenter', () => {
+    wrap.classList.add('pp-title-hovered');
+    window._stardropBoost = 7;
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    wrap.classList.remove('pp-title-hovered');
     window._stardropBoost = 1;
   });
 })();
@@ -1148,25 +1182,70 @@ window.addEventListener('beforeunload', function () {
    FACULTY OF CONTEMPORARY ARTS PAGE
    ============================================ */
 (function () {
-  var item1   = document.getElementById('rmItem1');
-  var fcaPage = document.getElementById('fcaPage');
-  var fcaBack = document.getElementById('fcaBack');
+  var item1    = document.getElementById('rmItem1');
+  var fcaPage  = document.getElementById('fcaPage');
+  var fcaBack  = document.getElementById('fcaBack');
   var projects = document.getElementById('projectsSection');
   if (!item1 || !fcaPage) return;
+
+  var twWrap  = document.getElementById('fcaTypewriter');
+  var twLine1 = document.getElementById('fcaTwLine1');
+  var twLine2 = document.getElementById('fcaTwLine2');
+
+  var TW_TEXT1 = "For the past year and a half, I\u2019ve been creating visual solutions for campaigns, social media, billboard displays, and exhibition posters for the Faculty of Contemporary Arts \u2014";
+  var TW_TEXT2 = "shaping each piece to reflect its artistic identity through design, motion, and visual storytelling.";
+  var TW_SPEED = 11;
+
+  var twTimer     = null;
+  var twCharTimer = null;
+
+  function resetTypewriter() {
+    clearTimeout(twTimer);
+    clearTimeout(twCharTimer);
+    if (!twWrap) return;
+    twWrap.classList.remove('tw-visible');
+    if (twLine1) twLine1.textContent = '';
+    if (twLine2) twLine2.textContent = '';
+    var cur = twWrap.querySelector('.tw-cursor');
+    if (cur) cur.remove();
+  }
+
+  function startTypewriter() {
+    if (!twWrap || !twLine1 || !twLine2) return;
+    var cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    twWrap.classList.add('tw-visible');
+    twLine1.appendChild(cursor);
+    var i = 0;
+    function typeChar() {
+      if (i < TW_TEXT1.length) {
+        twLine1.insertBefore(document.createTextNode(TW_TEXT1[i]), cursor);
+      } else if (i === TW_TEXT1.length) {
+        twLine2.appendChild(cursor);
+      } else {
+        var idx = i - TW_TEXT1.length - 1;
+        twLine2.insertBefore(document.createTextNode(TW_TEXT2[idx]), cursor);
+      }
+      i++;
+      if (i < TW_TEXT1.length + 1 + TW_TEXT2.length) {
+        twCharTimer = setTimeout(typeChar, TW_SPEED);
+      }
+    }
+    typeChar();
+  }
 
   function openFCA() {
     window._pageOpen = true;
     fcaPage.classList.add('pp-active');
-    // Softly fade projects behind
     if (projects) projects.style.opacity = '0';
+    startTypewriter();
   }
 
   function closeFCA() {
     window._pageOpen = false;
     fcaPage.classList.remove('pp-active');
     if (projects) projects.style.opacity = '1';
-    // Reset billboard when page closes
-    if (window._resetBillboard1) window._resetBillboard1();
+    resetTypewriter();
   }
 
   item1.addEventListener('click', function () {
@@ -1183,49 +1262,12 @@ window.addEventListener('beforeunload', function () {
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && window._pageOpen) closeFCA();
   });
+
+  // Expose for scroll navigation
+  window._openFCA  = openFCA;
+  window._closeFCA = closeFCA;
 })();
 
-/* ============================================
-   DIGITAL BILLBOARD — FCA
-   ============================================ */
-(function () {
-  var wrap    = document.getElementById('bbWrap1');
-  var overlay = document.getElementById('bbOverlay1');
-  var playBtn = document.getElementById('bbPlayBtn1');
-  var iframe  = document.getElementById('bbIframe1');
-  if (!wrap || !overlay || !playBtn || !iframe) return;
-
-  var loaded = false;
-
-  function loadVideo() {
-    if (loaded) return;
-    loaded = true;
-    iframe.src = iframe.dataset.src;
-    // Small delay so iframe starts loading before hiding overlay
-    setTimeout(function () {
-      overlay.classList.add('bb-hidden');
-    }, 320);
-  }
-
-  // Hover: autoplay muted
-  wrap.addEventListener('mouseenter', loadVideo);
-
-  // Click on play button: same (already loading on hover, this is fallback)
-  playBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    loadVideo();
-  });
-
-  // Reset: called when the project page is closed
-  window._resetBillboard1 = function () {
-    loaded = false;
-    iframe.src = '';
-    overlay.classList.remove('bb-hidden');
-  };
-
-  // Also register the billboard play button for custom cursor hover detection
-  // (handled via generic 'button' selector in cursor code — no extra work needed)
-})();
 
 /* ============================================
    STAGE RESTORE ON REFRESH
@@ -1242,7 +1284,11 @@ window.addEventListener('beforeunload', function () {
 
   // For stage 9 (projects roadmap): bypass the 1500ms activation delay
   if (saved >= 9 && window._activateProjectsDirect) {
-    window._activateProjectsDirect(100);
+    var lastPage = sessionStorage.getItem('lastPage');
+    var onActive = (lastPage === 'fca' && window._openFCA)
+      ? function () { window._openFCA(); }
+      : null;
+    window._activateProjectsDirect(100, onActive);
   }
 
   // Re-enable transitions after two frames (elements have snapped into place)
