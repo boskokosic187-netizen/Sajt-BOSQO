@@ -1438,25 +1438,43 @@ body[data-stage="8"] .journey-title-wrap {
 }
 
 /* ============================================
-   ROADMAP CLICKABLE ITEM
+   ROADMAP ITEM HOVER
    ============================================ */
 
-.projects-section.projects-active .roadmap-item-link {
+/* Enable pointer events on all items when active */
+.projects-section.projects-active .roadmap-item {
   pointer-events: auto;
 }
 
-.roadmap-item-link .roadmap-node-wrap,
-.roadmap-item-link .roadmap-label {
-  transition: filter 0.25s ease, color 0.25s ease;
+/* Transitions */
+.roadmap-item {
+  transition: opacity 0.25s ease, filter 0.25s ease;
 }
 
-.roadmap-item-link:hover .roadmap-node-wrap {
-  filter: drop-shadow(0 0 10px rgba(29, 233, 182, 0.7))
-          drop-shadow(0 0 22px rgba(29, 233, 182, 0.3));
+.roadmap-node-wrap {
+  transition: scale 0.25s ease, filter 0.25s ease;
 }
 
-.roadmap-item-link:hover .roadmap-label {
+.roadmap-label {
+  transition: scale 0.25s ease, color 0.25s ease;
+}
+
+/* Hovered item — scale up + outer glow */
+.roadmap-item:hover .roadmap-node-wrap {
+  scale: 1.12;
+  filter: drop-shadow(0 0 14px rgba(29, 233, 182, 0.85))
+          drop-shadow(0 0 30px rgba(29, 233, 182, 0.4));
+}
+
+.roadmap-item:hover .roadmap-label {
+  scale: 1.06;
   color: rgba(29, 233, 182, 0.92);
+}
+
+/* Non-hovered items blur when roadmap is hovered */
+.roadmap:hover .roadmap-item:not(:hover) {
+  opacity: 0.3;
+  filter: blur(2px);
 }
 
 /* ============================================
