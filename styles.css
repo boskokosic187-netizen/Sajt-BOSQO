@@ -1159,13 +1159,64 @@ body[data-stage="8"] .journey-title-wrap {
   opacity: 1;
 }
 
-/* Title */
-.projects-title {
+/* Title wrap */
+.projects-title-wrap {
   position: absolute;
   top: 112px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 32px 72px;
+  border-radius: 55px;
+  white-space: nowrap;
+  pointer-events: auto;
+  opacity: 0;
+  transition: box-shadow 0.35s ease;
+}
+
+.projects-section.projects-active .projects-title-wrap {
+  animation: projectsTitleIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+@keyframes projectsTitleIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-22px); filter: blur(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0);     filter: blur(0); }
+}
+
+.projects-title-wrap.projects-title-hovered {
+  box-shadow:
+    0 0 18px rgba(29, 233, 182, 0.45),
+    0 0 55px rgba(29, 233, 182, 0.18);
+}
+
+/* SVG frame */
+.projects-frame {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.projects-rect {
+  fill: none;
+  stroke-width: 1;
+  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5))
+          drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
+}
+
+.projects-title-wrap.projects-title-hovered .projects-rect {
+  animation: projectsRectDraw 1.5s ease-in forwards;
+  filter: drop-shadow(0 0 12px rgba(29, 233, 182, 0.85))
+          drop-shadow(0 0 38px rgba(29, 233, 182, 0.4));
+}
+
+@keyframes projectsRectDraw {
+  from { stroke-dashoffset: 6000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Title */
+.projects-title {
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.6rem, 4.5vw, 4.2rem);
   font-weight: 700;
@@ -1173,16 +1224,6 @@ body[data-stage="8"] .journey-title-wrap {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin: 0;
-  opacity: 0;
-}
-
-.projects-section.projects-active .projects-title {
-  animation: projectsTitleIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-}
-
-@keyframes projectsTitleIn {
-  from { opacity: 0; transform: translateY(-22px); filter: blur(12px); }
-  to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
 }
 
 /* Roadmap container */

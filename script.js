@@ -873,6 +873,24 @@
 })();
 
 /* ============================================
+   PROJECTS ROADMAP TITLE HOVER
+   ============================================ */
+(function () {
+  const wrap = document.querySelector('.projects-title-wrap');
+  if (!wrap) return;
+
+  wrap.addEventListener('mouseenter', () => {
+    wrap.classList.add('projects-title-hovered');
+    window._stardropBoost = 7;
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    wrap.classList.remove('projects-title-hovered');
+    window._stardropBoost = 1;
+  });
+})();
+
+/* ============================================
    JOURNEY TITLE — CLICK TO SKIP TO PROJECTS
    ============================================ */
 (function () {
