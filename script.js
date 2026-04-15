@@ -710,8 +710,7 @@
 
     // Scroll UP while lightbox is open → close lightbox first
     if (window._lbOpen && dir === -1) {
-      if (window._activePage === 'its' && window._closeITSLightbox) window._closeITSLightbox();
-      else if (window._closeLightbox) window._closeLightbox();
+      if (window._closeLightbox) window._closeLightbox();
       return;
     }
 
@@ -1378,7 +1377,6 @@ window.addEventListener('beforeunload', function () {
     itsPage.classList.remove('pp-active');
     if (projects) projects.style.opacity = '1';
     resetTypewriter();
-    if (window._closeITSLightbox) window._closeITSLightbox();
   }
 
   item2.addEventListener('click', function () {
@@ -1404,11 +1402,7 @@ window.addEventListener('beforeunload', function () {
    ITS BILLBOARD VIDEO — HOVER TO PLAY & LIGHTBOX
    ============================================ */
 (function () {
-  var gallery  = document.getElementById('itsGallery');
-  var lightbox = document.getElementById('itsLightbox');
-  var lbIframe = document.getElementById('itsLbIframe');
-  var lbClose  = document.getElementById('itsLbClose');
-  var lbYtLink = document.getElementById('itsLbYtLink');
+  var gallery = document.getElementById('itsGallery');
   if (!gallery) return;
 
   var items = gallery.querySelectorAll('.its-bb-item');
@@ -1456,12 +1450,42 @@ window.addEventListener('beforeunload', function () {
     } catch (ignore) {}
   });
 
+  /* ---- "Hover to play" hint ---- */
+  var hintEl    = document.getElementById('itsHoverHint');
+  var hintTimer = null;
+
+  function scheduleHint() {
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(function () {
+      if (hintEl) hintEl.classList.add('its-hint-visible');
+    }, 3000);
+  }
+
+  function hideHint() {
+    clearTimeout(hintTimer);
+    if (hintEl) hintEl.classList.remove('its-hint-visible');
+  }
+
+  // Start the 3-second timer as soon as the ITS page opens
+  document.getElementById('itsPage') && (function () {
+    var itsPage = document.getElementById('itsPage');
+    var observer = new MutationObserver(function () {
+      if (itsPage.classList.contains('pp-active')) {
+        scheduleHint();
+      } else {
+        hideHint();
+      }
+    });
+    observer.observe(itsPage, { attributes: true, attributeFilter: ['class'] });
+  })();
+
   items.forEach(function (item) {
     var ytId   = item.dataset.yt;
     var screen = item.querySelector('.its-bb-screen');
     if (!ytId || !screen) return;
 
     item.addEventListener('mouseenter', function () {
+      hideHint();
       if (item._ytFailed) return;
 
       if (!item._ytIframe) {
@@ -1498,44 +1522,17 @@ window.addEventListener('beforeunload', function () {
     });
 
     item.addEventListener('mouseleave', function () {
+      // Destroy iframe completely so next hover always restarts from the beginning
+      clearTimeout(item._showTimer);
       if (item._ytIframe) {
-        item._ytIframe.classList.remove('its-bb-visible');
-        item.classList.remove('its-bb-playing');
-        try {
-          item._ytIframe.contentWindow.postMessage(
-            JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'
-          );
-        } catch (ignore) {}
+        item._ytIframe.remove();
+        item._ytIframe = null;
       }
+      item.classList.remove('its-bb-playing');
+      scheduleHint();
     });
-
-    item.addEventListener('click', function () { openLightbox(ytId); });
   });
 
-  /* ---- Lightbox ---- */
-  function openLightbox(ytId) {
-    if (!lightbox || !lbIframe) return;
-    lbIframe.src = 'https://www.youtube.com/embed/' + ytId +
-      '?autoplay=1&controls=1&rel=0' + originParam;
-    if (lbYtLink) lbYtLink.href = 'https://youtu.be/' + ytId;
-    lightbox.classList.add('its-lb-active');
-    window._lbOpen = true;
-  }
-
-  function closeLightbox() {
-    if (!lightbox) return;
-    lightbox.classList.remove('its-lb-active');
-    if (lbIframe) lbIframe.src = '';
-    window._lbOpen = false;
-  }
-
-  if (lbClose) lbClose.addEventListener('click', closeLightbox);
-  if (lightbox) {
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-  }
-  window._closeITSLightbox = closeLightbox;
 })();
 
 /* ============================================
