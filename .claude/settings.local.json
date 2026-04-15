@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"from PIL import Image; img = Image.open\\('c:/Users/Gigabite/OneDrive/Desktop/Sajt BOSQO/assets/FCA/1/Work 1.png'\\); print\\(img.size, img.mode\\)\")",
+      "Bash(powershell -command 'Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('\\\\''c:\\\\Users\\\\Gigabite\\\\OneDrive\\\\Desktop\\\\Sajt BOSQO\\\\assets\\\\FCA\\\\1\\\\Work 1.png'\\\\''\\); Write-Host $img.Width $img.Height; $img.Dispose\\(\\)')",
+      "Bash(powershell -command 'Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('\\\\''c:\\\\Users\\\\Gigabite\\\\OneDrive\\\\Desktop\\\\Sajt BOSQO\\\\assets\\\\FCA\\\\1\\\\Work 6.png'\\\\''\\); Write-Host $img.Width $img.Height; $img.Dispose\\(\\)')",
+      "Bash(powershell -command 'Add-Type -AssemblyName System.Drawing; foreach \\($f in @\\('\\\\''Work 3.png'\\\\'','\\\\''Work 5.png'\\\\''\\)\\) { $img = [System.Drawing.Image]::FromFile\\('\\\\''c:\\\\Users\\\\Gigabite\\\\OneDrive\\\\Desktop\\\\Sajt BOSQO\\\\assets\\\\FCA\\\\1\\\\'\\\\'' + $f\\); Write-Host $f $img.Width $img.Height; $img.Dispose\\(\\) }')",
+      "Bash(powershell -command 'Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('\\\\''c:\\\\Users\\\\Gigabite\\\\OneDrive\\\\Desktop\\\\Sajt BOSQO\\\\assets\\\\FCA\\\\1\\\\Work 2.png'\\\\''\\); Write-Host $img.Width $img.Height; $img.Dispose\\(\\)')",
+      "Bash(powershell -command 'Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('\\\\''c:\\\\Users\\\\Gigabite\\\\OneDrive\\\\Desktop\\\\Sajt BOSQO\\\\assets\\\\FCA\\\\1\\\\Work 10.png'\\\\''\\); Write-Host $img.Width $img.Height; $img.Dispose\\(\\)')"
+    ]
+  }
+}
