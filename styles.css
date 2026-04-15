@@ -1654,11 +1654,11 @@ body[data-stage="8"] .journey-title-wrap {
     "g1 g6 g6 g8 g9 g10";
 }
 
-/* Gallery 2 — all landscape/square (max 2:1), no portrait spanning rows */
+/* Gallery 2 — all landscape images in landscape cells, portraits in portrait cells */
 .fca-gallery-2 {
   grid-template-areas:
-    "h1 h2 h2 h3 h3 h4"
-    "h5 h6 h7 h7 h8 h9";
+    "h1 h1 h2 h3 h4 h5"
+    "h6 h7 h7 h8 h9 h9";
   opacity: 0;
   pointer-events: none;
 }
@@ -1700,6 +1700,37 @@ body[data-stage="8"] .journey-title-wrap {
 .fca-gallery-2 .fca-work-item:nth-child(7) { grid-area: h7; }
 .fca-gallery-2 .fca-work-item:nth-child(8) { grid-area: h8; }
 .fca-gallery-2 .fca-work-item:nth-child(9) { grid-area: h9; }
+
+/* Gallery 2 — focal point adjustments */
+/* h6: "Dođite" (col1 row2) — person is on the right side of the landscape image */
+.fca-gallery-2 .fca-work-item:nth-child(6) .fca-work-img-wrap img { object-position: right center; }
+/* h9: Santa (col5+6 row2) — Santa's face/illustration is on the left side */
+.fca-gallery-2 .fca-work-item:nth-child(9) .fca-work-img-wrap img { object-position: left center; }
+
+/* ---- Gallery 2 — orientation-matched corner brackets ---- */
+/* Landscape cells (h1, h6, h7, h9): wide horizontal brackets */
+.fca-gallery-2 .fca-work-item:nth-child(1)::before,
+.fca-gallery-2 .fca-work-item:nth-child(1)::after,
+.fca-gallery-2 .fca-work-item:nth-child(6)::before,
+.fca-gallery-2 .fca-work-item:nth-child(6)::after,
+.fca-gallery-2 .fca-work-item:nth-child(7)::before,
+.fca-gallery-2 .fca-work-item:nth-child(7)::after,
+.fca-gallery-2 .fca-work-item:nth-child(9)::before,
+.fca-gallery-2 .fca-work-item:nth-child(9)::after {
+  width: 20px;
+  height: 9px;
+}
+
+/* Portrait cells (h2, h3, h4): narrow vertical brackets */
+.fca-gallery-2 .fca-work-item:nth-child(2)::before,
+.fca-gallery-2 .fca-work-item:nth-child(2)::after,
+.fca-gallery-2 .fca-work-item:nth-child(3)::before,
+.fca-gallery-2 .fca-work-item:nth-child(3)::after,
+.fca-gallery-2 .fca-work-item:nth-child(4)::before,
+.fca-gallery-2 .fca-work-item:nth-child(4)::after {
+  width: 9px;
+  height: 20px;
+}
 
 /* Per-item grid placement — Gallery 3 */
 .fca-gallery-3 .fca-work-item:nth-child(1) { grid-area: j1; }
