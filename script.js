@@ -714,11 +714,25 @@
       return;
     }
 
-    // Scroll UP while a project page is open → close it and return to roadmap
+    // Scroll UP while a project page is open
     if (window._pageOpen && dir === -1) {
-      if (window._closeFCA) window._closeFCA();
+      if (window._galleryTransitioning) return; // don't interrupt transitions
+      if (window._galleryPage > 0) {
+        // On gallery 2 or 3 → go back one step
+        if (window._fcaPrevGallery) window._fcaPrevGallery();
+      } else {
+        // On gallery 1 → close FCA and return to roadmap
+        if (window._closeFCA) window._closeFCA();
+      }
       return;
     }
+
+    // Scroll DOWN while FCA is open and more galleries remain → advance
+    if (window._pageOpen && dir === 1 && window._galleryPage < (window._galleryTotal || 1) - 1) {
+      if (!window._galleryTransitioning && window._fcaNextGallery) window._fcaNextGallery();
+      return;
+    }
+
     if (window._pageOpen) return; // block all other scroll when a project page is open
 
     // Scroll DOWN on projects roadmap after all items have appeared → open FCA
@@ -1253,6 +1267,7 @@ window.addEventListener('beforeunload', function () {
     if (projects) projects.style.opacity = '1';
     resetTypewriter();
     if (window._closeLightbox) window._closeLightbox();
+    if (window._resetGalleryPage) window._resetGalleryPage();
   }
 
   item1.addEventListener('click', function () {
@@ -1280,11 +1295,15 @@ window.addEventListener('beforeunload', function () {
    ============================================ */
 (function () {
   var gallery  = document.getElementById('fcaGallery');
+  var gallery2 = document.getElementById('fcaGallery2');
+  var gallery3 = document.getElementById('fcaGallery3');
   var lightbox = document.getElementById('fcaLightbox');
   var lbImg    = document.getElementById('fcaLbImg');
   var lbCap    = document.getElementById('fcaLbCaption');
   var lbClose  = document.getElementById('fcaLbClose');
   if (!gallery || !lightbox || !lbImg) return;
+
+  var galleries = [gallery, gallery2, gallery3].filter(Boolean);
 
   function openLightbox(item) {
     var img = item.querySelector('.fca-work-img-wrap img');
@@ -1294,22 +1313,25 @@ window.addEventListener('beforeunload', function () {
     lbImg.alt = img.alt;
     if (lbCap && cap) lbCap.textContent = cap.textContent;
     lightbox.classList.add('lb-active');
-    gallery.classList.add('gallery-lb-open');
+    galleries.forEach(function (g) { g.classList.add('gallery-lb-open'); });
     window._lbOpen = true;
   }
 
   function closeLightbox() {
     if (!window._lbOpen) return;
     lightbox.classList.remove('lb-active');
-    gallery.classList.remove('gallery-lb-open');
+    galleries.forEach(function (g) { g.classList.remove('gallery-lb-open'); });
     window._lbOpen = false;
     setTimeout(function () { lbImg.src = ''; }, 420);
   }
 
-  gallery.addEventListener('click', function (e) {
-    var item = e.target.closest('.fca-work-item');
-    if (!item) return;
-    openLightbox(item);
+  // Handle clicks on both gallery 1 and gallery 2
+  galleries.forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var item = e.target.closest('.fca-work-item');
+      if (!item) return;
+      openLightbox(item);
+    });
   });
 
   lbClose.addEventListener('click', closeLightbox);
@@ -1330,6 +1352,143 @@ window.addEventListener('beforeunload', function () {
   window._closeLightbox = closeLightbox;
 })();
 
+
+/* ============================================
+   FCA GALLERY SWITCHING
+   ============================================ */
+(function () {
+  var galleries = [
+    document.getElementById('fcaGallery'),
+    document.getElementById('fcaGallery2'),
+    document.getElementById('fcaGallery3')
+  ];
+  var dots = document.querySelectorAll('.fca-dot');
+  var TOTAL = galleries.length;
+
+  if (!galleries[0]) return;
+
+  window._galleryPage = 0;
+  window._galleryTotal = TOTAL;
+  window._galleryTransitioning = false;
+
+  function updateDots(page) {
+    dots.forEach(function (dot, i) {
+      dot.classList.toggle('fca-dot--active', i === page);
+    });
+  }
+
+  // Reset a non-first gallery back to hidden state + clear item animations
+  function resetGallery(g) {
+    g.classList.remove('gallery-active', 'gallery-exiting');
+    g.querySelectorAll('.fca-work-item').forEach(function (el) {
+      el.style.animation = 'none';
+      void el.offsetWidth; // force reflow so animation replays on next activation
+      el.style.animation = '';
+    });
+  }
+
+  window._resetGalleryPage = function () {
+    window._galleryPage = 0;
+    window._galleryTransitioning = false;
+    // Reset all non-first galleries
+    for (var i = 1; i < TOTAL; i++) {
+      if (galleries[i]) resetGallery(galleries[i]);
+    }
+    // Restore gallery 1 to normal visible state
+    galleries[0].classList.remove('gallery-exiting');
+    galleries[0].style.opacity = '';
+    galleries[0].style.transition = '';
+    galleries[0].style.pointerEvents = '';
+    updateDots(0);
+  };
+
+  window._fcaNextGallery = function () {
+    var page = window._galleryPage;
+    if (page >= TOTAL - 1 || window._galleryTransitioning) return;
+    window._galleryTransitioning = true;
+
+    var oldG = galleries[page];
+    var newPage = page + 1;
+    var newG = galleries[newPage];
+
+    // Exit old gallery
+    oldG.classList.add('gallery-exiting');
+
+    setTimeout(function () {
+      oldG.classList.remove('gallery-exiting');
+
+      if (page === 0) {
+        // Gallery 1: hide via inline style (pp-active CSS would show it otherwise)
+        oldG.style.opacity = '0';
+        oldG.style.pointerEvents = 'none';
+      } else {
+        // Other galleries: remove gallery-active so CSS hides them
+        resetGallery(oldG);
+      }
+
+      // Show new gallery
+      newG.classList.add('gallery-active');
+      window._galleryPage = newPage;
+      updateDots(newPage);
+      window._galleryTransitioning = false;
+    }, 560);
+  };
+
+  window._fcaPrevGallery = function () {
+    var page = window._galleryPage;
+    if (page <= 0 || window._galleryTransitioning) return;
+    window._galleryTransitioning = true;
+
+    var oldG = galleries[page];
+    var newPage = page - 1;
+    var newG = galleries[newPage];
+
+    // Exit current gallery
+    oldG.classList.add('gallery-exiting');
+
+    setTimeout(function () {
+      resetGallery(oldG);
+
+      if (newPage === 0) {
+        // Re-run fcaItemFromDist on gallery 1 items.
+        // They still have the animation set via pp-active CSS, but it already
+        // completed. To restart it: set animation:none → force reflow → clear
+        // inline style. The browser sees the property change from none → the
+        // CSS value and starts the animation fresh (with the correct stagger delays).
+        var items = newG.querySelectorAll('.fca-work-item');
+        items.forEach(function (el) { el.style.animation = 'none'; });
+        void newG.offsetWidth; // flush styles so browser registers animation:none
+        items.forEach(function (el) { el.style.animation = ''; }); // CSS takes over → restarts
+        newG.style.pointerEvents = '';
+        newG.style.opacity = ''; // unhide container (fill-mode:backwards keeps items at opacity:0 during delays)
+        window._galleryPage = newPage;
+        updateDots(newPage);
+        window._galleryTransitioning = false;
+      } else {
+        // Returning to a middle gallery — re-activate it
+        newG.classList.add('gallery-active');
+        window._galleryPage = newPage;
+        updateDots(newPage);
+        window._galleryTransitioning = false;
+      }
+    }, 560);
+  };
+
+  // Dot click navigation
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () {
+      if (window._galleryTransitioning) return;
+      var page = window._galleryPage;
+      if (i === page) return;
+      if (i > page) {
+        // Advance forward one step at a time
+        window._fcaNextGallery();
+      } else {
+        window._fcaPrevGallery();
+      }
+    });
+  });
+})();
 
 /* ============================================
    STAGE RESTORE ON REFRESH

@@ -1624,29 +1624,93 @@ body[data-stage="8"] .journey-title-wrap {
    FCA GALLERY
    ============================================ */
 
-.fca-gallery {
-  display: grid;
-  grid-template-columns: 6fr 4fr 4fr 4fr 3fr 25vh;
-  grid-template-rows: 25vh 25vh;
-  grid-template-areas:
-    "g1 g2 g2 g3 g4 g5"
-    "g1 g6 g6 g8 g9 g10";
-  gap: 15px;
+/* Gallery wrap — contains both gallery sets stacked at the same position */
+.fca-gallery-wrap {
+  position: relative;
   width: min(95vw, 1480px);
+  height: calc(50vh + 15px);
   margin-top: 96px;
   margin-bottom: 20px;
 }
 
-/* Per-item grid placement */
-.fca-work-item:nth-child(1) { grid-area: g1;  }
-.fca-work-item:nth-child(2) { grid-area: g2;  }
-.fca-work-item:nth-child(3) { grid-area: g3;  }
-.fca-work-item:nth-child(4) { grid-area: g4;  }
-.fca-work-item:nth-child(5) { grid-area: g5;  }
-.fca-work-item:nth-child(6) { grid-area: g6;  }
-.fca-work-item:nth-child(7) { grid-area: g8;  }
-.fca-work-item:nth-child(8) { grid-area: g9;  }
-.fca-work-item:nth-child(9) { grid-area: g10; }
+/* Shared base grid for all galleries */
+.fca-gallery,
+.fca-gallery-2,
+.fca-gallery-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 6fr 4fr 4fr 4fr 3fr 25vh;
+  grid-template-rows: 25vh 25vh;
+  gap: 15px;
+}
+
+/* Gallery 1 — tall portrait on the left */
+.fca-gallery {
+  grid-template-areas:
+    "g1 g2 g2 g3 g4 g5"
+    "g1 g6 g6 g8 g9 g10";
+}
+
+/* Gallery 2 — all landscape/square (max 2:1), no portrait spanning rows */
+.fca-gallery-2 {
+  grid-template-areas:
+    "h1 h2 h2 h3 h3 h4"
+    "h5 h6 h7 h7 h8 h9";
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Gallery 3 — wide landscape top-left, tall portrait on the right */
+.fca-gallery-3 {
+  grid-template-areas:
+    "j1 j1 j2 j3 j4 j5"
+    "j6 j7 j7 j8 j9 j5";
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Galleries 2 & 3 become visible and interactive when active */
+.fca-gallery-2.gallery-active,
+.fca-gallery-3.gallery-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Per-item grid placement — Gallery 1 */
+.fca-gallery .fca-work-item:nth-child(1) { grid-area: g1;  }
+.fca-gallery .fca-work-item:nth-child(2) { grid-area: g2;  }
+.fca-gallery .fca-work-item:nth-child(3) { grid-area: g3;  }
+.fca-gallery .fca-work-item:nth-child(4) { grid-area: g4;  }
+.fca-gallery .fca-work-item:nth-child(5) { grid-area: g5;  }
+.fca-gallery .fca-work-item:nth-child(6) { grid-area: g6;  }
+.fca-gallery .fca-work-item:nth-child(7) { grid-area: g8;  }
+.fca-gallery .fca-work-item:nth-child(8) { grid-area: g9;  }
+.fca-gallery .fca-work-item:nth-child(9) { grid-area: g10; }
+
+/* Per-item grid placement — Gallery 2 */
+.fca-gallery-2 .fca-work-item:nth-child(1) { grid-area: h1; }
+.fca-gallery-2 .fca-work-item:nth-child(2) { grid-area: h2; }
+.fca-gallery-2 .fca-work-item:nth-child(3) { grid-area: h3; }
+.fca-gallery-2 .fca-work-item:nth-child(4) { grid-area: h4; }
+.fca-gallery-2 .fca-work-item:nth-child(5) { grid-area: h5; }
+.fca-gallery-2 .fca-work-item:nth-child(6) { grid-area: h6; }
+.fca-gallery-2 .fca-work-item:nth-child(7) { grid-area: h7; }
+.fca-gallery-2 .fca-work-item:nth-child(8) { grid-area: h8; }
+.fca-gallery-2 .fca-work-item:nth-child(9) { grid-area: h9; }
+
+/* Per-item grid placement — Gallery 3 */
+.fca-gallery-3 .fca-work-item:nth-child(1) { grid-area: j1; }
+.fca-gallery-3 .fca-work-item:nth-child(2) { grid-area: j2; }
+.fca-gallery-3 .fca-work-item:nth-child(3) { grid-area: j3; }
+.fca-gallery-3 .fca-work-item:nth-child(4) { grid-area: j4; }
+.fca-gallery-3 .fca-work-item:nth-child(5) { grid-area: j5; }
+.fca-gallery-3 .fca-work-item:nth-child(6) { grid-area: j6; }
+.fca-gallery-3 .fca-work-item:nth-child(7) { grid-area: j7; }
+.fca-gallery-3 .fca-work-item:nth-child(8) { grid-area: j8; }
+.fca-gallery-3 .fca-work-item:nth-child(9) { grid-area: j9; }
 
 .fca-work-item {
   position: relative;
@@ -1672,8 +1736,10 @@ body[data-stage="8"] .journey-title-wrap {
   overflow: hidden;
 }
 
-/* entry animation on the whole item rectangle */
-.project-page.pp-active .fca-work-item {
+/* ---- GALLERY 1 ENTRY ANIMATION ---- */
+
+/* Entry animation on the whole item rectangle — Gallery 1 only */
+.project-page.pp-active .fca-gallery .fca-work-item {
   opacity: 1;
   animation: fcaItemFromDist 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
@@ -1685,15 +1751,15 @@ body[data-stage="8"] .journey-title-wrap {
 */
 
 /* pseudo-random stagger — last starts at 1.75s + 0.75s duration = 2.5s total */
-.project-page.pp-active .fca-work-item:nth-child(1) { animation-delay: 0.00s; } /* g1  */
-.project-page.pp-active .fca-work-item:nth-child(2) { animation-delay: 0.45s; } /* g2  */
-.project-page.pp-active .fca-work-item:nth-child(3) { animation-delay: 1.10s; } /* g3  */
-.project-page.pp-active .fca-work-item:nth-child(4) { animation-delay: 0.70s; } /* g4  */
-.project-page.pp-active .fca-work-item:nth-child(5) { animation-delay: 1.50s; } /* g5  */
-.project-page.pp-active .fca-work-item:nth-child(6) { animation-delay: 0.25s; } /* g6  */
-.project-page.pp-active .fca-work-item:nth-child(7) { animation-delay: 0.55s; } /* g8  */
-.project-page.pp-active .fca-work-item:nth-child(8) { animation-delay: 1.30s; } /* g9  */
-.project-page.pp-active .fca-work-item:nth-child(9) { animation-delay: 0.15s; } /* g10 */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(1) { animation-delay: 0.00s; } /* g1  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(2) { animation-delay: 0.45s; } /* g2  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(3) { animation-delay: 1.10s; } /* g3  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(4) { animation-delay: 0.70s; } /* g4  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(5) { animation-delay: 1.50s; } /* g5  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(6) { animation-delay: 0.25s; } /* g6  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(7) { animation-delay: 0.55s; } /* g8  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(8) { animation-delay: 1.30s; } /* g9  */
+.project-page.pp-active .fca-gallery .fca-work-item:nth-child(9) { animation-delay: 0.15s; } /* g10 */
 
 @keyframes fcaItemFromDist {
   from {
@@ -1711,6 +1777,99 @@ body[data-stage="8"] .journey-title-wrap {
     filter: blur(0);
   }
 }
+
+/* ---- GALLERY 2 ENTRY ANIMATION ---- */
+
+.fca-gallery-2.gallery-active .fca-work-item {
+  opacity: 1;
+  animation: fcaItemFromDist 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Different pseudo-random stagger order for gallery 2 */
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(1) { animation-delay: 0.20s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(2) { animation-delay: 0.80s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(3) { animation-delay: 1.35s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(4) { animation-delay: 0.50s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(5) { animation-delay: 0.05s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(6) { animation-delay: 1.00s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(7) { animation-delay: 1.60s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(8) { animation-delay: 0.35s; }
+.fca-gallery-2.gallery-active .fca-work-item:nth-child(9) { animation-delay: 1.15s; }
+
+/* ---- GALLERY 3 ENTRY ANIMATION ---- */
+
+.fca-gallery-3.gallery-active .fca-work-item {
+  opacity: 1;
+  animation: fcaItemFromDist 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Different pseudo-random stagger order for gallery 3 */
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(1) { animation-delay: 0.60s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(2) { animation-delay: 0.10s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(3) { animation-delay: 1.25s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(4) { animation-delay: 0.75s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(5) { animation-delay: 0.40s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(6) { animation-delay: 1.55s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(7) { animation-delay: 0.90s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(8) { animation-delay: 0.25s; }
+.fca-gallery-3.gallery-active .fca-work-item:nth-child(9) { animation-delay: 1.10s; }
+
+/* ---- GALLERY EXIT ANIMATION (fly toward screen) ---- */
+
+.fca-gallery.gallery-exiting .fca-work-item,
+.fca-gallery-2.gallery-exiting .fca-work-item,
+.fca-gallery-3.gallery-exiting .fca-work-item {
+  animation: fcaItemToScreen 0.48s cubic-bezier(0.55, 0, 0.85, 0.4) forwards !important;
+}
+
+/* Quick stagger so items don't all vanish at once */
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(1),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(1),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(1) { animation-delay: 0.00s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(2),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(2),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(2) { animation-delay: 0.04s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(3),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(3),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(3) { animation-delay: 0.08s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(4),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(4),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(4) { animation-delay: 0.02s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(5),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(5),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(5) { animation-delay: 0.06s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(6),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(6),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(6) { animation-delay: 0.03s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(7),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(7),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(7) { animation-delay: 0.07s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(8),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(8),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(8) { animation-delay: 0.05s !important; }
+.fca-gallery.gallery-exiting .fca-work-item:nth-child(9),
+.fca-gallery-2.gallery-exiting .fca-work-item:nth-child(9),
+.fca-gallery-3.gallery-exiting .fca-work-item:nth-child(9) { animation-delay: 0.01s !important; }
+
+@keyframes fcaItemToScreen {
+  from {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  55% {
+    opacity: 0.65;
+    filter: blur(6px);
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+    filter: blur(24px);
+  }
+}
+
+/* Gallery 1 re-entry is handled via container opacity transition in JS,
+   not via item-level animation — avoids re-triggering fcaItemFromDist. */
 
 /* futuristic corner brackets */
 .fca-work-item::before,
@@ -1780,39 +1939,94 @@ body[data-stage="8"] .journey-title-wrap {
 /* ---- HOVER STATES ---- */
 
 /* hovered item */
-.fca-gallery:hover .fca-work-item:hover {
+.fca-gallery:hover .fca-work-item:hover,
+.fca-gallery-2:hover .fca-work-item:hover,
+.fca-gallery-3:hover .fca-work-item:hover {
   scale: 1.07;
   z-index: 10;
   border-color: rgba(29, 233, 182, 0.65);
 }
 
 .fca-gallery:hover .fca-work-item:hover::before,
-.fca-gallery:hover .fca-work-item:hover::after {
+.fca-gallery:hover .fca-work-item:hover::after,
+.fca-gallery-2:hover .fca-work-item:hover::before,
+.fca-gallery-2:hover .fca-work-item:hover::after,
+.fca-gallery-3:hover .fca-work-item:hover::before,
+.fca-gallery-3:hover .fca-work-item:hover::after {
   width: 22px;
   height: 22px;
   border-color: rgba(29, 233, 182, 0.9);
 }
 
-.fca-gallery:hover .fca-work-item:hover .fca-work-img-wrap img {
+.fca-gallery:hover .fca-work-item:hover .fca-work-img-wrap img,
+.fca-gallery-2:hover .fca-work-item:hover .fca-work-img-wrap img,
+.fca-gallery-3:hover .fca-work-item:hover .fca-work-img-wrap img {
   transform: scale(1.45);
   filter: brightness(1) saturate(1.1);
 }
 
-.fca-gallery:hover .fca-work-item:hover .fca-work-caption {
+.fca-gallery:hover .fca-work-item:hover .fca-work-caption,
+.fca-gallery-2:hover .fca-work-item:hover .fca-work-caption,
+.fca-gallery-3:hover .fca-work-item:hover .fca-work-caption {
   color: rgba(29, 233, 182, 0.9);
 }
 
 /* non-hovered siblings */
-.fca-gallery:hover .fca-work-item:not(:hover) {
+.fca-gallery:hover .fca-work-item:not(:hover),
+.fca-gallery-2:hover .fca-work-item:not(:hover),
+.fca-gallery-3:hover .fca-work-item:not(:hover) {
   opacity: 0.28;
   filter: blur(1.5px);
 }
 
 /* Gallery fades out when lightbox is open */
-.fca-gallery.gallery-lb-open {
+.fca-gallery.gallery-lb-open,
+.fca-gallery-2.gallery-lb-open,
+.fca-gallery-3.gallery-lb-open {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
+}
+
+/* ============================================
+   GALLERY PAGINATION DOTS
+   ============================================ */
+
+.fca-gallery-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-page.pp-active .fca-gallery-dots {
+  opacity: 1;
+}
+
+.fca-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(29, 233, 182, 0.18);
+  border: 1px solid rgba(29, 233, 182, 0.3);
+  cursor: pointer;
+  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease,
+              transform 0.35s ease;
+}
+
+.fca-dot:hover {
+  background: rgba(29, 233, 182, 0.35);
+  border-color: rgba(29, 233, 182, 0.55);
+}
+
+.fca-dot.fca-dot--active {
+  background: rgba(29, 233, 182, 0.82);
+  border-color: rgba(29, 233, 182, 0.9);
+  box-shadow: 0 0 8px rgba(29, 233, 182, 0.5), 0 0 18px rgba(29, 233, 182, 0.2);
+  transform: scale(1.25);
 }
 
 /* ============================================
