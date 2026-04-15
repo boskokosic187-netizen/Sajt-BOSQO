@@ -1743,6 +1743,41 @@ body[data-stage="8"] .journey-title-wrap {
 .fca-gallery-3 .fca-work-item:nth-child(8) { grid-area: j8; }
 .fca-gallery-3 .fca-work-item:nth-child(9) { grid-area: j9; }
 
+/* Gallery 3 — focal point adjustments */
+/* j3: Prolećni Predupisni Rok (portrait in square cell) — face in upper half */
+.fca-gallery-3 .fca-work-item:nth-child(3) .fca-work-img-wrap img { object-position: center top; }
+/* j6: Second Chance (1.91:1 in 1.5:1 cell) — woman + text on left side */
+.fca-gallery-3 .fca-work-item:nth-child(6) .fca-work-img-wrap img { object-position: left center; }
+/* j8: Još 5 Mesta (portrait in square cell) — VR element in upper half */
+.fca-gallery-3 .fca-work-item:nth-child(8) .fca-work-img-wrap img { object-position: center top; }
+
+/* ---- Gallery 3 — orientation-matched corner brackets ---- */
+/* Landscape cells (j1, j6, j7): wide horizontal brackets */
+.fca-gallery-3 .fca-work-item:nth-child(1)::before,
+.fca-gallery-3 .fca-work-item:nth-child(1)::after,
+.fca-gallery-3 .fca-work-item:nth-child(6)::before,
+.fca-gallery-3 .fca-work-item:nth-child(6)::after,
+.fca-gallery-3 .fca-work-item:nth-child(7)::before,
+.fca-gallery-3 .fca-work-item:nth-child(7)::after {
+  width: 20px;
+  height: 9px;
+}
+
+/* Portrait cells (j3, j4, j5, j8, j9): narrow vertical brackets */
+.fca-gallery-3 .fca-work-item:nth-child(3)::before,
+.fca-gallery-3 .fca-work-item:nth-child(3)::after,
+.fca-gallery-3 .fca-work-item:nth-child(4)::before,
+.fca-gallery-3 .fca-work-item:nth-child(4)::after,
+.fca-gallery-3 .fca-work-item:nth-child(5)::before,
+.fca-gallery-3 .fca-work-item:nth-child(5)::after,
+.fca-gallery-3 .fca-work-item:nth-child(8)::before,
+.fca-gallery-3 .fca-work-item:nth-child(8)::after,
+.fca-gallery-3 .fca-work-item:nth-child(9)::before,
+.fca-gallery-3 .fca-work-item:nth-child(9)::after {
+  width: 9px;
+  height: 20px;
+}
+
 .fca-work-item {
   position: relative;
   display: flex;
