@@ -11,7 +11,8 @@
       "Bash(powershell -command 'Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('\\\\''c:\\\\Users\\\\Gigabite\\\\OneDrive\\\\Desktop\\\\Sajt BOSQO\\\\assets\\\\FCA\\\\1\\\\Work 8.png'\\\\''\\); Write-Host $img.Width $img.Height; $img.Dispose\\(\\)')",
       "Bash(python3 -c ' *)",
       "Bash(python -c ' *)",
-      "Bash(powershell -Command ' *)"
+      "Bash(powershell -Command ' *)",
+      "WebFetch(domain:img.youtube.com)"
     ]
   }
 }

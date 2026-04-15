@@ -708,9 +708,10 @@
   function step(dir) {
     if (!scrollEnabled) return;   // block scroll until page animations complete
 
-    // Scroll UP while lightbox is open → close lightbox first (not FCA)
+    // Scroll UP while lightbox is open → close lightbox first
     if (window._lbOpen && dir === -1) {
-      if (window._closeLightbox) window._closeLightbox();
+      if (window._activePage === 'its' && window._closeITSLightbox) window._closeITSLightbox();
+      else if (window._closeLightbox) window._closeLightbox();
       return;
     }
 
@@ -1377,6 +1378,7 @@ window.addEventListener('beforeunload', function () {
     itsPage.classList.remove('pp-active');
     if (projects) projects.style.opacity = '1';
     resetTypewriter();
+    if (window._closeITSLightbox) window._closeITSLightbox();
   }
 
   item2.addEventListener('click', function () {
@@ -1396,6 +1398,144 @@ window.addEventListener('beforeunload', function () {
   // Expose for potential scroll navigation
   window._openITS  = openITS;
   window._closeITS = closeITS;
+})();
+
+/* ============================================
+   ITS BILLBOARD VIDEO — HOVER TO PLAY & LIGHTBOX
+   ============================================ */
+(function () {
+  var gallery  = document.getElementById('itsGallery');
+  var lightbox = document.getElementById('itsLightbox');
+  var lbIframe = document.getElementById('itsLbIframe');
+  var lbClose  = document.getElementById('itsLbClose');
+  var lbYtLink = document.getElementById('itsLbYtLink');
+  if (!gallery) return;
+
+  var items = gallery.querySelectorAll('.its-bb-item');
+
+  // origin param helps YouTube authorise the embed
+  var originParam = (location.origin && location.origin !== 'null')
+    ? '&origin=' + encodeURIComponent(location.origin) : '';
+
+  /* ---- Global postMessage listener ----
+     Iframe stays opacity:0 until we get playerState=1 (PLAYING).
+     Any error fires BEFORE YouTube renders its error UI, so we
+     silently remove the iframe — the thumbnail is never obscured. */
+  window.addEventListener('message', function (e) {
+    try {
+      var raw  = e.data;
+      var data = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (!data || !data.event) return;
+
+      items.forEach(function (item) {
+        if (!item._ytIframe || item._ytIframe.contentWindow !== e.source) return;
+
+        var ev   = data.event;
+        var info = data.info;
+
+        // Error (101 / 150 / 153 / …) → remove silently
+        if (ev === 'onError' || ev === 'error') {
+          clearTimeout(item._showTimer);
+          item._ytIframe.remove();
+          item._ytIframe = null;
+          item._ytFailed = true;
+          item.classList.add('its-bb-failed');
+          item.classList.remove('its-bb-playing');
+          return;
+        }
+
+        // Player state PLAYING (1) → now safe to reveal
+        var playing = (ev === 'onStateChange' && info === 1) ||
+                      (ev === 'infoDelivery'  && info && info.playerState === 1);
+        if (playing) {
+          clearTimeout(item._showTimer);
+          item._ytIframe.classList.add('its-bb-visible');
+          item.classList.add('its-bb-playing');
+        }
+      });
+    } catch (ignore) {}
+  });
+
+  items.forEach(function (item) {
+    var ytId   = item.dataset.yt;
+    var screen = item.querySelector('.its-bb-screen');
+    if (!ytId || !screen) return;
+
+    item.addEventListener('mouseenter', function () {
+      if (item._ytFailed) return;
+
+      if (!item._ytIframe) {
+        var iframe = document.createElement('iframe');
+        iframe.className = 'its-bb-player';
+        // Match the official YouTube embed allow attribute exactly
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.src = 'https://www.youtube.com/embed/' + ytId +
+          '?autoplay=1&mute=1&controls=0&rel=0&enablejsapi=1&playsinline=1' + originParam;
+        screen.appendChild(iframe);
+        item._ytIframe = iframe;
+
+        // Fallback: if postMessage never confirms play (slow connection),
+        // reveal after 2 s so the user isn't left staring at a thumbnail forever
+        item._showTimer = setTimeout(function () {
+          if (!item._ytFailed && item._ytIframe && item.matches(':hover')) {
+            item._ytIframe.classList.add('its-bb-visible');
+            item.classList.add('its-bb-playing');
+          }
+        }, 2000);
+
+      } else {
+        // Re-hover — resume
+        item._ytIframe.classList.add('its-bb-visible');
+        item.classList.add('its-bb-playing');
+        try {
+          item._ytIframe.contentWindow.postMessage(
+            JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*'
+          );
+        } catch (ignore) {}
+      }
+    });
+
+    item.addEventListener('mouseleave', function () {
+      if (item._ytIframe) {
+        item._ytIframe.classList.remove('its-bb-visible');
+        item.classList.remove('its-bb-playing');
+        try {
+          item._ytIframe.contentWindow.postMessage(
+            JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'
+          );
+        } catch (ignore) {}
+      }
+    });
+
+    item.addEventListener('click', function () { openLightbox(ytId); });
+  });
+
+  /* ---- Lightbox ---- */
+  function openLightbox(ytId) {
+    if (!lightbox || !lbIframe) return;
+    lbIframe.src = 'https://www.youtube.com/embed/' + ytId +
+      '?autoplay=1&controls=1&rel=0' + originParam;
+    if (lbYtLink) lbYtLink.href = 'https://youtu.be/' + ytId;
+    lightbox.classList.add('its-lb-active');
+    window._lbOpen = true;
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('its-lb-active');
+    if (lbIframe) lbIframe.src = '';
+    window._lbOpen = false;
+  }
+
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  if (lightbox) {
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+  window._closeITSLightbox = closeLightbox;
 })();
 
 /* ============================================
