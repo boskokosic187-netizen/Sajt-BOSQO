@@ -1010,6 +1010,12 @@ window.addEventListener('beforeunload', function () {
     // Prevent double-trigger
     if (wrap.classList.contains('journey-click-exit')) return;
 
+    // Freeze current float position so removing journey-floating doesn't snap to origin
+    var currentTransform = getComputedStyle(wrap).transform;
+    if (currentTransform && currentTransform !== 'none') {
+      wrap.style.transform = currentTransform;
+    }
+
     // Stop hover/float states
     wrap.classList.remove('journey-hovered');
     wrap.classList.remove('journey-floating');
