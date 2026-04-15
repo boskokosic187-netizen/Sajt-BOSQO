@@ -716,19 +716,25 @@
 
     // Scroll UP while a project page is open
     if (window._pageOpen && dir === -1) {
-      if (window._galleryTransitioning) return; // don't interrupt transitions
-      if (window._galleryPage > 0) {
-        // On gallery 2 or 3 → go back one step
-        if (window._fcaPrevGallery) window._fcaPrevGallery();
+      var isFCA = window._activePage === 'fca';
+      if (isFCA) {
+        if (window._galleryTransitioning) return; // don't interrupt transitions
+        if (window._galleryPage > 0) {
+          // On gallery 2 or 3 → go back one step
+          if (window._fcaPrevGallery) window._fcaPrevGallery();
+        } else {
+          // On gallery 1 → close FCA and return to roadmap
+          if (window._closeFCA) window._closeFCA();
+        }
       } else {
-        // On gallery 1 → close FCA and return to roadmap
-        if (window._closeFCA) window._closeFCA();
+        // Any other project page (ITS, etc.) — just close it
+        if (window._closeActivePage) window._closeActivePage();
       }
       return;
     }
 
     // Scroll DOWN while FCA is open and more galleries remain → advance
-    if (window._pageOpen && dir === 1 && window._galleryPage < (window._galleryTotal || 1) - 1) {
+    if (window._pageOpen && window._activePage === 'fca' && dir === 1 && window._galleryPage < (window._galleryTotal || 1) - 1) {
       if (!window._galleryTransitioning && window._fcaNextGallery) window._fcaNextGallery();
       return;
     }
@@ -806,7 +812,7 @@ window.addEventListener('beforeunload', function () {
   if (s > 0) sessionStorage.setItem('lastStage', s);
   else sessionStorage.removeItem('lastStage');
 
-  if (window._pageOpen) sessionStorage.setItem('lastPage', 'fca');
+  if (window._pageOpen && window._activePage) sessionStorage.setItem('lastPage', window._activePage);
   else sessionStorage.removeItem('lastPage');
 });
 
@@ -974,20 +980,19 @@ window.addEventListener('beforeunload', function () {
 })();
 
 /* ============================================
-   FCA TITLE HOVER
+   PROJECT PAGE TITLE HOVER (all pages)
    ============================================ */
 (function () {
-  const wrap = document.querySelector('.pp-title-wrap');
-  if (!wrap) return;
-
-  wrap.addEventListener('mouseenter', () => {
-    wrap.classList.add('pp-title-hovered');
-    window._stardropBoost = 7;
-  });
-
-  wrap.addEventListener('mouseleave', () => {
-    wrap.classList.remove('pp-title-hovered');
-    window._stardropBoost = 1;
+  var wraps = document.querySelectorAll('.pp-title-wrap');
+  wraps.forEach(function (wrap) {
+    wrap.addEventListener('mouseenter', function () {
+      wrap.classList.add('pp-title-hovered');
+      window._stardropBoost = 7;
+    });
+    wrap.addEventListener('mouseleave', function () {
+      wrap.classList.remove('pp-title-hovered');
+      window._stardropBoost = 1;
+    });
   });
 })();
 
@@ -1256,6 +1261,8 @@ window.addEventListener('beforeunload', function () {
 
   function openFCA() {
     window._pageOpen = true;
+    window._activePage = 'fca';
+    window._closeActivePage = closeFCA;
     fcaPage.classList.add('pp-active');
     if (projects) projects.style.opacity = '0';
     startTypewriter();
@@ -1263,6 +1270,8 @@ window.addEventListener('beforeunload', function () {
 
   function closeFCA() {
     window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
     fcaPage.classList.remove('pp-active');
     if (projects) projects.style.opacity = '1';
     resetTypewriter();
@@ -1282,12 +1291,105 @@ window.addEventListener('beforeunload', function () {
 
   // ESC key also closes
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && window._pageOpen) closeFCA();
+    if (e.key === 'Escape' && window._pageOpen && fcaPage.classList.contains('pp-active')) closeFCA();
   });
 
   // Expose for scroll navigation
   window._openFCA  = openFCA;
   window._closeFCA = closeFCA;
+})();
+
+/* ============================================
+   INFORMATION TECHNOLOGY SCHOOL PAGE
+   ============================================ */
+(function () {
+  var item2    = document.getElementById('rmItem2');
+  var itsPage  = document.getElementById('itsPage');
+  var itsBack  = document.getElementById('itsBack');
+  var projects = document.getElementById('projectsSection');
+  if (!item2 || !itsPage) return;
+
+  var twWrap  = document.getElementById('itsTypewriter');
+  var twLine1 = document.getElementById('itsTwLine1');
+  var twLine2 = document.getElementById('itsTwLine2');
+
+  var TW_TEXT1 = "For the Information Technology School, I\u2019ve been developing visual content including billboard campaigns, animations, and digital banners \u2014";
+  var TW_TEXT2 = "while also contributing as a Teaching Assistant, combining practical design work with academic involvement.";
+  var TW_SPEED = 11;
+
+  var twTimer     = null;
+  var twCharTimer = null;
+
+  function resetTypewriter() {
+    clearTimeout(twTimer);
+    clearTimeout(twCharTimer);
+    if (!twWrap) return;
+    twWrap.classList.remove('tw-visible');
+    if (twLine1) twLine1.textContent = '';
+    if (twLine2) twLine2.textContent = '';
+    var cur = twWrap.querySelector('.tw-cursor');
+    if (cur) cur.remove();
+  }
+
+  function startTypewriter() {
+    if (!twWrap || !twLine1 || !twLine2) return;
+    var cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    twWrap.classList.add('tw-visible');
+    twLine1.appendChild(cursor);
+    var i = 0;
+    function typeChar() {
+      if (i < TW_TEXT1.length) {
+        twLine1.insertBefore(document.createTextNode(TW_TEXT1[i]), cursor);
+      } else if (i === TW_TEXT1.length) {
+        twLine2.appendChild(cursor);
+      } else {
+        var idx = i - TW_TEXT1.length - 1;
+        twLine2.insertBefore(document.createTextNode(TW_TEXT2[idx]), cursor);
+      }
+      i++;
+      if (i < TW_TEXT1.length + 1 + TW_TEXT2.length) {
+        twCharTimer = setTimeout(typeChar, TW_SPEED);
+      }
+    }
+    typeChar();
+  }
+
+  function openITS() {
+    window._pageOpen = true;
+    window._activePage = 'its';
+    window._closeActivePage = closeITS;
+    itsPage.classList.add('pp-active');
+    if (projects) projects.style.opacity = '0';
+    startTypewriter();
+  }
+
+  function closeITS() {
+    window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
+    itsPage.classList.remove('pp-active');
+    if (projects) projects.style.opacity = '1';
+    resetTypewriter();
+  }
+
+  item2.addEventListener('click', function () {
+    if (!projects || !projects.classList.contains('projects-active')) return;
+    openITS();
+  });
+
+  if (itsBack) {
+    itsBack.addEventListener('click', closeITS);
+  }
+
+  // ESC key also closes
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && window._pageOpen && itsPage.classList.contains('pp-active')) closeITS();
+  });
+
+  // Expose for potential scroll navigation
+  window._openITS  = openITS;
+  window._closeITS = closeITS;
 })();
 
 /* ============================================
@@ -1506,9 +1608,9 @@ window.addEventListener('beforeunload', function () {
   // For stage 9 (projects roadmap): bypass the 1500ms activation delay
   if (saved >= 9 && window._activateProjectsDirect) {
     var lastPage = sessionStorage.getItem('lastPage');
-    var onActive = (lastPage === 'fca' && window._openFCA)
-      ? function () { window._openFCA(); }
-      : null;
+    var onActive = lastPage === 'fca' && window._openFCA ? function () { window._openFCA(); }
+                 : lastPage === 'its' && window._openITS ? function () { window._openITS(); }
+                 : null;
     window._activateProjectsDirect(100, onActive);
   }
 
