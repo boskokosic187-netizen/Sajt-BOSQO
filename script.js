@@ -717,6 +717,7 @@
     // Scroll UP while a project page is open
     if (window._pageOpen && dir === -1) {
       var isFCA = window._activePage === 'fca';
+      var isITS = window._activePage === 'its';
       if (isFCA) {
         if (window._galleryTransitioning) return; // don't interrupt transitions
         if (window._galleryPage > 0) {
@@ -726,8 +727,15 @@
           // On gallery 1 → close FCA and return to roadmap
           if (window._closeFCA) window._closeFCA();
         }
+      } else if (isITS) {
+        if (window._itsGalleryTransitioning) return;
+        if (window._itsGalleryPage > 0) {
+          if (window._itsPrevGallery) window._itsPrevGallery();
+        } else {
+          if (window._closeITS) window._closeITS();
+        }
       } else {
-        // Any other project page (ITS, etc.) — just close it
+        // Any other project page — just close it
         if (window._closeActivePage) window._closeActivePage();
       }
       return;
@@ -736,6 +744,12 @@
     // Scroll DOWN while FCA is open and more galleries remain → advance
     if (window._pageOpen && window._activePage === 'fca' && dir === 1 && window._galleryPage < (window._galleryTotal || 1) - 1) {
       if (!window._galleryTransitioning && window._fcaNextGallery) window._fcaNextGallery();
+      return;
+    }
+
+    // Scroll DOWN while ITS is open and more galleries remain → advance
+    if (window._pageOpen && window._activePage === 'its' && dir === 1 && window._itsGalleryPage < (window._itsGalleryTotal || 1) - 1) {
+      if (!window._itsGalleryTransitioning && window._itsNextGallery) window._itsNextGallery();
       return;
     }
 
@@ -1377,6 +1391,7 @@ window.addEventListener('beforeunload', function () {
     itsPage.classList.remove('pp-active');
     if (projects) projects.style.opacity = '1';
     resetTypewriter();
+    if (window._resetItsGalleryPage) window._resetItsGalleryPage();
   }
 
   item2.addEventListener('click', function () {
@@ -1500,14 +1515,16 @@ window.addEventListener('beforeunload', function () {
         screen.appendChild(iframe);
         item._ytIframe = iframe;
 
-        // Fallback: if postMessage never confirms play (slow connection),
-        // reveal after 2 s so the user isn't left staring at a thumbnail forever
+        // Iframe stays hidden (opacity:0) while YouTube loads.
+        // The thumbnail covers it so the user never sees black/loading UI.
+        // postMessage playerState=1 triggers the reveal; thumbnail fades out simultaneously.
+        // Fallback: reveal after 1.2 s if postMessage never arrives (slow connection).
         item._showTimer = setTimeout(function () {
           if (!item._ytFailed && item._ytIframe && item.matches(':hover')) {
             item._ytIframe.classList.add('its-bb-visible');
             item.classList.add('its-bb-playing');
           }
-        }, 2000);
+        }, 1200);
 
       } else {
         // Re-hover — resume
@@ -1533,6 +1550,175 @@ window.addEventListener('beforeunload', function () {
     });
   });
 
+})();
+
+/* ============================================
+   ITS GALLERY SWITCHING
+   ============================================ */
+(function () {
+  var itsPage    = document.getElementById('itsPage');
+  var billboard  = document.getElementById('itsGallery');
+  var gallery2   = document.getElementById('itsGallery2');
+  var gallery3   = document.getElementById('itsGallery3');
+  var hintEl     = document.getElementById('itsHoverHint');
+  var dots       = document.querySelectorAll('.its-dot');
+
+  if (!billboard || !gallery2 || !gallery3) return;
+
+  var galleries  = [billboard, gallery2, gallery3];
+  var TOTAL      = galleries.length;
+  var page       = 0;
+  var transitioning = false;
+
+  function updateDots(p) {
+    dots.forEach(function (d, i) { d.classList.toggle('its-dot--active', i === p); });
+  }
+
+  function resetImageGallery(g) {
+    g.classList.remove('gallery-active', 'gallery-exiting');
+    g.querySelectorAll('.fca-work-item').forEach(function (el) {
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
+  }
+
+  window._itsGalleryPage       = 0;
+  window._itsGalleryTotal      = TOTAL;
+  window._itsGalleryTransitioning = false;
+
+  window._resetItsGalleryPage = function () {
+    page = 0;
+    window._itsGalleryPage = 0;
+    transitioning = false;
+    window._itsGalleryTransitioning = false;
+    // Restore billboard
+    billboard.style.height   = '';
+    billboard.style.overflow = '';
+    billboard.style.margin   = '';
+    billboard.style.padding  = '';
+    billboard.style.opacity      = '';
+    billboard.style.pointerEvents = '';
+    billboard.style.transition   = '';
+    if (itsPage) {
+      itsPage.classList.remove('its-gallery-2-active', 'its-gallery-3-active');
+    }
+    // Reset image galleries
+    resetImageGallery(gallery2);
+    resetImageGallery(gallery3);
+    updateDots(0);
+  };
+
+  window._itsNextGallery = function () {
+    if (page >= TOTAL - 1 || transitioning) return;
+    transitioning = true;
+    window._itsGalleryTransitioning = true;
+
+    var oldPage = page;
+    var newPage = page + 1;
+
+    if (oldPage === 0) {
+      // Fade out billboard + hint
+      billboard.style.transition   = 'opacity 0.4s ease';
+      billboard.style.opacity      = '0';
+      billboard.style.pointerEvents = 'none';
+      if (hintEl) { hintEl.style.opacity = '0'; hintEl.style.transition = 'none'; }
+
+      setTimeout(function () {
+        // Collapse billboard so it no longer pushes gallery 2/3 down
+        billboard.style.height   = '0';
+        billboard.style.overflow = 'hidden';
+        billboard.style.margin   = '0';
+        billboard.style.padding  = '0';
+
+        galleries[newPage].classList.add('gallery-active');
+        page = newPage;
+        window._itsGalleryPage = newPage;
+        if (itsPage) itsPage.classList.add('its-gallery-' + newPage + '-active');
+        updateDots(newPage);
+        transitioning = false;
+        window._itsGalleryTransitioning = false;
+      }, 420);
+    } else {
+      // Exit old image gallery
+      galleries[oldPage].classList.add('gallery-exiting');
+      setTimeout(function () {
+        resetImageGallery(galleries[oldPage]);
+        galleries[newPage].classList.add('gallery-active');
+        page = newPage;
+        window._itsGalleryPage = newPage;
+        if (itsPage) {
+          itsPage.classList.remove('its-gallery-' + oldPage + '-active');
+          itsPage.classList.add('its-gallery-' + newPage + '-active');
+        }
+        updateDots(newPage);
+        transitioning = false;
+        window._itsGalleryTransitioning = false;
+      }, 560);
+    }
+  };
+
+  window._itsPrevGallery = function () {
+    if (page <= 0 || transitioning) return;
+    transitioning = true;
+    window._itsGalleryTransitioning = true;
+
+    var oldPage = page;
+    var newPage = page - 1;
+
+    galleries[oldPage].classList.add('gallery-exiting');
+
+    setTimeout(function () {
+      resetImageGallery(galleries[oldPage]);
+      if (itsPage) itsPage.classList.remove('its-gallery-' + oldPage + '-active');
+
+      if (newPage === 0) {
+        // Restore billboard height first, then fade it in
+        billboard.style.height   = '';
+        billboard.style.overflow = '';
+        billboard.style.margin   = '';
+        billboard.style.padding  = '';
+        billboard.style.transition   = 'opacity 0.5s ease';
+        billboard.style.opacity      = '';
+        billboard.style.pointerEvents = '';
+        if (hintEl) { hintEl.style.opacity = ''; hintEl.style.transition = ''; }
+      } else {
+        galleries[newPage].classList.add('gallery-active');
+        if (itsPage) itsPage.classList.add('its-gallery-' + newPage + '-active');
+      }
+
+      page = newPage;
+      window._itsGalleryPage = newPage;
+      updateDots(newPage);
+      transitioning = false;
+      window._itsGalleryTransitioning = false;
+    }, 560);
+  };
+
+  // Dot click navigation
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () {
+      if (transitioning) return;
+      if (i === page) return;
+      if (i > page) {
+        // Only advance one step at a time
+        window._itsNextGallery();
+      } else {
+        window._itsPrevGallery();
+      }
+    });
+  });
+
+  // Also expose lightbox-compatible gallery for image galleries (reuse FCA lightbox)
+  [gallery2, gallery3].forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var item = e.target.closest('.fca-work-item');
+      if (!item) return;
+      var img = item.querySelector('.fca-work-img-wrap img');
+      if (!img) return;
+      if (window._openFcaLightboxForItem) window._openFcaLightboxForItem(item);
+    });
+  });
 })();
 
 /* ============================================
