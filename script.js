@@ -846,6 +846,7 @@ window.addEventListener('beforeunload', function () {
   let twTimer        = null;
   let twCharTimer    = null;
   let readyTimer     = null;
+  let itemTimers     = [];
 
   const roadmap = section.querySelector('.roadmap');
 
@@ -921,6 +922,18 @@ window.addEventListener('beforeunload', function () {
         readyTimer = setTimeout(function () {
           if (roadmap) roadmap.classList.add('roadmap-ready');
         }, 4300);
+        // Enable pointer-events per item as soon as each one finishes appearing
+        itemTimers.forEach(clearTimeout);
+        itemTimers = [];
+        var rmItems = roadmap ? roadmap.querySelectorAll('.roadmap-item') : [];
+        var appearDelays = [0.3, 1.1, 1.9, 2.7, 3.5];
+        for (var i = 0; i < rmItems.length; i++) {
+          (function (el, delay) {
+            itemTimers.push(setTimeout(function () {
+              el.style.pointerEvents = 'auto';
+            }, (delay + 0.4) * 1000));
+          })(rmItems[i], appearDelays[i] !== undefined ? appearDelays[i] : 3.5);
+        }
       });
     }, delay);
   }
@@ -932,7 +945,14 @@ window.addEventListener('beforeunload', function () {
       activated = false;
       clearTimeout(activateTimer);
       clearTimeout(readyTimer);
-      if (roadmap) roadmap.classList.remove('roadmap-ready');
+      itemTimers.forEach(clearTimeout);
+      itemTimers = [];
+      if (roadmap) {
+        roadmap.classList.remove('roadmap-ready');
+        roadmap.querySelectorAll('.roadmap-item').forEach(function (el) {
+          el.style.pointerEvents = '';
+        });
+      }
       section.classList.remove('projects-active');
       resetTypewriter();
       // Clean up click-exit class and nav-hide when scrolling back
@@ -1728,13 +1748,15 @@ window.addEventListener('beforeunload', function () {
   var gallery  = document.getElementById('fcaGallery');
   var gallery2 = document.getElementById('fcaGallery2');
   var gallery3 = document.getElementById('fcaGallery3');
+  var itsG2    = document.getElementById('itsGallery2');
+  var itsG3    = document.getElementById('itsGallery3');
   var lightbox = document.getElementById('fcaLightbox');
   var lbImg    = document.getElementById('fcaLbImg');
   var lbCap    = document.getElementById('fcaLbCaption');
   var lbClose  = document.getElementById('fcaLbClose');
   if (!gallery || !lightbox || !lbImg) return;
 
-  var galleries = [gallery, gallery2, gallery3].filter(Boolean);
+  var galleries = [gallery, gallery2, gallery3, itsG2, itsG3].filter(Boolean);
 
   function openLightbox(item) {
     var img = item.querySelector('.fca-work-img-wrap img');
@@ -1781,6 +1803,7 @@ window.addEventListener('beforeunload', function () {
   }, true); // capture phase so it fires before the FCA ESC handler
 
   window._closeLightbox = closeLightbox;
+  window._openFcaLightboxForItem = openLightbox;
 })();
 
 
