@@ -2114,9 +2114,9 @@ body[data-stage="8"] .journey-title-wrap {
    ============================================ */
 
 .fca-lightbox {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 200;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2291,15 +2291,21 @@ body[data-stage="8"] .journey-title-wrap {
    ============================================ */
 
 .its-gallery-wrap {
+  --H: calc((min(95vw, 1600px) - 100px) / 10);
   position: relative;
-  width: min(95vw, 1480px);
-  margin-top: 108px;
+  width: min(95vw, 1600px);
+  min-height: calc(var(--H) * 4.2 + 161px);
+  margin-top: 96px;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
 #itsPage.pp-active .its-gallery-wrap {
   opacity: 1;
+}
+
+#itsPage.its-gallery-1-active .its-gallery-wrap {
+  margin-top: 56px;
 }
 
 .its-gallery {
@@ -2708,11 +2714,12 @@ body[data-stage="8"] .journey-title-wrap {
    Formula: 2×(2H+20) + 3×(2H) + 4×15 = W → 10H+100 = W → H = (W−100)/10 */
 .its-gallery-2 {
   --H: calc((min(95vw, 1600px) - 100px) / 10);
+  --LH: calc(var(--H) * 21 / 20 + 29px);
   --L: calc(var(--H) * 2);
   --P: calc(var(--H) * 2 + 20px);
   display: none;
   grid-template-columns: var(--P) var(--L) var(--L) var(--L) var(--P);
-  grid-template-rows: var(--H) var(--H) var(--H) var(--H);
+  grid-template-rows: var(--LH) var(--LH) var(--LH) var(--LH);
   gap: 15px;
   grid-template-areas:
     "k1  k2  k3  k4  k5"
@@ -2907,16 +2914,13 @@ body[data-stage="8"] .journey-title-wrap {
 .its-gallery-3.gallery-exiting .fca-work-item:nth-child(8) { animation-delay: 0.02s !important; }
 .its-gallery-3.gallery-exiting .fca-work-item:nth-child(9) { animation-delay: 0.04s !important; }
 
-/* ITS gallery dots — fixed to bottom center of the page overlay */
+/* ITS gallery dots — same layout as FCA dots */
 .its-gallery-dots {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
+  margin-top: 22px;
   opacity: 0;
   transition: opacity 0.5s ease;
 }

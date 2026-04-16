@@ -1352,9 +1352,11 @@ window.addEventListener('beforeunload', function () {
   var twWrap  = document.getElementById('itsTypewriter');
   var twLine1 = document.getElementById('itsTwLine1');
   var twLine2 = document.getElementById('itsTwLine2');
+  var twLine3 = document.getElementById('itsTwLine3');
 
-  var TW_TEXT1 = "For the Information Technology School, I\u2019ve been developing visual content including billboard campaigns, animations, and digital banners \u2014";
-  var TW_TEXT2 = "while also contributing as a Teaching Assistant, combining practical design work with academic involvement.";
+  var TW_TEXT1 = "For the Information Technology School, I\u2019ve been developing visual content including billboard campaigns, animations, and digital banners \u2014 while also contributing as a Teaching Assistant,";
+  var TW_TEXT2 = "combining practical design work with academic involvement.";
+  var TW_TEXT3 = "Many of these visuals have been featured across Belgrade on both traditional and digital billboards.";
   var TW_SPEED = 11;
 
   var twTimer     = null;
@@ -1367,6 +1369,7 @@ window.addEventListener('beforeunload', function () {
     twWrap.classList.remove('tw-visible');
     if (twLine1) twLine1.textContent = '';
     if (twLine2) twLine2.textContent = '';
+    if (twLine3) twLine3.textContent = '';
     var cur = twWrap.querySelector('.tw-cursor');
     if (cur) cur.remove();
   }
@@ -1378,17 +1381,21 @@ window.addEventListener('beforeunload', function () {
     twWrap.classList.add('tw-visible');
     twLine1.appendChild(cursor);
     var i = 0;
+    var L1 = TW_TEXT1.length, L2 = TW_TEXT2.length, L3 = TW_TEXT3.length;
     function typeChar() {
-      if (i < TW_TEXT1.length) {
+      if (i < L1) {
         twLine1.insertBefore(document.createTextNode(TW_TEXT1[i]), cursor);
-      } else if (i === TW_TEXT1.length) {
+      } else if (i === L1) {
         twLine2.appendChild(cursor);
+      } else if (i < L1 + 1 + L2) {
+        twLine2.insertBefore(document.createTextNode(TW_TEXT2[i - L1 - 1]), cursor);
+      } else if (i === L1 + 1 + L2) {
+        if (twLine3) twLine3.appendChild(cursor);
       } else {
-        var idx = i - TW_TEXT1.length - 1;
-        twLine2.insertBefore(document.createTextNode(TW_TEXT2[idx]), cursor);
+        if (twLine3) twLine3.insertBefore(document.createTextNode(TW_TEXT3[i - L1 - 1 - L2 - 1]), cursor);
       }
       i++;
-      if (i < TW_TEXT1.length + 1 + TW_TEXT2.length) {
+      if (i < L1 + 1 + L2 + 1 + L3) {
         twCharTimer = setTimeout(typeChar, TW_SPEED);
       }
     }
@@ -1729,16 +1736,6 @@ window.addEventListener('beforeunload', function () {
     });
   });
 
-  // Also expose lightbox-compatible gallery for image galleries (reuse FCA lightbox)
-  [gallery2, gallery3].forEach(function (g) {
-    g.addEventListener('click', function (e) {
-      var item = e.target.closest('.fca-work-item');
-      if (!item) return;
-      var img = item.querySelector('.fca-work-img-wrap img');
-      if (!img) return;
-      if (window._openFcaLightboxForItem) window._openFcaLightboxForItem(item);
-    });
-  });
 })();
 
 /* ============================================
