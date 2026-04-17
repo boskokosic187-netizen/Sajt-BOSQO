@@ -734,6 +734,12 @@
         } else {
           if (window._closeITS) window._closeITS();
         }
+      } else if (window._activePage === 'ballies') {
+        if (window._balliesPage > 0) {
+          if (window._balliesPrevPage) window._balliesPrevPage();
+        } else {
+          if (window._closeBallies) window._closeBallies();
+        }
       } else {
         // Any other project page — just close it
         if (window._closeActivePage) window._closeActivePage();
@@ -750,6 +756,12 @@
     // Scroll DOWN while ITS is open and more galleries remain → advance
     if (window._pageOpen && window._activePage === 'its' && dir === 1 && window._itsGalleryPage < (window._itsGalleryTotal || 1) - 1) {
       if (!window._itsGalleryTransitioning && window._itsNextGallery) window._itsNextGallery();
+      return;
+    }
+
+    // Scroll DOWN while Ballies is open and more pages remain → advance
+    if (window._pageOpen && window._activePage === 'ballies' && dir === 1 && window._balliesPage < (window._balliesTotal || 1) - 1) {
+      if (window._balliesNextPage) window._balliesNextPage();
       return;
     }
 
@@ -1546,6 +1558,141 @@ window.addEventListener('beforeunload', function () {
     });
   }
 
+  /* ---- Mosaic (page 2) ---- */
+  var mosaic      = document.getElementById('balliesMosaic');
+  var mosaicOuter = document.getElementById('balliesMosaicOuter');
+  var mosaicWrap  = document.getElementById('balliesMosaicWrap');
+  var sbThumb     = document.getElementById('balliesSbThumb');
+  var dots        = document.querySelectorAll('.ballies-dot');
+  var balliesPage2 = 1; // current page (1-indexed)
+
+  (function buildMosaic() {
+    if (!mosaic) return;
+    var files = [
+      '1.png','1_1.png','1_1%20(1).png','2-Jun.png','4-Aug.png','4-Aug-(1).png',
+      '5-Sept-(1).png','11-July.png','16-July.png','16-May.png','18-2.png','19-2.png',
+      '19-11.png','20-2-(2).png','21-2.png','22-July.png','23-June.png',
+      '26-June.png','26-sept.png','29-July.png','31-July-(2).png','ALPHABOT.png','Airdrop.jpg',
+      'Ai-ambassadors-assemble.png','Ai-ballies-promo-2.png','Ai-game-predictor.png','BALL-ETH.png',
+      'Ballies-Is-Not-a-Bookmaker.png','Ballies-santa.png','Big-announcement.png',
+      'CLX.png','CLX-Launch.png','Christmas-post%20(1).png','Friday%20(1).png',
+      'Fusion.png','Halloween-badge.png','How-ballies-works.png','Hustler-League-post.png',
+      'Join-AI-testing.png','Join-or-Win.png','King-of-the-metacourt.png',
+      'Knockout-stage-begins.png','Monday.png','November-winner-recap.png',
+      'Rewards-discord.png','Roadmap.png','Season-10-pass.png','Season-11.png',
+      'Season-12.png','Soon.png','Thursday.png','brown-vs-gravity.png',
+      'defi-rewarded.png','h2h.png'
+    ];
+    var html = '';
+    files.forEach(function (f) {
+      var alt = decodeURIComponent(f).replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+      html += '<div class="ballies-m-item">'
+            +   '<img src="assets/BALLIES/2/' + f + '" alt="' + alt + '" draggable="false">'
+            + '</div>';
+    });
+    mosaic.innerHTML = html;
+  })();
+
+  /* Mosaic lightbox click */
+  if (mosaic) {
+    mosaic.addEventListener('click', function (e) {
+      var item = e.target.closest('.ballies-m-item');
+      if (!item || !window._openLightboxWithSrc) return;
+      var img = item.querySelector('img');
+      if (img) window._openLightboxWithSrc(img.src, img.alt, '');
+    });
+  }
+
+  /* Scrollbar update */
+  function updateScrollbar() {
+    if (!mosaicWrap || !sbThumb) return;
+    var total   = mosaicWrap.scrollHeight;
+    var visible = mosaicWrap.clientHeight;
+    var scrollTop = mosaicWrap.scrollTop;
+    var thumbH  = Math.max(32, (visible / total) * visible);
+    var maxScroll = total - visible;
+    var thumbTop  = maxScroll > 0 ? (scrollTop / maxScroll) * (visible - thumbH) : 0;
+    sbThumb.style.height = thumbH + 'px';
+    sbThumb.style.top    = thumbTop + 'px';
+  }
+
+  /* Wheel scroll on mosaic — intercept so global handler doesn't fire */
+  if (mosaicWrap) {
+    mosaicWrap.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      mosaicWrap.scrollTop += e.deltaY;
+      updateScrollbar();
+    }, { passive: false });
+
+    mosaicWrap.addEventListener('scroll', updateScrollbar);
+  }
+
+  /* Scrollbar thumb drag */
+  if (sbThumb && mosaicWrap) {
+    var sbDragging = false, sbDragY = 0, sbDragScroll = 0;
+    sbThumb.addEventListener('mousedown', function (e) {
+      sbDragging = true;
+      sbDragY = e.clientY;
+      sbDragScroll = mosaicWrap.scrollTop;
+      sbThumb.classList.add('dragging');
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!sbDragging) return;
+      var total   = mosaicWrap.scrollHeight;
+      var visible = mosaicWrap.clientHeight;
+      var thumbH  = parseFloat(sbThumb.style.height) || 32;
+      var ratio   = (total - visible) / (visible - thumbH);
+      mosaicWrap.scrollTop = sbDragScroll + (e.clientY - sbDragY) * ratio;
+      updateScrollbar();
+    });
+    document.addEventListener('mouseup', function () {
+      if (sbDragging) { sbDragging = false; sbThumb.classList.remove('dragging'); }
+    });
+  }
+
+  function goToPage(p) {
+    if (balliesPage2 === p) return;
+    balliesPage2 = p;
+    window._balliesPage = p - 1;
+    dots.forEach(function (d, i) { d.classList.toggle('ballies-dot--active', i + 1 === p); });
+    if (p === 1) {
+      if (mosaicOuter) {
+        mosaicOuter.classList.add('ballies-mosaic-exiting');
+        setTimeout(function () {
+          mosaicOuter.classList.remove('ballies-mosaic-active', 'ballies-mosaic-exiting');
+          if (mosaicWrap) mosaicWrap.scrollTop = 0;
+          if (slideshow) {
+            slideshow.style.display = '';
+            slideshow.classList.add('ballies-entering');
+            setTimeout(function () { slideshow.classList.remove('ballies-entering'); }, 1100);
+          }
+          setSlideshowState(true);
+        }, 520);
+      }
+    } else {
+      if (slideshow) slideshow.style.display = 'none';
+      setSlideshowState(false);
+      if (mosaicWrap) mosaicWrap.scrollTop = 0;
+      if (mosaicOuter) mosaicOuter.classList.add('ballies-mosaic-active');
+      setTimeout(updateScrollbar, 50);
+    }
+  }
+
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { goToPage(i + 1); });
+  });
+
+  window._balliesPage  = 0;
+  window._balliesTotal = 2;
+  window._balliesNextPage = function () {
+    if (window._balliesPage < window._balliesTotal - 1) goToPage(window._balliesPage + 2);
+  };
+  window._balliesPrevPage = function () {
+    if (window._balliesPage > 0) goToPage(window._balliesPage);
+  };
+
   function setSlideshowState(running) {
     [track1, track2].forEach(function (t) {
       if (!t) return;
@@ -1559,7 +1706,15 @@ window.addEventListener('beforeunload', function () {
     window._closeActivePage = closeBallies;
     balliesPage.classList.add('pp-active');
     if (projects) projects.style.opacity = '0';
+    goToPage(1);
     setSlideshowState(true);
+    if (slideshow) {
+      slideshow.classList.remove('ballies-entering');
+      requestAnimationFrame(function () {
+        slideshow.classList.add('ballies-entering');
+        setTimeout(function () { slideshow.classList.remove('ballies-entering'); }, 1100);
+      });
+    }
     startTypewriter();
   }
 
@@ -1569,7 +1724,8 @@ window.addEventListener('beforeunload', function () {
     window._closeActivePage = null;
     balliesPage.classList.remove('pp-active');
     if (projects) projects.style.opacity = '1';
-    setSlideshowState(false);
+    goToPage(1);
+    window._balliesPage = 0;
     resetTypewriter();
   }
 
