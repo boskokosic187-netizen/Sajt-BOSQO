@@ -2012,10 +2012,14 @@ body[data-stage="8"] .journey-title-wrap {
 /* hovered item */
 .fca-gallery:hover .fca-work-item:hover,
 .fca-gallery-2:hover .fca-work-item:hover,
-.fca-gallery-3:hover .fca-work-item:hover,
+.fca-gallery-3:hover .fca-work-item:hover {
+  scale: 1.07;
+  z-index: 10;
+  border-color: rgba(29, 233, 182, 0.65);
+}
 .its-gallery-2:hover .fca-work-item:hover,
 .its-gallery-3:hover .fca-work-item:hover {
-  scale: 1.07;
+  scale: 1.1;
   z-index: 10;
   border-color: rgba(29, 233, 182, 0.65);
 }
@@ -2037,10 +2041,13 @@ body[data-stage="8"] .journey-title-wrap {
 
 .fca-gallery:hover .fca-work-item:hover .fca-work-img-wrap img,
 .fca-gallery-2:hover .fca-work-item:hover .fca-work-img-wrap img,
-.fca-gallery-3:hover .fca-work-item:hover .fca-work-img-wrap img,
+.fca-gallery-3:hover .fca-work-item:hover .fca-work-img-wrap img {
+  transform: scale(1.45);
+  filter: brightness(1) saturate(1.1);
+}
 .its-gallery-2:hover .fca-work-item:hover .fca-work-img-wrap img,
 .its-gallery-3:hover .fca-work-item:hover .fca-work-img-wrap img {
-  transform: scale(1.45);
+  transform: scale(1.06);
   filter: brightness(1) saturate(1.1);
 }
 
