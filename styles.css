@@ -3386,8 +3386,9 @@ body[data-stage="8"] .journey-title-wrap {
    ============================================================ */
 .ballies-videos-outer {
   display: none;
-  width: min(95vw, 1600px);
-  margin: 64px auto 0;
+  width: min(88vw, 1200px);
+  margin: 44px auto 0;
+  padding-bottom: 72px;
   position: relative;
 }
 .ballies-videos-outer.ballies-videos-active {
@@ -3396,8 +3397,8 @@ body[data-stage="8"] .journey-title-wrap {
 
 .ballies-videos {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
 }
 
@@ -3430,15 +3431,15 @@ body[data-stage="8"] .journey-title-wrap {
 .ballies-videos-outer.ballies-videos-active .ballies-v-item:nth-child(6) { animation-delay: 0.15s; }
 .ballies-videos-outer.ballies-videos-active .ballies-v-item:nth-child(7) { animation-delay: 0.70s; }
 .ballies-videos-outer.ballies-videos-active .ballies-v-item:nth-child(8) { animation-delay: 0.35s; }
+.ballies-videos-outer.ballies-videos-active .ballies-v-item:nth-child(9) { animation-delay: 0.55s; }
 
 .ballies-videos-outer.ballies-videos-exiting .ballies-v-item {
   animation: balliesItemShrink 0.45s cubic-bezier(0.55, 0, 0.85, 0.4) forwards !important;
   opacity: 1;
 }
-.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(4n+1) { animation-delay: 0.00s !important; }
-.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(4n+2) { animation-delay: 0.04s !important; }
-.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(4n+3) { animation-delay: 0.08s !important; }
-.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(4n+4) { animation-delay: 0.02s !important; }
+.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(3n+1) { animation-delay: 0.00s !important; }
+.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(3n+2) { animation-delay: 0.05s !important; }
+.ballies-videos-outer.ballies-videos-exiting .ballies-v-item:nth-child(3n+3) { animation-delay: 0.02s !important; }
 
 .ballies-v-item:hover {
   transform: translateY(-3px) scale(1.02);
