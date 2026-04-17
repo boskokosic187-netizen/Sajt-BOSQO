@@ -3123,81 +3123,6 @@ body[data-stage="8"] .journey-title-wrap {
   border-top: 1px solid rgba(29, 233, 182, 0.22);
 }
 
-/* ====== Ballies Stats Bar (page 1) ====== */
-.ballies-stats-bar {
-  display: none;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 0 20px;
-  position: relative;
-}
-.ballies-stats-bar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(29,233,182,0.45) 30%, rgba(29,233,182,0.45) 70%, transparent);
-}
-.ballies-stats-bar.ballies-stats-active {
-  display: flex;
-}
-.ballies-stat-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 28px 0 20px;
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1);
-}
-.ballies-stats-bar.ballies-stats-entered .ballies-stat-item {
-  opacity: 1;
-  transform: translateY(0);
-}
-.ballies-stat-item:nth-child(1) { transition-delay: 0.05s; }
-.ballies-stat-item:nth-child(3) { transition-delay: 0.18s; }
-.ballies-stat-item:nth-child(5) { transition-delay: 0.31s; }
-.ballies-stat-item:nth-child(7) { transition-delay: 0.44s; }
-.ballies-stat-value {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(32px, 4.5vw, 60px);
-  font-weight: 900;
-  color: #1de9b6;
-  line-height: 1;
-  text-shadow: 0 0 22px rgba(29,233,182,0.85), 0 0 55px rgba(29,233,182,0.35);
-  animation: balliesStatPulse 2.8s ease-in-out infinite;
-}
-.ballies-stat-label {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(29,233,182,0.55);
-}
-.ballies-stat-div {
-  width: 1px;
-  height: 55px;
-  background: linear-gradient(to bottom, transparent, rgba(29,233,182,0.45) 30%, rgba(29,233,182,0.45) 70%, transparent);
-  flex-shrink: 0;
-}
-@keyframes balliesStatPulse {
-  0%, 100% {
-    text-shadow: 0 0 22px rgba(29,233,182,0.85), 0 0 55px rgba(29,233,182,0.35);
-  }
-  50% {
-    text-shadow: 0 0 32px rgba(29,233,182,1), 0 0 75px rgba(29,233,182,0.65), 0 0 110px rgba(29,233,182,0.2);
-  }
-}
-
 
 
 /* ====== Ballies Mosaic (page 2) ====== */
@@ -3490,9 +3415,11 @@ body[data-stage="8"] .journey-title-wrap {
     0 0 0 1px rgba(29, 233, 182, 0.08) inset,
     0 8px 26px rgba(0, 0, 0, 0.55),
     0 0 18px rgba(29, 233, 182, 0.18);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.35s ease,
-              box-shadow 0.35s ease;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s ease,
+              box-shadow 0.5s ease,
+              opacity 0.65s ease,
+              filter 0.65s ease;
   opacity: 0;
 }
 .ballies-videos-outer.ballies-videos-active .ballies-v-item {

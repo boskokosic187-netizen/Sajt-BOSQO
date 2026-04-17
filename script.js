@@ -1691,15 +1691,19 @@ window.addEventListener('beforeunload', function () {
   }
 
   // ----- Idle auto-feature -----
-  var videoIdleTimer       = null;
-  var videoHoverCount      = 0;
-  var videoFeaturedEl      = null;
+  var FEATURED_DUR = 18000; // ms each video stays featured (2 s shrink + next)
+
+  var videoIdleTimer         = null;
+  var videoHoverCount        = 0;
+  var videoFeaturedEl        = null;
   var videoFeaturedPlayTimer = null;
-  var videoFeaturedWin     = null; // contentWindow of the featured iframe
+  var videoFeaturedShrinkTimer = null; // fires 2 s before end → shrink
+  var videoFeaturedNextTimer   = null; // fires at end → next video immediately
 
   function clearFeatured() {
     clearTimeout(videoFeaturedPlayTimer);
-    videoFeaturedWin = null;
+    clearTimeout(videoFeaturedShrinkTimer);
+    clearTimeout(videoFeaturedNextTimer);
     if (videoFeaturedEl) {
       var f = videoFeaturedEl.querySelector('.ballies-v-frame');
       if (f) f.innerHTML = '';
@@ -1714,9 +1718,7 @@ window.addEventListener('beforeunload', function () {
     clearFeatured();
     var items = videos.querySelectorAll('.ballies-v-item');
     var indices = [];
-    items.forEach(function (_, i) {
-      if (i !== excludeIdx) indices.push(i);
-    });
+    items.forEach(function (_, i) { if (i !== excludeIdx) indices.push(i); });
     var idx = indices[Math.floor(Math.random() * indices.length)];
     videoFeaturedEl = items[idx];
     var featId = videoFeaturedEl.getAttribute('data-vid');
@@ -1731,28 +1733,25 @@ window.addEventListener('beforeunload', function () {
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('frameborder', '0');
       frame.appendChild(iframe);
-      videoFeaturedWin = iframe.contentWindow;
       videoFeaturedPlayTimer = setTimeout(function () {
         if (videoFeaturedEl) videoFeaturedEl.classList.add('playing');
       }, 900);
     }
-  }
-
-  // Listen for YouTube ended event (playerState === 0) from the featured iframe
-  window.addEventListener('message', function (e) {
-    if (!videoFeaturedEl || !videoFeaturedWin) return;
-    if (e.source !== videoFeaturedWin) return;
-    try {
-      var data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-      if (!data) return;
-      var ended = (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) ||
-                  (data.event === 'onStateChange' && data.info === 0);
-      if (!ended) return;
-      var prevIdx = parseInt(videoFeaturedEl.getAttribute('data-index'), 10);
+    var capturedEl = videoFeaturedEl;
+    // 0.5 s before end: shrink back to normal (CSS transition handles it)
+    videoFeaturedShrinkTimer = setTimeout(function () {
+      if (videoFeaturedEl !== capturedEl) return;
+      capturedEl.classList.remove('ballies-v-featured');
+      videos.classList.remove('has-featured');
+    }, FEATURED_DUR - 500);
+    // At end: immediately start next video
+    videoFeaturedNextTimer = setTimeout(function () {
+      if (!capturedEl) return;
+      var pi = parseInt(capturedEl.getAttribute('data-index'), 10);
       clearFeatured();
-      videoIdleTimer = setTimeout(function () { triggerFeatured(prevIdx); }, 1400);
-    } catch (_) {}
-  });
+      if (videoHoverCount === 0) triggerFeatured(pi);
+    }, FEATURED_DUR);
+  }
 
   function resetIdleTimer() {
     clearTimeout(videoIdleTimer);
@@ -1860,7 +1859,7 @@ window.addEventListener('beforeunload', function () {
     { file: 'kobe.png',                        span: 1, ar: '1082/1325' }, // row1: portrait
     { file: 'badge-pack.png',                   span: 1, ar: '1392/2024' }, // row2: portrait × 3
     { file: 'Drop-card.png',                    span: 1, ar: '967/1386'  },
-    { file: '5-Nov-DRJ.png',                    span: 1, ar: '1080/1308' },
+    { file: '5-Nov-DRJ.png',                    span: 1, ar: '1080/1308', deco: true },
     { file: 'NFL-Games.png',                    span: 1, ar: '1/1'       }, // row3: squares × 3
     { file: 'Ball-post-4.png',                  span: 1, ar: '1/1'       },
     { file: 'You-vs-Ai.png',                    span: 1, ar: '1/1'       },
@@ -1957,28 +1956,7 @@ window.addEventListener('beforeunload', function () {
 
     function hideSlideshow() {
       if (slideshow) slideshow.style.display = 'none';
-      if (statsBar) {
-        statsBar.classList.remove('ballies-stats-active', 'ballies-stats-entered');
-      }
       setSlideshowState(false);
-    }
-    function animateStatCounters() {
-      if (!statsBar) return;
-      var items = statsBar.querySelectorAll('.ballies-stat-value');
-      items.forEach(function (el) {
-        var to = parseInt(el.getAttribute('data-to'), 10);
-        var suffix = el.getAttribute('data-suffix') || '';
-        var duration = to >= 1000 ? 1400 : 900;
-        var start = performance.now();
-        function step(now) {
-          var t = Math.min(1, (now - start) / duration);
-          var eased = 1 - Math.pow(1 - t, 3);
-          var val = Math.round(eased * to);
-          el.textContent = val.toLocaleString() + suffix;
-          if (t < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      });
     }
     function showSlideshow() {
       if (slideshow) {
@@ -1987,16 +1965,6 @@ window.addEventListener('beforeunload', function () {
         requestAnimationFrame(function () {
           slideshow.classList.add('ballies-entering');
           setTimeout(function () { slideshow.classList.remove('ballies-entering'); }, 1100);
-        });
-      }
-      if (statsBar) {
-        statsBar.classList.remove('ballies-stats-entered');
-        statsBar.classList.add('ballies-stats-active');
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            statsBar.classList.add('ballies-stats-entered');
-            setTimeout(animateStatCounters, 80);
-          });
         });
       }
       setSlideshowState(true);
