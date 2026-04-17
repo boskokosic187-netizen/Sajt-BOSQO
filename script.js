@@ -1503,9 +1503,10 @@ window.addEventListener('beforeunload', function () {
   }
 
   /* ---- Slideshow ---- */
-  var slideshow = document.getElementById('balliesSlideshow');
-  var track1    = document.getElementById('balliesTrack1');
-  var track2    = document.getElementById('balliesTrack2');
+  var slideshow  = document.getElementById('balliesSlideshow');
+  var statsBar   = document.getElementById('balliesStatsBar');
+  var track1     = document.getElementById('balliesTrack1');
+  var track2     = document.getElementById('balliesTrack2');
 
   (function buildSlideshow() {
     if (!track1 || !track2) return;
@@ -1869,8 +1870,9 @@ window.addEventListener('beforeunload', function () {
     { file: '1360x680.png',                     span: 2, ar: '1360/680'  }, // row6: 2:1 + square
     { file: '4.png',                            span: 1, ar: '1/1'       },
     { file: 'Banner 2.png',                     span: 3, ar: '1500/500'  }, // row7: full-width wide
-    { file: '1000$.png',                        span: 1, ar: '1/1'       }, // row8: 2 squares
+    { file: '1000$.png',                        span: 1, ar: '1/1'       }, // row8: 3 squares
     { file: '1 (1).png',                        span: 1, ar: '1/1'       },
+    { file: 'edelman-vs-gravity.png',           span: 1, ar: '1088/1080' },
   ];
 
   (function buildGallery() {
@@ -1955,7 +1957,28 @@ window.addEventListener('beforeunload', function () {
 
     function hideSlideshow() {
       if (slideshow) slideshow.style.display = 'none';
+      if (statsBar) {
+        statsBar.classList.remove('ballies-stats-active', 'ballies-stats-entered');
+      }
       setSlideshowState(false);
+    }
+    function animateStatCounters() {
+      if (!statsBar) return;
+      var items = statsBar.querySelectorAll('.ballies-stat-value');
+      items.forEach(function (el) {
+        var to = parseInt(el.getAttribute('data-to'), 10);
+        var suffix = el.getAttribute('data-suffix') || '';
+        var duration = to >= 1000 ? 1400 : 900;
+        var start = performance.now();
+        function step(now) {
+          var t = Math.min(1, (now - start) / duration);
+          var eased = 1 - Math.pow(1 - t, 3);
+          var val = Math.round(eased * to);
+          el.textContent = val.toLocaleString() + suffix;
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
     }
     function showSlideshow() {
       if (slideshow) {
@@ -1964,6 +1987,16 @@ window.addEventListener('beforeunload', function () {
         requestAnimationFrame(function () {
           slideshow.classList.add('ballies-entering');
           setTimeout(function () { slideshow.classList.remove('ballies-entering'); }, 1100);
+        });
+      }
+      if (statsBar) {
+        statsBar.classList.remove('ballies-stats-entered');
+        statsBar.classList.add('ballies-stats-active');
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            statsBar.classList.add('ballies-stats-entered');
+            setTimeout(animateStatCounters, 80);
+          });
         });
       }
       setSlideshowState(true);
@@ -2022,12 +2055,12 @@ window.addEventListener('beforeunload', function () {
       }, 520);
     }
     function showGallery() {
-      // Always reset scroll to top when entering page 4
-      if (galleryWrap) galleryWrap.scrollTop = 0;
       if (galleryOuter) {
         galleryOuter.classList.remove('ballies-gallery-active');
         requestAnimationFrame(function () {
           galleryOuter.classList.add('ballies-gallery-active');
+          // Reset scroll AFTER display:block is applied — setting scrollTop on display:none has no effect
+          if (galleryWrap) galleryWrap.scrollTop = 0;
           setTimeout(updateGalleryScrollbar, 50);
         });
       }
