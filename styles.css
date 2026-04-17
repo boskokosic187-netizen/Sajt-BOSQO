@@ -3013,7 +3013,7 @@ body[data-stage="8"] .journey-title-wrap {
   display: flex;
   flex-direction: column;
   gap: 42px;
-  margin-top: 105px;
+  margin-top: 80px;
   padding: 44px 0 28px;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
