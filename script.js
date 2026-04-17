@@ -1100,7 +1100,7 @@ window.addEventListener('beforeunload', function () {
     if (window._applyStage) window._applyStage(9);
 
     // Projects appear after a brief pause
-    if (window._activateProjectsDirect) window._activateProjectsDirect(600);
+    if (window._activateProjectsDirect) window._activateProjectsDirect(100);
 
     // Remove fast mode after transitions settle
     setTimeout(function () {
@@ -1431,6 +1431,163 @@ window.addEventListener('beforeunload', function () {
   // Expose for potential scroll navigation
   window._openITS  = openITS;
   window._closeITS = closeITS;
+})();
+
+/* ============================================
+   BALLIES NFT PAGE
+   ============================================ */
+(function () {
+  var item3       = document.getElementById('rmItem3');
+  var balliesPage = document.getElementById('balliesPage');
+  var balliesBack = document.getElementById('balliesBack');
+  var projects    = document.getElementById('projectsSection');
+  if (!item3 || !balliesPage) return;
+
+  var twWrap  = document.getElementById('balliesTypewriter');
+  var twLine1 = document.getElementById('balliesTwLine1');
+  var twLine2 = document.getElementById('balliesTwLine2');
+
+  var TW_TEXT1 = "From January 2023 to January 2026, I collaborated with Ballies, working across a wide range of Web3-focused projects \u2014 including NFT collections, airdrop campaigns, token design, and full-scale visual campaigns.";
+  var TW_TEXT2 = "I was also responsible for creating animated video ads, investor decks, and delivering a complete branding package. Throughout this experience, I developed a strong understanding of crypto, NFTs, and Web3 gaming ecosystems.";
+  var TW_SPEED = 11;
+
+  var twTimer     = null;
+  var twCharTimer = null;
+
+  function resetTypewriter() {
+    clearTimeout(twTimer);
+    clearTimeout(twCharTimer);
+    if (!twWrap) return;
+    twWrap.classList.remove('tw-visible');
+    if (twLine1) twLine1.textContent = '';
+    if (twLine2) twLine2.textContent = '';
+    var cur = twWrap.querySelector('.tw-cursor');
+    if (cur) cur.remove();
+  }
+
+  function startTypewriter() {
+    if (!twWrap || !twLine1 || !twLine2) return;
+    var cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    twWrap.classList.add('tw-visible');
+    twLine1.appendChild(cursor);
+    var i = 0;
+    function typeChar() {
+      if (i < TW_TEXT1.length) {
+        twLine1.insertBefore(document.createTextNode(TW_TEXT1[i]), cursor);
+      } else if (i === TW_TEXT1.length) {
+        twLine2.appendChild(cursor);
+      } else {
+        twLine2.insertBefore(document.createTextNode(TW_TEXT2[i - TW_TEXT1.length - 1]), cursor);
+      }
+      i++;
+      if (i < TW_TEXT1.length + 1 + TW_TEXT2.length) {
+        twCharTimer = setTimeout(typeChar, TW_SPEED);
+      }
+    }
+    typeChar();
+  }
+
+  /* ---- Slideshow ---- */
+  var slideshow = document.getElementById('balliesSlideshow');
+  var track1    = document.getElementById('balliesTrack1');
+  var track2    = document.getElementById('balliesTrack2');
+
+  (function buildSlideshow() {
+    if (!track1 || !track2) return;
+    var html = '';
+    for (var rep = 0; rep < 2; rep++) {
+      for (var i = 1; i <= 20; i++) {
+        var num = String(i).padStart(3, '0');
+        html += '<div class="ballies-nft-card">'
+              +   '<div class="ballies-nft-inner">'
+              +     '<img src="assets/ballies/1/' + i + '.png" alt="Ballies #' + num + '" draggable="false">'
+              +   '</div>'
+              +   '<div class="ballies-nft-num">#' + num + '</div>'
+              + '</div>';
+      }
+    }
+    track1.innerHTML = html;
+    track2.innerHTML = html;
+  })();
+
+  /* Hover: scale up hovered card, slow others 60% */
+  if (slideshow) {
+    slideshow.addEventListener('mouseover', function (e) {
+      var card = e.target.closest('.ballies-nft-card');
+      if (!card) return;
+      card.classList.add('ballies-card-hovered');
+      [track1, track2].forEach(function (t) {
+        if (!t) return;
+        t.getAnimations().forEach(function (a) { a.playbackRate = 0.4; });
+      });
+    });
+    slideshow.addEventListener('mouseout', function (e) {
+      var card = e.target.closest('.ballies-nft-card');
+      if (!card) return;
+      if (card.contains(e.relatedTarget)) return;
+      card.classList.remove('ballies-card-hovered');
+      if (!slideshow.querySelector('.ballies-card-hovered')) {
+        [track1, track2].forEach(function (t) {
+          if (!t) return;
+          t.getAnimations().forEach(function (a) { a.playbackRate = 1; });
+        });
+      }
+    });
+
+    /* Click: open lightbox */
+    slideshow.addEventListener('click', function (e) {
+      var card = e.target.closest('.ballies-nft-card');
+      if (!card) return;
+      var img = card.querySelector('img');
+      var num = card.querySelector('.ballies-nft-num');
+      if (!img || !window._openLightboxWithSrc) return;
+      window._openLightboxWithSrc(img.src, img.alt, num ? num.textContent : '');
+    });
+  }
+
+  function setSlideshowState(running) {
+    [track1, track2].forEach(function (t) {
+      if (!t) return;
+      t.style.animationPlayState = running ? 'running' : 'paused';
+    });
+  }
+
+  function openBallies() {
+    window._pageOpen = true;
+    window._activePage = 'ballies';
+    window._closeActivePage = closeBallies;
+    balliesPage.classList.add('pp-active');
+    if (projects) projects.style.opacity = '0';
+    setSlideshowState(true);
+    startTypewriter();
+  }
+
+  function closeBallies() {
+    window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
+    balliesPage.classList.remove('pp-active');
+    if (projects) projects.style.opacity = '1';
+    setSlideshowState(false);
+    resetTypewriter();
+  }
+
+  item3.addEventListener('click', function () {
+    if (!projects || !projects.classList.contains('projects-active')) return;
+    openBallies();
+  });
+
+  if (balliesBack) {
+    balliesBack.addEventListener('click', closeBallies);
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && window._pageOpen && balliesPage.classList.contains('pp-active')) closeBallies();
+  });
+
+  window._openBallies  = openBallies;
+  window._closeBallies = closeBallies;
 })();
 
 /* ============================================
@@ -1792,8 +1949,18 @@ window.addEventListener('beforeunload', function () {
     }
   }, true); // capture phase so it fires before the FCA ESC handler
 
+  function openLightboxWithSrc(src, alt, caption) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    if (lbCap) lbCap.textContent = caption || '';
+    lightbox.classList.add('lb-active');
+    galleries.forEach(function (g) { g.classList.add('gallery-lb-open'); });
+    window._lbOpen = true;
+  }
+
   window._closeLightbox = closeLightbox;
   window._openFcaLightboxForItem = openLightbox;
+  window._openLightboxWithSrc = openLightboxWithSrc;
 })();
 
 
@@ -1950,8 +2117,9 @@ window.addEventListener('beforeunload', function () {
   // For stage 9 (projects roadmap): bypass the 1500ms activation delay
   if (saved >= 9 && window._activateProjectsDirect) {
     var lastPage = sessionStorage.getItem('lastPage');
-    var onActive = lastPage === 'fca' && window._openFCA ? function () { window._openFCA(); }
-                 : lastPage === 'its' && window._openITS ? function () { window._openITS(); }
+    var onActive = lastPage === 'fca'     && window._openFCA     ? function () { window._openFCA(); }
+                 : lastPage === 'its'     && window._openITS     ? function () { window._openITS(); }
+                 : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
                  : null;
     window._activateProjectsDirect(100, onActive);
   }

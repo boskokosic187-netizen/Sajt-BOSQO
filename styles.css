@@ -3005,4 +3005,131 @@ body[data-stage="8"] .journey-title-wrap {
   display: none;
 }
 
+/* ====== Ballies NFT Slideshow ====== */
+.ballies-slideshow {
+  width: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  margin-top: 105px;
+  padding: 44px 0 28px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.ballies-row {
+  display: flex;
+  overflow: visible;
+}
+
+.ballies-track {
+  display: flex;
+  gap: 18px;
+  will-change: transform;
+}
+
+.ballies-row-rtl .ballies-track {
+  animation: ballies-rtl 44s linear infinite;
+}
+
+.ballies-row-ltr .ballies-track {
+  animation: ballies-ltr 44s linear infinite;
+}
+
+/* 20 cards × (220 + 18) = 4760 px per set */
+@keyframes ballies-rtl {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-4760px); }
+}
+@keyframes ballies-ltr {
+  from { transform: translateX(-4760px); }
+  to   { transform: translateX(0); }
+}
+
+.ballies-nft-card {
+  flex-shrink: 0;
+  width: 220px;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              z-index 0s;
+  position: relative;
+  z-index: 1;
+}
+
+.ballies-nft-card.ballies-card-hovered {
+  transform: scale(1.22);
+  z-index: 20;
+}
+
+.ballies-nft-inner {
+  position: relative;
+  background: linear-gradient(160deg, #050f0d 0%, #0a0a0c 100%);
+  border: 2px solid #1de9b6;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(29, 233, 182, 0.18),
+    0 0 16px rgba(29, 233, 182, 0.35),
+    0 0 40px rgba(29, 233, 182, 0.10),
+    inset 0 0 24px rgba(29, 233, 182, 0.05);
+  padding: 9px 9px 0 9px;
+}
+
+/* Top teal light streak */
+.ballies-nft-inner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 5%, #1de9b6 35%, #00ffd5 50%, #1de9b6 65%, transparent 95%);
+  border-radius: 14px 14px 0 0;
+  opacity: 0.9;
+}
+
+/* Inner inset frame line */
+.ballies-nft-inner::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 9px;
+  border: 1px solid rgba(29, 233, 182, 0.18);
+  pointer-events: none;
+}
+
+.ballies-nft-inner img {
+  width: 100%;
+  aspect-ratio: 1423 / 1679;
+  display: block;
+  border-radius: 7px;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ballies-nft-label {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #1de9b6;
+  margin: 28px 0 0;
+}
+
+.ballies-nft-num {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #1de9b6;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 10px rgba(29, 233, 182, 0.75);
+  padding: 7px 0 8px;
+  background: rgba(0, 0, 0, 0.45);
+  border-top: 1px solid rgba(29, 233, 182, 0.22);
+}
+
 
