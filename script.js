@@ -1720,7 +1720,10 @@ window.addEventListener('beforeunload', function () {
           iframe.setAttribute('allowfullscreen', '');
           iframe.setAttribute('frameborder', '0');
           frame.appendChild(iframe);
-          item.classList.add('playing');
+          // Delay thumbnail fade-out so YouTube's loading spinner never shows
+          hoverTimer = setTimeout(function () {
+            if (frame.querySelector('iframe')) item.classList.add('playing');
+          }, 900);
         }, 160);
       });
 

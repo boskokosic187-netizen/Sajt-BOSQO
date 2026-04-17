@@ -3459,7 +3459,7 @@ body[data-stage="8"] .journey-title-wrap {
   height: 18px;
   border: 2px solid #1de9b6;
   pointer-events: none;
-  z-index: 4;
+  z-index: 5;
   opacity: 0.85;
   transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
@@ -3480,24 +3480,10 @@ body[data-stage="8"] .journey-title-wrap {
   height: 24px;
 }
 
-.ballies-v-thumb {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: opacity 0.35s ease, transform 0.6s ease;
-  z-index: 1;
-}
-.ballies-v-item.playing .ballies-v-thumb {
-  opacity: 0;
-}
-
 .ballies-v-frame {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 }
 .ballies-v-frame iframe {
@@ -3508,6 +3494,21 @@ body[data-stage="8"] .journey-title-wrap {
   height: 114%;
   border: 0;
   pointer-events: none;
+}
+
+/* Thumbnail sits above the iframe — covers YouTube loading state until .playing */
+.ballies-v-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+.ballies-v-item.playing .ballies-v-thumb {
+  opacity: 0;
 }
 
 .ballies-v-play {
@@ -3525,7 +3526,7 @@ body[data-stage="8"] .journey-title-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  z-index: 4;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   pointer-events: none;
 }
@@ -3551,7 +3552,7 @@ body[data-stage="8"] .journey-title-wrap {
 .ballies-v-veil {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   background:
     linear-gradient(180deg, rgba(5, 16, 13, 0.25) 0%, rgba(5, 16, 13, 0) 18%, rgba(5, 16, 13, 0) 82%, rgba(5, 16, 13, 0.28) 100%);
