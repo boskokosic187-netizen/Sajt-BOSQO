@@ -740,6 +740,8 @@
         } else {
           if (window._closeBallies) window._closeBallies();
         }
+      } else if (window._activePage === 'wsg') {
+        if (window._closeWSG) window._closeWSG();
       } else {
         // Any other project page — just close it
         if (window._closeActivePage) window._closeActivePage();
@@ -1674,19 +1676,29 @@ window.addEventListener('beforeunload', function () {
       '&playsinline=1&disablekb=1&fs=0&cc_load_policy=0';
   }
 
+  function featuredPlayParams(id) {
+    // No loop so the video ends naturally; enablejsapi so we get postMessage state events
+    return 'https://www.youtube.com/embed/' + id +
+      '?autoplay=1&mute=1&enablejsapi=1' +
+      '&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3' +
+      '&playsinline=1&disablekb=1&fs=0&cc_load_policy=0';
+  }
+
   function lightboxParams(id) {
     return 'https://www.youtube.com/embed/' + id +
       '?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1';
   }
 
   // ----- Idle auto-feature -----
-  var videoIdleTimer  = null;
-  var videoHoverCount = 0;
-  var videoFeaturedEl = null;
+  var videoIdleTimer       = null;
+  var videoHoverCount      = 0;
+  var videoFeaturedEl      = null;
   var videoFeaturedPlayTimer = null;
+  var videoFeaturedWin     = null; // contentWindow of the featured iframe
 
   function clearFeatured() {
     clearTimeout(videoFeaturedPlayTimer);
+    videoFeaturedWin = null;
     if (videoFeaturedEl) {
       var f = videoFeaturedEl.querySelector('.ballies-v-frame');
       if (f) f.innerHTML = '';
@@ -1696,11 +1708,15 @@ window.addEventListener('beforeunload', function () {
     if (videos) videos.classList.remove('has-featured');
   }
 
-  function triggerFeatured() {
+  function triggerFeatured(excludeIdx) {
     if (!videos) return;
     clearFeatured();
     var items = videos.querySelectorAll('.ballies-v-item');
-    var idx = Math.floor(Math.random() * items.length);
+    var indices = [];
+    items.forEach(function (_, i) {
+      if (i !== excludeIdx) indices.push(i);
+    });
+    var idx = indices[Math.floor(Math.random() * indices.length)];
     videoFeaturedEl = items[idx];
     var featId = videoFeaturedEl.getAttribute('data-vid');
     videos.classList.add('has-featured');
@@ -1709,16 +1725,33 @@ window.addEventListener('beforeunload', function () {
     if (frame) {
       frame.innerHTML = '';
       var iframe = document.createElement('iframe');
-      iframe.src = hoverPlayParams(featId);
+      iframe.src = featuredPlayParams(featId);
       iframe.setAttribute('allow', 'autoplay; encrypted-media');
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('frameborder', '0');
       frame.appendChild(iframe);
+      videoFeaturedWin = iframe.contentWindow;
       videoFeaturedPlayTimer = setTimeout(function () {
         if (videoFeaturedEl) videoFeaturedEl.classList.add('playing');
       }, 900);
     }
   }
+
+  // Listen for YouTube ended event (playerState === 0) from the featured iframe
+  window.addEventListener('message', function (e) {
+    if (!videoFeaturedEl || !videoFeaturedWin) return;
+    if (e.source !== videoFeaturedWin) return;
+    try {
+      var data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+      if (!data) return;
+      var ended = (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) ||
+                  (data.event === 'onStateChange' && data.info === 0);
+      if (!ended) return;
+      var prevIdx = parseInt(videoFeaturedEl.getAttribute('data-index'), 10);
+      clearFeatured();
+      videoIdleTimer = setTimeout(function () { triggerFeatured(prevIdx); }, 1400);
+    } catch (_) {}
+  });
 
   function resetIdleTimer() {
     clearTimeout(videoIdleTimer);
@@ -1814,6 +1847,105 @@ window.addEventListener('beforeunload', function () {
     if (videos) videos.classList.remove('has-featured');
   }
 
+  // ----- Page 4: editorial gallery -----
+  var galleryOuter = document.getElementById('balliesGalleryOuter');
+  var galleryWrap  = document.getElementById('balliesGalleryWrap');
+  var galleryEl    = document.getElementById('balliesGallery');
+  var gSbThumb     = document.getElementById('balliesGSbThumb');
+
+  // Layout: rows sized to content via aspect-ratio; ultra-wide banners span 3 cols
+  var galleryItems = [
+    { file: 'all-stars-banner-1920-1080.jpg', span: 2, ar: '1920/1080' }, // row1: landscape
+    { file: 'kobe.png',                        span: 1, ar: '1082/1325' }, // row1: portrait
+    { file: 'badge-pack.png',                   span: 1, ar: '1392/2024' }, // row2: portrait × 3
+    { file: 'Drop-card.png',                    span: 1, ar: '967/1386'  },
+    { file: '5-Nov-DRJ.png',                    span: 1, ar: '1080/1308' },
+    { file: 'NFL-Games.png',                    span: 1, ar: '1/1'       }, // row3: squares × 3
+    { file: 'Ball-post-4.png',                  span: 1, ar: '1/1'       },
+    { file: 'You-vs-Ai.png',                    span: 1, ar: '1/1'       },
+    { file: 'starter-pack-banner.png',          span: 3, ar: '2018/451'  }, // row4: full-width ultra-wide
+    { file: 'drop-page.png',                    span: 2, ar: '1440/810'  }, // row5: landscape + portrait
+    { file: '2000_vince_carter.png',            span: 1, ar: '1080/1252' },
+    { file: '1360x680.png',                     span: 2, ar: '1360/680'  }, // row6: 2:1 + square
+    { file: '4.png',                            span: 1, ar: '1/1'       },
+    { file: 'Banner 2.png',                     span: 3, ar: '1500/500'  }, // row7: full-width wide
+    { file: '1000$.png',                        span: 1, ar: '1/1'       }, // row8: 2 squares
+    { file: '1 (1).png',                        span: 1, ar: '1/1'       },
+  ];
+
+  (function buildGallery() {
+    if (!galleryEl) return;
+    galleryEl.innerHTML = '';
+    galleryItems.forEach(function (item, idx) {
+      var el = document.createElement('div');
+      el.className = 'ballies-g-item';
+      if (item.span > 1) el.setAttribute('data-span', String(item.span));
+      if (item.ar) el.style.aspectRatio = item.ar;
+      el.setAttribute('data-index', idx);
+
+      var img = document.createElement('img');
+      img.className = 'ballies-g-img';
+      img.src = 'assets/BALLIES/4/' + item.file;
+      img.alt = item.file.replace(/\.[^.]+$/, '');
+      img.loading = 'lazy';
+      img.draggable = false;
+
+      el.appendChild(img);
+      galleryEl.appendChild(el);
+
+      el.addEventListener('click', function () {
+        if (window._openLightboxWithSrc) {
+          window._openLightboxWithSrc(img.src, img.alt, '');
+        }
+      });
+    });
+  })();
+
+  function updateGalleryScrollbar() {
+    if (!galleryWrap || !gSbThumb) return;
+    var total    = galleryWrap.scrollHeight;
+    var visible  = galleryWrap.clientHeight;
+    var scrollTop = galleryWrap.scrollTop;
+    if (total <= visible) { gSbThumb.style.height = '100%'; gSbThumb.style.top = '0px'; return; }
+    var thumbH   = Math.max(32, Math.round((visible / total) * visible));
+    var thumbTop = Math.round((scrollTop / (total - visible)) * (visible - thumbH));
+    gSbThumb.style.height = thumbH + 'px';
+    gSbThumb.style.top    = thumbTop + 'px';
+  }
+
+  if (galleryWrap) {
+    galleryWrap.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      galleryWrap.scrollTop += e.deltaY;
+    }, { passive: false });
+    galleryWrap.addEventListener('scroll', updateGalleryScrollbar);
+  }
+
+  var gDragging = false;
+  var gDragY = 0;
+  var gDragScroll = 0;
+  if (gSbThumb && galleryWrap) {
+    gSbThumb.addEventListener('mousedown', function (e) {
+      gDragging = true;
+      gDragY = e.clientY;
+      gDragScroll = galleryWrap.scrollTop;
+      gSbThumb.classList.add('dragging');
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!gDragging) return;
+      var total   = galleryWrap.scrollHeight;
+      var visible = galleryWrap.clientHeight;
+      var thumbH  = parseFloat(gSbThumb.style.height) || 32;
+      var ratio   = (total - visible) / (visible - thumbH);
+      galleryWrap.scrollTop = gDragScroll + (e.clientY - gDragY) * ratio;
+    });
+    document.addEventListener('mouseup', function () {
+      if (gDragging) { gDragging = false; gSbThumb.classList.remove('dragging'); }
+    });
+  }
+
   function goToPage(p) {
     if (balliesPage2 === p) return;
     var prev = balliesPage2;
@@ -1876,26 +2008,76 @@ window.addEventListener('beforeunload', function () {
       }
       startIdleTimer();
     }
+    function hideGalleryInstant() {
+      if (galleryOuter) galleryOuter.classList.remove('ballies-gallery-active', 'ballies-gallery-exiting');
+      if (galleryWrap) galleryWrap.scrollTop = 0;
+    }
+    function hideGalleryAnimated(cb) {
+      if (!galleryOuter || !galleryOuter.classList.contains('ballies-gallery-active')) { if (cb) cb(); return; }
+      galleryOuter.classList.add('ballies-gallery-exiting');
+      setTimeout(function () {
+        galleryOuter.classList.remove('ballies-gallery-active', 'ballies-gallery-exiting');
+        if (galleryWrap) galleryWrap.scrollTop = 0;
+        if (cb) cb();
+      }, 520);
+    }
+    function showGallery() {
+      // Always reset scroll to top when entering page 4
+      if (galleryWrap) galleryWrap.scrollTop = 0;
+      if (galleryOuter) {
+        galleryOuter.classList.remove('ballies-gallery-active');
+        requestAnimationFrame(function () {
+          galleryOuter.classList.add('ballies-gallery-active');
+          setTimeout(updateGalleryScrollbar, 50);
+        });
+      }
+    }
 
     if (p === 1) {
-      hideVideosAnimated(function () {
-        hideMosaicAnimated(showSlideshow);
-      });
+      if (prev === 4) {
+        hideVideosInstant();
+        hideMosaicInstant();
+        hideGalleryAnimated(showSlideshow);
+      } else {
+        hideGalleryInstant();
+        hideVideosAnimated(function () {
+          hideMosaicAnimated(showSlideshow);
+        });
+      }
     } else if (p === 2) {
       hideSlideshow();
-      if (prev === 3) {
+      if (prev === 4) {
+        hideVideosInstant();
+        hideGalleryAnimated(showMosaic);
+      } else if (prev === 3) {
+        hideGalleryInstant();
         hideVideosAnimated(showMosaic);
       } else {
+        hideGalleryInstant();
         hideVideosInstant();
         showMosaic();
       }
     } else if (p === 3) {
       hideSlideshow();
-      if (prev === 2) {
+      if (prev === 4) {
+        hideMosaicInstant();
+        hideGalleryAnimated(showVideos);
+      } else if (prev === 2) {
+        hideGalleryInstant();
         hideMosaicAnimated(showVideos);
       } else {
+        hideGalleryInstant();
         hideMosaicInstant();
         showVideos();
+      }
+    } else if (p === 4) {
+      hideSlideshow();
+      hideMosaicInstant();
+      if (prev === 3) {
+        hideVideosAnimated(showGallery);
+      } else {
+        hideVideosInstant();
+        showGallery();
       }
     }
   }
@@ -1905,7 +2087,7 @@ window.addEventListener('beforeunload', function () {
   });
 
   window._balliesPage  = 0;
-  window._balliesTotal = 3;
+  window._balliesTotal = 4;
   window._balliesNextPage = function () {
     if (window._balliesPage < window._balliesTotal - 1) goToPage(window._balliesPage + 2);
   };
@@ -1981,6 +2163,8 @@ window.addEventListener('beforeunload', function () {
     if (projects) projects.style.opacity = '1';
     stopAllVideos();
     if (videosOuter) videosOuter.classList.remove('ballies-videos-active', 'ballies-videos-exiting');
+    if (galleryOuter) galleryOuter.classList.remove('ballies-gallery-active', 'ballies-gallery-exiting');
+    if (galleryWrap) galleryWrap.scrollTop = 0;
     goToPage(1);
     window._balliesPage = 0;
     resetTypewriter();
@@ -2001,6 +2185,89 @@ window.addEventListener('beforeunload', function () {
 
   window._openBallies  = openBallies;
   window._closeBallies = closeBallies;
+})();
+
+/* ============================================
+   WALL STREET GAMES PAGE
+   ============================================ */
+(function () {
+  var item4   = document.getElementById('rmItem4');
+  var wsgPage = document.getElementById('wsgPage');
+  var wsgBack = document.getElementById('wsgBack');
+  var projects = document.getElementById('projectsSection');
+  if (!item4 || !wsgPage) return;
+
+  var twWrap  = document.getElementById('wsgTypewriter');
+  var twLine1 = document.getElementById('wsgTwLine1');
+
+  var TW_TEXT  = "Across multiple collaborations with Wall Street Games, I created animated marketing videos and a range of visual solutions aligned with their bold and dynamic brand identity.";
+  var TW_SPEED = 18;
+
+  var twTimer     = null;
+  var twCharTimer = null;
+
+  function resetTypewriter() {
+    clearTimeout(twTimer);
+    clearTimeout(twCharTimer);
+    if (!twWrap) return;
+    twWrap.classList.remove('tw-visible');
+    if (twLine1) twLine1.textContent = '';
+    var cur = twWrap.querySelector('.tw-cursor');
+    if (cur) cur.remove();
+  }
+
+  function startTypewriter() {
+    if (!twWrap || !twLine1) return;
+    var cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    twWrap.classList.add('tw-visible');
+    twLine1.appendChild(cursor);
+    var i = 0;
+    function typeChar() {
+      twLine1.insertBefore(document.createTextNode(TW_TEXT[i]), cursor);
+      i++;
+      if (i < TW_TEXT.length) {
+        twCharTimer = setTimeout(typeChar, TW_SPEED);
+      }
+    }
+    twTimer = setTimeout(typeChar, 600);
+  }
+
+  function openWSG() {
+    window._pageOpen = true;
+    window._activePage = 'wsg';
+    window._closeActivePage = closeWSG;
+    wsgPage.classList.add('pp-active');
+    if (projects) projects.style.opacity = '0';
+    sessionStorage.setItem('lastPage', 'wsg');
+    startTypewriter();
+  }
+
+  function closeWSG() {
+    window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
+    wsgPage.classList.remove('pp-active');
+    if (projects) projects.style.opacity = '1';
+    sessionStorage.removeItem('lastPage');
+    resetTypewriter();
+  }
+
+  item4.addEventListener('click', function () {
+    if (!projects || !projects.classList.contains('projects-active')) return;
+    openWSG();
+  });
+
+  if (wsgBack) {
+    wsgBack.addEventListener('click', closeWSG);
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && window._pageOpen && wsgPage.classList.contains('pp-active')) closeWSG();
+  });
+
+  window._openWSG  = openWSG;
+  window._closeWSG = closeWSG;
 })();
 
 /* ============================================
@@ -2533,6 +2800,7 @@ window.addEventListener('beforeunload', function () {
     var onActive = lastPage === 'fca'     && window._openFCA     ? function () { window._openFCA(); }
                  : lastPage === 'its'     && window._openITS     ? function () { window._openITS(); }
                  : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
+                 : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
                  : null;
     window._activateProjectsDirect(100, onActive);
   }

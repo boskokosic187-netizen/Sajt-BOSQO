@@ -230,7 +230,7 @@
         <div class="roadmap-label">Ballies NFT</div>
       </div>
 
-      <div class="roadmap-item" style="--appear-delay:2.7s;--stroke-delay:2.90s;--line-delay:3.4s">
+      <div class="roadmap-item roadmap-item-link" id="rmItem4" style="--appear-delay:2.7s;--stroke-delay:2.90s;--line-delay:3.4s">
         <div class="roadmap-left">
           <div class="roadmap-node-wrap">
             <svg class="roadmap-node-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
@@ -673,11 +673,24 @@
       <div class="ballies-videos" id="balliesVideos"></div>
     </div>
 
+    <!-- Page 4: editorial gallery -->
+    <div class="ballies-gallery-outer" id="balliesGalleryOuter">
+      <div class="ballies-gallery-wrap" id="balliesGalleryWrap">
+        <div class="ballies-gallery" id="balliesGallery"></div>
+      </div>
+      <div class="ballies-g-scrollbar" id="balliesGScrollbar">
+        <div class="ballies-g-sb-track">
+          <div class="ballies-g-sb-thumb" id="balliesGSbThumb"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Page dots -->
     <div class="ballies-dots" id="balliesDots">
       <span class="ballies-dot ballies-dot--active" data-page="1"></span>
       <span class="ballies-dot" data-page="2"></span>
       <span class="ballies-dot" data-page="3"></span>
+      <span class="ballies-dot" data-page="4"></span>
     </div>
   </div>
 
@@ -686,6 +699,27 @@
     <div class="ballies-video-lb-frame">
       <button class="ballies-video-lb-close" id="balliesVideoLbClose">✕</button>
       <div class="ballies-video-lb-wrap" id="balliesVideoLbWrap"></div>
+    </div>
+  </div>
+
+  <!-- Wall Street Games Page -->
+  <div class="project-page" id="wsgPage">
+    <button class="pp-back" id="wsgBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad4" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad4)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">Wall Street Games</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="wsgTypewriter">
+      <p class="tw-line" id="wsgTwLine1"></p>
     </div>
   </div>
 
