@@ -1679,6 +1679,63 @@ window.addEventListener('beforeunload', function () {
       '?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1';
   }
 
+  // ----- Idle auto-feature -----
+  var videoIdleTimer  = null;
+  var videoHoverCount = 0;
+  var videoFeaturedEl = null;
+  var videoFeaturedPlayTimer = null;
+
+  function clearFeatured() {
+    clearTimeout(videoFeaturedPlayTimer);
+    if (videoFeaturedEl) {
+      var f = videoFeaturedEl.querySelector('.ballies-v-frame');
+      if (f) f.innerHTML = '';
+      videoFeaturedEl.classList.remove('playing', 'ballies-v-featured');
+      videoFeaturedEl = null;
+    }
+    if (videos) videos.classList.remove('has-featured');
+  }
+
+  function triggerFeatured() {
+    if (!videos) return;
+    clearFeatured();
+    var items = videos.querySelectorAll('.ballies-v-item');
+    var idx = Math.floor(Math.random() * items.length);
+    videoFeaturedEl = items[idx];
+    var featId = videoFeaturedEl.getAttribute('data-vid');
+    videos.classList.add('has-featured');
+    videoFeaturedEl.classList.add('ballies-v-featured');
+    var frame = videoFeaturedEl.querySelector('.ballies-v-frame');
+    if (frame) {
+      frame.innerHTML = '';
+      var iframe = document.createElement('iframe');
+      iframe.src = hoverPlayParams(featId);
+      iframe.setAttribute('allow', 'autoplay; encrypted-media');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('frameborder', '0');
+      frame.appendChild(iframe);
+      videoFeaturedPlayTimer = setTimeout(function () {
+        if (videoFeaturedEl) videoFeaturedEl.classList.add('playing');
+      }, 900);
+    }
+  }
+
+  function resetIdleTimer() {
+    clearTimeout(videoIdleTimer);
+    videoIdleTimer = setTimeout(triggerFeatured, 3000);
+  }
+
+  function startIdleTimer() {
+    clearFeatured();
+    resetIdleTimer();
+  }
+
+  function stopIdleTimer() {
+    clearTimeout(videoIdleTimer);
+    videoHoverCount = 0;
+    clearFeatured();
+  }
+
   (function buildVideos() {
     if (!videos) return;
     videos.innerHTML = '';
@@ -1712,6 +1769,9 @@ window.addEventListener('beforeunload', function () {
       var hoverTimer = null;
 
       item.addEventListener('mouseenter', function () {
+        videoHoverCount++;
+        clearFeatured();
+        clearTimeout(videoIdleTimer); // pause timer while any item is hovered
         if (hoverTimer) clearTimeout(hoverTimer);
         hoverTimer = setTimeout(function () {
           if (frame.querySelector('iframe')) return;
@@ -1721,7 +1781,6 @@ window.addEventListener('beforeunload', function () {
           iframe.setAttribute('allowfullscreen', '');
           iframe.setAttribute('frameborder', '0');
           frame.appendChild(iframe);
-          // Delay thumbnail fade-out so YouTube's loading spinner never shows
           hoverTimer = setTimeout(function () {
             if (frame.querySelector('iframe')) item.classList.add('playing');
           }, 900);
@@ -1732,9 +1791,13 @@ window.addEventListener('beforeunload', function () {
         if (hoverTimer) { clearTimeout(hoverTimer); hoverTimer = null; }
         frame.innerHTML = '';
         item.classList.remove('playing');
+        videoHoverCount = Math.max(0, videoHoverCount - 1);
+        if (videoHoverCount === 0) resetIdleTimer(); // restart only when all items unhovered
       });
 
       item.addEventListener('click', function () {
+        clearTimeout(videoIdleTimer);
+        clearFeatured();
         openVideoLb(id);
       });
     });
@@ -1742,11 +1805,13 @@ window.addEventListener('beforeunload', function () {
 
   function stopAllVideos() {
     if (!videos) return;
+    stopIdleTimer();
     videos.querySelectorAll('.ballies-v-item').forEach(function (it) {
       var f = it.querySelector('.ballies-v-frame');
       if (f) f.innerHTML = '';
-      it.classList.remove('playing');
+      it.classList.remove('playing', 'ballies-v-featured');
     });
+    if (videos) videos.classList.remove('has-featured');
   }
 
   function goToPage(p) {
@@ -1809,6 +1874,7 @@ window.addEventListener('beforeunload', function () {
           videosOuter.classList.add('ballies-videos-active');
         });
       }
+      startIdleTimer();
     }
 
     if (p === 1) {
