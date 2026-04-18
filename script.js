@@ -741,7 +741,11 @@
           if (window._closeBallies) window._closeBallies();
         }
       } else if (window._activePage === 'wsg') {
-        if (window._closeWSG) window._closeWSG();
+        if (window._wsgPage > 0) {
+          if (window._wsgPrevPage) window._wsgPrevPage();
+        } else {
+          if (window._closeWSG) window._closeWSG();
+        }
       } else {
         // Any other project page — just close it
         if (window._closeActivePage) window._closeActivePage();
@@ -764,6 +768,12 @@
     // Scroll DOWN while Ballies is open and more pages remain → advance
     if (window._pageOpen && window._activePage === 'ballies' && dir === 1 && window._balliesPage < (window._balliesTotal || 1) - 1) {
       if (window._balliesNextPage) window._balliesNextPage();
+      return;
+    }
+
+    // Scroll DOWN while WSG is open and more pages remain → advance
+    if (window._pageOpen && window._activePage === 'wsg' && dir === 1 && window._wsgPage < (window._wsgTotal || 1) - 1) {
+      if (window._wsgNextPage) window._wsgNextPage();
       return;
     }
 
@@ -2355,11 +2365,195 @@ window.addEventListener('beforeunload', function () {
     };
   }
 
+  // ---- WSG Gallery (page 2) ----
+  var wsgGalleryOuter = document.getElementById('wsgGalleryOuter');
+  var wsgGalleryWrap  = document.getElementById('wsgGalleryWrap');
+  var wsgGalleryEl    = document.getElementById('wsgGallery');
+  var wsgGSbThumb     = document.getElementById('wsgGSbThumb');
+  var wsgDots         = document.querySelectorAll('.wsg-dot');
+  var wsgBgroupLb     = document.getElementById('wsgBgroupLb');
+  var wsgBgroupLbClose = document.getElementById('wsgBgroupLbClose');
+  var wsgPage2 = 1; // current WSG sub-page
+
+  var wsgGalleryItems = [
+    { type: 'bgroup', span: 2, ar: '16/9' },
+    { file: 'banner-wsg.png',                                     span: 1, ar: '1130/1500' },
+    { file: 'WhatsApp Image 2026-04-18 at 12.12.02.jpeg',         span: 1, ar: '1/1'       },
+    { file: 'wsg-nvidia-1.png',                                    span: 1, ar: '1600/1067' },
+    { file: 'WhatsApp Image 2026-04-18 at 12.12.05.jpeg',         span: 1, ar: '1600/1224' },
+    { file: 'pic11 (1).png',                                       span: 1, ar: '960/540'   },
+    { file: 'banner-restyle.png',                                  span: 2, ar: '1920/1118' },
+  ];
+
+  (function buildWsgGallery() {
+    if (!wsgGalleryEl) return;
+    wsgGalleryEl.innerHTML = '';
+    wsgGalleryItems.forEach(function (item) {
+      var el = document.createElement('div');
+      el.className = 'wsg-g-item';
+      if (item.span > 1) el.setAttribute('data-span', String(item.span));
+
+      var clip = document.createElement('div');
+      clip.className = 'wsg-g-clip';
+      el.appendChild(clip);
+
+      if (item.type === 'bgroup') {
+        var triptych = document.createElement('div');
+        triptych.className = 'wsg-bgroup';
+        ['B1.png', 'B2.png', 'B3.png'].forEach(function (f) {
+          var panel = document.createElement('div');
+          panel.className = 'wsg-bgroup-panel';
+          var img = document.createElement('img');
+          img.src = 'assets/WSG/2/' + f;
+          img.alt = f.replace('.png', '');
+          img.draggable = false;
+          panel.appendChild(img);
+          triptych.appendChild(panel);
+        });
+        var lbl = document.createElement('div');
+        lbl.className = 'wsg-bgroup-label';
+        lbl.textContent = 'B1 · B2 · B3';
+        clip.appendChild(triptych);
+        el.appendChild(lbl);
+        el.addEventListener('click', function () {
+          if (wsgBgroupLb) wsgBgroupLb.classList.add('wsg-bgroup-lb--active');
+        });
+      } else {
+        var img = document.createElement('img');
+        img.className = 'wsg-g-img';
+        img.src = 'assets/WSG/2/' + item.file;
+        img.alt = item.file.replace(/\.[^.]+$/, '');
+        img.loading = 'lazy';
+        img.draggable = false;
+        clip.appendChild(img);
+        el.addEventListener('click', function () {
+          if (window._openLightboxWithSrc) window._openLightboxWithSrc(img.src, img.alt, '', true);
+        });
+      }
+      wsgGalleryEl.appendChild(el);
+    });
+  })();
+
+  // B-group lightbox close
+  if (wsgBgroupLbClose) {
+    wsgBgroupLbClose.addEventListener('click', function () {
+      if (wsgBgroupLb) wsgBgroupLb.classList.remove('wsg-bgroup-lb--active');
+    });
+  }
+  if (wsgBgroupLb) {
+    wsgBgroupLb.addEventListener('click', function (e) {
+      if (e.target === wsgBgroupLb) wsgBgroupLb.classList.remove('wsg-bgroup-lb--active');
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && wsgBgroupLb && wsgBgroupLb.classList.contains('wsg-bgroup-lb--active')) {
+      wsgBgroupLb.classList.remove('wsg-bgroup-lb--active');
+    }
+  });
+
+  // Gallery scrollbar
+  function updateWsgScrollbar() {
+    if (!wsgGalleryWrap || !wsgGSbThumb) return;
+    var total = wsgGalleryWrap.scrollHeight;
+    var vis   = wsgGalleryWrap.clientHeight;
+    var st    = wsgGalleryWrap.scrollTop;
+    if (total <= vis) { wsgGSbThumb.style.height = '100%'; wsgGSbThumb.style.top = '0px'; return; }
+    var th = Math.max(32, Math.round((vis / total) * vis));
+    var tp = Math.round((st / (total - vis)) * (vis - th));
+    wsgGSbThumb.style.height = th + 'px';
+    wsgGSbThumb.style.top    = tp + 'px';
+  }
+  if (wsgGalleryWrap) {
+    wsgGalleryWrap.addEventListener('wheel', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      wsgGalleryWrap.scrollTop += e.deltaY;
+    }, { passive: false });
+    wsgGalleryWrap.addEventListener('scroll', updateWsgScrollbar);
+  }
+  var wsgDrag = false, wsgDragY = 0, wsgDragScroll = 0;
+  if (wsgGSbThumb && wsgGalleryWrap) {
+    wsgGSbThumb.addEventListener('mousedown', function (e) {
+      wsgDrag = true; wsgDragY = e.clientY;
+      wsgDragScroll = wsgGalleryWrap.scrollTop;
+      wsgGSbThumb.classList.add('dragging'); e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!wsgDrag) return;
+      var total = wsgGalleryWrap.scrollHeight, vis = wsgGalleryWrap.clientHeight;
+      var th = wsgGSbThumb.offsetHeight;
+      wsgGalleryWrap.scrollTop = wsgDragScroll + (e.clientY - wsgDragY) * (total - vis) / (vis - th);
+    });
+    document.addEventListener('mouseup', function () {
+      if (wsgDrag) { wsgDrag = false; wsgGSbThumb.classList.remove('dragging'); }
+    });
+  }
+
+  // Page switching
+  function updateWsgDots() {
+    wsgDots.forEach(function (d, i) { d.classList.toggle('wsg-dot--active', i + 1 === wsgPage2); });
+  }
+  function showWsgVideos() {
+    if (wsgVideosEl) wsgVideosEl.style.display = '';
+    if (window._stopWsgVideos) window._stopWsgVideos();
+    wsgPage2 = 1;
+    window._wsgPage = 0;
+    updateWsgDots();
+  }
+  function hideWsgVideos() {
+    if (wsgVideosEl) wsgVideosEl.style.display = 'none';
+    if (window._stopWsgVideos) window._stopWsgVideos();
+  }
+  function showWsgGallery() {
+    if (!wsgGalleryOuter) return;
+    wsgGalleryOuter.classList.remove('wsg-gallery-active');
+    requestAnimationFrame(function () {
+      wsgGalleryOuter.classList.add('wsg-gallery-active');
+      if (wsgGalleryWrap) wsgGalleryWrap.scrollTop = 0;
+      setTimeout(updateWsgScrollbar, 50);
+    });
+    wsgPage2 = 2;
+    window._wsgPage = 1;
+    updateWsgDots();
+  }
+  function hideWsgGalleryInstant() {
+    if (wsgGalleryOuter) {
+      wsgGalleryOuter.classList.remove('wsg-gallery-active', 'wsg-gallery-exiting');
+      if (wsgGalleryWrap) wsgGalleryWrap.scrollTop = 0;
+    }
+  }
+  function hideWsgGalleryAnimated(cb) {
+    if (!wsgGalleryOuter || !wsgGalleryOuter.classList.contains('wsg-gallery-active')) { if (cb) cb(); return; }
+    wsgGalleryOuter.classList.add('wsg-gallery-exiting');
+    setTimeout(function () {
+      wsgGalleryOuter.classList.remove('wsg-gallery-active', 'wsg-gallery-exiting');
+      if (wsgGalleryWrap) wsgGalleryWrap.scrollTop = 0;
+      if (cb) cb();
+    }, 500);
+  }
+
+  wsgDots.forEach(function (d, i) {
+    d.addEventListener('click', function () {
+      if (i + 1 === 1) { hideWsgGalleryAnimated(showWsgVideos); }
+      else             { hideWsgVideos(); showWsgGallery(); }
+    });
+  });
+
   var _origCloseWSG = closeWSG;
   closeWSG = function () {
     if (window._stopWsgVideos) window._stopWsgVideos();
+    hideWsgGalleryInstant();
+    if (wsgBgroupLb) wsgBgroupLb.classList.remove('wsg-bgroup-lb--active');
+    wsgPage2 = 1;
+    window._wsgPage = 0;
+    updateWsgDots();
+    if (wsgVideosEl) wsgVideosEl.style.display = '';
     _origCloseWSG();
   };
+
+  window._wsgPage      = 0;
+  window._wsgTotal     = 2;
+  window._wsgNextPage  = function () { if (wsgPage2 < 2) { hideWsgVideos(); showWsgGallery(); } };
+  window._wsgPrevPage  = function () { if (wsgPage2 > 1) { hideWsgGalleryAnimated(showWsgVideos); } };
 
   window._openWSG  = openWSG;
   window._closeWSG = closeWSG;
@@ -2694,7 +2888,7 @@ window.addEventListener('beforeunload', function () {
 
   function closeLightbox() {
     if (!window._lbOpen) return;
-    lightbox.classList.remove('lb-active');
+    lightbox.classList.remove('lb-active', 'lb--gold');
     galleries.forEach(function (g) { g.classList.remove('gallery-lb-open'); });
     window._lbOpen = false;
     setTimeout(function () { lbImg.src = ''; }, 420);
@@ -2724,10 +2918,11 @@ window.addEventListener('beforeunload', function () {
     }
   }, true); // capture phase so it fires before the FCA ESC handler
 
-  function openLightboxWithSrc(src, alt, caption) {
+  function openLightboxWithSrc(src, alt, caption, goldGlow) {
     lbImg.src = src;
     lbImg.alt = alt || '';
     if (lbCap) lbCap.textContent = caption || '';
+    lightbox.classList.toggle('lb--gold', !!goldGlow);
     lightbox.classList.add('lb-active');
     galleries.forEach(function (g) { g.classList.add('gallery-lb-open'); });
     window._lbOpen = true;
