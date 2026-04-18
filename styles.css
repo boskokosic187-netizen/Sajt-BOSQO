@@ -2230,8 +2230,11 @@ body[data-stage="8"] .journey-title-wrap {
   filter: brightness(0.93);
   transition: filter 0.4s ease;
 }
-.fca-lightbox.lb--gold .fca-lb-img-wrap img {
-  filter: brightness(1) drop-shadow(0 0 14px rgba(220,170,40,0.9)) drop-shadow(0 0 40px rgba(255,190,50,0.4));
+.fca-lightbox.lb--gold .fca-lb-img-wrap {
+  box-shadow:
+    0 0 14px 3px  rgba(220,170,40,0.50),
+    0 0 40px 10px rgba(220,170,40,0.22),
+    0 0 80px 20px rgba(200,140,0,0.10);
 }
 
 /* Corner brackets */
@@ -4207,9 +4210,31 @@ body[data-stage="8"] .journey-title-wrap {
 .wsg-g-item[data-span="2"] { grid-column: span 2; }
 .wsg-g-item[data-span="3"] { grid-column: span 3; }
 
+@keyframes wsgGalleryPowerOn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: brightness(8) blur(16px) saturate(2.5);
+  }
+  16% {
+    opacity: 1;
+    transform: scale(0.95);
+    filter: brightness(3) blur(7px) saturate(1.5);
+  }
+  52% {
+    transform: scale(1.015);
+    filter: brightness(1.2) blur(0.8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+}
+
 /* Entry */
 .wsg-gallery-outer.wsg-gallery-active .wsg-g-item {
-  animation: balliesGalleryPowerOn 1.1s cubic-bezier(0.16,1,0.3,1) both;
+  animation: wsgGalleryPowerOn 1.1s cubic-bezier(0.16,1,0.3,1) both;
 }
 .wsg-gallery-outer.wsg-gallery-active .wsg-g-item:nth-child(1) { animation-delay: 0.05s; }
 .wsg-gallery-outer.wsg-gallery-active .wsg-g-item:nth-child(2) { animation-delay: 0.22s; }
@@ -4239,9 +4264,9 @@ body[data-stage="8"] .journey-title-wrap {
 .wsg-g-item:hover {
   transform: scale(1.04) translateY(-3px);
   box-shadow:
-    0 0 16px 4px  rgba(220,170,40,0.80),
-    0 0 48px 12px rgba(220,170,40,0.40),
-    0 0 90px 24px rgba(200,140,0,0.20);
+    0 0 10px 2px  rgba(220,170,40,0.45),
+    0 0 28px 6px  rgba(220,170,40,0.20),
+    0 0 55px 12px rgba(200,140,0,0.10);
   z-index: 10;
 }
 /* Inner clip — holds clip-path so the outer item's filter shadow is never clipped */
@@ -4258,7 +4283,7 @@ body[data-stage="8"] .journey-title-wrap {
   inset: 8px;
   z-index: 4;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0;
   transition: opacity 0.35s ease;
   background:
     linear-gradient(to right,  #1de9b6, #1de9b6) top    left  / 18px 2px no-repeat,
