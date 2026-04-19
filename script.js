@@ -3072,6 +3072,82 @@ window.addEventListener('beforeunload', function () {
 })();
 
 /* ============================================
+   LA BOO PAGE
+   ============================================ */
+(function () {
+  var item5     = document.getElementById('rmItem5');
+  var labooPage = document.getElementById('labooPage');
+  var labooBack = document.getElementById('labooBack');
+  var projects  = document.getElementById('projectsSection');
+  if (!item5 || !labooPage) return;
+
+  var twWrap  = document.getElementById('labooTypewriter');
+  var twLine1 = document.getElementById('labooTwLine1');
+
+  var TW_TEXT  = 'Working with Laboo, I developed visuals and short animated sketches built around their signature characters \u2014 crafted to create a warm, playful, and engaging experience for children and babies.';
+  var TW_SPEED = 18;
+  var twTimer = null, twCharTimer = null;
+
+  function resetTypewriter() {
+    clearTimeout(twTimer); clearTimeout(twCharTimer);
+    if (!twWrap) return;
+    twWrap.classList.remove('tw-visible');
+    if (twLine1) twLine1.textContent = '';
+    var cur = twWrap.querySelector('.tw-cursor');
+    if (cur) cur.remove();
+  }
+
+  function startTypewriter() {
+    if (!twWrap || !twLine1) return;
+    var cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    twWrap.classList.add('tw-visible');
+    twLine1.appendChild(cursor);
+    var i = 0;
+    function typeChar() {
+      twLine1.insertBefore(document.createTextNode(TW_TEXT[i]), cursor);
+      i++;
+      if (i < TW_TEXT.length) twCharTimer = setTimeout(typeChar, TW_SPEED);
+    }
+    twTimer = setTimeout(typeChar, 600);
+  }
+
+  function openLaboo() {
+    window._pageOpen = true;
+    window._activePage = 'laboo';
+    window._closeActivePage = closeLaboo;
+    labooPage.classList.add('pp-active');
+    if (projects) projects.style.opacity = '0';
+    sessionStorage.setItem('lastPage', 'laboo');
+    startTypewriter();
+  }
+
+  function closeLaboo() {
+    window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
+    labooPage.classList.remove('pp-active');
+    if (projects) projects.style.opacity = '1';
+    sessionStorage.removeItem('lastPage');
+    resetTypewriter();
+  }
+
+  item5.addEventListener('click', function () {
+    if (!projects || !projects.classList.contains('projects-active')) return;
+    openLaboo();
+  });
+
+  if (labooBack) labooBack.addEventListener('click', closeLaboo);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && window._pageOpen && labooPage.classList.contains('pp-active')) closeLaboo();
+  });
+
+  window._openLaboo  = openLaboo;
+  window._closeLaboo = closeLaboo;
+})();
+
+/* ============================================
    STAGE RESTORE ON REFRESH
    ============================================ */
 (function () {
@@ -3091,6 +3167,7 @@ window.addEventListener('beforeunload', function () {
                  : lastPage === 'its'     && window._openITS     ? function () { window._openITS(); }
                  : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
                  : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
+                 : lastPage === 'laboo'   && window._openLaboo   ? function () { window._openLaboo(); }
                  : null;
     window._activateProjectsDirect(100, onActive);
   }

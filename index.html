@@ -16,11 +16,6 @@
   })();
 </script>
 
-  <!-- Custom cursor -->
-  <div id="custom-cursor">
-    <img id="cursor-img" src="assets/Cursor.svg" width="96" height="96" draggable="false">
-  </div>
-
   <!-- Background canvases -->
   <canvas id="stars"></canvas>
   <canvas id="stardrops"></canvas>
@@ -244,7 +239,7 @@
         <div class="roadmap-label">Wall Street Games</div>
       </div>
 
-      <div class="roadmap-item" style="--appear-delay:3.5s;--stroke-delay:3.70s">
+      <div class="roadmap-item roadmap-item-link" id="rmItem5" style="--appear-delay:3.5s;--stroke-delay:3.70s">
         <div class="roadmap-left">
           <div class="roadmap-node-wrap">
             <svg class="roadmap-node-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
@@ -740,6 +735,27 @@
     <div class="wsg-dots" id="wsgDots">
       <span class="wsg-dot wsg-dot--active" data-page="1"></span>
       <span class="wsg-dot" data-page="2"></span>
+    </div>
+  </div>
+
+  <!-- La Boo Page -->
+  <div class="project-page" id="labooPage">
+    <button class="pp-back" id="labooBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad5" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad5)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">La Boo</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="labooTypewriter">
+      <p class="tw-line" id="labooTwLine1"></p>
     </div>
   </div>
 
