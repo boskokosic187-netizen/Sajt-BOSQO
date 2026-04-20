@@ -2575,6 +2575,11 @@ body[data-stage="8"] .journey-title-wrap {
 #itsPage.pp-active .its-bb-item:nth-child(6) { animation-delay: 0.75s; }
 
 /* Hover-to-play hint */
+@keyframes itsHintBlink {
+  0%, 100% { opacity: 1;    color: rgba(29, 233, 182, 0.85); }
+  50%       { opacity: 0.3; color: rgba(29, 233, 182, 0.4);  }
+}
+
 .its-hover-hint {
   text-align: center;
   margin-top: 18px;
@@ -2591,6 +2596,7 @@ body[data-stage="8"] .journey-title-wrap {
 
 .its-hover-hint.its-hint-visible {
   opacity: 1;
+  animation: itsHintBlink 2s ease-in-out infinite;
 }
 
 @keyframes itsBbPowerOn {
@@ -3028,9 +3034,9 @@ body[data-stage="8"] .journey-title-wrap {
   transform: scale(1.25);
 }
 
-/* Hide billboard hover hint on galleries 2 & 3 */
-#itsPage.its-gallery-2-active .its-hover-hint,
-#itsPage.its-gallery-3-active .its-hover-hint {
+/* Hide billboard hover hint on galleries 2 & 3 (pages 1 & 2, 0-indexed) */
+#itsPage.its-gallery-1-active .its-hover-hint,
+#itsPage.its-gallery-2-active .its-hover-hint {
   display: none;
 }
 

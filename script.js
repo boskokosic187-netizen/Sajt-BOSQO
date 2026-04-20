@@ -1161,7 +1161,20 @@ window.addEventListener('beforeunload', function () {
           cl.contains('avatar-wrapper') ||
           cl.contains('journey-title-wrap') ||
           cl.contains('roadmap-item-link') ||
-          cl.contains('pp-back')
+          cl.contains('pp-back') ||
+          cl.contains('wsg-v-item') ||
+          cl.contains('wsg-g-item') ||
+          cl.contains('wsg-g-clip') ||
+          cl.contains('wsg-dot') ||
+          cl.contains('ballies-g-item') ||
+          cl.contains('ballies-nft-item') ||
+          cl.contains('ballies-v-item') ||
+          cl.contains('ballies-dot') ||
+          cl.contains('fca-work-item') ||
+          cl.contains('fca-gallery-dot') ||
+          cl.contains('scroll-mouse') ||
+          cl.contains('fca-lb-close') ||
+          cl.contains('wsg-bgroup-lb-close')
         ) return true;
         // Info panels only hoverable after stroke animation completes
         if (cl.contains('info-panel-wrap')) {
