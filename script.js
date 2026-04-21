@@ -930,8 +930,8 @@ window.addEventListener('beforeunload', function () {
       document.fonts.ready.then(function () {
         section.classList.add('projects-active');
         if (onActive) onActive();
-        // Last item stroke ends at ~4.3s (delay 3.70s + 0.6s duration); start at 4.5s
-        twTimer = setTimeout(startTypewriter, 4500);
+        // Start typewriter immediately as page opens
+        twTimer = setTimeout(startTypewriter, 0);
         // Scroll hint: cancel pending timer, schedule for content-ready + 3s
         // Last roadmap item fully drawn at ~4.3s from projects-active
         if (window._resetScrollHint) {
