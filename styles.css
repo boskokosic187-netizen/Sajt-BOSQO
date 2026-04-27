@@ -2437,7 +2437,9 @@ body[data-stage="8"] .journey-title-wrap {
   opacity: 0;
 }
 
-/* Hover iframe — created on first mouseenter, lazy per item */
+/* Hover iframe — created by YT.Player API in background. Hidden by default,
+   revealed only when player is "warm" (chrome auto-hidden) and user is hovering. */
+.its-bb-screen iframe,
 .its-bb-player {
   position: absolute;
   top: 0;
@@ -2452,8 +2454,19 @@ body[data-stage="8"] .journey-title-wrap {
   display: block;
 }
 
+.its-bb-screen iframe.its-bb-visible,
 .its-bb-player.its-bb-visible {
   opacity: 1;
+}
+
+/* Mount point for YT.Player — invisible until replaced by iframe */
+.its-bb-mount,
+.ballies-v-mount,
+.wsg-v-mount {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* ---- Hover states ---- */

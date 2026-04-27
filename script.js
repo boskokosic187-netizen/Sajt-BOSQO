@@ -1471,6 +1471,143 @@ window.addEventListener('beforeunload', function () {
 })();
 
 /* ============================================
+   YOUTUBE IFRAME API — shared hover-player helper
+   ============================================ */
+/*
+ * createHoverPlayer(videoId, mountEl, onWarm)
+ *   Creates a YT.Player inside mountEl (a div). Player autoplays muted, then
+ *   pauses itself once "warm" so the next hover gets instant playback from 0.
+ *   Returns { play, pause, getIframe, isWarm, destroy }.
+ *
+ *   "Warm" = onReady has fired AND ~3s have passed (YouTube's title/logo
+ *   overlay auto-hides after ~3s of playback — by the time we mark warm,
+ *   chrome is already gone). Until warm, the iframe stays hidden; the parent
+ *   thumbnail covers it.
+ *
+ * Pages should:
+ *   - hide iframe via CSS until item.classList.contains('playing')
+ *   - call .play() on mouseenter (instant from 0 once warm)
+ *   - call .pause() on mouseleave
+ */
+(function () {
+  var apiReady = false;
+  var apiCallbacks = [];
+  var apiLoading = false;
+
+  window._whenYTReady = function (cb) {
+    if (apiReady) return cb();
+    apiCallbacks.push(cb);
+    if (apiLoading) return;
+    apiLoading = true;
+    var prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () {
+      if (typeof prev === 'function') { try { prev(); } catch (e) {} }
+      apiReady = true;
+      apiCallbacks.splice(0).forEach(function (fn) { try { fn(); } catch (e) {} });
+    };
+    var s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    s.async = true;
+    document.head.appendChild(s);
+  };
+
+  // Warm-up window: time after onReady before we consider the player "warm"
+  // (YouTube's chrome auto-hides after ~3s of playback)
+  var WARM_MS = 3000;
+
+  window._createHoverPlayer = function (videoId, mountEl, onWarm) {
+    var state = {
+      player: null,
+      ready: false,
+      warm: false,
+      destroyed: false,
+      pendingPlay: false
+    };
+
+    function markWarm() {
+      if (state.destroyed || state.warm) return;
+      state.warm = true;
+      // Pause + reset so first user hover starts cleanly from 0
+      try { state.player.pauseVideo(); } catch (e) {}
+      try { state.player.seekTo(0, true); } catch (e) {}
+      if (state.pendingPlay) { state.pendingPlay = false; api.play(); }
+      if (typeof onWarm === 'function') onWarm();
+    }
+
+    window._whenYTReady(function () {
+      if (state.destroyed) return;
+      state.player = new YT.Player(mountEl, {
+        videoId: videoId,
+        host: 'https://www.youtube-nocookie.com',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          fs: 0,
+          iv_load_policy: 3,
+          disablekb: 1,
+          cc_load_policy: 0,
+          playsinline: 1
+        },
+        events: {
+          onReady: function () {
+            if (state.destroyed) return;
+            state.ready = true;
+            try { state.player.mute(); } catch (e) {}
+            try { state.player.playVideo(); } catch (e) {}
+            // Wait WARM_MS for YouTube's title/logo chrome to auto-hide
+            setTimeout(markWarm, WARM_MS);
+          },
+          onStateChange: function (e) {
+            // Manual loop on ENDED — we never use loop=1&playlist (which shows playlist chrome)
+            if (e.data === YT.PlayerState.ENDED && !state.destroyed) {
+              try { state.player.seekTo(0, true); } catch (err) {}
+              try { state.player.playVideo(); } catch (err) {}
+            }
+          },
+          onError: function () {
+            // Mark as warm so caller can fall back to thumbnail UI
+            markWarm();
+          }
+        }
+      });
+    });
+
+    var api = {
+      play: function () {
+        if (state.destroyed) return;
+        if (!state.warm) { state.pendingPlay = true; return; }
+        try { state.player.seekTo(0, true); } catch (e) {}
+        try { state.player.playVideo(); } catch (e) {}
+      },
+      pause: function () {
+        if (state.destroyed) return;
+        state.pendingPlay = false;
+        if (!state.warm) return;
+        try { state.player.pauseVideo(); } catch (e) {}
+        try { state.player.seekTo(0, true); } catch (e) {}
+      },
+      isWarm: function () { return state.warm; },
+      getIframe: function () {
+        if (!state.player) return null;
+        try { return state.player.getIframe(); } catch (e) { return null; }
+      },
+      destroy: function () {
+        state.destroyed = true;
+        if (state.player) {
+          try { state.player.destroy(); } catch (e) {}
+          state.player = null;
+        }
+      }
+    };
+    return api;
+  };
+})();
+
+/* ============================================
    BALLIES NFT PAGE
    ============================================ */
 (function () {
@@ -1694,15 +1831,17 @@ window.addEventListener('beforeunload', function () {
   ];
 
   function hoverPlayParams(id) {
-    return 'https://www.youtube.com/embed/' + id +
-      '?autoplay=1&mute=1&loop=1&playlist=' + id +
+    // youtube-nocookie + all chrome suppression params; loop is handled via postMessage
+    // (loop=1&playlist=<id> was removed because it shows YouTube's playlist prev/next chrome)
+    return 'https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&mute=1&enablejsapi=1' +
       '&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3' +
       '&playsinline=1&disablekb=1&fs=0&cc_load_policy=0';
   }
 
   function featuredPlayParams(id) {
     // No loop so the video ends naturally; enablejsapi so we get postMessage state events
-    return 'https://www.youtube.com/embed/' + id +
+    return 'https://www.youtube-nocookie.com/embed/' + id +
       '?autoplay=1&mute=1&enablejsapi=1' +
       '&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3' +
       '&playsinline=1&disablekb=1&fs=0&cc_load_policy=0';
@@ -1755,10 +1894,12 @@ window.addEventListener('beforeunload', function () {
       iframe.setAttribute('allow', 'autoplay; encrypted-media');
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('frameborder', '0');
+      iframe.style.pointerEvents = 'none';
       frame.appendChild(iframe);
+      // Keep thumbnail covering iframe ~4s while YouTube's chrome auto-hides
       videoFeaturedPlayTimer = setTimeout(function () {
         if (videoFeaturedEl) videoFeaturedEl.classList.add('playing');
-      }, 900);
+      }, 4000);
     }
     var capturedEl = videoFeaturedEl;
     // 0.5 s before end: shrink back to normal (CSS transition handles it)
@@ -1812,6 +1953,10 @@ window.addEventListener('beforeunload', function () {
 
       var frame = document.createElement('div');
       frame.className = 'ballies-v-frame';
+      // Mount point for the YouTube IFrame API player (replaced with iframe by YT)
+      var mount = document.createElement('div');
+      mount.className = 'ballies-v-mount';
+      frame.appendChild(mount);
 
       var play = document.createElement('div');
       play.className = 'ballies-v-play';
@@ -1822,33 +1967,53 @@ window.addEventListener('beforeunload', function () {
       item.appendChild(play);
       videos.appendChild(item);
 
-      var hoverTimer = null;
+      // Lazy-init: only create YT.Player when item scrolls into view
+      function initPlayer() {
+        if (item._player) return;
+        item._player = window._createHoverPlayer(id, mount, function () {
+          // Player is warm. If user is currently hovering, start instant playback.
+          if (item.matches(':hover')) {
+            item._player.play();
+            item.classList.add('playing');
+          }
+        });
+        // After YT replaces mount with an iframe, ensure pointer-events: none
+        // so YouTube doesn't detect cursor over its UI
+        var styleApplyTimer = setInterval(function () {
+          var ifr = item._player && item._player.getIframe && item._player.getIframe();
+          if (ifr) {
+            ifr.style.pointerEvents = 'none';
+            clearInterval(styleApplyTimer);
+          }
+        }, 200);
+        // Stop trying after 10s
+        setTimeout(function () { clearInterval(styleApplyTimer); }, 10000);
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            initPlayer();
+            io.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' });
+      io.observe(item);
 
       item.addEventListener('mouseenter', function () {
         videoHoverCount++;
         clearFeatured();
-        clearTimeout(videoIdleTimer); // pause timer while any item is hovered
-        if (hoverTimer) clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function () {
-          if (frame.querySelector('iframe')) return;
-          var iframe = document.createElement('iframe');
-          iframe.src = hoverPlayParams(id);
-          iframe.setAttribute('allow', 'autoplay; encrypted-media');
-          iframe.setAttribute('allowfullscreen', '');
-          iframe.setAttribute('frameborder', '0');
-          frame.appendChild(iframe);
-          hoverTimer = setTimeout(function () {
-            if (frame.querySelector('iframe')) item.classList.add('playing');
-          }, 900);
-        }, 160);
+        clearTimeout(videoIdleTimer);
+        if (!item._player) initPlayer();
+        item._player.play();
+        if (item._player.isWarm()) item.classList.add('playing');
       });
 
       item.addEventListener('mouseleave', function () {
-        if (hoverTimer) { clearTimeout(hoverTimer); hoverTimer = null; }
-        frame.innerHTML = '';
         item.classList.remove('playing');
+        if (item._player) item._player.pause();
         videoHoverCount = Math.max(0, videoHoverCount - 1);
-        if (videoHoverCount === 0) resetIdleTimer(); // restart only when all items unhovered
+        if (videoHoverCount === 0) resetIdleTimer();
       });
 
       item.addEventListener('click', function () {
@@ -1863,8 +2028,7 @@ window.addEventListener('beforeunload', function () {
     if (!videos) return;
     stopIdleTimer();
     videos.querySelectorAll('.ballies-v-item').forEach(function (it) {
-      var f = it.querySelector('.ballies-v-frame');
-      if (f) f.innerHTML = '';
+      if (it._player) it._player.pause();
       it.classList.remove('playing', 'ballies-v-featured');
     });
     if (videos) videos.classList.remove('has-featured');
@@ -2337,31 +2501,48 @@ window.addEventListener('beforeunload', function () {
       item.appendChild(num);
       wsgVideosEl.appendChild(item);
 
-      var hoverTimer = null;
+      // Mount point for YT.Player (replaced by iframe by the YouTube API)
+      var mount = document.createElement('div');
+      mount.className = 'wsg-v-mount';
+      iframeWrap.appendChild(mount);
+
+      function initPlayer() {
+        if (item._player) return;
+        item._player = window._createHoverPlayer(id, mount, function () {
+          if (item.matches(':hover')) {
+            item._player.play();
+            item.classList.add('playing');
+          }
+        });
+        var styleApplyTimer = setInterval(function () {
+          var ifr = item._player && item._player.getIframe && item._player.getIframe();
+          if (ifr) {
+            ifr.style.pointerEvents = 'none';
+            clearInterval(styleApplyTimer);
+          }
+        }, 200);
+        setTimeout(function () { clearInterval(styleApplyTimer); }, 10000);
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            initPlayer();
+            io.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' });
+      io.observe(item);
 
       item.addEventListener('mouseenter', function () {
-        if (hoverTimer) clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function () {
-          if (iframeWrap.querySelector('iframe')) return;
-          var iframe = document.createElement('iframe');
-          iframe.src = 'https://www.youtube.com/embed/' + id +
-            '?autoplay=1&mute=1&loop=1&playlist=' + id +
-            '&controls=0&modestbranding=1&rel=0&showinfo=0' +
-            '&iv_load_policy=3&playsinline=1&disablekb=1&fs=0&cc_load_policy=0';
-          iframe.setAttribute('allow', 'autoplay; encrypted-media');
-          iframe.setAttribute('allowfullscreen', '');
-          iframe.setAttribute('frameborder', '0');
-          iframeWrap.appendChild(iframe);
-          hoverTimer = setTimeout(function () {
-            if (iframeWrap.querySelector('iframe')) item.classList.add('playing');
-          }, 900);
-        }, 160);
+        if (!item._player) initPlayer();
+        item._player.play();
+        if (item._player.isWarm()) item.classList.add('playing');
       });
 
       item.addEventListener('mouseleave', function () {
-        if (hoverTimer) { clearTimeout(hoverTimer); hoverTimer = null; }
-        iframeWrap.innerHTML = '';
         item.classList.remove('playing');
+        if (item._player) item._player.pause();
       });
 
       item.addEventListener('click', function () {
@@ -2371,8 +2552,7 @@ window.addEventListener('beforeunload', function () {
 
     window._stopWsgVideos = function () {
       wsgVideosEl.querySelectorAll('.wsg-v-item').forEach(function (it) {
-        var w = it.querySelector('.wsg-v-iframe-wrap');
-        if (w) w.innerHTML = '';
+        if (it._player) it._player.pause();
         it.classList.remove('playing');
       });
     };
@@ -2581,49 +2761,6 @@ window.addEventListener('beforeunload', function () {
 
   var items = gallery.querySelectorAll('.its-bb-item');
 
-  // origin param helps YouTube authorise the embed
-  var originParam = (location.origin && location.origin !== 'null')
-    ? '&origin=' + encodeURIComponent(location.origin) : '';
-
-  /* ---- Global postMessage listener ----
-     Iframe stays opacity:0 until we get playerState=1 (PLAYING).
-     Any error fires BEFORE YouTube renders its error UI, so we
-     silently remove the iframe — the thumbnail is never obscured. */
-  window.addEventListener('message', function (e) {
-    try {
-      var raw  = e.data;
-      var data = typeof raw === 'string' ? JSON.parse(raw) : raw;
-      if (!data || !data.event) return;
-
-      items.forEach(function (item) {
-        if (!item._ytIframe || item._ytIframe.contentWindow !== e.source) return;
-
-        var ev   = data.event;
-        var info = data.info;
-
-        // Error (101 / 150 / 153 / …) → remove silently
-        if (ev === 'onError' || ev === 'error') {
-          clearTimeout(item._showTimer);
-          item._ytIframe.remove();
-          item._ytIframe = null;
-          item._ytFailed = true;
-          item.classList.add('its-bb-failed');
-          item.classList.remove('its-bb-playing');
-          return;
-        }
-
-        // Player state PLAYING (1) → now safe to reveal
-        var playing = (ev === 'onStateChange' && info === 1) ||
-                      (ev === 'infoDelivery'  && info && info.playerState === 1);
-        if (playing) {
-          clearTimeout(item._showTimer);
-          item._ytIframe.classList.add('its-bb-visible');
-          item.classList.add('its-bb-playing');
-        }
-      });
-    } catch (ignore) {}
-  });
-
   /* ---- "Hover to play" hint ---- */
   var hintEl    = document.getElementById('itsHoverHint');
   var hintTimer = null;
@@ -2658,51 +2795,60 @@ window.addEventListener('beforeunload', function () {
     var screen = item.querySelector('.its-bb-screen');
     if (!ytId || !screen) return;
 
+    var mount = document.createElement('div');
+    mount.className = 'its-bb-mount';
+    screen.appendChild(mount);
+
+    function initPlayer() {
+      if (item._player || item._ytFailed) return;
+      item._player = window._createHoverPlayer(ytId, mount, function () {
+        // onWarm — apply CSS class so iframe styling matches existing .its-bb-player
+        var ifr = item._player.getIframe && item._player.getIframe();
+        if (ifr) ifr.classList.add('its-bb-player');
+        if (item.matches(':hover') && !item._ytFailed) {
+          item._player.play();
+          if (ifr) ifr.classList.add('its-bb-visible');
+          item.classList.add('its-bb-playing');
+        }
+      });
+      var styleApplyTimer = setInterval(function () {
+        var ifr = item._player && item._player.getIframe && item._player.getIframe();
+        if (ifr) {
+          ifr.classList.add('its-bb-player');
+          ifr.style.pointerEvents = 'none';
+          clearInterval(styleApplyTimer);
+        }
+      }, 200);
+      setTimeout(function () { clearInterval(styleApplyTimer); }, 10000);
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          initPlayer();
+          io.disconnect();
+        }
+      });
+    }, { rootMargin: '200px' });
+    io.observe(item);
+
     item.addEventListener('mouseenter', function () {
       hideHint();
       if (item._ytFailed) return;
-
-      if (!item._ytIframe) {
-        var iframe = document.createElement('iframe');
-        iframe.className = 'its-bb-player';
-        // Match the official YouTube embed allow attribute exactly
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.src = 'https://www.youtube.com/embed/' + ytId +
-          '?autoplay=1&mute=1&controls=0&rel=0&enablejsapi=1&playsinline=1' + originParam;
-        screen.appendChild(iframe);
-        item._ytIframe = iframe;
-
-        // Iframe stays hidden (opacity:0) while YouTube loads.
-        // The thumbnail covers it so the user never sees black/loading UI.
-        // postMessage playerState=1 triggers the reveal; thumbnail fades out simultaneously.
-        // Fallback: reveal after 1.2 s if postMessage never arrives (slow connection).
-        item._showTimer = setTimeout(function () {
-          if (!item._ytFailed && item._ytIframe && item.matches(':hover')) {
-            item._ytIframe.classList.add('its-bb-visible');
-            item.classList.add('its-bb-playing');
-          }
-        }, 1200);
-
-      } else {
-        // Re-hover — resume
-        item._ytIframe.classList.add('its-bb-visible');
+      if (!item._player) initPlayer();
+      item._player.play();
+      if (item._player.isWarm()) {
+        var ifr = item._player.getIframe && item._player.getIframe();
+        if (ifr) ifr.classList.add('its-bb-visible');
         item.classList.add('its-bb-playing');
-        try {
-          item._ytIframe.contentWindow.postMessage(
-            JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*'
-          );
-        } catch (ignore) {}
       }
     });
 
     item.addEventListener('mouseleave', function () {
-      // Destroy iframe completely so next hover always restarts from the beginning
-      clearTimeout(item._showTimer);
-      if (item._ytIframe) {
-        item._ytIframe.remove();
-        item._ytIframe = null;
+      if (item._player) {
+        var ifr = item._player.getIframe && item._player.getIframe();
+        if (ifr) ifr.classList.remove('its-bb-visible');
+        item._player.pause();
       }
       item.classList.remove('its-bb-playing');
       scheduleHint();
