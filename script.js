@@ -1515,7 +1515,11 @@ window.addEventListener('beforeunload', function () {
   // (YouTube's chrome auto-hides after ~3s of playback)
   var WARM_MS = 3000;
 
-  window._createHoverPlayer = function (videoId, mountEl, onWarm) {
+  // options: { noWarmup: bool, onEnded: fn }
+  //   noWarmup — mark warm immediately on onReady (for featured auto-play)
+  //   onEnded  — called when video ends; if omitted the player loops
+  window._createHoverPlayer = function (videoId, mountEl, onWarm, options) {
+    options = options || {};
     var state = {
       player: null,
       ready: false,
@@ -1527,9 +1531,11 @@ window.addEventListener('beforeunload', function () {
     function markWarm() {
       if (state.destroyed || state.warm) return;
       state.warm = true;
-      // Pause + reset so first user hover starts cleanly from 0
-      try { state.player.pauseVideo(); } catch (e) {}
-      try { state.player.seekTo(0, true); } catch (e) {}
+      if (!options.noWarmup) {
+        // Pause + reset so first user hover starts cleanly from 0
+        try { state.player.pauseVideo(); } catch (e) {}
+        try { state.player.seekTo(0, true); } catch (e) {}
+      }
       if (state.pendingPlay) { state.pendingPlay = false; api.play(); }
       if (typeof onWarm === 'function') onWarm();
     }
@@ -1558,18 +1564,24 @@ window.addEventListener('beforeunload', function () {
             state.ready = true;
             try { state.player.mute(); } catch (e) {}
             try { state.player.playVideo(); } catch (e) {}
-            // Wait WARM_MS for YouTube's title/logo chrome to auto-hide
-            setTimeout(markWarm, WARM_MS);
+            if (options.noWarmup) {
+              markWarm(); // instant — no chrome-hide delay needed
+            } else {
+              setTimeout(markWarm, WARM_MS);
+            }
           },
           onStateChange: function (e) {
-            // Manual loop on ENDED — we never use loop=1&playlist (which shows playlist chrome)
             if (e.data === YT.PlayerState.ENDED && !state.destroyed) {
-              try { state.player.seekTo(0, true); } catch (err) {}
-              try { state.player.playVideo(); } catch (err) {}
+              if (typeof options.onEnded === 'function') {
+                options.onEnded();
+              } else {
+                // Default: loop
+                try { state.player.seekTo(0, true); } catch (err) {}
+                try { state.player.playVideo(); } catch (err) {}
+              }
             }
           },
           onError: function () {
-            // Mark as warm so caller can fall back to thumbnail UI
             markWarm();
           }
         }
@@ -1853,22 +1865,31 @@ window.addEventListener('beforeunload', function () {
   }
 
   // ----- Idle auto-feature -----
-  var FEATURED_DUR = 18000; // ms each video stays featured (2 s shrink + next)
+  var videoIdleTimer       = null;
+  var videoHoverCount      = 0;
+  var videoFeaturedEl      = null;
+  var videoFeaturedNextTimer = null; // 1-second gap between featured videos
 
-  var videoIdleTimer         = null;
-  var videoHoverCount        = 0;
-  var videoFeaturedEl        = null;
-  var videoFeaturedPlayTimer = null;
-  var videoFeaturedShrinkTimer = null; // fires 2 s before end → shrink
-  var videoFeaturedNextTimer   = null; // fires at end → next video immediately
+  function _destroyFeaturedPlayer(el) {
+    if (!el) return;
+    if (el._featuredPlayer) {
+      el._featuredPlayer.destroy();
+      el._featuredPlayer = null;
+    }
+    // Restore a clean mount div so hover can re-init a normal player later
+    var f = el.querySelector('.ballies-v-frame');
+    if (f) {
+      f.innerHTML = '';
+      var m = document.createElement('div');
+      m.className = 'ballies-v-mount';
+      f.appendChild(m);
+    }
+  }
 
   function clearFeatured() {
-    clearTimeout(videoFeaturedPlayTimer);
-    clearTimeout(videoFeaturedShrinkTimer);
     clearTimeout(videoFeaturedNextTimer);
     if (videoFeaturedEl) {
-      var f = videoFeaturedEl.querySelector('.ballies-v-frame');
-      if (f) f.innerHTML = '';
+      _destroyFeaturedPlayer(videoFeaturedEl);
       videoFeaturedEl.classList.remove('playing', 'ballies-v-featured');
       videoFeaturedEl = null;
     }
@@ -1878,43 +1899,56 @@ window.addEventListener('beforeunload', function () {
   function triggerFeatured(excludeIdx) {
     if (!videos) return;
     clearFeatured();
-    var items = videos.querySelectorAll('.ballies-v-item');
+    var allItems = videos.querySelectorAll('.ballies-v-item');
     var indices = [];
-    items.forEach(function (_, i) { if (i !== excludeIdx) indices.push(i); });
+    allItems.forEach(function (_, i) { if (i !== excludeIdx) indices.push(i); });
     var idx = indices[Math.floor(Math.random() * indices.length)];
-    videoFeaturedEl = items[idx];
+    videoFeaturedEl = allItems[idx];
     var featId = videoFeaturedEl.getAttribute('data-vid');
+    var featIdx = parseInt(videoFeaturedEl.getAttribute('data-index'), 10);
+
     videos.classList.add('has-featured');
     videoFeaturedEl.classList.add('ballies-v-featured');
+
+    // Fresh mount for the featured YT.Player
     var frame = videoFeaturedEl.querySelector('.ballies-v-frame');
-    if (frame) {
-      frame.innerHTML = '';
-      var iframe = document.createElement('iframe');
-      iframe.src = featuredPlayParams(featId);
-      iframe.setAttribute('allow', 'autoplay; encrypted-media');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.setAttribute('frameborder', '0');
-      iframe.style.pointerEvents = 'none';
-      frame.appendChild(iframe);
-      // Keep thumbnail covering iframe ~4s while YouTube's chrome auto-hides
-      videoFeaturedPlayTimer = setTimeout(function () {
-        if (videoFeaturedEl) videoFeaturedEl.classList.add('playing');
-      }, 4000);
-    }
+    if (!frame) return;
+    frame.innerHTML = '';
+    var featMount = document.createElement('div');
+    featMount.className = 'ballies-v-mount';
+    frame.appendChild(featMount);
+
     var capturedEl = videoFeaturedEl;
-    // 0.5 s before end: shrink back to normal (CSS transition handles it)
-    videoFeaturedShrinkTimer = setTimeout(function () {
-      if (videoFeaturedEl !== capturedEl) return;
-      capturedEl.classList.remove('ballies-v-featured');
-      videos.classList.remove('has-featured');
-    }, FEATURED_DUR - 500);
-    // At end: immediately start next video
-    videoFeaturedNextTimer = setTimeout(function () {
-      if (!capturedEl) return;
-      var pi = parseInt(capturedEl.getAttribute('data-index'), 10);
-      clearFeatured();
-      if (videoHoverCount === 0) triggerFeatured(pi);
-    }, FEATURED_DUR);
+
+    videoFeaturedEl._featuredPlayer = window._createHoverPlayer(
+      featId,
+      featMount,
+      function onWarm() {
+        // Player is ready — show video immediately (zoom already happened via CSS)
+        if (capturedEl === videoFeaturedEl) {
+          capturedEl.classList.add('playing');
+          var ifr = capturedEl._featuredPlayer && capturedEl._featuredPlayer.getIframe();
+          if (ifr) ifr.style.pointerEvents = 'none';
+        }
+      },
+      {
+        noWarmup: true,
+        onEnded: function () {
+          if (capturedEl !== videoFeaturedEl) return;
+          // Shrink back
+          capturedEl.classList.remove('ballies-v-featured', 'playing');
+          if (videos) videos.classList.remove('has-featured');
+          _destroyFeaturedPlayer(capturedEl);
+          videoFeaturedEl = null;
+          // Start next random video after 1 second
+          if (videoHoverCount === 0) {
+            videoFeaturedNextTimer = setTimeout(function () {
+              triggerFeatured(featIdx);
+            }, 1000);
+          }
+        }
+      }
+    );
   }
 
   function resetIdleTimer() {
@@ -1967,18 +2001,22 @@ window.addEventListener('beforeunload', function () {
       item.appendChild(play);
       videos.appendChild(item);
 
-      // Lazy-init: only create YT.Player when item scrolls into view
+      // Lazy-init hover player; always creates a fresh mount div in case a previous
+      // featured playback destroyed the original one.
       function initPlayer() {
         if (item._player) return;
-        item._player = window._createHoverPlayer(id, mount, function () {
-          // Player is warm. If user is currently hovering, start instant playback.
+        var frame = item.querySelector('.ballies-v-frame');
+        if (!frame) return;
+        frame.innerHTML = '';
+        var freshMount = document.createElement('div');
+        freshMount.className = 'ballies-v-mount';
+        frame.appendChild(freshMount);
+        item._player = window._createHoverPlayer(id, freshMount, function () {
           if (item.matches(':hover')) {
             item._player.play();
             item.classList.add('playing');
           }
         });
-        // After YT replaces mount with an iframe, ensure pointer-events: none
-        // so YouTube doesn't detect cursor over its UI
         var styleApplyTimer = setInterval(function () {
           var ifr = item._player && item._player.getIframe && item._player.getIframe();
           if (ifr) {
@@ -1986,7 +2024,6 @@ window.addEventListener('beforeunload', function () {
             clearInterval(styleApplyTimer);
           }
         }, 200);
-        // Stop trying after 10s
         setTimeout(function () { clearInterval(styleApplyTimer); }, 10000);
       }
 
@@ -2028,6 +2065,7 @@ window.addEventListener('beforeunload', function () {
     if (!videos) return;
     stopIdleTimer();
     videos.querySelectorAll('.ballies-v-item').forEach(function (it) {
+      if (it._featuredPlayer) { it._featuredPlayer.destroy(); it._featuredPlayer = null; }
       if (it._player) it._player.pause();
       it.classList.remove('playing', 'ballies-v-featured');
     });
