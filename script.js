@@ -2618,7 +2618,6 @@ window.addEventListener('beforeunload', function () {
       var revealIo = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
           if (e.isIntersecting) {
-            item.classList.add('wsg-revealed');
             initPlayer();
             revealIo.disconnect();
           }
@@ -2632,6 +2631,27 @@ window.addEventListener('beforeunload', function () {
         if (it._player) it._player.pause();
         it.classList.remove('playing');
       });
+    };
+
+    var animWsgIn = function () {
+      var items = wsgVideosEl.querySelectorAll('.wsg-v-item');
+      items.forEach(function (it) { it.classList.remove('wsg-anim-in', 'wsg-anim-out'); });
+      void wsgVideosEl.offsetHeight;
+      items.forEach(function (it, i) {
+        it.style.setProperty('--wsg-d', (i * 0.08) + 's');
+        it.classList.add('wsg-anim-in');
+      });
+    };
+
+    var animWsgOut = function (cb) {
+      var items = wsgVideosEl.querySelectorAll('.wsg-v-item');
+      items.forEach(function (it) { it.classList.remove('wsg-anim-in', 'wsg-anim-out'); });
+      void wsgVideosEl.offsetHeight;
+      items.forEach(function (it, i) {
+        it.style.setProperty('--wsg-d', (i * 0.04) + 's');
+        it.classList.add('wsg-anim-out');
+      });
+      setTimeout(cb, items.length * 40 + 280);
     };
   }
 
@@ -2768,6 +2788,7 @@ window.addEventListener('beforeunload', function () {
     wsgPage2 = 1;
     window._wsgPage = 0;
     updateWsgDots();
+    if (typeof animWsgIn === 'function') animWsgIn();
   }
   function hideWsgVideos() {
     if (wsgVideosEl) wsgVideosEl.style.display = 'none';
@@ -2804,9 +2825,24 @@ window.addEventListener('beforeunload', function () {
   wsgDots.forEach(function (d, i) {
     d.addEventListener('click', function () {
       if (i + 1 === 1) { hideWsgGalleryAnimated(showWsgVideos); }
-      else             { hideWsgVideos(); showWsgGallery(); }
+      else {
+        if (typeof animWsgOut === 'function') {
+          if (window._stopWsgVideos) window._stopWsgVideos();
+          animWsgOut(function () { hideWsgVideos(); showWsgGallery(); });
+        } else { hideWsgVideos(); showWsgGallery(); }
+      }
     });
   });
+
+  // MutationObserver: trigger animate-in whenever WSG page opens
+  var _wsgWasActive = wsgPage.classList.contains('pp-active');
+  new MutationObserver(function () {
+    var isActive = wsgPage.classList.contains('pp-active');
+    if (isActive && !_wsgWasActive && wsgPage2 === 1) {
+      setTimeout(function () { if (typeof animWsgIn === 'function') animWsgIn(); }, 80);
+    }
+    _wsgWasActive = isActive;
+  }).observe(wsgPage, { attributes: true, attributeFilter: ['class'] });
 
   var _origCloseWSG = closeWSG;
   closeWSG = function () {
@@ -2822,7 +2858,14 @@ window.addEventListener('beforeunload', function () {
 
   window._wsgPage      = 0;
   window._wsgTotal     = 2;
-  window._wsgNextPage  = function () { if (wsgPage2 < 2) { hideWsgVideos(); showWsgGallery(); } };
+  window._wsgNextPage  = function () {
+    if (wsgPage2 < 2) {
+      if (typeof animWsgOut === 'function') {
+        if (window._stopWsgVideos) window._stopWsgVideos();
+        animWsgOut(function () { hideWsgVideos(); showWsgGallery(); });
+      } else { hideWsgVideos(); showWsgGallery(); }
+    }
+  };
   window._wsgPrevPage  = function () { if (wsgPage2 > 1) { hideWsgGalleryAnimated(showWsgVideos); } };
 
   window._openWSG  = openWSG;
