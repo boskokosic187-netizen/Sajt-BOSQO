@@ -3467,7 +3467,6 @@ window.addEventListener('beforeunload', function () {
       var revealIo = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
           if (e.isIntersecting) {
-            item.classList.add('lbv-revealed');
             initPlayer();
             revealIo.disconnect();
           }
@@ -3497,19 +3496,38 @@ window.addEventListener('beforeunload', function () {
   buildLabooGrid(labooVPage1, labooPage1Ids);
   buildLabooGrid(labooVPage2, labooPage2Ids);
 
+  // ---- animation helpers ----
+  function animLabooIn(wrap) {
+    var items = wrap.querySelectorAll('.laboo-v-item');
+    items.forEach(function (item) {
+      item.classList.remove('lbv-anim-in', 'lbv-anim-out');
+    });
+    void wrap.offsetHeight; // force reflow so animation restarts
+    items.forEach(function (item, i) {
+      item.style.setProperty('--lbv-d', (i * 0.055) + 's');
+      item.classList.add('lbv-anim-in');
+    });
+  }
+
+  function animLabooOut(wrap, cb) {
+    var items = wrap.querySelectorAll('.laboo-v-item');
+    items.forEach(function (item) {
+      item.classList.remove('lbv-anim-in', 'lbv-anim-out');
+    });
+    void wrap.offsetHeight;
+    items.forEach(function (item, i) {
+      item.style.setProperty('--lbv-d', (i * 0.028) + 's');
+      item.classList.add('lbv-anim-out');
+    });
+    // total out duration: 10 items × 28ms + 240ms anim = ~520ms
+    setTimeout(cb, items.length * 28 + 240);
+  }
+
+  // ---- dots & page state ----
   function updateLabooDots() {
     labooDots.forEach(function (d, i) {
       d.classList.toggle('laboo-dot--active', i + 1 === labooSubPage);
     });
-  }
-
-  function showLabooPage(n) {
-    labooSubPage = n;
-    window._labooPage = n - 1;
-    labooVPage1.classList.toggle('laboo-v-wrap--hidden', n !== 1);
-    labooVPage2.classList.toggle('laboo-v-wrap--hidden', n !== 2);
-    stopLabooVideos();
-    updateLabooDots();
   }
 
   function stopLabooVideos() {
@@ -3521,17 +3539,53 @@ window.addEventListener('beforeunload', function () {
     });
   }
 
+  function showLabooPage(n) {
+    if (n === labooSubPage) return;
+    var oldWrap = labooSubPage === 1 ? labooVPage1 : labooVPage2;
+    stopLabooVideos();
+    animLabooOut(oldWrap, function () {
+      labooSubPage = n;
+      window._labooPage = n - 1;
+      labooVPage1.classList.toggle('laboo-v-wrap--hidden', n !== 1);
+      labooVPage2.classList.toggle('laboo-v-wrap--hidden', n !== 2);
+      updateLabooDots();
+      var newWrap = n === 1 ? labooVPage1 : labooVPage2;
+      animLabooIn(newWrap);
+    });
+  }
+
   labooDots.forEach(function (d, i) {
     d.addEventListener('click', function () { showLabooPage(i + 1); });
   });
 
-  // Wrap closeLaboo to also stop videos + reset page
+  // MutationObserver catches ALL entry paths (including direct openLaboo() calls)
+  var _labooWasActive = labooPage.classList.contains('pp-active');
+  new MutationObserver(function () {
+    var isActive = labooPage.classList.contains('pp-active');
+    if (isActive && !_labooWasActive) {
+      labooSubPage = 1;
+      window._labooPage = 0;
+      labooVPage1.classList.remove('laboo-v-wrap--hidden');
+      labooVPage2.classList.add('laboo-v-wrap--hidden');
+      updateLabooDots();
+      setTimeout(function () { animLabooIn(labooVPage1); }, 80);
+    }
+    _labooWasActive = isActive;
+  }).observe(labooPage, { attributes: true, attributeFilter: ['class'] });
+
+  // Wrap closeLaboo → animate out current page, then close
   var _origCloseLaboo = window._closeLaboo;
   window._closeLaboo = function () {
+    var activeWrap = labooSubPage === 1 ? labooVPage1 : labooVPage2;
     stopLabooVideos();
-    labooSubPage = 1;
-    showLabooPage(1);
-    if (_origCloseLaboo) _origCloseLaboo();
+    animLabooOut(activeWrap, function () {
+      labooSubPage = 1;
+      window._labooPage = 0;
+      labooVPage1.classList.remove('laboo-v-wrap--hidden');
+      labooVPage2.classList.add('laboo-v-wrap--hidden');
+      updateLabooDots();
+      if (_origCloseLaboo) _origCloseLaboo();
+    });
   };
   if (document.getElementById('labooBack')) {
     document.getElementById('labooBack').addEventListener('click', window._closeLaboo);

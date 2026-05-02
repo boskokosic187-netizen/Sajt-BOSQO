@@ -3964,24 +3964,48 @@ body[data-stage="8"] .journey-title-wrap {
   opacity: 0;
   will-change: transform;
 }
-.laboo-v-item.lbv-revealed {
-  opacity: 1;
-  animation: lbvReveal 0.6s cubic-bezier(0.16,1,0.3,1) both;
+/* Animate IN — holographic materialisation */
+.laboo-v-item.lbv-anim-in {
+  animation: lbvIn 0.52s cubic-bezier(0.16,1,0.3,1) both;
+  animation-delay: var(--lbv-d, 0s);
 }
-@keyframes lbvReveal {
-  from { opacity: 0; transform: translateY(20px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
+@keyframes lbvIn {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scaleY(0.78);
+    filter: brightness(3) saturate(0) blur(2px);
+  }
+  35% {
+    filter: brightness(1.25) saturate(0.4) blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    filter: brightness(1) saturate(1) blur(0);
+  }
 }
-.laboo-v-item:nth-child(1)  { animation-delay: 0.05s; }
-.laboo-v-item:nth-child(2)  { animation-delay: 0.10s; }
-.laboo-v-item:nth-child(3)  { animation-delay: 0.15s; }
-.laboo-v-item:nth-child(4)  { animation-delay: 0.20s; }
-.laboo-v-item:nth-child(5)  { animation-delay: 0.25s; }
-.laboo-v-item:nth-child(6)  { animation-delay: 0.30s; }
-.laboo-v-item:nth-child(7)  { animation-delay: 0.35s; }
-.laboo-v-item:nth-child(8)  { animation-delay: 0.40s; }
-.laboo-v-item:nth-child(9)  { animation-delay: 0.45s; }
-.laboo-v-item:nth-child(10) { animation-delay: 0.50s; }
+
+/* Animate OUT — hologram dissolve */
+.laboo-v-item.lbv-anim-out {
+  animation: lbvOut 0.22s ease-in both;
+  animation-delay: var(--lbv-d, 0s);
+  pointer-events: none;
+}
+@keyframes lbvOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    filter: brightness(1) saturate(1);
+  }
+  55% {
+    filter: brightness(2.2) saturate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px) scaleY(0.82);
+    filter: brightness(3) saturate(0) blur(1px);
+  }
+}
 
 /* Clipped octagonal container — narrower cuts for vertical */
 .laboo-v-clip {
