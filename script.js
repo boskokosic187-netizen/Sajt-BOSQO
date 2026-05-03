@@ -791,9 +791,9 @@
 
     if (window._pageOpen) return; // block all other scroll when a project page is open
 
-    // Scroll DOWN on projects roadmap after all items have appeared → open FCA
+    // Scroll DOWN on projects roadmap after all items have appeared → open Contact
     if (stage === 9 && dir === 1 && document.querySelector('.roadmap.roadmap-ready')) {
-      if (window._openFCA) window._openFCA();
+      if (window._openContact) window._openContact();
       return;
     }
     const now  = Date.now();
@@ -1186,7 +1186,12 @@ window.addEventListener('beforeunload', function () {
           cl.contains('fca-gallery-dot') ||
           cl.contains('scroll-mouse') ||
           cl.contains('fca-lb-close') ||
-          cl.contains('wsg-bgroup-lb-close')
+          cl.contains('wsg-bgroup-lb-close') ||
+          cl.contains('contact-tag') ||
+          cl.contains('contact-social') ||
+          cl.contains('contact-btn') ||
+          cl.contains('contact-info-row') ||
+          cl.contains('contact-input')
         ) return true;
         // Info panels only hoverable after stroke animation completes
         if (cl.contains('info-panel-wrap')) {
@@ -3641,6 +3646,158 @@ window.addEventListener('beforeunload', function () {
 })();
 
 /* ============================================
+   CONTACT PAGE
+   ============================================ */
+(function () {
+  var contactPage = document.getElementById('contactPage');
+  var contactBack = document.getElementById('contactBack');
+  var projects    = document.getElementById('projectsSection');
+  if (!contactPage) return;
+
+  function openContact() {
+    window._pageOpen = true;
+    window._activePage = 'contact';
+    window._closeActivePage = closeContact;
+    contactPage.classList.add('pp-active');
+    if (projects) projects.style.opacity = '0';
+    sessionStorage.setItem('lastPage', 'contact');
+    startParticles();
+  }
+
+  function closeContact() {
+    window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
+    contactPage.classList.remove('pp-active');
+    if (projects) projects.style.opacity = '1';
+    sessionStorage.removeItem('lastPage');
+  }
+
+  if (contactBack) contactBack.addEventListener('click', closeContact);
+
+  // Nav CONTACT button
+  var navContact = document.querySelector('.nav-contact');
+  if (navContact) {
+    navContact.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (window._pageOpen) return;
+      if (window._applyStage) window._applyStage(9);
+      if (window._activateProjectsDirect) {
+        window._activateProjectsDirect(0, function () { openContact(); });
+      } else {
+        openContact();
+      }
+    });
+  }
+
+  // Mouse glow
+  contactPage.addEventListener('mousemove', function (e) {
+    var r = contactPage.getBoundingClientRect();
+    contactPage.style.setProperty('--cx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    contactPage.style.setProperty('--cy', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+  });
+
+  // Form submit → mailto + toast
+  var form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name    = (document.getElementById('cName').value || '').trim();
+      var email   = (document.getElementById('cEmail').value || '').trim();
+      var type    = document.getElementById('cType').value || '';
+      var message = (document.getElementById('cMessage').value || '').trim();
+      if (!name || !email || !message) return;
+      var subj = encodeURIComponent('Project Inquiry' + (type ? ': ' + type : ''));
+      var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+      window.open('mailto:boskokosic187@gmail.com?subject=' + subj + '&body=' + body);
+      form.reset();
+      var toast = document.getElementById('contactToast');
+      if (toast) {
+        toast.classList.add('contact-toast--show');
+        setTimeout(function () { toast.classList.remove('contact-toast--show'); }, 3800);
+      }
+    });
+  }
+
+  // Particle aura around image
+  var canvas = document.getElementById('contactParticles');
+  var ctx    = canvas ? canvas.getContext('2d') : null;
+  var raf    = null;
+  var mouse  = { x: -999, y: -999 };
+  var pts    = [];
+
+  document.addEventListener('mousemove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+  function makePt(cx, cy, R) {
+    var a = Math.random() * Math.PI * 2;
+    var r = R * (0.45 + Math.random() * 0.8);
+    return {
+      x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      sz: Math.random() * 1.4 + 0.3,
+      life: Math.random(), spd: Math.random() * 0.005 + 0.002,
+      al: Math.random() * 0.45 + 0.12
+    };
+  }
+
+  function startParticles() {
+    if (!canvas || !ctx) return;
+    cancelAnimationFrame(raf);
+
+    function resize() {
+      var fr = canvas.parentElement;
+      if (!fr) return;
+      var rb = fr.getBoundingClientRect();
+      canvas.width  = rb.width  + 100;
+      canvas.height = rb.height + 100;
+    }
+    resize();
+
+    var W, H, cx, cy, R;
+    function setDims() { W = canvas.width; H = canvas.height; cx = W/2; cy = H/2; R = Math.min(W,H)*0.48; }
+    setDims();
+    window.addEventListener('resize', function () { resize(); setDims(); });
+
+    pts = [];
+    for (var i = 0; i < 60; i++) pts.push(makePt(cx, cy, R));
+
+    function tick() {
+      if (!contactPage.classList.contains('pp-active')) { cancelAnimationFrame(raf); return; }
+      setDims();
+      ctx.clearRect(0, 0, W, H);
+      var cr = canvas.getBoundingClientRect();
+      var mx = mouse.x - cr.left;
+      var my = mouse.y - cr.top;
+
+      pts.forEach(function (p) {
+        p.life += p.spd;
+        if (p.life >= 1) {
+          var a = Math.random() * Math.PI * 2;
+          var r = R * (0.45 + Math.random() * 0.8);
+          p.x = cx + Math.cos(a)*r; p.y = cy + Math.sin(a)*r;
+          p.life = 0;
+        }
+        var dx = mx - p.x, dy = my - p.y, d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 110 && d > 0) { p.vx += dx/d*0.012; p.vy += dy/d*0.012; }
+        p.vx *= 0.97; p.vy *= 0.97;
+        p.x += p.vx; p.y += p.vy;
+        var ph = Math.sin(p.life * Math.PI);
+        ctx.globalAlpha = ph * p.al;
+        ctx.fillStyle = '#1de9b6';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.sz * ph, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(tick);
+    }
+    setTimeout(function () { raf = requestAnimationFrame(tick); }, 450);
+  }
+
+  window._openContact  = openContact;
+  window._closeContact = closeContact;
+})();
+
+/* ============================================
    STAGE RESTORE ON REFRESH
    ============================================ */
 (function () {
@@ -3661,6 +3818,7 @@ window.addEventListener('beforeunload', function () {
                  : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
                  : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
                  : lastPage === 'laboo'   && window._openLaboo   ? function () { window._openLaboo(); }
+                 : lastPage === 'contact' && window._openContact ? function () { window._openContact(); }
                  : null;
     window._activateProjectsDirect(100, onActive);
   }
