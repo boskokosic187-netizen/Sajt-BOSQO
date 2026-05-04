@@ -3804,6 +3804,35 @@ window.addEventListener('beforeunload', function () {
       accentEl.classList.add('ex-out');
     });
   }
+
+  // Align footer bar so left tags start at headline left edge, right tags end at headline right edge
+  var footerBar  = contactPage.querySelector('.contact-socials-footer');
+  var headLine1  = contactPage.querySelector('.contact-headline-line1');
+
+  function alignContactFooter() {
+    if (!headLine1 || !footerBar) return;
+    var r = headLine1.getBoundingClientRect();
+    footerBar.style.left  = r.left + 'px';
+    footerBar.style.right = (window.innerWidth - r.right) + 'px';
+  }
+
+  var _footerResizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(_footerResizeTimer);
+    _footerResizeTimer = setTimeout(alignContactFooter, 80);
+  });
+
+  var _origOpenContact = openContact;
+  openContact = function () {
+    _origOpenContact();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(alignContactFooter);
+    });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(alignContactFooter);
+    }
+  };
+  window._openContact = openContact;
 })();
 
 /* ============================================
