@@ -3788,6 +3788,22 @@ window.addEventListener('beforeunload', function () {
 
   window._openContact  = openContact;
   window._closeContact = closeContact;
+
+  // Headline accent hover animation
+  var headlineWrap = document.querySelector('.contact-headline-wrap');
+  var accentEl     = document.querySelector('.contact-headline-accent');
+  if (headlineWrap && accentEl) {
+    headlineWrap.addEventListener('mouseenter', function () {
+      accentEl.classList.remove('ex-out');
+      void accentEl.offsetWidth;
+      accentEl.classList.add('ex-in');
+    });
+    headlineWrap.addEventListener('mouseleave', function () {
+      accentEl.classList.remove('ex-in');
+      void accentEl.offsetWidth;
+      accentEl.classList.add('ex-out');
+    });
+  }
 })();
 
 /* ============================================
