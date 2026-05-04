@@ -3690,13 +3690,6 @@ window.addEventListener('beforeunload', function () {
     });
   }
 
-  // Mouse glow
-  contactPage.addEventListener('mousemove', function (e) {
-    var r = contactPage.getBoundingClientRect();
-    contactPage.style.setProperty('--cx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-    contactPage.style.setProperty('--cy', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
-  });
-
   // Form submit → mailto + toast
   var form = document.getElementById('contactForm');
   if (form) {
