@@ -3687,15 +3687,11 @@ window.addEventListener('beforeunload', function () {
     });
   }
 
-  // ── EmailJS config ───────────────────────────────────────────────────────
-  // 1. Sign up free at emailjs.com
-  // 2. Add Email Service → connect your Gmail account
-  // 3. Create an Email Template (variables: from_name, from_email, project_type, message)
-  // 4. Replace the three values below with your real IDs from the dashboard
-  var EJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-  var EJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-  var EJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-  if (typeof emailjs !== 'undefined') emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+  // ── Web3Forms config ─────────────────────────────────────────────────────
+  // 1. Idi na https://web3forms.com
+  // 2. Ukucaj boskokosic187@gmail.com i klikni "Create Access Key"
+  // 3. Proveri email — dobićeš ključ, zalepi ga ovde:
+  var W3F_KEY = '657f0456-f7a0-448a-b1b5-1dfc5b083682';
 
   // Form: validation + send
   var form    = document.getElementById('contactForm');
@@ -3719,7 +3715,6 @@ window.addEventListener('beforeunload', function () {
 
       var ok = true;
       if (!email)   { fieldOf(emailEl).classList.add('contact-field--error'); ok = false; }
-      if (!type)    { fieldOf(typeEl).classList.add('contact-field--error');  ok = false; }
       if (!message) { fieldOf(msgEl).classList.add('contact-field--error');   ok = false; }
       if (!ok) return;
 
@@ -3739,27 +3734,29 @@ window.addEventListener('beforeunload', function () {
         }
       }
 
-      if (typeof emailjs !== 'undefined' && EJS_SERVICE_ID !== 'YOUR_SERVICE_ID') {
-        setBtn('Sending…', true);
-        emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
-          from_name:    name,
-          from_email:   email,
-          project_type: type,
-          message:      message
-        }).then(function () {
+      setBtn('Sending…', true);
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key:   W3F_KEY,
+          name:         name || 'Anonymous',
+          email:        email,
+          subject:      'New Inquiry: ' + type,
+          message:      'Project: ' + type + '\nEmail: ' + email + '\n\n' + message
+        })
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        setBtn('Send Message', false);
+        if (data.success) {
           form.reset();
-          setBtn('Send Message', false);
           showToast();
-        }).catch(function () {
-          setBtn('Send Message', false);
-        });
-      } else {
-        var subj = encodeURIComponent('Project Inquiry: ' + type);
-        var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-        window.open('mailto:boskokosic187@gmail.com?subject=' + subj + '&body=' + body);
-        form.reset();
-        showToast();
-      }
+        }
+      })
+      .catch(function () {
+        setBtn('Send Message', false);
+      });
     });
   }
 
@@ -3839,6 +3836,18 @@ window.addEventListener('beforeunload', function () {
 
   window._openContact  = openContact;
   window._closeContact = closeContact;
+
+  // Copy email button
+  var copyBtn = document.getElementById('copyEmailBtn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      navigator.clipboard.writeText('boskokosic187@gmail.com').then(function () {
+        copyBtn.classList.add('copied');
+        setTimeout(function () { copyBtn.classList.remove('copied'); }, 2000);
+      });
+    });
+  }
 
   // Headline accent hover animation
   var headlineWrap = document.querySelector('.contact-headline-wrap');

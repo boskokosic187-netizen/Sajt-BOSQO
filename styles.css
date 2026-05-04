@@ -4783,7 +4783,7 @@ body[data-stage="8"] .journey-title-wrap {
   flex: 1;
   min-width: 0;
   height: min(74vh, 756px);
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -4861,11 +4861,49 @@ body[data-stage="8"] .journey-title-wrap {
 }
 .contact-meta-row:last-child { border-bottom: none; }
 a.contact-meta-row { cursor: pointer; }
-a.contact-meta-row:hover .contact-meta-val { color: rgba(29,233,182,0.95); }
-a.contact-meta-row:hover .contact-meta-icon {
+a.contact-meta-row:hover .contact-meta-val,
+.contact-meta-row--email:hover .contact-meta-email-link .contact-meta-val { color: rgba(29,233,182,0.95); }
+a.contact-meta-row:hover .contact-meta-icon,
+.contact-meta-row--email:hover .contact-meta-email-link .contact-meta-icon {
   color: rgba(29,233,182,1);
   filter: drop-shadow(0 0 5px rgba(29,233,182,0.65));
 }
+.contact-meta-row--email {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.contact-meta-email-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex: 1;
+}
+.contact-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(29,233,182,0.2);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  color: rgba(29,233,182,0.45);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  position: relative;
+}
+.contact-copy-btn:hover {
+  color: rgba(29,233,182,0.9);
+  border-color: rgba(29,233,182,0.5);
+  background: rgba(29,233,182,0.06);
+}
+.contact-copy-btn svg { width: 15px; height: 15px; flex-shrink: 0; position: absolute; transition: opacity 0.2s ease; }
+.contact-copy-check { opacity: 0; }
+.contact-copy-btn.copied .contact-copy-check { opacity: 1; color: rgba(29,233,182,1); }
+.contact-copy-btn.copied svg:first-child { opacity: 0; }
 .contact-meta-icon {
   font-size: 16px;
   color: rgba(29,233,182,0.5);
@@ -5146,7 +5184,7 @@ a.contact-info-row { cursor: pointer; }
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 40px;
   z-index: 3;
   opacity: 0;
