@@ -3853,15 +3853,19 @@ window.addEventListener('beforeunload', function () {
   var headlineWrap = document.querySelector('.contact-headline-wrap');
   var accentEl     = document.querySelector('.contact-headline-accent');
   if (headlineWrap && accentEl) {
+    var exOutTimer;
     headlineWrap.addEventListener('mouseenter', function () {
+      clearTimeout(exOutTimer);
       accentEl.classList.remove('ex-out');
       void accentEl.offsetWidth;
       accentEl.classList.add('ex-in');
     });
     headlineWrap.addEventListener('mouseleave', function () {
-      accentEl.classList.remove('ex-in');
-      void accentEl.offsetWidth;
-      accentEl.classList.add('ex-out');
+      exOutTimer = setTimeout(function () {
+        accentEl.classList.remove('ex-in');
+        void accentEl.offsetWidth;
+        accentEl.classList.add('ex-out');
+      }, 1000);
     });
   }
 
