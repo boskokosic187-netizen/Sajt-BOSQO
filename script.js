@@ -3682,32 +3682,83 @@ window.addEventListener('beforeunload', function () {
       e.preventDefault();
       if (window._pageOpen) return;
       if (window._applyStage) window._applyStage(9);
-      if (window._activateProjectsDirect) {
-        window._activateProjectsDirect(0, function () { openContact(); });
-      } else {
-        openContact();
-      }
+      openContact();
+      if (window._activateProjectsDirect) window._activateProjectsDirect(0);
     });
   }
 
-  // Form submit → mailto + toast
-  var form = document.getElementById('contactForm');
-  if (form) {
+  // ── EmailJS config ───────────────────────────────────────────────────────
+  // 1. Sign up free at emailjs.com
+  // 2. Add Email Service → connect your Gmail account
+  // 3. Create an Email Template (variables: from_name, from_email, project_type, message)
+  // 4. Replace the three values below with your real IDs from the dashboard
+  var EJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+  var EJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+  var EJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+  if (typeof emailjs !== 'undefined') emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+
+  // Form: validation + send
+  var form    = document.getElementById('contactForm');
+  var nameEl  = document.getElementById('cName');
+  var emailEl = document.getElementById('cEmail');
+  var typeEl  = document.getElementById('cType');
+  var msgEl   = document.getElementById('cMessage');
+
+  if (form && nameEl && emailEl && typeEl && msgEl) {
+    function fieldOf(el) { return el.closest('.contact-field'); }
+    emailEl.addEventListener('input', function () { fieldOf(emailEl).classList.remove('contact-field--error'); });
+    typeEl.addEventListener('change', function () { fieldOf(typeEl).classList.remove('contact-field--error'); });
+    msgEl.addEventListener('input',   function () { fieldOf(msgEl).classList.remove('contact-field--error'); });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var name    = (document.getElementById('cName').value || '').trim();
-      var email   = (document.getElementById('cEmail').value || '').trim();
-      var type    = document.getElementById('cType').value || '';
-      var message = (document.getElementById('cMessage').value || '').trim();
-      if (!name || !email || !message) return;
-      var subj = encodeURIComponent('Project Inquiry' + (type ? ': ' + type : ''));
-      var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-      window.open('mailto:boskokosic187@gmail.com?subject=' + subj + '&body=' + body);
-      form.reset();
-      var toast = document.getElementById('contactToast');
-      if (toast) {
-        toast.classList.add('contact-toast--show');
-        setTimeout(function () { toast.classList.remove('contact-toast--show'); }, 3800);
+      var name    = nameEl.value.trim();
+      var email   = emailEl.value.trim();
+      var type    = typeEl.value;
+      var message = msgEl.value.trim();
+
+      var ok = true;
+      if (!email)   { fieldOf(emailEl).classList.add('contact-field--error'); ok = false; }
+      if (!type)    { fieldOf(typeEl).classList.add('contact-field--error');  ok = false; }
+      if (!message) { fieldOf(msgEl).classList.add('contact-field--error');   ok = false; }
+      if (!ok) return;
+
+      var btn     = form.querySelector('.contact-btn:not(.contact-btn-alt)');
+      var btnText = btn ? btn.querySelector('.contact-btn-text') : null;
+
+      function setBtn(label, disabled) {
+        if (btnText) btnText.textContent = label;
+        if (btn) btn.disabled = disabled;
+      }
+
+      function showToast() {
+        var toast = document.getElementById('contactToast');
+        if (toast) {
+          toast.classList.add('contact-toast--show');
+          setTimeout(function () { toast.classList.remove('contact-toast--show'); }, 3800);
+        }
+      }
+
+      if (typeof emailjs !== 'undefined' && EJS_SERVICE_ID !== 'YOUR_SERVICE_ID') {
+        setBtn('Sending…', true);
+        emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+          from_name:    name,
+          from_email:   email,
+          project_type: type,
+          message:      message
+        }).then(function () {
+          form.reset();
+          setBtn('Send Message', false);
+          showToast();
+        }).catch(function () {
+          setBtn('Send Message', false);
+        });
+      } else {
+        var subj = encodeURIComponent('Project Inquiry: ' + type);
+        var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+        window.open('mailto:boskokosic187@gmail.com?subject=' + subj + '&body=' + body);
+        form.reset();
+        showToast();
       }
     });
   }

@@ -1056,6 +1056,12 @@ body[data-stage="11"] .journey-title {
   filter: blur(0px);
 }
 
+/* Hide journey title instantly whenever any overlay page is open */
+body:has(.project-page.pp-active) .journey-title {
+  opacity: 0 !important;
+  transition: none !important;
+}
+
 /* Individual letters — dissolve like hero scene (scale up = rush toward viewer) */
 .jt-letter {
   display: inline-block;
@@ -5053,6 +5059,19 @@ a.contact-info-row { cursor: pointer; }
   border-color: rgba(29,233,182,0.6);
   background: rgba(29,233,182,0.035);
   box-shadow: 0 0 0 3px rgba(29,233,182,0.07), 0 0 22px rgba(29,233,182,0.08);
+}
+.contact-field-err {
+  display: none;
+  color: rgba(255, 70, 70, 0.9);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  margin-left: 6px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.contact-field--error .contact-field-err {
+  display: inline;
 }
 .contact-textarea { resize: none; min-height: 88px; }
 .contact-select option { background: #1a1a1f; color: #fff; }

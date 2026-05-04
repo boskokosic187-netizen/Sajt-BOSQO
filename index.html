@@ -822,11 +822,11 @@
             <input type="text" class="contact-input" id="cName" placeholder="Your name" autocomplete="off">
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="cEmail">Email</label>
+            <label class="contact-label" for="cEmail">Email <span class="contact-field-err">* required</span></label>
             <input type="email" class="contact-input" id="cEmail" placeholder="Your email" autocomplete="off">
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="cType">Project Type</label>
+            <label class="contact-label" for="cType">Project Type <span class="contact-field-err">* required</span></label>
             <select class="contact-input contact-select" id="cType">
               <option value="" disabled selected>Select a service</option>
               <option>Visual Design</option>
@@ -837,7 +837,7 @@
             </select>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="cMessage">Message</label>
+            <label class="contact-label" for="cMessage">Message <span class="contact-field-err">* required</span></label>
             <textarea class="contact-input contact-textarea" id="cMessage" placeholder="Tell me about your vision..." rows="4"></textarea>
           </div>
           <button type="submit" class="contact-btn">
@@ -895,6 +895,7 @@
   <!-- Contact toast -->
   <div class="contact-toast" id="contactToast">Message sent — I'll be in touch soon.</div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
