@@ -633,7 +633,6 @@ body.avatar-hovered .nav-logo {
   width: 540px;
   height: 152px;
   padding: 28px 48px;
-  border-radius: 55px;
   background-color: rgba(13, 13, 15, 0.55);
   box-shadow: none;
   opacity: 0;
@@ -645,7 +644,14 @@ body.avatar-hovered .nav-logo {
   align-items: center;
   text-align: center;
   box-sizing: border-box;
-  overflow: hidden;
+}
+
+.info-panels-left .info-panel {
+  clip-path: polygon(20px 0%, 100% 0%, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0% 100%, 0% 20px);
+}
+
+.info-panels-right .info-panel {
+  clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 20px, 100% 100%, 20px 100%, 0% calc(100% - 20px));
 }
 
 .info-panel.ip-visible {
@@ -783,7 +789,7 @@ body.avatar-hovered .nav-logo {
 }
 
 @keyframes ipDraw {
-  from { stroke-dashoffset: 3000; }
+  from { stroke-dashoffset: 1400; }
   to   { stroke-dashoffset: 0; }
 }
 
