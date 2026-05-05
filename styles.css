@@ -151,6 +151,8 @@ body {
 .nav-logo img {
   height: 112px;
   width: auto;
+  transform: scale(3);
+  transform-origin: center center;
 }
 
 /* Rectangle frame */
@@ -201,9 +203,6 @@ body {
 }
 
 /* === CLOSE === */
-.nav-closing .nav-link {
-  animation: linkOut 0.2s ease-in forwards 0s;
-}
 .nav-closing .nav-frame {
   animation: frameContract 0.3s ease-in 0.25s forwards;
 }
@@ -237,8 +236,8 @@ body {
   color: rgba(29, 233, 182, 0.75);
   text-decoration: none;
   text-transform: uppercase;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
+  pointer-events: auto;
   transition: transform 0.25s ease, color 0.2s ease;
   line-height: 1;
 }

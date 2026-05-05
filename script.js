@@ -49,11 +49,14 @@
     closeTimeout = setTimeout(startClose, 2000);
   }
 
-  logoWrap.addEventListener('mouseenter', open);
-  nav.addEventListener('mouseenter', () => clearTimeout(closeTimeout));
+  const navbar = document.querySelector('.navbar');
 
-  // Auto-open on page load
-  setTimeout(open, 200);
+  nav.addEventListener('mouseenter', open);
+  nav.addEventListener('mouseleave', scheduleClose);
+  if (navbar) {
+    navbar.addEventListener('mouseenter', open);
+    navbar.addEventListener('mouseleave', scheduleClose);
+  }
 })();
 
 /* ============================================
