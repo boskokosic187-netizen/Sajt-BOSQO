@@ -3685,6 +3685,18 @@ body[data-stage="8"] .journey-title-wrap {
   transform: scale(1);
 }
 
+.ballies-video-lb-frame.lb-frame--portrait {
+  width: auto;
+  height: min(88vh, 720px);
+  aspect-ratio: 9 / 16;
+}
+.ballies-video-lb-frame.lb-frame--portrait .ballies-video-lb-wrap iframe {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .ballies-video-lb-wrap {
   position: absolute;
   inset: 0;

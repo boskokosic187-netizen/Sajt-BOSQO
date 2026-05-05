@@ -9,15 +9,10 @@
 
   let closeTimeout = null;
   let cleanupTimeout = null;
-  let mouseReady = false;
   const rect  = nav.querySelector('.nf-rect');
   const frame = nav.querySelector('.nav-frame');
 
-  // mousemove ne puca na page load — okida se samo kad korisnik zaista pomjeri mis
-  document.addEventListener('mousemove', () => { mouseReady = true; }, { once: true, passive: true });
-
   function open() {
-    if (!mouseReady) return;
     clearTimeout(closeTimeout);
     clearTimeout(cleanupTimeout);
     if (rect)  rect.style.strokeDashoffset = '';
@@ -56,7 +51,9 @@
 
   logoWrap.addEventListener('mouseenter', open);
   nav.addEventListener('mouseenter', () => clearTimeout(closeTimeout));
-  nav.addEventListener('mouseleave', scheduleClose);
+
+  // Auto-open on page load
+  setTimeout(open, 200);
 })();
 
 /* ============================================
@@ -269,6 +266,7 @@
   const PANEL_STEP  = 333;                     // ms between each panel
   let panelTimers   = [];
   let panelsVisible = false;
+  let panelsPermanent = false;
 
   const STROKE_DURATION = 900; // matches ipDraw 0.9s
 
@@ -290,6 +288,7 @@
   }
 
   function hidePanels() {
+    if (panelsPermanent) return;
     panelTimers.forEach(clearTimeout);
     panelTimers   = [];
     panelsVisible = false;
@@ -457,6 +456,26 @@
   }
 
   requestAnimationFrame(rotateTick);
+
+  // Auto-show panels on page load with reduced delay
+  setTimeout(function () {
+    if (panelsVisible) return;
+    panelsVisible = true;
+    allPanels.forEach(function (panel, i) {
+      var t = setTimeout(function () {
+        panel.classList.add('ip-visible');
+      }, i * PANEL_STEP);
+      panelTimers.push(t);
+    });
+    var lastDelay = (allPanels.length - 1) * PANEL_STEP + STROKE_DURATION;
+    var tAll = setTimeout(function () {
+      document.querySelectorAll('.info-panel-wrap').forEach(function (w) {
+        w.classList.add('ip-interactive');
+      });
+      panelsPermanent = true;
+    }, lastDelay);
+    panelTimers.push(tAll);
+  }, 400);
 })();
 
 /* ============================================
@@ -1705,7 +1724,7 @@ window.addEventListener('beforeunload', function () {
         var num = String(i).padStart(3, '0');
         html += '<div class="ballies-nft-card">'
               +   '<div class="ballies-nft-inner">'
-              +     '<img src="assets/ballies/1/' + i + '.png" alt="Ballies #' + num + '" draggable="false">'
+              +     '<img src="assets/BALLIES/1/' + i + '.png" alt="Ballies #' + num + '" draggable="false">'
               +   '</div>'
               +   '<div class="ballies-nft-num">#' + num + '</div>'
               + '</div>';
@@ -2343,11 +2362,13 @@ window.addEventListener('beforeunload', function () {
   var videoLbWrap  = document.getElementById('balliesVideoLbWrap');
   var videoLbClose = document.getElementById('balliesVideoLbClose');
 
-  function openVideoLb(id) {
+  function openVideoLb(id, portrait) {
     if (!videoLb || !videoLbWrap) return;
     // Pause hover previews while lightbox is open
     stopAllVideos();
     videoLbWrap.innerHTML = '';
+    var frame = videoLb.querySelector('.ballies-video-lb-frame');
+    if (frame) frame.classList.toggle('lb-frame--portrait', !!portrait);
     var iframe = document.createElement('iframe');
     iframe.src = lightboxParams(id);
     iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
@@ -3536,7 +3557,7 @@ window.addEventListener('beforeunload', function () {
       });
 
       item.addEventListener('click', function () {
-        if (window._openVideoLb) window._openVideoLb(id);
+        if (window._openVideoLb) window._openVideoLb(id, true);
       });
     });
   }
