@@ -117,12 +117,16 @@ body {
 
 .nav-work {
   justify-self: end;
-  margin-right: 40px;
+  margin-right: 90px;
+  min-width: 160px;
+  justify-content: center;
 }
 
 .nav-contact {
   justify-self: start;
-  margin-left: 40px;
+  margin-left: 90px;
+  min-width: 160px;
+  justify-content: center;
 }
 
 /* Logo */
@@ -136,16 +140,14 @@ body {
   display: flex;
   align-items: center;
   text-decoration: none;
-  transform: scale(1);
   filter: drop-shadow(0 0 12px rgba(0, 255, 200, 0.15));
-  transition: transform 0.5s ease-out, filter 0.5s ease-out;
+  transition: filter 0.3s ease;
   position: relative;
   z-index: 1;
 }
 
-.nav-opening .nav-logo,
-.nav-closing .nav-logo {
-  filter: drop-shadow(0 0 22px rgba(0, 255, 200, 0.35));
+.nav-logo:hover {
+  filter: drop-shadow(0 0 22px rgba(0, 255, 200, 0.4));
 }
 
 .nav-logo img {
@@ -155,98 +157,58 @@ body {
   transform-origin: center center;
 }
 
-/* Rectangle frame */
-.nav-frame {
-  position: absolute;
-  top: -10px;
-  bottom: -10px;
-  left: -18px;
-  right: -18px;
-  width: calc(100% + 36px);
-  height: calc(100% + 20px);
-  pointer-events: none;
-  overflow: visible;
-}
-
-.nf-rect {
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  fill: none;
-  stroke: url(#navGrad);
-  stroke-width: 1;
-  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5)) drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
-  stroke-dasharray: 5000;
-  stroke-dashoffset: 5000;
-}
-
-#navGradStop1 { animation: gradStop1 4s ease-in-out infinite; }
-#navGradStop2 { animation: gradStop2 4s ease-in-out infinite; }
-
-@keyframes gradStop1 {
-  0%, 100% { stop-color: #0D0D0F; }
-  50%       { stop-color: #1de9b6; }
-}
-@keyframes gradStop2 {
-  0%, 100% { stop-color: #1de9b6; }
-  50%       { stop-color: #0D0D0F; }
-}
-
-/* === OPEN === */
-.nav-opening .nf-rect {
-  animation: drawRectOpen 1s ease-in forwards;
-}
-.nav-opening .nav-frame {
-  animation: frameExpand 0.5s ease-out 1.1s forwards;
-}
-.nav-opening .nav-link {
-  animation: linkIn 0.35s ease-out 1.3s forwards;
-}
-
-/* === CLOSE === */
-.nav-closing .nav-frame {
-  animation: frameContract 0.3s ease-in 0.25s forwards;
-}
-.nav-closing .nf-rect {
-  animation: drawRectClose 1s ease-out 0.55s forwards;
-}
-
-@keyframes drawRectOpen  { from { stroke-dashoffset: 5000; } to { stroke-dashoffset: 0; } }
-@keyframes drawRectClose { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 5000; } }
-
-@keyframes frameExpand {
-  from { left: -18px; right: -18px; width: calc(100% + 36px); }
-  to   { left: -180px; right: -180px; width: calc(100% + 360px); }
-}
-@keyframes frameContract {
-  from { left: -180px; right: -180px; width: calc(100% + 360px); }
-  to   { left: -18px; right: -18px; width: calc(100% + 36px); }
-}
-
-@keyframes linkOut {
-  from { opacity: 1; }
-  to   { opacity: 0; pointer-events: none; }
-}
-
-/* Nav links */
+/* Nav links — futuristic buttons */
 .nav-link {
-  font-family: 'Satoshi', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: rgba(29, 233, 182, 0.75);
+  display: inline-flex;
+  align-items: center;
+  padding: 17px 42px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(29, 233, 182, 0.7);
   text-decoration: none;
   text-transform: uppercase;
   opacity: 1;
   pointer-events: auto;
-  transition: transform 0.25s ease, color 0.2s ease;
   line-height: 1;
+  position: relative;
+  background: rgba(5, 16, 13, 0.8);
+  border: 1px solid rgba(29, 233, 182, 0.3);
+  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.08));
+  transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease, filter 0.22s ease, transform 0.22s ease;
 }
 
+/* WORK — notch top-left + bottom-right */
+.nav-work {
+  clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px);
+}
+
+/* CONTACT — mirrored: notch top-right + bottom-left */
+.nav-contact {
+  clip-path: polygon(0% 0%, calc(100% - 14px) 0%, 100% 14px, 100% 100%, 14px 100%, 0% calc(100% - 14px));
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(29, 233, 182, 0.07) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
 
 .nav-link:hover {
-  color: rgba(29, 233, 182, 1);
-  transform: scale(1.08);
-  transition: transform 0.25s ease, color 0.2s ease;
+  color: #1de9b6;
+  background: rgba(29, 233, 182, 0.09);
+  border-color: rgba(29, 233, 182, 0.72);
+  filter: drop-shadow(0 0 12px rgba(29, 233, 182, 0.55)) drop-shadow(0 0 28px rgba(29, 233, 182, 0.2));
+  transform: translateY(-2px);
+}
+
+.nav-link:hover::before {
+  opacity: 1;
 }
 
 @keyframes linkIn {

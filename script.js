@@ -1,63 +1,3 @@
-/* ============================================
-   NAVBAR INTERACTION
-   ============================================ */
-
-(function () {
-  const nav = document.querySelector('.nav-inner');
-  const logoWrap = document.querySelector('.nav-logo-wrap');
-  if (!nav || !logoWrap) return;
-
-  let closeTimeout = null;
-  let cleanupTimeout = null;
-  const rect  = nav.querySelector('.nf-rect');
-  const frame = nav.querySelector('.nav-frame');
-
-  function open() {
-    clearTimeout(closeTimeout);
-    clearTimeout(cleanupTimeout);
-    if (rect)  rect.style.strokeDashoffset = '';
-    if (frame) { frame.style.left = ''; frame.style.right = ''; frame.style.width = ''; }
-    nav.classList.remove('nav-closing');
-    nav.classList.add('nav-opening');
-  }
-
-  function startClose() {
-    // Freeze the fully-open visual state as inline styles BEFORE switching classes
-    // so the animation doesn't snap to CSS base values on class removal
-    if (rect)  rect.style.strokeDashoffset = '0';
-    if (frame) {
-      frame.style.left  = '-180px';
-      frame.style.right = '-180px';
-      frame.style.width = 'calc(100% + 360px)';
-    }
-
-    // Force reflow so inline styles are painted before class change
-    nav.getBoundingClientRect();
-
-    nav.classList.remove('nav-opening');
-    nav.classList.add('nav-closing');
-
-    // Clean up inline styles after close animation finishes (~1.6s)
-    cleanupTimeout = setTimeout(() => {
-      if (rect)  rect.style.strokeDashoffset = '';
-      if (frame) { frame.style.left = ''; frame.style.right = ''; frame.style.width = ''; }
-    }, 1800);
-  }
-
-  function scheduleClose() {
-    clearTimeout(closeTimeout);
-    closeTimeout = setTimeout(startClose, 2000);
-  }
-
-  const navbar = document.querySelector('.navbar');
-
-  nav.addEventListener('mouseenter', open);
-  nav.addEventListener('mouseleave', scheduleClose);
-  if (navbar) {
-    navbar.addEventListener('mouseenter', open);
-    navbar.addEventListener('mouseleave', scheduleClose);
-  }
-})();
 
 /* ============================================
    STAR FIELD
@@ -717,8 +657,14 @@
         journeyWrap.classList.remove('journey-hovered');
         window._stardropBoost = 1;
       } else if (prev >= 9 && stage <= 8) {
-        // Scrolling back from stage 9 → restore float
-        journeyWrap.style.animationPlayState = 'running';
+        if (stage >= 6) {
+          // Normal step-back through journey — restore float
+          journeyWrap.style.animationPlayState = 'running';
+        } else {
+          // Jumping past journey directly to hero — clean up completely
+          journeyWrap.style.animationPlayState = 'paused';
+          journeyWrap.classList.remove('journey-floating', 'journey-hovered', 'journey-click-exit');
+        }
       }
     }
 
@@ -845,6 +791,12 @@
     } else {
       clearTimeout(rapidTimer);
       document.body.classList.remove('scroll-fast');
+    }
+
+    // Scrolling up from roadmap → skip journey, go straight to hero
+    if (dir === -1 && stage === 9) {
+      applyStage(0);
+      return;
     }
 
     applyStage(stage + dir);
