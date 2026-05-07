@@ -118,14 +118,14 @@ body {
 .nav-work {
   justify-self: end;
   margin-right: 90px;
-  min-width: 160px;
+  min-width: 260px;
   justify-content: center;
 }
 
 .nav-contact {
   justify-self: start;
   margin-left: 90px;
-  min-width: 160px;
+  min-width: 260px;
   justify-content: center;
 }
 
@@ -161,9 +161,9 @@ body {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  padding: 17px 42px;
+  padding: 34px 84px;
   font-family: 'Orbitron', sans-serif;
-  font-size: 13px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: 0.3em;
   color: rgba(29, 233, 182, 0.7);
@@ -181,12 +181,12 @@ body {
 
 /* WORK — notch top-left + bottom-right */
 .nav-work {
-  clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px);
+  clip-path: polygon(28px 0%, 100% 0%, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0% 100%, 0% 28px);
 }
 
 /* CONTACT — mirrored: notch top-right + bottom-left */
 .nav-contact {
-  clip-path: polygon(0% 0%, calc(100% - 14px) 0%, 100% 14px, 100% 100%, 14px 100%, 0% calc(100% - 14px));
+  clip-path: polygon(0% 0%, calc(100% - 28px) 0%, 100% 28px, 100% 100%, 28px 100%, 0% calc(100% - 28px));
 }
 
 .nav-link::before {
@@ -209,6 +209,33 @@ body {
 
 .nav-link:hover::before {
   opacity: 1;
+}
+
+/* ── WORK button — orange CTA ── */
+.nav-work {
+  color: #FFA040;
+  background: rgba(255, 109, 0, 0.1);
+  border-color: rgba(255, 109, 0, 0.85);
+  filter: drop-shadow(0 0 16px rgba(255, 109, 0, 0.7)) drop-shadow(0 0 36px rgba(255, 109, 0, 0.28));
+  animation: workGlowPulse 2.6s ease-in-out infinite;
+}
+
+.nav-work::before {
+  background: linear-gradient(135deg, rgba(255, 130, 0, 0.13) 0%, transparent 55%);
+}
+
+.nav-work:hover {
+  color: #FFFFFF;
+  background: rgba(255, 100, 0, 0.22);
+  border-color: #FF8C00;
+  filter: drop-shadow(0 0 24px rgba(255, 120, 0, 1)) drop-shadow(0 0 60px rgba(255, 80, 0, 0.5));
+  animation: none;
+  transform: translateY(-2px);
+}
+
+@keyframes workGlowPulse {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(255, 109, 0, 0.7)) drop-shadow(0 0 36px rgba(255, 109, 0, 0.28)); }
+  50%       { filter: drop-shadow(0 0 28px rgba(255, 120, 0, 0.95)) drop-shadow(0 0 64px rgba(255, 80, 0, 0.45)); }
 }
 
 @keyframes linkIn {
@@ -989,7 +1016,7 @@ body.avatar-hovered .nav-logo {
 }
 
 .projects-section.projects-active .roadmap-node-wrap {
-  animation: nodeAppear 0.3s ease-out var(--appear-delay) both;
+  animation: nodeAppear 0.15s ease-out var(--appear-delay) both;
 }
 
 @keyframes nodeAppear {
@@ -1035,7 +1062,7 @@ body.avatar-hovered .nav-logo {
 }
 
 .projects-section.projects-active .node-stroke-circle {
-  animation: circleStrokeDraw 0.6s ease-in-out var(--stroke-delay) both;
+  animation: circleStrokeDraw 0.3s ease-in-out var(--stroke-delay) both;
 }
 
 @keyframes circleStrokeDraw {
@@ -1054,7 +1081,7 @@ body.avatar-hovered .nav-logo {
 }
 
 .projects-section.projects-active .roadmap-line {
-  animation: lineExtend 0.32s ease-out var(--line-delay) both;
+  animation: lineExtend 0.16s ease-out var(--line-delay) both;
 }
 
 @keyframes lineExtend {
@@ -1078,7 +1105,7 @@ body.avatar-hovered .nav-logo {
 }
 
 .projects-section.projects-active .roadmap-label {
-  animation: labelIn 0.35s ease-out var(--appear-delay) both;
+  animation: labelIn 0.18s ease-out var(--appear-delay) both;
 }
 
 @keyframes labelIn {

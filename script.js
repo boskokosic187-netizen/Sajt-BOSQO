@@ -662,16 +662,16 @@ window.addEventListener('beforeunload', function () {
         if (onActive) onActive();
         // Start typewriter immediately as page opens
         twTimer = setTimeout(startTypewriter, 0);
-        // Enable hover on roadmap items only after all animations finish (~4.3s)
+        // Enable hover on roadmap items only after all animations finish (~2.15s)
         clearTimeout(readyTimer);
         readyTimer = setTimeout(function () {
           if (roadmap) roadmap.classList.add('roadmap-ready');
-        }, 4300);
+        }, 2150);
         // Enable pointer-events per item as soon as each one finishes appearing
         itemTimers.forEach(clearTimeout);
         itemTimers = [];
         var rmItems = roadmap ? roadmap.querySelectorAll('.roadmap-item') : [];
-        var appearDelays = [0.3, 1.1, 1.9, 2.7, 3.5];
+        var appearDelays = [0.15, 0.55, 0.95, 1.35, 1.75];
         for (var i = 0; i < rmItems.length; i++) {
           (function (el, delay) {
             itemTimers.push(setTimeout(function () {
@@ -3485,4 +3485,50 @@ window.addEventListener('beforeunload', function () {
       });
     });
   }
+})();
+
+/* ============================================
+   GALLERY SCROLL NAVIGATION
+   ============================================ */
+(function () {
+  var lastWheel = 0;
+  var COOLDOWN  = 650;
+
+  window.addEventListener('wheel', function (e) {
+    if (!window._pageOpen) return;
+    var page = window._activePage;
+    if (!page || page === 'contact') return;
+
+    // Skip when a lightbox / video overlay is open
+    if (window._lbOpen) return;
+    var balliesLb = document.getElementById('balliesVideoLb');
+    if (balliesLb && balliesLb.classList.contains('ballies-video-lb--active')) return;
+    var wsgLb = document.getElementById('wsgBgroupLb');
+    if (wsgLb && wsgLb.classList.contains('wsg-bgroup-lb--active')) return;
+
+    e.preventDefault();
+
+    var now = Date.now();
+    if (now - lastWheel < COOLDOWN) return;
+    lastWheel = now;
+
+    var next = e.deltaY > 0;
+
+    if (page === 'fca') {
+      if (next) { if (window._fcaNextGallery) window._fcaNextGallery(); }
+      else      { if (window._fcaPrevGallery) window._fcaPrevGallery(); }
+    } else if (page === 'its') {
+      if (next) { if (window._itsNextGallery) window._itsNextGallery(); }
+      else      { if (window._itsPrevGallery) window._itsPrevGallery(); }
+    } else if (page === 'ballies') {
+      if (next) { if (window._balliesNextPage) window._balliesNextPage(); }
+      else      { if (window._balliesPrevPage) window._balliesPrevPage(); }
+    } else if (page === 'wsg') {
+      if (next) { if (window._wsgNextPage) window._wsgNextPage(); }
+      else      { if (window._wsgPrevPage) window._wsgPrevPage(); }
+    } else if (page === 'laboo') {
+      if (next) { if (window._labooNextPage) window._labooNextPage(); }
+      else      { if (window._labooPrevPage) window._labooPrevPage(); }
+    }
+  }, { passive: false });
 })();
