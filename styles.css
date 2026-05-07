@@ -5170,7 +5170,7 @@ a.contact-info-row { cursor: pointer; }
     justify-content: flex-start;
     width: 100%;
     height: 100%;
-    padding: 28px 24px calc(32px + env(safe-area-inset-bottom));
+    padding: 28px 24px calc(80px + env(safe-area-inset-bottom));
     grid-template-columns: unset;
     position: static;
   }

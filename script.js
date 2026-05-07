@@ -422,6 +422,8 @@
    ============================================ */
 
 (function () {
+  if (window.innerWidth <= 600) return;
+
   const wrapper = document.querySelector('.avatar-wrapper');
   if (!wrapper) return;
 
