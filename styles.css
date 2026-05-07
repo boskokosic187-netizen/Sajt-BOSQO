@@ -1840,6 +1840,36 @@ body.avatar-hovered .nav-logo {
   transform: scale(1.25);
 }
 
+/* ── Gallery prev / next buttons (shared across all 5 pages) ── */
+.gallery-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 44px;
+  padding: 0;
+  margin: 0 16px;
+  background: transparent;
+  border: 1px solid rgba(29, 233, 182, 0.3);
+  color: rgba(29, 233, 182, 0.5);
+  cursor: pointer;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, filter 0.2s ease;
+}
+
+.gallery-nav-btn svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.gallery-nav-btn:hover {
+  color: #1de9b6;
+  border-color: rgba(29, 233, 182, 0.75);
+  background: rgba(29, 233, 182, 0.08);
+  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.45));
+}
+
 /* ============================================
    FCA LIGHTBOX
    ============================================ */

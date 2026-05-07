@@ -3532,3 +3532,35 @@ window.addEventListener('beforeunload', function () {
     }
   }, { passive: false });
 })();
+
+/* ============================================
+   GALLERY PREV / NEXT BUTTONS
+   ============================================ */
+(function () {
+  function bind(prevId, nextId, prevFn, nextFn) {
+    var p = document.getElementById(prevId);
+    var n = document.getElementById(nextId);
+    if (p) p.addEventListener('click', prevFn);
+    if (n) n.addEventListener('click', nextFn);
+  }
+
+  bind('fcaPrev',     'fcaNext',
+    function () { if (window._fcaPrevGallery)  window._fcaPrevGallery(); },
+    function () { if (window._fcaNextGallery)  window._fcaNextGallery(); });
+
+  bind('itsPrev',     'itsNext',
+    function () { if (window._itsPrevGallery)  window._itsPrevGallery(); },
+    function () { if (window._itsNextGallery)  window._itsNextGallery(); });
+
+  bind('balliesPrev', 'balliesNext',
+    function () { if (window._balliesPrevPage) window._balliesPrevPage(); },
+    function () { if (window._balliesNextPage) window._balliesNextPage(); });
+
+  bind('wsgPrev',     'wsgNext',
+    function () { if (window._wsgPrevPage)     window._wsgPrevPage(); },
+    function () { if (window._wsgNextPage)     window._wsgNextPage(); });
+
+  bind('labooPrev',   'labooNext',
+    function () { if (window._labooPrevPage)   window._labooPrevPage(); },
+    function () { if (window._labooNextPage)   window._labooNextPage(); });
+})();
