@@ -5105,7 +5105,318 @@ a.contact-info-row { cursor: pointer; }
 }
 .contact-page .pp-title-wrap { display: none; }
 
-/* ---- RESPONSIVE ---- */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* ── Touch devices — hide custom cursor ── */
+@media (hover: none) and (pointer: coarse) {
+  body, *, *::before, *::after { cursor: auto !important; }
+  #custom-cursor { display: none !important; }
+}
+
+/* ── 1400px — smaller 16:9 laptops (1366×768, 1280×720) ── */
+@media (max-width: 1400px) {
+  .nav-link {
+    padding: 24px 56px;
+    font-size: 20px;
+  }
+  .nav-work  { margin-right: 56px; min-width: 200px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
+  .nav-contact { margin-left: 56px; min-width: 200px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
+
+  .info-panels { width: 400px; }
+  .info-panel  { width: 400px; padding: 22px 36px; }
+  .info-panels-left .info-panel  { clip-path: polygon(18px 0%, 100% 0%, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0% 100%, 0% 18px); }
+  .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 18px) 0%, 100% 18px, 100% 100%, 18px 100%, 0% calc(100% - 18px)); }
+}
+
+/* ── 900px — tablets ── */
+@media (max-width: 900px) {
+  .nav-link    { padding: 18px 36px; font-size: 15px; letter-spacing: 0.2em; }
+  .nav-work    { margin-right: 32px; min-width: 140px; clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
+  .nav-contact { margin-left: 32px;  min-width: 140px; clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
+
+  .info-panels { display: none; }
+
+  .avatar-wrapper {
+    width: clamp(340px, 70vw, 580px);
+    height: clamp(340px, 70vw, 580px);
+  }
+  .hero-content { height: clamp(340px, 70vw, 580px); }
+}
+
+/* ── 600px — phones ── */
+@media (max-width: 600px) {
+  /* Navbar — full-screen transparent overlay
+     Logo pinned top-center, buttons stacked below avatar */
+  .navbar {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-top: none;
+    pointer-events: none;
+    display: flex;
+    align-items: stretch;
+  }
+  .nav-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 28px 24px calc(32px + env(safe-area-inset-bottom));
+    grid-template-columns: unset;
+    position: static;
+  }
+
+  /* Logo — top center */
+  .nav-logo-wrap {
+    order: -1;
+    pointer-events: auto;
+    justify-self: auto;
+    align-self: auto;
+    margin: 0 0 0 0;
+  }
+  .nav-logo-wrap { margin-top: 7vh; }
+  .nav-logo img { height: 120px; transform: scale(3); }
+
+  /* WORK + CONTACT — stacked below avatar, pushed to bottom */
+  .nav-link {
+    pointer-events: auto;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    padding: 14px 0;
+    width: min(78vw, 300px);
+    justify-content: center;
+    margin: 0;
+    min-width: 0;
+  }
+  .nav-work {
+    order: 1;
+    margin-top: auto;
+    margin-bottom: 14px;
+    clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+  }
+  .nav-contact {
+    order: 2;
+    margin-bottom: 0;
+    clip-path: polygon(0% 0%, calc(100% - 12px) 0%, 100% 12px, 100% 100%, 12px 100%, 0% calc(100% - 12px));
+  }
+
+  /* Hide floating icons */
+  .floating-icon { display: none; }
+
+  /* Hero — just center the avatar; navbar overlay handles chrome */
+  .hero { min-height: 100vh; }
+  .hero-content { height: auto; gap: 0; }
+
+  /* Avatar — fill the middle area between logo and buttons */
+  .avatar-wrapper {
+    width: min(88vw, 500px);
+    height: min(88vw, 500px);
+  }
+  .avatar-ring,
+  .avatar-border,
+  .avatar-outer-ring { display: none; }
+  .avatar-glow { opacity: 0.5; }
+  .avatar-img-wrap { width: 94%; height: 94%; }
+
+  /* Hide socials — reachable via contact page */
+  .hero-socials { display: none; }
+
+  /* Projects roadmap — scrollable (only when active) */
+  .projects-section.projects-active {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 160px;
+    padding-bottom: 60px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .projects-title-wrap {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 28px;
+    background: rgba(13,13,15,0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  .projects-title { font-size: clamp(1rem, 4vw, 1.5rem); white-space: normal; text-align: center; }
+  .roadmap-label { font-size: 13px; white-space: normal; }
+  .roadmap-item  { gap: 18px; }
+
+  /* Project pages — scrollable (only when active) */
+  .project-page.pp-active {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 72px;
+  }
+
+  /* Back button */
+  .pp-back { top: 22px; left: 20px; font-size: 12px; }
+
+  /* Page title */
+  .pp-title { font-size: clamp(1.1rem, 6vw, 1.8rem); white-space: normal; }
+  .pp-title-wrap { padding: 20px 32px; }
+
+  /* Typewriter text */
+  .pp-typewriter { margin-top: 18px; }
+
+  /* Dots row — larger touch targets */
+  .fca-gallery-dots { bottom: 16px; gap: 8px; }
+  .fca-dot          { width: 10px; height: 10px; }
+  .gallery-nav-btn  { width: 44px; height: 36px; margin: 0 10px; }
+  .gallery-nav-btn svg { width: 18px; height: 18px; }
+  .laboo-dots { bottom: 16px; }
+  .laboo-dot  { width: 10px; height: 10px; }
+
+  /* ── FCA gallery ── */
+  .fca-gallery-wrap {
+    height: auto;
+    overflow: visible;
+    margin-top: 24px;
+    margin-bottom: 60px;
+  }
+  .fca-gallery,
+  .fca-gallery-2,
+  .fca-gallery-3 {
+    position: relative;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: none;
+    height: auto;
+  }
+  .fca-gallery-2,
+  .fca-gallery-3 { opacity: 0; pointer-events: none; }
+  .fca-gallery-2.gallery-active,
+  .fca-gallery-3.gallery-active { opacity: 1; pointer-events: auto; }
+
+  .fca-gallery .fca-work-item:nth-child(n),
+  .fca-gallery-2 .fca-work-item:nth-child(n),
+  .fca-gallery-3 .fca-work-item:nth-child(n) {
+    grid-area: auto;
+    height: 28vw;
+  }
+
+  /* ── ITS gallery ── */
+  .its-gallery-wrap {
+    height: auto;
+    overflow: visible;
+    margin-top: 24px;
+    width: 96vw;
+  }
+  .its-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .its-bb-item { height: 28vw; }
+
+  .its-gallery-2,
+  .its-gallery-3 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: none;
+    width: 96vw;
+    height: auto;
+    transform: none;
+  }
+  .its-gallery-2.gallery-active,
+  .its-gallery-3.gallery-active { display: grid; transform: none; }
+
+  .its-gallery-2 .fca-work-item:nth-child(n),
+  .its-gallery-3 .fca-work-item:nth-child(n) {
+    grid-area: auto;
+    height: 28vw;
+  }
+
+  /* ── Ballies gallery ── */
+  .ballies-gallery-outer {
+    width: 96vw;
+    margin-top: 24px;
+    padding-bottom: 60px;
+  }
+  .ballies-gallery-wrap {
+    height: auto;
+    overflow: visible;
+  }
+  .ballies-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ballies-g-item[data-span="2"] { grid-column: span 2; }
+  .ballies-g-item[data-span="3"] { grid-column: span 2; }
+
+  /* ── WSG gallery ── */
+  .wsg-gallery-outer {
+    padding: 0 12px 60px;
+    margin-top: 24px;
+  }
+  .wsg-gallery-wrap {
+    max-height: none;
+    overflow: visible;
+  }
+  .wsg-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    height: auto;
+    gap: 12px;
+  }
+  .wsg-g-item[data-span="2"] { grid-column: span 2; }
+  .wsg-g-item[data-span="3"] { grid-column: span 2; }
+
+  /* ── Laboo gallery ── */
+  .laboo-v-wrap {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 24px;
+    padding: 0 12px 60px;
+    gap: 10px;
+  }
+
+  /* ── Contact ── */
+  .contact-split {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+    padding: 80px 20px 60px;
+    gap: 40px;
+  }
+  .contact-left  { height: auto; padding: 0; width: 100%; max-width: 440px; }
+  .contact-right { flex: 0 0 auto; width: 100%; max-width: 280px; }
+  .contact-right::after { display: none; }
+}
+
+/* ── 400px — small phones (iPhone SE, Galaxy A series) ── */
+@media (max-width: 400px) {
+  .nav-link    { padding: 12px 0; font-size: 11px; width: min(82vw, 280px); }
+  .nav-logo img { height: 100px; }
+
+  .avatar-wrapper {
+    width: min(86vw, 380px);
+    height: min(86vw, 380px);
+  }
+
+  .fca-gallery .fca-work-item:nth-child(n),
+  .fca-gallery-2 .fca-work-item:nth-child(n),
+  .fca-gallery-3 .fca-work-item:nth-child(n),
+  .its-gallery-2 .fca-work-item:nth-child(n),
+  .its-gallery-3 .fca-work-item:nth-child(n),
+  .its-bb-item { height: 36vw; }
+
+  .roadmap-label { font-size: 12px; }
+  .node-num { font-size: 22px; }
+}
+
+/* ── 920px — contact stacking (kept from before) ── */
 @media (max-width: 920px) {
   .contact-split {
     flex-direction: column;

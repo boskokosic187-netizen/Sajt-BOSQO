@@ -9,7 +9,7 @@
   let stars = [];
   let w, h;
 
-  const STAR_COUNT = 350;
+  const STAR_COUNT = window.innerWidth <= 600 ? 70 : 350;
   const MOUSE_RADIUS = 70;
   let mouse = { x: -9999, y: -9999 };
 
@@ -142,7 +142,7 @@
   }
 
   let spawnTimer = 0;
-  const SPAWN_INTERVAL = 1000;
+  const SPAWN_INTERVAL = window.innerWidth <= 600 ? 3200 : 1000;
 
   function draw(timestamp) {
     if (document.hidden) {
@@ -3501,6 +3501,44 @@ window.addEventListener('beforeunload', function () {
       });
     });
   }
+})();
+
+/* ============================================
+   GALLERY TOUCH SWIPE NAVIGATION
+   ============================================ */
+(function () {
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var SWIPE_MIN   = 48;
+
+  document.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function (e) {
+    if (!window._pageOpen) return;
+    var page = window._activePage;
+    if (!page || page === 'contact') return;
+    if (window._lbOpen) return;
+
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < SWIPE_MIN || Math.abs(dy) > Math.abs(dx)) return;
+
+    var next = dx < 0;
+    if (page === 'fca') {
+      next ? window._fcaNextGallery  && window._fcaNextGallery()  : window._fcaPrevGallery  && window._fcaPrevGallery();
+    } else if (page === 'its') {
+      next ? window._itsNextGallery  && window._itsNextGallery()  : window._itsPrevGallery  && window._itsPrevGallery();
+    } else if (page === 'ballies') {
+      next ? window._balliesNextPage && window._balliesNextPage() : window._balliesPrevPage && window._balliesPrevPage();
+    } else if (page === 'wsg') {
+      next ? window._wsgNextPage     && window._wsgNextPage()     : window._wsgPrevPage     && window._wsgPrevPage();
+    } else if (page === 'laboo') {
+      next ? window._labooNextPage   && window._labooNextPage()   : window._labooPrevPage   && window._labooPrevPage();
+    }
+  }, { passive: true });
 })();
 
 /* ============================================
