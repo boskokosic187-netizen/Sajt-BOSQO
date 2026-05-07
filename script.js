@@ -216,18 +216,14 @@
   function showPanels() {
     if (panelsVisible) return;
     panelsVisible = true;
+    panelsPermanent = true;
+    document.querySelectorAll('.info-panel-wrap').forEach(w => w.classList.add('ip-interactive'));
     allPanels.forEach((panel, i) => {
       const t = setTimeout(() => {
         panel.classList.add('ip-visible');
       }, PANEL_DELAY + i * PANEL_STEP);
       panelTimers.push(t);
     });
-    // All panels interactive only after the LAST panel's stroke completes
-    const lastDelay = PANEL_DELAY + (allPanels.length - 1) * PANEL_STEP + STROKE_DURATION;
-    const tAll = setTimeout(() => {
-      document.querySelectorAll('.info-panel-wrap').forEach(w => w.classList.add('ip-interactive'));
-    }, lastDelay);
-    panelTimers.push(tAll);
   }
 
   function hidePanels() {
@@ -339,32 +335,27 @@
   function check(e) {
     const x = e.clientX, y = e.clientY;
     const inCircle  = isInsideCircle(x, y);
-    // Extended zone only keeps hover alive — never triggers it
+    // Extended zone only keeps circle hover alive — never triggers it
     const inExtended = hovered && isOverExtended(x, y);
     const active = inCircle || inExtended;
 
     if (active) {
-      // Cancel any pending leave
-      if (leaveTimer)    { clearTimeout(leaveTimer);    leaveTimer    = null; }
-      if (wrapLeaveTimer){ clearTimeout(wrapLeaveTimer); wrapLeaveTimer = null; }
-      // Only enter hover if cursor is on the circle
+      // Cancel any pending circle leave
+      if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+      // Only enter circle hover if cursor is on the circle
       if (inCircle && !hovered) onHoverEnter();
-      updateWrapHover(x, y);
     } else {
-      // Schedule leave after 1s if not already scheduled
+      // Schedule circle leave after 1s if not already scheduled
       if (hovered && !leaveTimer) {
         leaveTimer = setTimeout(() => {
           onHoverLeave();
           leaveTimer = null;
         }, LEAVE_DELAY);
       }
-      if (hoveredWrap && !wrapLeaveTimer) {
-        wrapLeaveTimer = setTimeout(() => {
-          if (hoveredWrap) { hoveredWrap.classList.remove('ip-hovered'); hoveredWrap = null; }
-          wrapLeaveTimer = null;
-        }, LEAVE_DELAY);
-      }
     }
+
+    // Wrap hover is always independent of circle hover state
+    updateWrapHover(x, y);
   }
 
   window.addEventListener('mousemove', check, { passive: true });
@@ -404,20 +395,16 @@
   setTimeout(function () {
     if (panelsVisible) return;
     panelsVisible = true;
+    panelsPermanent = true;
+    document.querySelectorAll('.info-panel-wrap').forEach(function (w) {
+      w.classList.add('ip-interactive');
+    });
     allPanels.forEach(function (panel, i) {
       var t = setTimeout(function () {
         panel.classList.add('ip-visible');
       }, i * PANEL_STEP);
       panelTimers.push(t);
     });
-    var lastDelay = (allPanels.length - 1) * PANEL_STEP + STROKE_DURATION;
-    var tAll = setTimeout(function () {
-      document.querySelectorAll('.info-panel-wrap').forEach(function (w) {
-        w.classList.add('ip-interactive');
-      });
-      panelsPermanent = true;
-    }, lastDelay);
-    panelTimers.push(tAll);
   }, 400);
 })();
 

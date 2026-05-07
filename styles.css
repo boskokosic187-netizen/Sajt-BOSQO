@@ -236,6 +236,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: clamp(24px, 3vw, 52px);
+  height: clamp(580px, 90vh, 920px);
+  overflow: visible;
 }
 
 /* ============================================
@@ -616,6 +618,8 @@ body.avatar-hovered .nav-logo {
   gap: 24px;
   width: 540px;
   flex-shrink: 0;
+  align-self: flex-start;
+  padding-top: clamp(38px, calc(45vh - 252px), 208px);
 }
 
 .info-panel-wrap {
