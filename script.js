@@ -408,50 +408,6 @@
   }, 400);
 })();
 
-/* ============================================
-   SCROLL HINT
-   ============================================ */
-
-(function () {
-  const hint = document.getElementById('scrollHint');
-  if (!hint) return;
-
-  let timer       = null;
-  let activeDelay = 2500; // default; overridden per-context
-  const DEFAULT_DELAY = 2500;
-
-  function show() { hint.classList.add('visible'); }
-  function hide() { hint.classList.remove('visible'); }
-
-  function resetTimer() {
-    hide();
-    clearTimeout(timer);
-    timer = setTimeout(show, activeDelay);
-  }
-
-  window.addEventListener('wheel',     resetTimer, { passive: true });
-  window.addEventListener('touchmove', resetTimer, { passive: true });
-  window.addEventListener('keydown',   resetTimer);
-
-  // Called externally once the page is ready to accept scroll (hero)
-  window._startScrollHint = function () {
-    activeDelay = DEFAULT_DELAY;
-    timer = setTimeout(show, activeDelay);
-  };
-
-  // Called externally to cancel current timer and restart with a new delay
-  window._resetScrollHint = function (delayMs) {
-    hide();
-    clearTimeout(timer);
-    activeDelay = (delayMs !== undefined) ? delayMs : DEFAULT_DELAY;
-    timer = setTimeout(show, activeDelay);
-  };
-
-  // Called externally to update the delay used by subsequent scroll resets
-  window._setScrollHintDelay = function (delayMs) {
-    activeDelay = delayMs;
-  };
-})();
 
 /* ============================================
    FLOATING ICONS
@@ -606,223 +562,24 @@
 
 
 /* ============================================
-   SCROLL STAGE ENGINE
+   STAGE ENGINE (gallery navigation only)
    ============================================ */
 (function () {
-  const MAX_STAGE       = 9;
-  const MIN_STEP        = 160;  // minimum ms between any two stage changes (prevents wheel spam)
-  const RAPID_THRESHOLD = 700;  // if next scroll within this ms → fast mode
-  const RAPID_RESTORE   = 800;  // ms after last fast scroll to restore normal speed
-
-  let stage        = 0;
-  let lastStepTime = 0;
-  let rapidTimer   = null;
-  let scrollCount  = 0;  // accumulates toward SCROLLS_NEEDED
-  let lastDir      = 0;  // direction of accumulated scrolls
-  const SCROLLS_NEEDED = 1;
-
-  let scrollEnabled = false;
-  window._enableScroll = function () { scrollEnabled = true; };
-
-  const journeyWrap = document.querySelector('.journey-title-wrap');
+  let stage = 0;
+  window._enableScroll = function () {};
 
   function applyStage(n) {
-    const prev = stage;
-    stage = Math.max(0, Math.min(MAX_STAGE, n));
-
-    if (journeyWrap) {
-      if (stage >= 6 && stage <= 8) {
-        // Stages 6-8: float running, hover available
-        if (!journeyWrap.classList.contains('journey-floating')) {
-          void journeyWrap.offsetWidth;
-          journeyWrap.classList.add('journey-floating');
-        }
-        journeyWrap.style.animationPlayState = 'running';
-      } else if (prev <= 8 && stage >= 9) {
-        // Entering stage 9: letters start dissolving — kill hover immediately
-        journeyWrap.style.animationPlayState = 'paused';
-        journeyWrap.classList.remove('journey-hovered');
-        window._stardropBoost = 1;
-      } else if (prev >= 9 && stage <= 8) {
-        if (stage >= 6) {
-          // Normal step-back through journey — restore float
-          journeyWrap.style.animationPlayState = 'running';
-        } else {
-          // Jumping past journey directly to hero — clean up completely
-          journeyWrap.style.animationPlayState = 'paused';
-          journeyWrap.classList.remove('journey-floating', 'journey-hovered', 'journey-click-exit');
-        }
-      }
-    }
-
+    stage = Math.max(0, Math.min(9, n));
     document.body.dataset.stage = stage;
-    if (window._setLetterStage) window._setLetterStage(stage);
     if (window._setProjectsStage) window._setProjectsStage(stage);
   }
 
-  function step(dir) {
-    if (!scrollEnabled) return;   // block scroll until page animations complete
-
-    // Scroll UP while lightbox is open → close lightbox first
-    if (window._lbOpen && dir === -1) {
-      if (window._closeLightbox) window._closeLightbox();
-      return;
-    }
-
-    // Scroll UP while a project page is open
-    if (window._pageOpen && dir === -1) {
-      var isFCA = window._activePage === 'fca';
-      var isITS = window._activePage === 'its';
-      if (isFCA) {
-        if (window._galleryTransitioning) return; // don't interrupt transitions
-        if (window._galleryPage > 0) {
-          // On gallery 2 or 3 → go back one step
-          if (window._fcaPrevGallery) window._fcaPrevGallery();
-        } else {
-          // On gallery 1 → close FCA and return to roadmap
-          if (window._closeFCA) window._closeFCA();
-        }
-      } else if (isITS) {
-        if (window._itsGalleryTransitioning) return;
-        if (window._itsGalleryPage > 0) {
-          if (window._itsPrevGallery) window._itsPrevGallery();
-        } else {
-          if (window._closeITS) window._closeITS();
-        }
-      } else if (window._activePage === 'ballies') {
-        if (window._balliesPage > 0) {
-          if (window._balliesPrevPage) window._balliesPrevPage();
-        } else {
-          if (window._closeBallies) window._closeBallies();
-        }
-      } else if (window._activePage === 'wsg') {
-        if (window._wsgPage > 0) {
-          if (window._wsgPrevPage) window._wsgPrevPage();
-        } else {
-          if (window._closeWSG) window._closeWSG();
-        }
-      } else if (window._activePage === 'laboo') {
-        if (window._labooPage > 0) {
-          if (window._labooPrevPage) window._labooPrevPage();
-        } else {
-          if (window._closeLaboo) window._closeLaboo();
-        }
-      } else {
-        // Any other project page — just close it
-        if (window._closeActivePage) window._closeActivePage();
-      }
-      return;
-    }
-
-    // Scroll DOWN while FCA is open and more galleries remain → advance
-    if (window._pageOpen && window._activePage === 'fca' && dir === 1 && window._galleryPage < (window._galleryTotal || 1) - 1) {
-      if (!window._galleryTransitioning && window._fcaNextGallery) window._fcaNextGallery();
-      return;
-    }
-
-    // Scroll DOWN while ITS is open and more galleries remain → advance
-    if (window._pageOpen && window._activePage === 'its' && dir === 1 && window._itsGalleryPage < (window._itsGalleryTotal || 1) - 1) {
-      if (!window._itsGalleryTransitioning && window._itsNextGallery) window._itsNextGallery();
-      return;
-    }
-
-    // Scroll DOWN while Ballies is open and more pages remain → advance
-    if (window._pageOpen && window._activePage === 'ballies' && dir === 1 && window._balliesPage < (window._balliesTotal || 1) - 1) {
-      if (window._balliesNextPage) window._balliesNextPage();
-      return;
-    }
-
-    // Scroll DOWN while WSG is open and more pages remain → advance
-    if (window._pageOpen && window._activePage === 'wsg' && dir === 1 && window._wsgPage < (window._wsgTotal || 1) - 1) {
-      if (window._wsgNextPage) window._wsgNextPage();
-      return;
-    }
-
-    // Scroll DOWN while Laboo is open and more pages remain → advance
-    if (window._pageOpen && window._activePage === 'laboo' && dir === 1 && window._labooPage < (window._labooTotal || 1) - 1) {
-      if (window._labooNextPage) window._labooNextPage();
-      return;
-    }
-
-    if (window._pageOpen) return; // block all other scroll when a project page is open
-
-    // Scroll DOWN on projects roadmap after all items have appeared → open Contact
-    if (stage === 9 && dir === 1 && document.querySelector('.roadmap.roadmap-ready')) {
-      if (window._openContact) window._openContact();
-      return;
-    }
-    const now  = Date.now();
-    const prev = lastStepTime;
-    if (now - prev < MIN_STEP) return; // debounce wheel spam
-    lastStepTime = now;
-
-    // Reset count if direction changed
-    if (dir !== lastDir) {
-      scrollCount = 0;
-      lastDir = dir;
-    }
-
-    scrollCount++;
-    if (scrollCount < SCROLLS_NEEDED) return; // wait for second scroll
-    scrollCount = 0; // reset for next stage
-
-    // Rapid = second scroll arrived before previous animation finished
-    const isRapid = prev > 0 && (now - prev) < RAPID_THRESHOLD;
-
-    if (isRapid) {
-      document.body.classList.add('scroll-fast');
-      clearTimeout(rapidTimer);
-      rapidTimer = setTimeout(() => {
-        document.body.classList.remove('scroll-fast');
-      }, RAPID_RESTORE);
-    } else {
-      clearTimeout(rapidTimer);
-      document.body.classList.remove('scroll-fast');
-    }
-
-    // Scrolling up from roadmap → skip journey, go straight to hero
-    if (dir === -1 && stage === 9) {
-      applyStage(0);
-      return;
-    }
-
-    applyStage(stage + dir);
-  }
-
-  // Mouse wheel
-  window.addEventListener('wheel', (e) => {
-    step(e.deltaY > 0 ? 1 : -1);
-  }, { passive: true });
-
-  // Keyboard
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'PageDown') step(1);
-    if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) step(-1);
-  });
-
-  // Touch
-  let touchY = 0;
-  window.addEventListener('touchstart', (e) => {
-    touchY = e.touches[0].clientY;
-  }, { passive: true });
-  window.addEventListener('touchend', (e) => {
-    const dy = touchY - e.changedTouches[0].clientY;
-    if (Math.abs(dy) > 50) step(dy > 0 ? 1 : -1);
-  }, { passive: true });
-
-  // Expose for external use (e.g. nav click)
   window._applyStage = applyStage;
-
-  // Init
   applyStage(0);
 })();
 
-// Save current stage and open page before refresh/close
+// Save open project page before refresh/close
 window.addEventListener('beforeunload', function () {
-  var s = +document.body.dataset.stage;
-  if (s > 0) sessionStorage.setItem('lastStage', s);
-  else sessionStorage.removeItem('lastStage');
-
   if (window._pageOpen && window._activePage) sessionStorage.setItem('lastPage', window._activePage);
   else sessionStorage.removeItem('lastPage');
 });
@@ -905,15 +662,6 @@ window.addEventListener('beforeunload', function () {
         if (onActive) onActive();
         // Start typewriter immediately as page opens
         twTimer = setTimeout(startTypewriter, 0);
-        // Scroll hint: cancel pending timer, schedule for content-ready + 3s
-        // Last roadmap item fully drawn at ~4.3s from projects-active
-        if (window._resetScrollHint) {
-          window._resetScrollHint(4300 + 3000); // initial: 7.3s from now
-          setTimeout(function () {
-            // Content is now fully on screen — switch to 3s for scroll resets
-            if (window._setScrollHintDelay) window._setScrollHintDelay(3000);
-          }, 4300);
-        }
         // Enable hover on roadmap items only after all animations finish (~4.3s)
         clearTimeout(readyTimer);
         readyTimer = setTimeout(function () {
@@ -952,12 +700,6 @@ window.addEventListener('beforeunload', function () {
       }
       section.classList.remove('projects-active');
       resetTypewriter();
-      // Clean up click-exit class and nav-hide when scrolling back
-      var jWrap = document.querySelector('.journey-title-wrap');
-      if (jWrap) {
-        jWrap.classList.remove('journey-click-exit');
-        jWrap.style.visibility = '';
-      }
     }
   };
 
@@ -967,30 +709,6 @@ window.addEventListener('beforeunload', function () {
   };
 })();
 
-/* ============================================
-   JOURNEY TITLE HOVER
-   ============================================ */
-(function () {
-  const wrap = document.querySelector('.journey-title-wrap');
-  if (!wrap) return;
-
-  wrap.addEventListener('mouseenter', () => {
-    if (wrap.classList.contains('journey-click-exit')) return;
-    wrap.classList.add('journey-hovered');
-    wrap.style.animationPlayState = 'paused';
-    window._stardropBoost = 7;
-  });
-
-  wrap.addEventListener('mouseleave', () => {
-    if (wrap.classList.contains('journey-click-exit')) return;
-    wrap.classList.remove('journey-hovered');
-    const s = +document.body.dataset.stage;
-    if (s >= 6 && s <= 8) {
-      wrap.style.animationPlayState = 'running';
-    }
-    window._stardropBoost = 1;
-  });
-})();
 
 /* ============================================
    PROJECTS ROADMAP TITLE HOVER
@@ -1027,44 +745,6 @@ window.addEventListener('beforeunload', function () {
   });
 })();
 
-/* ============================================
-   JOURNEY TITLE — CLICK TO SKIP TO PROJECTS
-   ============================================ */
-(function () {
-  const wrap = document.querySelector('.journey-title-wrap');
-  if (!wrap) return;
-
-  wrap.addEventListener('click', function () {
-    var stage = +document.body.dataset.stage;
-    // Only active when title is fully visible (stages 6-8)
-    if (stage < 6 || stage > 8) return;
-    // Prevent double-trigger
-    if (wrap.classList.contains('journey-click-exit')) return;
-
-    // Freeze current float position so removing journey-floating doesn't snap to origin
-    var currentTransform = getComputedStyle(wrap).transform;
-    if (currentTransform && currentTransform !== 'none') {
-      wrap.style.transform = currentTransform;
-    }
-
-    // Stop hover/float states
-    wrap.classList.remove('journey-hovered');
-    wrap.classList.remove('journey-floating');
-    wrap.style.animationPlayState = 'paused';
-    window._stardropBoost = 1;
-
-    // Trigger futuristic exit flash animation
-    wrap.classList.add('journey-click-exit');
-
-    // Update body stage to 9 (hero/navbar already gone at 6+, this keeps CSS consistent)
-    document.body.dataset.stage = '9';
-
-    // Projects appear after 700ms — duration of the exit animation
-    if (window._activateProjectsDirect) {
-      window._activateProjectsDirect(700);
-    }
-  });
-})();
 
 /* ============================================
    NAV WORK LINK — JUMP TO PROJECTS ROADMAP
@@ -1075,35 +755,29 @@ window.addEventListener('beforeunload', function () {
 
   workLink.addEventListener('click', function (e) {
     e.preventDefault();
-
-    // Already showing projects — nothing to do
     var section = document.getElementById('projectsSection');
     if (section && section.classList.contains('projects-active')) return;
 
-    // Instantly hide the journey title — no fade, no flash at all
-    var jWrap = document.querySelector('.journey-title-wrap');
-    if (jWrap) {
-      jWrap.style.visibility = 'hidden';
-      jWrap.classList.remove('journey-hovered');
-      jWrap.classList.remove('journey-floating');
-      jWrap.style.animationPlayState = 'paused';
-      window._stardropBoost = 1;
-    }
-
-    // Fast-forward all stage CSS transitions
-    document.body.classList.add('scroll-fast');
-
-    // Jump stage machinery to 9 (hero + navbar gone)
-    if (window._applyStage) window._applyStage(9);
-
-    // Projects appear after a brief pause
-    if (window._activateProjectsDirect) window._activateProjectsDirect(100);
-
-    // Remove fast mode after transitions settle
+    document.body.classList.add('page-open');
     setTimeout(function () {
-      document.body.classList.remove('scroll-fast');
-    }, 400);
+      if (window._applyStage) window._applyStage(9);
+      if (window._activateProjectsDirect) window._activateProjectsDirect(100);
+    }, 200);
   });
+})();
+
+/* ============================================
+   PROJECTS BACK BUTTON — RETURN TO HERO
+   ============================================ */
+(function () {
+  var projectsBack = document.getElementById('projectsBack');
+  if (!projectsBack) return;
+
+  projectsBack.addEventListener('click', function () {
+    document.body.classList.remove('page-open');
+    if (window._applyStage) window._applyStage(0);
+  });
+
 })();
 
 /* ============================================
@@ -1132,7 +806,6 @@ window.addEventListener('beforeunload', function () {
           cl.contains('nav-logo-wrap') ||
           cl.contains('nav-link') ||
           cl.contains('avatar-wrapper') ||
-          cl.contains('journey-title-wrap') ||
           cl.contains('roadmap-item-link') ||
           cl.contains('pp-back') ||
           cl.contains('wsg-v-item') ||
@@ -1145,11 +818,11 @@ window.addEventListener('beforeunload', function () {
           cl.contains('ballies-dot') ||
           cl.contains('fca-work-item') ||
           cl.contains('fca-gallery-dot') ||
-          cl.contains('scroll-mouse') ||
           cl.contains('fca-lb-close') ||
           cl.contains('wsg-bgroup-lb-close') ||
           cl.contains('contact-tag') ||
           cl.contains('contact-social') ||
+          cl.contains('hero-socials') ||
           cl.contains('contact-btn') ||
           cl.contains('contact-info-row') ||
           cl.contains('contact-input')
@@ -1183,80 +856,6 @@ window.addEventListener('beforeunload', function () {
   });
 })();
 
-/* ============================================
-   JOURNEY TITLE — LETTER BY LETTER DISSOLVE
-   ============================================ */
-(function () {
-  const titleEl = document.querySelector('.journey-title');
-  if (!titleEl) return;
-
-  // Split into individual letter spans
-  const text = titleEl.textContent.trim();
-  titleEl.innerHTML = text.split('').map((ch, i) =>
-    `<span class="jt-letter" data-i="${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`
-  ).join('');
-
-  const letters = Array.from(titleEl.querySelectorAll('.jt-letter'));
-  const N = letters.length;
-
-  // Randomised batches — generated fresh each time stage 9 is first entered
-  let batches = null; // [ [indices...], [indices...], [indices...] ]
-
-  function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-  function buildBatches() {
-    const order = shuffle(Array.from({ length: N }, (_, i) => i));
-    const third = Math.ceil(N / 3);
-    batches = [
-      order.slice(0, third),
-      order.slice(third, third * 2),
-      order.slice(third * 2)
-    ];
-  }
-
-  function applyBatch(batchIdx, gone) {
-    const batch = batches[batchIdx];
-    batch.forEach((letterIdx, pos) => {
-      const letter = letters[letterIdx];
-      if (gone) {
-        letter.style.transitionDelay = (pos * 55) + 'ms';
-        letter.classList.add('jt-gone');
-      } else {
-        letter.style.transitionDelay = '0ms';
-        letter.classList.remove('jt-gone');
-      }
-    });
-  }
-
-  window._setLetterStage = function (stage) {
-    // Build randomised order on first entry to stage 9
-    if (stage >= 9 && !batches) buildBatches();
-    // Reset if scrolled back
-    if (stage < 9 && batches) batches = null;
-
-    if (!batches) {
-      // Stages 6-8: all letters visible
-      letters.forEach(l => { l.style.transitionDelay = '0ms'; l.classList.remove('jt-gone'); });
-      return;
-    }
-
-    // Stage 9: all letters dissolve in one go, staggered in random order
-    const allOrdered = [...batches[0], ...batches[1], ...batches[2]];
-    allOrdered.forEach((letterIdx, pos) => {
-      const letter = letters[letterIdx];
-      if (!letter.classList.contains('jt-gone')) {
-        letter.style.transitionDelay = (pos * 55) + 'ms';
-        letter.classList.add('jt-gone');
-      }
-    });
-  };
-})();
 
 /* ============================================
    FACULTY OF CONTEMPORARY ARTS PAGE
@@ -3622,7 +3221,6 @@ window.addEventListener('beforeunload', function () {
     window._activePage = 'contact';
     window._closeActivePage = closeContact;
     contactPage.classList.add('pp-active');
-    if (projects) projects.style.opacity = '0';
     sessionStorage.setItem('lastPage', 'contact');
     startParticles();
   }
@@ -3632,7 +3230,8 @@ window.addEventListener('beforeunload', function () {
     window._activePage = null;
     window._closeActivePage = null;
     contactPage.classList.remove('pp-active');
-    if (projects) projects.style.opacity = '1';
+    document.body.classList.remove('page-open');
+    if (window._applyStage) window._applyStage(0);
     sessionStorage.removeItem('lastPage');
   }
 
@@ -3644,9 +3243,8 @@ window.addEventListener('beforeunload', function () {
     navContact.addEventListener('click', function (e) {
       e.preventDefault();
       if (window._pageOpen) return;
-      if (window._applyStage) window._applyStage(9);
-      openContact();
-      if (window._activateProjectsDirect) window._activateProjectsDirect(0);
+      document.body.classList.add('page-open');
+      setTimeout(function () { openContact(); }, 200);
     });
   }
 
@@ -3863,54 +3461,28 @@ window.addEventListener('beforeunload', function () {
 })();
 
 /* ============================================
-   STAGE RESTORE ON REFRESH
+   PAGE RESTORE ON REFRESH
    ============================================ */
 (function () {
-  var saved = parseInt(sessionStorage.getItem('lastStage'), 10);
-  if (!saved || saved <= 0) return;
+  var lastPage = sessionStorage.getItem('lastPage');
+  if (!lastPage || !window._activateProjectsDirect) return;
 
-  // Suppress CSS transitions so elements snap to restored state instantly
-  document.body.classList.add('stage-restore');
+  var onActive = lastPage === 'fca'     && window._openFCA     ? function () { window._openFCA(); }
+               : lastPage === 'its'     && window._openITS     ? function () { window._openITS(); }
+               : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
+               : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
+               : lastPage === 'laboo'   && window._openLaboo   ? function () { window._openLaboo(); }
+               : lastPage === 'contact' && window._openContact ? function () { window._openContact(); }
+               : null;
 
-  // Apply the saved stage — triggers all stage handlers (_setLetterStage, _setProjectsStage, etc.)
-  if (window._applyStage) window._applyStage(saved);
-
-  // For stage 9 (projects roadmap): bypass the 1500ms activation delay
-  if (saved >= 9 && window._activateProjectsDirect) {
-    var lastPage = sessionStorage.getItem('lastPage');
-    var onActive = lastPage === 'fca'     && window._openFCA     ? function () { window._openFCA(); }
-                 : lastPage === 'its'     && window._openITS     ? function () { window._openITS(); }
-                 : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
-                 : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
-                 : lastPage === 'laboo'   && window._openLaboo   ? function () { window._openLaboo(); }
-                 : lastPage === 'contact' && window._openContact ? function () { window._openContact(); }
-                 : null;
+  if (onActive) {
+    document.body.classList.add('stage-restore');
+    document.body.classList.add('page-open');
     window._activateProjectsDirect(100, onActive);
-  }
-
-  // Re-enable transitions after two frames (elements have snapped into place)
-  requestAnimationFrame(function () {
     requestAnimationFrame(function () {
-      document.body.classList.remove('stage-restore');
+      requestAnimationFrame(function () {
+        document.body.classList.remove('stage-restore');
+      });
     });
-  });
-
-  // Restored page: enable scroll quickly (no hint — user is past the hero)
-  setTimeout(function () {
-    if (window._enableScroll) window._enableScroll();
-  }, 300);
-})();
-
-/* ============================================
-   PAGE READY — enable scroll after hero animations complete
-   ============================================ */
-(function () {
-  var saved = parseInt(sessionStorage.getItem('lastStage'), 10);
-  if (saved > 0) return; // restored pages handled above
-
-  // Hero animations finish at ~1.65s; wait 1800ms to be safe
-  setTimeout(function () {
-    if (window._enableScroll)    window._enableScroll();
-    if (window._startScrollHint) window._startScrollHint();
-  }, 1800);
+  }
 })();

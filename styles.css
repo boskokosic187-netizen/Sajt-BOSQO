@@ -240,6 +240,43 @@ body {
   overflow: visible;
 }
 
+/* Hero transition when work/contact opens */
+.hero-content,
+.hero-socials,
+.navbar {
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity   0.65s ease,
+              filter    0.65s ease;
+}
+
+body.page-open .hero-content {
+  transform: scale(1.1);
+  opacity: 0;
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+body.page-open .hero-socials {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.page-open .navbar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-socials {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 4;
+}
+
 /* ============================================
    AVATAR
    ============================================ */
@@ -822,308 +859,6 @@ body.avatar-hovered .nav-logo {
    SCROLL HINT
    ============================================ */
 
-.scroll-hint {
-  position: fixed;
-  bottom: 42px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-}
-
-.scroll-hint.visible {
-  opacity: 1;
-}
-
-body:has(.project-page.pp-active) .scroll-hint {
-  opacity: 0 !important;
-  pointer-events: none;
-}
-
-.scroll-mouse {
-  width: 22px;
-  height: 36px;
-  border: 1.5px solid rgba(29, 233, 182, 0.55);
-  border-radius: 11px;
-  position: relative;
-  box-shadow: 0 0 10px rgba(29, 233, 182, 0.12);
-}
-
-.scroll-wheel {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3px;
-  height: 7px;
-  background: rgba(29, 233, 182, 0.85);
-  border-radius: 2px;
-  animation: scrollWheelMove 1.6s ease-in-out infinite;
-}
-
-@keyframes scrollWheelMove {
-  0%   { top: 6px;  opacity: 1; }
-  60%  { top: 18px; opacity: 0.15; }
-  61%  { top: 6px;  opacity: 0; }
-  100% { top: 6px;  opacity: 1; }
-}
-
-.scroll-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: rgba(29, 233, 182, 0.45);
-  text-transform: uppercase;
-}
-
-
-/* ============================================
-   SCROLL STAGE SYSTEM
-   ============================================ */
-
-/* Hero content transition base */
-.hero-content,
-.navbar {
-  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity   0.9s ease,
-              filter    0.9s ease;
-}
-
-/* --- Stage 1: hero starts dissolving --- */
-body[data-stage="1"] .hero-content {
-  transform: scale(1.06);
-  opacity: 0.45;
-  filter: blur(5px) brightness(0.55);
-}
-body[data-stage="1"] .navbar {
-  opacity: 0.35;
-}
-
-/* --- Stage 2: hero mostly gone --- */
-body[data-stage="2"] .hero-content {
-  transform: scale(1.15);
-  opacity: 0.07;
-  filter: blur(18px) brightness(0.2);
-}
-body[data-stage="2"] .navbar {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* --- Stage 3+: hero completely gone --- */
-body[data-stage="3"] .hero-content,
-body[data-stage="4"] .hero-content,
-body[data-stage="5"] .hero-content,
-body[data-stage="6"] .hero-content {
-  transform: scale(1.25);
-  opacity: 0;
-  filter: blur(28px);
-  pointer-events: none;
-}
-body[data-stage="3"] .navbar,
-body[data-stage="4"] .navbar,
-body[data-stage="5"] .navbar,
-body[data-stage="6"] .navbar {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Hide scroll hint after stage 0 */
-
-/* ============================================
-   JOURNEY SECTION
-   ============================================ */
-
-.journey-section {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.journey-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1.6rem, 4.5vw, 4.2rem);
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.95);
-  text-align: center;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin: 0;
-  transform: scale(0.04);
-  opacity: 0;
-  filter: blur(32px);
-  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity   0.95s ease,
-              filter    0.95s ease;
-}
-
-/* Stage 3: barely a glimmer in the distance */
-body[data-stage="3"] .journey-title {
-  transform: scale(0.06);
-  opacity: 0.08;
-  filter: blur(26px);
-}
-
-/* Stage 4: emerging */
-body[data-stage="4"] .journey-title {
-  transform: scale(0.22);
-  opacity: 0.3;
-  filter: blur(14px);
-}
-
-/* Stage 5: approaching */
-body[data-stage="5"] .journey-title {
-  transform: scale(0.58);
-  opacity: 0.72;
-  filter: blur(5px);
-}
-
-/* Stage 6: fully arrived */
-body[data-stage="6"] .journey-title {
-  transform: scale(1);
-  opacity: 1;
-  filter: blur(0px);
-}
-
-/* Stages 7-11: hero and navbar stay gone */
-body[data-stage="7"] .hero-content,
-body[data-stage="8"] .hero-content,
-body[data-stage="9"] .hero-content,
-body[data-stage="10"] .hero-content,
-body[data-stage="11"] .hero-content {
-  transform: scale(1.25);
-  opacity: 0;
-  filter: blur(28px);
-  pointer-events: none;
-}
-body[data-stage="7"] .navbar,
-body[data-stage="8"] .navbar,
-body[data-stage="9"] .navbar,
-body[data-stage="10"] .navbar,
-body[data-stage="11"] .navbar {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Stages 7-11: journey title container stays at full size; letters handle their own animation */
-body[data-stage="7"] .journey-title,
-body[data-stage="8"] .journey-title,
-body[data-stage="9"] .journey-title,
-body[data-stage="10"] .journey-title,
-body[data-stage="11"] .journey-title {
-  transform: scale(1);
-  opacity: 1;
-  filter: blur(0px);
-}
-
-/* Hide journey title instantly whenever any overlay page is open */
-body:has(.project-page.pp-active) .journey-title {
-  opacity: 0 !important;
-  transition: none !important;
-}
-
-/* Individual letters — dissolve like hero scene (scale up = rush toward viewer) */
-.jt-letter {
-  display: inline-block;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 1, 1),
-              opacity   0.3s ease-in,
-              filter    0.33s ease;
-}
-
-.jt-letter.jt-gone {
-  transform: scale(2.2);
-  opacity: 0;
-  filter: blur(28px) brightness(2.5);
-}
-
-/* Fast scroll — shorten all stage transitions */
-body.scroll-fast .hero-content,
-body.scroll-fast .navbar,
-body.scroll-fast .journey-title {
-  transition-duration: 0.18s !important;
-}
-
-
-/* ============================================
-   JOURNEY TITLE HOVER
-   ============================================ */
-
-.journey-title-wrap {
-  position: relative;
-  padding: 32px 72px;
-  border-radius: 55px;
-  pointer-events: none;
-  transition: box-shadow 0.35s ease;
-}
-
-body[data-stage="6"] .journey-title-wrap,
-body[data-stage="7"] .journey-title-wrap,
-body[data-stage="8"] .journey-title-wrap {
-  pointer-events: auto;
-}
-
-.journey-frame {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.journey-rect {
-  fill: none;
-  stroke-width: 1;
-  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5))
-          drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
-}
-
-/* JS adds journey-hovered on mouseenter */
-.journey-title-wrap.journey-hovered .journey-rect {
-  animation: journeyDraw 1.5s ease-in forwards;
-  filter: drop-shadow(0 0 12px rgba(29, 233, 182, 0.85))
-          drop-shadow(0 0 38px rgba(29, 233, 182, 0.4));
-}
-
-.journey-title-wrap.journey-hovered {
-  box-shadow:
-    0 0 18px rgba(29, 233, 182, 0.45),
-    0 0 55px rgba(29, 233, 182, 0.18);
-}
-
-@keyframes journeyDraw {
-  from { stroke-dashoffset: 6000; }
-  to   { stroke-dashoffset: 0; }
-}
-
-/* ============================================
-   JOURNEY TITLE FLOAT
-   ============================================ */
-
-@keyframes journeyFloat {
-  0%   { transform: translateY(0px)   translateX(0px)   rotate(0deg);    }
-  25%  { transform: translateY(-22px) translateX(11px)  rotate(0.65deg); }
-  55%  { transform: translateY(-12px) translateX(-9px)  rotate(-0.55deg); }
-  78%  { transform: translateY(-28px) translateX(6px)   rotate(0.75deg); }
-  100% { transform: translateY(0px)   translateX(0px)   rotate(0deg);    }
-}
-
-/* Float only after title has fully arrived (JS adds journey-floating) */
-.journey-title-wrap.journey-floating {
-  animation: journeyFloat 9s ease-in-out infinite;
-}
-
-/* animation-play-state controlled via JS */
 
 /* ============================================
    PROJECTS ROADMAP SECTION
@@ -1145,6 +880,12 @@ body[data-stage="8"] .journey-title-wrap {
 
 .projects-section.projects-active {
   opacity: 1;
+  pointer-events: auto;
+}
+
+.projects-section.projects-active .pp-back {
+  animation: linkIn 0.35s ease-out 0.9s both;
+  pointer-events: auto;
 }
 
 /* Title wrap */
@@ -1345,41 +1086,6 @@ body[data-stage="8"] .journey-title-wrap {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ============================================
-   JOURNEY TITLE — CLICK-TO-SKIP EXIT ANIMATION
-   ============================================ */
-
-/* Stop float, block interaction */
-.journey-title-wrap.journey-click-exit {
-  animation: none !important;
-  pointer-events: none !important;
-}
-
-/* Freeze individual letters — prevent normal random dissolve */
-.journey-title-wrap.journey-click-exit .jt-letter {
-  transition: none !important;
-  transform: none !important;
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-/* Remove border rect */
-.journey-title-wrap.journey-click-exit .journey-rect {
-  animation: none !important;
-  transition: opacity 0.2s ease !important;
-  opacity: 0 !important;
-}
-
-/* Clean fade-out on the whole title */
-.journey-title-wrap.journey-click-exit .journey-title {
-  transition: none !important;
-  animation: journeyClickExit 0.7s ease-in forwards !important;
-}
-
-@keyframes journeyClickExit {
-  0%   { opacity: 1; transform: scale(1);    filter: blur(0); }
-  100% { opacity: 0; transform: scale(1.06); filter: blur(10px); }
-}
 
 /* ============================================
    ROADMAP TYPEWRITER TEXT
