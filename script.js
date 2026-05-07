@@ -46,6 +46,10 @@
   }
 
   function draw() {
+    if (document.hidden) {
+      requestAnimationFrame(draw);
+      return;
+    }
     ctx.clearRect(0, 0, w, h);
 
     for (const s of stars) {
@@ -141,6 +145,10 @@
   const SPAWN_INTERVAL = 1000;
 
   function draw(timestamp) {
+    if (document.hidden) {
+      requestAnimationFrame(draw);
+      return;
+    }
     ctx.clearRect(0, 0, w, h);
 
     if (!spawnTimer) spawnTimer = timestamp;
@@ -837,12 +845,16 @@ window.addEventListener('beforeunload', function () {
     return false;
   }
 
+  let _lastHoverCheck = 0;
   document.addEventListener('mousemove', (e) => {
     const x = e.clientX;
     const y = e.clientY;
     cursor.style.transform = `translate(${x - 36}px, ${y - 33}px)`;
 
-    // Use elementFromPoint for reliable hit detection (ignores pointer-events:none elements)
+    const now = performance.now();
+    if (now - _lastHoverCheck < 50) return;
+    _lastHoverCheck = now;
+
     const el = document.elementFromPoint(x, y);
     const hover = isHoverable(el);
     if (hover !== currentHover) {
@@ -1277,14 +1289,21 @@ window.addEventListener('beforeunload', function () {
 
   /* Hover: scale up hovered card, slow others 60% */
   if (slideshow) {
+    var _trackSlowed = false;
+    function _setTrackRate(rate) {
+      if (rate === 0.4 && _trackSlowed) return;
+      if (rate === 1 && !_trackSlowed) return;
+      _trackSlowed = rate === 0.4;
+      [track1, track2].forEach(function (t) {
+        if (!t) return;
+        t.getAnimations().forEach(function (a) { a.playbackRate = rate; });
+      });
+    }
     slideshow.addEventListener('mouseover', function (e) {
       var card = e.target.closest('.ballies-nft-card');
       if (!card) return;
       card.classList.add('ballies-card-hovered');
-      [track1, track2].forEach(function (t) {
-        if (!t) return;
-        t.getAnimations().forEach(function (a) { a.playbackRate = 0.4; });
-      });
+      _setTrackRate(0.4);
     });
     slideshow.addEventListener('mouseout', function (e) {
       var card = e.target.closest('.ballies-nft-card');
@@ -1292,10 +1311,7 @@ window.addEventListener('beforeunload', function () {
       if (card.contains(e.relatedTarget)) return;
       card.classList.remove('ballies-card-hovered');
       if (!slideshow.querySelector('.ballies-card-hovered')) {
-        [track1, track2].forEach(function (t) {
-          if (!t) return;
-          t.getAnimations().forEach(function (a) { a.playbackRate = 1; });
-        });
+        _setTrackRate(1);
       }
     });
 
