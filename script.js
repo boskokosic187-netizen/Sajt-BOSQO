@@ -9,7 +9,7 @@
   let stars = [];
   let w, h;
 
-  const STAR_COUNT = window.innerWidth <= 600 ? 70 : 350;
+  const STAR_COUNT = window.innerWidth <= 600 ? 35 : 350;
   const MOUSE_RADIUS = 70;
   let mouse = { x: -9999, y: -9999 };
 
@@ -142,7 +142,7 @@
   }
 
   let spawnTimer = 0;
-  const SPAWN_INTERVAL = window.innerWidth <= 600 ? 3200 : 1000;
+  const SPAWN_INTERVAL = window.innerWidth <= 600 ? 5500 : 1000;
 
   function draw(timestamp) {
     if (document.hidden) {
@@ -784,6 +784,8 @@ window.addEventListener('beforeunload', function () {
   if (!projectsBack) return;
 
   projectsBack.addEventListener('click', function () {
+    window._pageOpen = false;
+    window._activePage = null;
     document.body.classList.remove('page-open');
     if (window._applyStage) window._applyStage(0);
   });
@@ -937,7 +939,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeFCA() {
-    window._pageOpen = false;
+    window._pageOpen = true;
     window._activePage = null;
     window._closeActivePage = null;
     fcaPage.classList.remove('pp-active');
@@ -1033,7 +1035,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeITS() {
-    window._pageOpen = false;
+    window._pageOpen = true;
     window._activePage = null;
     window._closeActivePage = null;
     itsPage.classList.remove('pp-active');
@@ -1980,7 +1982,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeBallies() {
-    window._pageOpen = false;
+    window._pageOpen = true;
     window._activePage = null;
     window._closeActivePage = null;
     balliesPage.classList.remove('pp-active');
@@ -2068,7 +2070,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeWSG() {
-    window._pageOpen = false;
+    window._pageOpen = true;
     window._activePage = null;
     window._closeActivePage = null;
     wsgPage.classList.remove('pp-active');
@@ -2987,7 +2989,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeLaboo() {
-    window._pageOpen = false;
+    window._pageOpen = true;
     window._activePage = null;
     window._closeActivePage = null;
     labooPage.classList.remove('pp-active');

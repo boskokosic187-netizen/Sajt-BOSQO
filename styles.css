@@ -292,6 +292,12 @@ body.page-open .navbar {
   pointer-events: none;
 }
 
+body.page-open .nav-logo-wrap,
+body.page-open .nav-work,
+body.page-open .nav-contact {
+  pointer-events: none;
+}
+
 .hero-socials {
   position: absolute;
   bottom: 42px;
@@ -5233,31 +5239,36 @@ a.contact-info-row { cursor: pointer; }
   /* ── Projects roadmap — no scroll, fits on screen ── */
   .projects-section.projects-active {
     overflow: hidden;
-    padding: 72px 20px 16px;
+    padding: 60px 24px 16px;
     justify-content: center;
     align-items: center;
   }
   .roadmap-typewriter { display: none; }
+  /* Title: keep position:absolute but span full width so it's always centered */
   .projects-title-wrap {
-    position: relative;
-    top: auto; left: auto;
+    left: 16px;
+    right: 16px;
+    top: 14px;
     transform: none;
-    margin-bottom: 18px;
-    padding: 10px 22px;
+    text-align: center;
+    padding: 10px 16px;
+    white-space: normal;
+    width: auto;
   }
-  .projects-title { font-size: clamp(0.85rem, 4vw, 1.2rem); white-space: normal; text-align: center; }
-  .roadmap-item  { gap: 10px; }
+  .projects-title { font-size: clamp(0.85rem, 4vw, 1.15rem); text-align: center; white-space: normal; }
+  .roadmap { align-items: flex-start; }
+  .roadmap-item  { gap: 14px; }
   .roadmap-left  { width: 52px; }
   .roadmap-node-wrap, .roadmap-node-svg { width: 52px; height: 52px; }
   .node-num { font-size: 18px; }
-  .roadmap-line { height: 26px; }
+  .roadmap-line { height: 22px; }
   .roadmap-label { height: 52px; font-size: 11px; line-height: 1.3; white-space: normal; }
 
-  /* ── Project pages — no scroll, gallery navigation by click ── */
-  .project-page.pp-active {
-    overflow: hidden;
-    padding-top: 68px;
-  }
+  /* ── Project pages — solid background + no scroll ── */
+  .project-page { background: #0D0D0F; }
+  .project-page.pp-active { overflow: hidden; padding-top: 68px; }
+  /* Contact page: scroll enabled to reach photo below form */
+  #contactPage.pp-active { overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .pp-back { top: 22px; left: 20px; font-size: 12px; }
   .pp-title { font-size: clamp(1.1rem, 6vw, 1.8rem); white-space: normal; }
   .pp-title-wrap { padding: 12px 24px; }
@@ -5271,70 +5282,95 @@ a.contact-info-row { cursor: pointer; }
   .laboo-dots { bottom: 16px; }
   .laboo-dot  { width: 10px; height: 10px; }
 
-  /* ── FCA gallery ── */
-  .fca-gallery-wrap { height: auto; overflow: visible; margin-top: 14px; margin-bottom: 0; }
+  /* ── FCA gallery — position:absolute kept, just override grid ── */
+  .fca-gallery-wrap {
+    height: calc(3 * 28vw + 2 * 10px);
+    margin-top: 14px;
+    margin-bottom: 0;
+    overflow: hidden;
+  }
   .fca-gallery,
   .fca-gallery-2,
   .fca-gallery-3 {
-    position: relative;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
+    grid-template-rows: repeat(3, 28vw);
     grid-template-areas: none;
-    height: auto;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
   }
-  .fca-gallery-2,
-  .fca-gallery-3 { opacity: 0; pointer-events: none; }
-  .fca-gallery-2.gallery-active,
-  .fca-gallery-3.gallery-active { opacity: 1; pointer-events: auto; }
   .fca-gallery .fca-work-item:nth-child(n),
   .fca-gallery-2 .fca-work-item:nth-child(n),
-  .fca-gallery-3 .fca-work-item:nth-child(n) { grid-area: auto; height: 28vw; }
+  .fca-gallery-3 .fca-work-item:nth-child(n) { grid-area: auto; height: auto; }
+  .fca-gallery .fca-work-item:nth-child(n+7),
+  .fca-gallery-2 .fca-work-item:nth-child(n+7),
+  .fca-gallery-3 .fca-work-item:nth-child(n+7) { display: none; }
 
   /* ── ITS gallery ── */
-  .its-gallery-wrap { height: auto; overflow: visible; margin-top: 14px; width: 96vw; }
-  .its-gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .its-gallery-wrap {
+    height: calc(3 * 28vw + 2 * 10px);
+    margin-top: 14px;
+    width: 96vw;
+    overflow: hidden;
+    opacity: 1;
+  }
+  .its-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 28vw);
+    gap: 10px;
+  }
   .its-bb-item { height: 28vw; }
   .its-gallery-2,
   .its-gallery-3 {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto; grid-template-areas: none;
-    width: 96vw; height: auto; transform: none;
+    grid-template-rows: repeat(3, 28vw);
+    grid-template-areas: none;
+    width: 96vw;
+    height: calc(3 * 28vw + 2 * 10px);
+    transform: none;
+    gap: 10px;
   }
   .its-gallery-2.gallery-active,
   .its-gallery-3.gallery-active { display: grid; transform: none; }
   .its-gallery-2 .fca-work-item:nth-child(n),
-  .its-gallery-3 .fca-work-item:nth-child(n) { grid-area: auto; height: 28vw; }
+  .its-gallery-3 .fca-work-item:nth-child(n) { grid-area: auto; height: auto; }
+  .its-gallery-2 .fca-work-item:nth-child(n+7),
+  .its-gallery-3 .fca-work-item:nth-child(n+7) { display: none; }
 
   /* ── Ballies gallery ── */
   .ballies-gallery-outer { width: 96vw; margin-top: 14px; padding-bottom: 0; }
-  .ballies-gallery-wrap { height: auto; overflow: visible; }
-  .ballies-gallery { grid-template-columns: repeat(2, 1fr); }
+  .ballies-gallery-wrap { height: calc(3 * 28vw + 2 * 10px); overflow: hidden; }
+  .ballies-gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .ballies-g-item[data-span="2"] { grid-column: span 2; }
   .ballies-g-item[data-span="3"] { grid-column: span 2; }
 
   /* ── WSG gallery ── */
-  .wsg-gallery-outer { padding: 0 12px 0; margin-top: 14px; }
-  .wsg-gallery-wrap { max-height: none; overflow: visible; }
-  .wsg-gallery { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; height: auto; gap: 12px; }
+  .wsg-gallery-outer { padding: 0 12px; margin-top: 14px; }
+  .wsg-gallery-wrap { height: calc(3 * 28vw + 2 * 10px); max-height: none; overflow: hidden; }
+  .wsg-gallery { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; height: 100%; gap: 10px; }
   .wsg-g-item[data-span="2"] { grid-column: span 2; }
   .wsg-g-item[data-span="3"] { grid-column: span 2; }
 
   /* ── Laboo gallery ── */
-  .laboo-v-wrap { grid-template-columns: repeat(2, 1fr); margin-top: 14px; padding: 0 12px 0; gap: 10px; }
+  .laboo-v-wrap { grid-template-columns: repeat(2, 1fr); margin-top: 14px; padding: 0 12px; gap: 10px; }
 
-  /* ── Contact — no scroll, compact single-column ── */
+  /* ── Contact — scrollable to reveal photo below form ── */
   .contact-split {
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    overflow: hidden;
-    padding: 64px 20px 12px;
-    gap: 12px;
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+    padding: 64px 20px 40px;
+    gap: 32px;
   }
-  .contact-right { display: none; }
   .contact-left  { height: auto; padding: 0; width: 100%; max-width: 440px; }
-  .contact-field:has(.contact-textarea) { display: none; }
-  .contact-form  { gap: 10px; }
+  .contact-right {
+    flex: 0 0 auto;
+    width: min(72vw, 300px);
+    margin: 0 auto;
+  }
+  .contact-right::after { display: none; }
 }
 
 /* ── 400px — small phones (iPhone SE, Galaxy A series) ── */
