@@ -3481,6 +3481,49 @@ window.addEventListener('beforeunload', function () {
 })();
 
 /* ============================================
+   ABOUT PAGE
+   ============================================ */
+(function () {
+  var aboutPage = document.getElementById('aboutPage');
+  var aboutBack = document.getElementById('aboutBack');
+  if (!aboutPage) return;
+
+  function openAbout() {
+    window._pageOpen = true;
+    window._activePage = 'about';
+    window._closeActivePage = closeAbout;
+    aboutPage.classList.add('pp-active');
+    document.body.classList.add('page-open');
+    sessionStorage.setItem('lastPage', 'about');
+  }
+
+  function closeAbout() {
+    window._pageOpen = false;
+    window._activePage = null;
+    window._closeActivePage = null;
+    aboutPage.classList.remove('pp-active');
+    document.body.classList.remove('page-open');
+    if (window._applyStage) window._applyStage(0);
+    sessionStorage.removeItem('lastPage');
+  }
+
+  if (aboutBack) aboutBack.addEventListener('click', closeAbout);
+
+  var navAbout = document.querySelector('.nav-about');
+  if (navAbout) {
+    navAbout.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (window._pageOpen) return;
+      document.body.classList.add('page-open');
+      setTimeout(function () { openAbout(); }, 200);
+    });
+  }
+
+  window._openAbout  = openAbout;
+  window._closeAbout = closeAbout;
+})();
+
+/* ============================================
    PAGE RESTORE ON REFRESH
    ============================================ */
 (function () {
@@ -3493,6 +3536,7 @@ window.addEventListener('beforeunload', function () {
                : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
                : lastPage === 'laboo'   && window._openLaboo   ? function () { window._openLaboo(); }
                : lastPage === 'contact' && window._openContact ? function () { window._openContact(); }
+               : lastPage === 'about'   && window._openAbout   ? function () { window._openAbout(); }
                : null;
 
   if (onActive) {
