@@ -657,6 +657,12 @@ window.addEventListener('beforeunload', function () {
 
   function startTypewriter() {
     if (!twWrap || !twLine1 || !twLine2) return;
+    if ('ontouchstart' in window || window.innerWidth <= 600) {
+      twLine1.textContent = TEXT1;
+      twLine2.textContent = TEXT2;
+      twWrap.classList.add('tw-visible');
+      return;
+    }
 
     // Create blinking cursor element
     var cursor = document.createElement('span');
@@ -934,6 +940,12 @@ window.addEventListener('beforeunload', function () {
 
   function startTypewriter() {
     if (!twWrap || !twLine1 || !twLine2) return;
+    if ('ontouchstart' in window || window.innerWidth <= 600) {
+      twLine1.textContent = TW_TEXT1;
+      twLine2.textContent = TW_TEXT2;
+      twWrap.classList.add('tw-visible');
+      return;
+    }
     var cursor = document.createElement('span');
     cursor.className = 'tw-cursor';
     twWrap.classList.add('tw-visible');
@@ -1030,6 +1042,12 @@ window.addEventListener('beforeunload', function () {
 
   function startTypewriter() {
     if (!twWrap || !twLine1 || !twLine2) return;
+    if ('ontouchstart' in window || window.innerWidth <= 600) {
+      twLine1.textContent = TW_TEXT1;
+      twLine2.textContent = TW_TEXT2;
+      twWrap.classList.add('tw-visible');
+      return;
+    }
     var cursor = document.createElement('span');
     cursor.className = 'tw-cursor';
     twWrap.classList.add('tw-visible');
@@ -1273,6 +1291,12 @@ window.addEventListener('beforeunload', function () {
 
   function startTypewriter() {
     if (!twWrap || !twLine1 || !twLine2) return;
+    if ('ontouchstart' in window || window.innerWidth <= 600) {
+      twLine1.textContent = TW_TEXT1;
+      twLine2.textContent = TW_TEXT2;
+      twWrap.classList.add('tw-visible');
+      return;
+    }
     var cursor = document.createElement('span');
     cursor.className = 'tw-cursor';
     twWrap.classList.add('tw-visible');
@@ -2071,6 +2095,11 @@ window.addEventListener('beforeunload', function () {
 
   function startTypewriter() {
     if (!twWrap || !twLine1) return;
+    if ('ontouchstart' in window || window.innerWidth <= 600) {
+      twLine1.textContent = TW_TEXT;
+      twWrap.classList.add('tw-visible');
+      return;
+    }
     var cursor = document.createElement('span');
     cursor.className = 'tw-cursor';
     twWrap.classList.add('tw-visible');
@@ -2992,6 +3021,11 @@ window.addEventListener('beforeunload', function () {
 
   function startTypewriter() {
     if (!twWrap || !twLine1) return;
+    if ('ontouchstart' in window || window.innerWidth <= 600) {
+      twLine1.textContent = TW_TEXT;
+      twWrap.classList.add('tw-visible');
+      return;
+    }
     var cursor = document.createElement('span');
     cursor.className = 'tw-cursor';
     twWrap.classList.add('tw-visible');
