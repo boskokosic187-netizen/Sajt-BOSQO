@@ -5214,6 +5214,42 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 600px — phones ── */
 @media (max-width: 600px) {
+  /* ── Mobile performance: disable expensive GPU effects ── */
+  body { cursor: auto; }
+  *, *::before, *::after { cursor: auto !important; }
+  #custom-cursor { display: none !important; }
+  .avatar-glow { display: none; }
+  .avatar-ring { animation: spinBorder 4s linear infinite, ringRotate 25s linear infinite; }
+  .ring-dot { display: none; }
+  body.page-open .hero-content { filter: none; }
+  .hero-content,
+  .hero-socials,
+  .navbar { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease; }
+  .ballies-v-play,
+  .laboo-v-play { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(0,0,0,0.5); }
+  .ballies-video-lb { backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+  @keyframes fcaItemFromDist {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes itsBbPowerOn {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes wsgIn {
+    from { opacity: 0; transform: translateY(-14px) scale(0.94); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes lbvIn {
+    from { opacity: 0; transform: translateY(18px) scaleY(0.88); }
+    to   { opacity: 1; transform: translateY(0) scaleY(1); }
+  }
+  @keyframes lbImgIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
   /* Navbar — full-screen transparent overlay
      Logo pinned top-center, buttons stacked below avatar */
   .navbar {
@@ -5250,8 +5286,15 @@ a.contact-info-row { cursor: pointer; }
     align-self: auto;
     margin: 0 0 0 0;
   }
-  .nav-logo-wrap { margin-top: 7vh; }
-  .nav-logo img { height: 120px; transform: scale(3); }
+  .nav-logo-wrap { margin-top: 3vh; }
+  .nav-logo img {
+    height: 120px;
+    transform: scale(3);
+    transition: filter 0.5s ease;
+  }
+  body.avatar-tapped .nav-logo img {
+    filter: drop-shadow(0 0 8px rgba(29, 233, 182, 1)) drop-shadow(0 0 20px rgba(29, 233, 182, 0.55));
+  }
 
   /* WORK + CONTACT — stacked below avatar, pushed to bottom */
   .nav-link {
@@ -5293,6 +5336,11 @@ a.contact-info-row { cursor: pointer; }
   .avatar-wrapper {
     width: min(88vw, 500px);
     height: min(88vw, 500px);
+    margin-top: -8vh;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  body.avatar-tapped .avatar-img-wrap {
+    transform: scale(1.12);
   }
   .avatar-ring,
   .avatar-border,

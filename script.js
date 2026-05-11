@@ -9,14 +9,17 @@
   let stars = [];
   let w, h;
 
-  const STAR_COUNT = window.innerWidth <= 600 ? 35 : 350;
+  const isMobile = window.innerWidth <= 600 || 'ontouchstart' in window;
+  const STAR_COUNT = isMobile ? 35 : 350;
   const MOUSE_RADIUS = 70;
   let mouse = { x: -9999, y: -9999 };
 
-  window.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
+  if (!isMobile) {
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+  }
 
   function resize() {
     w = canvas.width = window.innerWidth;
@@ -45,7 +48,12 @@
     }
   }
 
-  function draw() {
+  let _lastFrame = 0;
+  const FRAME_INTERVAL = isMobile ? 33 : 0; // ~30fps on mobile, uncapped on desktop
+
+  function draw(ts) {
+    if (isMobile && ts - _lastFrame < FRAME_INTERVAL) { requestAnimationFrame(draw); return; }
+    _lastFrame = ts;
     if (document.hidden) {
       requestAnimationFrame(draw);
       return;
@@ -62,33 +70,40 @@
       if (s.y < -5) s.y = h + 5;
       if (s.y > h + 5) s.y = -5;
 
-      const ddx = s.x - mouse.x;
-      const ddy = s.y - mouse.y;
-      const dist = Math.sqrt(ddx * ddx + ddy * ddy);
-      const proximity = Math.max(0, 1 - dist / MOUSE_RADIUS);
-
       const baseFlicker = s.opacity * (0.6 + 0.4 * Math.sin(s.pulse));
-      const boostedOpacity = Math.min(1, baseFlicker + proximity * 1.0);
-      const boostedRadius = s.r + proximity * 3.5;
 
-      if (proximity > 0) {
-        const haloR = boostedRadius * 7;
-        const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, haloR);
-        glow.addColorStop(0, `rgba(29, 233, 182, ${proximity * 0.22})`);
-        glow.addColorStop(0.4, `rgba(29, 233, 182, ${proximity * 0.06})`);
-        glow.addColorStop(1, 'rgba(29, 233, 182, 0)');
+      if (!isMobile) {
+        const ddx = s.x - mouse.x;
+        const ddy = s.y - mouse.y;
+        const dist = Math.sqrt(ddx * ddx + ddy * ddy);
+        const proximity = Math.max(0, 1 - dist / MOUSE_RADIUS);
+        const boostedOpacity = Math.min(1, baseFlicker + proximity * 1.0);
+        const boostedRadius = s.r + proximity * 3.5;
+
+        if (proximity > 0) {
+          const haloR = boostedRadius * 7;
+          const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, haloR);
+          glow.addColorStop(0, `rgba(29, 233, 182, ${proximity * 0.22})`);
+          glow.addColorStop(0.4, `rgba(29, 233, 182, ${proximity * 0.06})`);
+          glow.addColorStop(1, 'rgba(29, 233, 182, 0)');
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, haloR, 0, Math.PI * 2);
+          ctx.fillStyle = glow;
+          ctx.fill();
+        }
+
         ctx.beginPath();
-        ctx.arc(s.x, s.y, haloR, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
+        ctx.arc(s.x, s.y, boostedRadius, 0, Math.PI * 2);
+        ctx.fillStyle = proximity > 0
+          ? `rgba(200, 255, 235, ${boostedOpacity})`
+          : `rgba(220, 230, 255, ${baseFlicker})`;
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220, 230, 255, ${baseFlicker})`;
         ctx.fill();
       }
-
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, boostedRadius, 0, Math.PI * 2);
-      ctx.fillStyle = proximity > 0
-        ? `rgba(200, 255, 235, ${boostedOpacity})`
-        : `rgba(220, 230, 255, ${baseFlicker})`;
-      ctx.fill();
     }
 
     requestAnimationFrame(draw);
@@ -104,6 +119,7 @@
    ============================================ */
 
 (function () {
+  if (window.innerWidth <= 600 || 'ontouchstart' in window) return;
   const canvas = document.getElementById('stardrops');
   const ctx = canvas.getContext('2d');
   let drops = [];
@@ -206,6 +222,7 @@
    ============================================ */
 
 (function () {
+  const isMobile = window.innerWidth <= 600 || 'ontouchstart' in window;
   const wrapper    = document.querySelector('.avatar-wrapper');
   const ring       = document.querySelector('.avatar-ring');
   const dot        = document.querySelector('.ring-dot');
@@ -366,7 +383,7 @@
     updateWrapHover(x, y);
   }
 
-  window.addEventListener('mousemove', check, { passive: true });
+  if (!isMobile) window.addEventListener('mousemove', check, { passive: true });
 
   // --- Smooth ring rotation with burst check ---
   const SPEED_NORMAL = 360 / (25 * 60);
@@ -377,6 +394,7 @@
   let speed = SPEED_NORMAL;
 
   function rotateTick() {
+    if (isMobile) return; // CSS handles ring spin on mobile
     // Burst after 3s of continuous hover
     if (hovered && !dotBurst && hoverStart !== null) {
       if (performance.now() - hoverStart >= 3000) {
@@ -414,6 +432,13 @@
       panelTimers.push(t);
     });
   }, 400);
+
+  // Mobile: tap avatar to grow it and glow the logo
+  if (isMobile) {
+    wrapper.addEventListener('click', function () {
+      document.body.classList.toggle('avatar-tapped');
+    });
+  }
 })();
 
 
@@ -724,6 +749,7 @@ window.addEventListener('beforeunload', function () {
    PROJECTS ROADMAP TITLE HOVER
    ============================================ */
 (function () {
+  if ('ontouchstart' in window || window.innerWidth <= 600) return;
   const wrap = document.querySelector('.projects-title-wrap');
   if (!wrap) return;
 
@@ -796,6 +822,7 @@ window.addEventListener('beforeunload', function () {
    CUSTOM CURSOR
    ============================================ */
 (function () {
+  if ('ontouchstart' in window || window.innerWidth <= 600) return;
   const cursor = document.getElementById('custom-cursor');
   const cursorImg = document.getElementById('cursor-img');
   if (!cursor || !cursorImg) return;
