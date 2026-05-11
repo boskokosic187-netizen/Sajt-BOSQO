@@ -5436,9 +5436,11 @@ a.contact-info-row { cursor: pointer; }
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 96vw;
+    width: 58vw;
     height: auto;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: visible;
   }
   #fcaPage .fca-gallery,
@@ -5475,9 +5477,11 @@ a.contact-info-row { cursor: pointer; }
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 96vw;
+    width: 58vw;
     height: auto;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: visible;
     opacity: 1;
   }
@@ -5518,7 +5522,7 @@ a.contact-info-row { cursor: pointer; }
   #itsPage .fca-work-img-wrap img { width: 100%; height: auto; object-fit: unset; }
 
   /* ── Ballies editorial gallery — 1 per row, natural proportions ── */
-  #balliesPage .ballies-gallery-outer { width: 96vw; margin-top: 14px; padding-bottom: 0; height: auto; }
+  #balliesPage .ballies-gallery-outer { width: 58vw; margin: 14px auto 0; padding-bottom: 0; height: auto; }
   #balliesPage .ballies-gallery-wrap { height: auto; overflow: visible; }
   #balliesPage .ballies-gallery { grid-template-columns: 1fr; gap: 10px; }
   #balliesPage .ballies-g-item[data-span="2"],
@@ -5538,13 +5542,13 @@ a.contact-info-row { cursor: pointer; }
     display: block;
   }
   /* Ballies mosaic (page 2) — 1 per row */
-  #balliesPage .ballies-mosaic-outer { width: 96vw; height: auto; }
+  #balliesPage .ballies-mosaic-outer { width: 58vw; margin: 0 auto; height: auto; }
   #balliesPage .ballies-mosaic-wrap { height: auto; overflow: visible; }
   #balliesPage .ballies-mosaic { grid-template-columns: 1fr; gap: 10px; }
   #balliesPage .ballies-m-item { opacity: 1 !important; animation: none !important; }
 
   /* ── WSG gallery — 1 per row, natural proportions ── */
-  #wsgPage .wsg-gallery-outer { padding: 0 12px; margin-top: 14px; width: 96vw; height: auto; }
+  #wsgPage .wsg-gallery-outer { padding: 0; margin: 14px auto 0; width: 58vw; height: auto; }
   #wsgPage .wsg-gallery-wrap { height: auto; max-height: none; overflow: visible; }
   #wsgPage .wsg-gallery { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; gap: 10px; }
   #wsgPage .wsg-g-item[data-span="2"],
@@ -5567,7 +5571,7 @@ a.contact-info-row { cursor: pointer; }
   }
 
   /* ── Laboo — 1 per row, keep 9:16 aspect ratio ── */
-  .laboo-v-wrap { grid-template-columns: 1fr; margin-top: 10px; padding: 0 12px; gap: 10px; }
+  .laboo-v-wrap { grid-template-columns: 1fr; width: 58vw; margin: 10px auto 0; padding: 0; gap: 10px; }
   .laboo-v-item { opacity: 1 !important; animation: none !important; }
 
   /* ── Contact — scrollable to reveal photo below form ── */
