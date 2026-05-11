@@ -52,6 +52,12 @@ body {
   cursor: none !important;
 }
 
+/* Mobile scroll helpers — hidden on desktop, shown via mobile media query */
+#mobileProgressBar,
+#mobileScrollTop {
+  display: none;
+}
+
 /* Custom cursor element */
 #custom-cursor {
   position: fixed;
@@ -1152,6 +1158,12 @@ body.avatar-hovered .nav-logo {
 /* ============================================
    PROJECT PAGE (FCA + future pages)
    ============================================ */
+
+/* When a project page is inactive, block ALL child pointer events so
+   nothing inside an invisible page can intercept clicks on the roadmap */
+.project-page:not(.pp-active) * {
+  pointer-events: none !important;
+}
 
 .project-page {
   position: fixed;
@@ -5124,6 +5136,101 @@ a.contact-info-row { cursor: pointer; }
 @media (hover: none) and (pointer: coarse) {
   body, *, *::before, *::after { cursor: auto !important; }
   #custom-cursor { display: none !important; }
+
+  /* ── FCA / ITS gallery — kill sticky-hover dim + scale ── */
+  .fca-gallery:hover .fca-work-item,
+  .fca-gallery-2:hover .fca-work-item,
+  .fca-gallery-3:hover .fca-work-item,
+  .its-gallery-2:hover .fca-work-item,
+  .its-gallery-3:hover .fca-work-item {
+    opacity: 1 !important; filter: none !important; scale: 1 !important;
+    border-color: rgba(29,233,182,0.18) !important;
+  }
+  .fca-gallery:hover .fca-work-item::before,
+  .fca-gallery:hover .fca-work-item::after,
+  .fca-gallery-2:hover .fca-work-item::before,
+  .fca-gallery-2:hover .fca-work-item::after,
+  .fca-gallery-3:hover .fca-work-item::before,
+  .fca-gallery-3:hover .fca-work-item::after,
+  .its-gallery-2:hover .fca-work-item::before,
+  .its-gallery-2:hover .fca-work-item::after,
+  .its-gallery-3:hover .fca-work-item::before,
+  .its-gallery-3:hover .fca-work-item::after {
+    width: 0 !important; height: 0 !important; border-color: transparent !important;
+  }
+  .fca-gallery:hover .fca-work-item .fca-work-img-wrap img,
+  .fca-gallery-2:hover .fca-work-item .fca-work-img-wrap img,
+  .fca-gallery-3:hover .fca-work-item .fca-work-img-wrap img,
+  .its-gallery-2:hover .fca-work-item .fca-work-img-wrap img,
+  .its-gallery-3:hover .fca-work-item .fca-work-img-wrap img {
+    transform: none !important; filter: none !important;
+  }
+
+  /* ── ITS billboard — no scale, no play reveal, no dim siblings ── */
+  .its-bb-item:hover {
+    transform: none !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  }
+  .its-bb-item:hover::after { height: 1px !important; background: none !important; box-shadow: none !important; }
+  .its-bb-item:hover .its-bb-screen { border-color: rgba(29,233,182,0.08) !important; box-shadow: none !important; }
+  .its-bb-item:hover .its-bb-thumb { transform: none !important; filter: brightness(0.75) saturate(0.88) !important; }
+  .its-bb-item:hover .its-bb-play { opacity: 0 !important; }
+  .its-gallery:hover .its-bb-item:not(:hover) { opacity: 1 !important; filter: none !important; }
+
+  /* ── Ballies video — no lift/glow ── */
+  .ballies-v-item:hover {
+    transform: none !important;
+    border-color: rgba(29,233,182,0.2) !important;
+    box-shadow: none !important;
+  }
+
+  /* ── Ballies editorial gallery — no scale/glow/scan ── */
+  .ballies-g-item:hover { transform: none !important; filter: none !important; }
+  .ballies-g-item:hover .ballies-g-img { transform: none !important; }
+  .ballies-g-item:hover::before { opacity: 0.55 !important; }
+  .ballies-g-item:hover::after { animation: none !important; }
+
+  /* ── Ballies mosaic — no shadow/scale ── */
+  .ballies-m-item:hover {
+    border-color: rgba(29,233,182,0.2) !important;
+    box-shadow: none !important;
+  }
+  .ballies-m-item:hover img { transform: none !important; }
+
+  /* ── Laboo video — no glow/scan/thumb scale/play scale ── */
+  .laboo-v-item:hover::before { opacity: 0.4 !important; }
+  .laboo-v-item:hover::after { border-color: rgba(29,233,182,0.18) !important; }
+  .laboo-v-item:hover .laboo-v-clip { filter: none !important; }
+  .laboo-v-item:hover:not(.playing) .laboo-v-thumb {
+    transform: none !important;
+    filter: brightness(0.75) saturate(0.88) !important;
+  }
+  .laboo-v-item:hover .laboo-v-scan { animation: none !important; }
+  .laboo-v-item:hover .laboo-v-num { color: rgba(29,233,182,0.40) !important; text-shadow: none !important; }
+
+  /* ── WSG video — no scale/scan/glow ── */
+  .wsg-v-item:hover { transform: none !important; }
+  .wsg-v-item:hover::after { border-color: rgba(29,233,182,0.18) !important; box-shadow: none !important; }
+  .wsg-v-item:hover::before { opacity: 0 !important; }
+  .wsg-v-item:hover:not(.playing) .wsg-v-thumb {
+    transform: none !important;
+    filter: brightness(0.70) saturate(0.80) !important;
+  }
+  .wsg-v-item:hover .wsg-v-scan { animation: none !important; opacity: 0 !important; }
+  .wsg-v-item:hover .wsg-v-play {
+    transform: translate(-50%, -50%) !important;
+    border-color: rgba(29,233,182,0.65) !important;
+    box-shadow: none !important;
+  }
+  .wsg-v-item:hover .wsg-v-inner { --rx: 0deg; --ry: 0deg; }
+
+  /* ── WSG gallery — no scale/glow/scan ── */
+  .wsg-g-item:hover { transform: none !important; box-shadow: none !important; }
+  .wsg-g-item:hover::before { opacity: 0 !important; }
+  .wsg-g-item:hover .wsg-g-clip::after { animation: none !important; }
+  .wsg-g-item:hover .wsg-g-img { transform: none !important; }
+  .wsg-g-item:hover .wsg-bgroup-panel img { transform: none !important; }
+  .wsg-g-item:hover .wsg-bgroup-label { color: rgba(29,233,182,0.5) !important; }
 }
 
 /* ── 1800px — large monitors / widescreen laptops ── */
@@ -5402,8 +5509,80 @@ a.contact-info-row { cursor: pointer; }
 
   /* ── Project pages — scrollable on mobile ── */
   .project-page { background: #0D0D0F; }
-  .project-page.pp-active { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 68px; padding-bottom: 80px; }
-  .pp-back { top: 22px; left: 20px; font-size: 12px; }
+  .project-page.pp-active {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-top: 68px;
+    padding-bottom: 80px;
+  }
+  /* Prevent flex-shrink from squashing children into 100vh (kills scroll) */
+  .project-page.pp-active > * { flex-shrink: 0; }
+  /* Back button — fixed so it stays visible while scrolling */
+  .pp-back {
+    position: fixed;
+    top: 22px;
+    left: 20px;
+    font-size: 12px;
+    z-index: 20;
+    background: rgba(13,13,15,0.72);
+    padding: 6px 10px;
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+  }
+
+  /* Scroll progress bar */
+  #mobileProgressBar {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #1de9b6 0%, rgba(29,233,182,0.45) 100%);
+    z-index: 30;
+    pointer-events: none;
+    opacity: 0;
+    transition: width 0.1s linear, opacity 0.3s ease;
+    border-radius: 0 2px 2px 0;
+  }
+  #mobileProgressBar.mp-visible { opacity: 1; }
+
+  /* Scroll-to-top button */
+  #mobileScrollTop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 88px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(13,13,15,0.88);
+    border: 1px solid rgba(29,233,182,0.5);
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    transform: translateY(10px);
+    backdrop-filter: blur(10px);
+  }
+  #mobileScrollTop.ms-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  #mobileScrollTop::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #1de9b6;
+    border-right: 2px solid #1de9b6;
+    transform: translate(-50%, -40%) rotate(-45deg);
+  }
   .pp-title { font-size: clamp(1.1rem, 6vw, 1.8rem); white-space: normal; }
   .pp-title-wrap { padding: 12px 24px; }
   .pp-typewriter {

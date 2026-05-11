@@ -2126,7 +2126,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeWSG() {
-    window._pageOpen = true;
+    window._pageOpen = false;
     window._activePage = null;
     window._closeActivePage = null;
     wsgPage.classList.remove('pp-active');
@@ -3689,4 +3689,50 @@ window.addEventListener('beforeunload', function () {
   bind('labooPrev',   'labooNext',
     function () { if (window._labooPrevPage)   window._labooPrevPage(); },
     function () { if (window._labooNextPage)   window._labooNextPage(); });
+})();
+
+/* ============================================
+   MOBILE SCROLL HELPERS
+   Progress bar + scroll-to-top button
+   ============================================ */
+(function () {
+  if (!('ontouchstart' in window) && window.innerWidth > 600) return;
+
+  var bar   = document.getElementById('mobileProgressBar');
+  var btn   = document.getElementById('mobileScrollTop');
+  var pages = document.querySelectorAll('.project-page');
+
+  function updateUI(el) {
+    var scrolled = el.scrollTop;
+    var total    = el.scrollHeight - el.clientHeight;
+    var pct      = total > 0 ? (scrolled / total * 100) : 0;
+
+    if (bar) {
+      bar.style.width = pct + '%';
+      bar.classList.toggle('mp-visible', scrolled > 20);
+    }
+    if (btn) {
+      btn.classList.toggle('ms-visible', scrolled > 120);
+    }
+  }
+
+  function resetUI() {
+    if (bar) { bar.style.width = '0%'; bar.classList.remove('mp-visible'); }
+    if (btn) { btn.classList.remove('ms-visible'); }
+  }
+
+  pages.forEach(function (page) {
+    page.addEventListener('scroll', function () { updateUI(page); }, { passive: true });
+
+    new MutationObserver(function () {
+      if (!page.classList.contains('pp-active')) resetUI();
+    }).observe(page, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var active = document.querySelector('.project-page.pp-active');
+      if (active) active.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 })();
