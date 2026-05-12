@@ -868,7 +868,7 @@ body.avatar-hovered .nav-logo {
 }
 
 .projects-section.projects-active .pp-back {
-  animation: linkIn 0.35s ease-out 0.9s both;
+  animation: linkIn 0.35s ease-out 0s both;
   pointer-events: auto;
 }
 
@@ -943,87 +943,79 @@ body.avatar-hovered .nav-logo {
 .roadmap {
   display: flex;
   flex-direction: column;
-}
-
-/* Each row: node (col 1 row 1) + label (col 2 row 1) + line (col 1 row 2) */
-.roadmap-item {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  column-gap: 36px;
-}
-
-.roadmap-node-wrap { grid-area: 1 / 1; }
-.roadmap-label     { grid-area: 1 / 2; }
-.roadmap-line      { grid-area: 2 / 1; justify-self: center; }
-
-/* Node wrapper — starts hidden; 80px matches SVG */
-.roadmap-node-wrap {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  opacity: 0;
-  flex-shrink: 0;
-}
-
-.projects-section.projects-active .roadmap-node-wrap {
-  animation: nodeAppear 0.15s ease-out var(--appear-delay) both;
-}
-
-@keyframes nodeAppear {
-  from { opacity: 0; transform: scale(0.5); filter: blur(8px); }
-  to   { opacity: 1; transform: scale(1);   filter: blur(0); }
-}
-
-.roadmap-node-svg {
-  width: 80px;
-  height: 80px;
-  display: block;
-  overflow: visible;
-}
-
-/* Subtle fill inside circle */
-.node-bg-circle {
-  fill: rgba(29, 233, 182, 0.07);
-}
-
-/* Number overlay — absolutely centered over SVG circle */
-.node-num {
-  position: absolute;
-  inset: 0;
-  display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+/* Each item: card + connecting line stacked vertically */
+.roadmap-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Futuristic rectangle card */
+.rm-card {
+  position: relative;
+  width: min(500px, 80vw);
+  padding: 18px 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: rgba(29, 233, 182, 0.03);
+  border: 1px solid rgba(29, 233, 182, 0.18);
+  opacity: 0;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.projects-section.projects-active .rm-card {
+  animation: cardAppear 0.35s ease-out var(--appear-delay) both;
+}
+
+@keyframes cardAppear {
+  from { opacity: 0; transform: translateY(10px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Number on the left */
+.rm-num {
   font-family: 'Orbitron', sans-serif;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
-  color: rgba(29, 233, 182, 0.92);
-  pointer-events: none;
+  color: rgba(29, 233, 182, 0.88);
+  flex-shrink: 0;
+  line-height: 1;
+  width: 56px;
+  text-align: center;
 }
 
-/* Stroke circle — draws clockwise from 12 o'clock */
-.node-stroke-circle {
-  fill: none;
-  stroke: #1de9b6;
-  stroke-width: 1.5;
-  stroke-dasharray: 226.2;
-  stroke-dashoffset: 226.2;
-  filter: drop-shadow(0 0 5px rgba(29, 233, 182, 0.8))
-          drop-shadow(0 0 14px rgba(29, 233, 182, 0.35));
+/* Project title — separated by a thin vertical rule */
+.rm-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(13px, 1.4vw, 18px);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.07em;
+  border-left: 1px solid rgba(29, 233, 182, 0.25);
+  padding-left: 24px;
+  line-height: 1.4;
+  transition: color 0.25s ease;
 }
 
-.projects-section.projects-active .node-stroke-circle {
-  animation: circleStrokeDraw 0.3s ease-in-out var(--stroke-delay) both;
+/* Corner bracket accents */
+.rm-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
 }
+.rm-tl { top: -1px;    left: -1px;   border-top:    2px solid rgba(29,233,182,0.9); border-left:   2px solid rgba(29,233,182,0.9); }
+.rm-tr { top: -1px;    right: -1px;  border-top:    2px solid rgba(29,233,182,0.9); border-right:  2px solid rgba(29,233,182,0.9); }
+.rm-bl { bottom: -1px; left: -1px;   border-bottom: 2px solid rgba(29,233,182,0.9); border-left:   2px solid rgba(29,233,182,0.9); }
+.rm-br { bottom: -1px; right: -1px;  border-bottom: 2px solid rgba(29,233,182,0.9); border-right:  2px solid rgba(29,233,182,0.9); }
 
-@keyframes circleStrokeDraw {
-  from { stroke-dashoffset: 226.2; }
-  to   { stroke-dashoffset: 0; }
-}
-
-/* Vertical connecting line between nodes */
+/* Vertical connecting line between cards */
 .roadmap-line {
   width: 1.5px;
-  height: 68px;
+  height: 56px;
   background: linear-gradient(to bottom, rgba(29, 233, 182, 0.75), rgba(29, 233, 182, 0.12));
   transform-origin: top center;
   transform: scaleY(0);
@@ -1037,30 +1029,6 @@ body.avatar-hovered .nav-logo {
 @keyframes lineExtend {
   from { transform: scaleY(0); }
   to   { transform: scaleY(1); }
-}
-
-/* Project name label — height matches node so flex centering
-   puts the text exactly at the circle's vertical midpoint */
-.roadmap-label {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(14px, 1.55vw, 22px);
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.07em;
-  opacity: 0;
-  white-space: nowrap;
-}
-
-.projects-section.projects-active .roadmap-label {
-  animation: labelIn 0.18s ease-out var(--appear-delay) both;
-}
-
-@keyframes labelIn {
-  from { opacity: 0; transform: translateX(-14px); }
-  to   { opacity: 1; transform: translateX(0); }
 }
 
 
@@ -1115,6 +1083,7 @@ body.avatar-hovered .nav-logo {
 /* Enable pointer events only after all items have finished appearing */
 .roadmap.roadmap-ready .roadmap-item {
   pointer-events: auto;
+  cursor: pointer;
 }
 
 /* Transitions */
@@ -1122,27 +1091,18 @@ body.avatar-hovered .nav-logo {
   transition: opacity 0.25s ease, filter 0.25s ease;
 }
 
-.roadmap-node-wrap {
-  transition: scale 0.25s ease, filter 0.25s ease;
+/* Hovered card — glow + bg brighten */
+.roadmap-item:hover .rm-card {
+  background: rgba(29, 233, 182, 0.08);
+  border-color: rgba(29, 233, 182, 0.55);
+  box-shadow: 0 0 28px rgba(29, 233, 182, 0.15), inset 0 0 20px rgba(29, 233, 182, 0.04);
 }
 
-.roadmap-label {
-  transition: scale 0.25s ease, color 0.25s ease;
+.roadmap-item:hover .rm-title {
+  color: rgba(29, 233, 182, 0.95);
 }
 
-/* Hovered item — scale up + outer glow */
-.roadmap-item:hover .roadmap-node-wrap {
-  scale: 1.12;
-  filter: drop-shadow(0 0 14px rgba(29, 233, 182, 0.85))
-          drop-shadow(0 0 30px rgba(29, 233, 182, 0.4));
-}
-
-.roadmap-item:hover .roadmap-label {
-  scale: 1.06;
-  color: rgba(29, 233, 182, 0.92);
-}
-
-/* Non-hovered items blur when roadmap is hovered */
+/* Non-hovered items dim when roadmap is hovered */
 .roadmap:hover .roadmap-item:not(:hover) {
   opacity: 0.3;
   filter: blur(2px);
@@ -1177,20 +1137,21 @@ body.avatar-hovered .nav-logo {
   pointer-events: auto;
 }
 
-/* Back button — matches nav link style */
+/* Back button — text style for project pages */
 .pp-back {
   position: absolute;
-  top: 38px;
-  left: 58px;
-  font-family: 'Satoshi', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  top: 28px;
+  left: 48px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.2em;
   color: rgba(29, 233, 182, 0.75);
   text-transform: uppercase;
   background: none;
   border: none;
   padding: 0;
+  cursor: pointer;
   opacity: 0;
   pointer-events: none;
   transition: color 0.2s ease;
@@ -1200,8 +1161,35 @@ body.avatar-hovered .nav-logo {
   color: rgba(29, 233, 182, 1);
 }
 
+/* Projects roadmap back — logo version */
+.pp-back-logo {
+  height: 138px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.3));
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.pp-back:hover .pp-back-logo {
+  filter: drop-shadow(0 0 14px rgba(29, 233, 182, 0.9))
+          drop-shadow(0 0 28px rgba(29, 233, 182, 0.45));
+  transform: scale(1.1);
+}
+
+@keyframes ppLogoBounce {
+  0%   { transform: scale(1)    translateY(0); }
+  25%  { transform: scale(1.22) translateY(-8px); }
+  55%  { transform: scale(0.93) translateY(3px); }
+  75%  { transform: scale(1.1)  translateY(-4px); }
+  100% { transform: scale(1)    translateY(0); }
+}
+
+.pp-back-logo.pp-logo-bounce {
+  animation: ppLogoBounce 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 .project-page.pp-active .pp-back {
-  animation: linkIn 0.35s ease-out 0.9s both;
+  animation: linkIn 0.35s ease-out 0s both;
 }
 
 /* Title wrap — same structure as journey-title-wrap */
@@ -5227,14 +5215,19 @@ a.contact-info-row { cursor: pointer; }
   .wsg-g-item:hover .wsg-bgroup-panel img { transform: none !important; }
   .wsg-g-item:hover .wsg-bgroup-label { color: rgba(29,233,182,0.5) !important; }
 
-  /* ── Allow vertical finger-scroll through all gallery items ── */
-  .fca-work-item, .fca-work-img-wrap img,
-  .its-bb-item,
-  .ballies-g-item, .ballies-v-item, .ballies-m-item,
-  .wsg-v-item, .wsg-g-item,
-  .laboo-v-item {
+  /* ── Allow vertical finger-scroll through all gallery items and their children ── */
+  .fca-work-item, .fca-work-item *,
+  .its-bb-item, .its-bb-item *,
+  .ballies-g-item, .ballies-g-item *,
+  .ballies-v-item, .ballies-v-item *,
+  .ballies-m-item, .ballies-m-item *,
+  .wsg-v-item, .wsg-v-item *,
+  .wsg-g-item, .wsg-g-item *,
+  .laboo-v-item, .laboo-v-item * {
     touch-action: pan-y;
   }
+  /* Also ensure the scrollable page container itself passes through pan-y */
+  .project-page.pp-active { touch-action: pan-y; }
 }
 
 /* ── 1800px — large monitors / widescreen laptops ── */
@@ -5514,28 +5507,19 @@ a.contact-info-row { cursor: pointer; }
   }
   #roadmapTypewriter .tw-line { font-size: 10px; line-height: 1.5; }
 
-  /* Roadmap: horizontal layout — circle left, label right */
-  .roadmap { align-items: flex-start; width: 100%; }
-  .roadmap-item {
-    display: grid;
-    grid-template-columns: 46px 1fr;
-    column-gap: 8px;
+  /* Roadmap: cards centered on mobile */
+  .roadmap { align-items: center; width: 100%; margin: 0; }
+  .roadmap-item { display: flex; flex-direction: column; align-items: center; }
+  .rm-card {
+    width: min(360px, calc(100vw - 48px));
+    padding: 12px 18px;
   }
-  .roadmap-node-wrap { grid-area: 1 / 1; }
-  .roadmap-label     { grid-area: 1 / 2; display: flex; align-items: center; }
-  .roadmap-line      { grid-area: 2 / 1; justify-self: center; }
-  .roadmap-node-wrap, .roadmap-node-svg { width: 46px; height: 46px; }
-  .node-num { font-size: 16px; }
-  .roadmap-label {
-    height: 46px;
-    font-size: 11px;
-    text-align: left;
-    white-space: normal;
-    letter-spacing: 0.04em;
-    padding: 0;
-    opacity: 1;
-  }
-  .roadmap-line { width: 1.5px; height: 24px; margin: 0 auto; }
+  .rm-num { font-size: 20px; width: 38px; }
+  .rm-title { font-size: clamp(10px, 3.8vw, 14px); padding-left: 14px; letter-spacing: 0.04em; }
+  .rm-corner { width: 8px; height: 8px; }
+  .roadmap-line { width: 1.5px; height: 24px; }
+  /* Ghost fix: hide cards when roadmap section is not open */
+  .projects-section:not(.projects-active) .rm-card { opacity: 0 !important; animation: none !important; }
 
   /* ── Project pages — scrollable on mobile ── */
   .project-page { background: #0D0D0F; }
@@ -5548,18 +5532,31 @@ a.contact-info-row { cursor: pointer; }
   }
   /* Prevent flex-shrink from squashing children into 100vh (kills scroll) */
   .project-page.pp-active > * { flex-shrink: 0; }
-  /* Back button — fixed so it stays visible while scrolling */
+  /* Back button — fixed text, visible while scrolling */
   .pp-back {
     position: fixed;
     top: 22px;
     left: 20px;
-    font-size: 12px;
+    font-size: 11px;
     z-index: 20;
     background: rgba(13,13,15,0.72);
     padding: 6px 10px;
     border-radius: 4px;
     backdrop-filter: blur(8px);
   }
+  /* Roadmap / Contact / About back — logo, centered */
+  #projectsBack,
+  #contactBack,
+  #aboutBack {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    backdrop-filter: none;
+  }
+  .pp-back-logo { height: 102px; }
 
   /* Scroll progress bar */
   #mobileProgressBar {
@@ -5900,10 +5897,10 @@ a.contact-info-row { cursor: pointer; }
   .its-gallery-3 .fca-work-item:nth-child(n),
   .its-bb-item { height: 36vw; }
 
-  .roadmap-label { font-size: 10px; height: 38px; padding: 0; }
-  .node-num { font-size: 14px; }
-  .roadmap-node-wrap, .roadmap-node-svg { width: 38px; height: 38px; }
-  .roadmap-item { grid-template-columns: 38px 1fr; }
+  .rm-card { padding: 10px 14px; }
+  .rm-num { font-size: 16px; width: 30px; }
+  .rm-title { font-size: clamp(9px, 3.5vw, 12px); padding-left: 10px; }
+  .rm-corner { width: 7px; height: 7px; }
   .roadmap-line { height: 16px; }
   .roadmap-typewriter { display: none; }
   .projects-title { font-size: clamp(0.95rem, 5vw, 1.2rem); }

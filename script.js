@@ -3740,3 +3740,21 @@ window.addEventListener('beforeunload', function () {
     });
   }
 })();
+
+/* ============================================
+   BACK LOGO BOUNCE
+   ============================================ */
+(function () {
+  document.querySelectorAll('.pp-back').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var logo = btn.querySelector('.pp-back-logo');
+      if (!logo) return;
+      logo.classList.remove('pp-logo-bounce');
+      void logo.offsetWidth;
+      logo.classList.add('pp-logo-bounce');
+      logo.addEventListener('animationend', function () {
+        logo.classList.remove('pp-logo-bounce');
+      }, { once: true });
+    });
+  });
+}());
