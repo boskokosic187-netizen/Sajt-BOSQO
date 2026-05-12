@@ -2021,6 +2021,8 @@ body.avatar-hovered .nav-logo {
    ITS BILLBOARD GALLERY
    ============================================ */
 
+.its-section-label { display: none; }
+
 .its-gallery-wrap {
   --H: calc((min(95vw, 1600px) - 100px) / 10);
   position: relative;
@@ -5389,7 +5391,7 @@ a.contact-info-row { cursor: pointer; }
     justify-content: flex-start;
     width: 100%;
     height: 100%;
-    padding: 28px 24px calc(80px + env(safe-area-inset-bottom));
+    padding: 28px 24px calc(40px + env(safe-area-inset-bottom));
     grid-template-columns: unset;
     position: static;
   }
@@ -5426,13 +5428,13 @@ a.contact-info-row { cursor: pointer; }
   .nav-work {
     order: 1;
     margin-top: auto;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
   }
   .nav-about {
     display: inline-flex !important;
     order: 2;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
   }
   .nav-contact {
@@ -5444,15 +5446,21 @@ a.contact-info-row { cursor: pointer; }
   /* Hide floating icons */
   .floating-icon { display: none; }
 
-  /* Hero — just center the avatar; navbar overlay handles chrome */
-  .hero { min-height: 100vh; }
+  /* Hero — safe zones for logo (top) and buttons (bottom) prevent overlap */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: 180px;
+    padding-bottom: 240px;
+    box-sizing: border-box;
+  }
   .hero-content { height: auto; gap: 0; }
 
-  /* Avatar — fill the middle area between logo and buttons */
+  /* Avatar — never taller than the space between logo and buttons */
   .avatar-wrapper {
-    width: min(88vw, 500px);
-    height: min(88vw, 500px);
-    margin-top: -8vh;
+    width: min(88vw, calc(100svh - 420px));
+    height: min(88vw, calc(100svh - 420px));
+    margin-top: 0;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   body.avatar-tapped .avatar-img-wrap {
@@ -5660,6 +5668,26 @@ a.contact-info-row { cursor: pointer; }
   /* ── ITS gallery — all items in one scrollable column ── */
   #itsPage .its-gallery-dots { display: none !important; }
   #itsPage .its-hover-hint { display: none; }
+
+  .its-section-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(29,233,182,0.65);
+    margin: 0;
+    padding: 18px 0 10px;
+    border-top: 1px solid rgba(29,233,182,0.12);
+  }
+  .its-section-label--first {
+    border-top: none;
+    padding-top: 4px;
+  }
+
   #itsPage .its-gallery-wrap {
     position: relative;
     display: flex;
@@ -5848,8 +5876,8 @@ a.contact-info-row { cursor: pointer; }
   .nav-logo img { height: 100px; }
 
   .avatar-wrapper {
-    width: min(86vw, 380px);
-    height: min(86vw, 380px);
+    width: min(86vw, calc(100svh - 380px));
+    height: min(86vw, calc(100svh - 380px));
   }
 
   .fca-gallery .fca-work-item:nth-child(n),
