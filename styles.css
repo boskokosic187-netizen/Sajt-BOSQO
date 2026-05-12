@@ -956,7 +956,7 @@ body.avatar-hovered .nav-logo {
 /* Futuristic rectangle card */
 .rm-card {
   position: relative;
-  width: min(500px, 80vw);
+  width: min(700px, 88vw);
   padding: 18px 32px;
   display: flex;
   flex-direction: row;
@@ -994,10 +994,11 @@ body.avatar-hovered .nav-logo {
   font-size: clamp(13px, 1.4vw, 18px);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.07em;
+  letter-spacing: 0.05em;
   border-left: 1px solid rgba(29, 233, 182, 0.25);
   padding-left: 24px;
   line-height: 1.4;
+  white-space: nowrap;
   transition: color 0.25s ease;
 }
 
@@ -4454,6 +4455,9 @@ body.avatar-hovered .nav-logo {
   100% { opacity: 1; filter: none; transform: scale(1); }
 }
 
+/* Scroll wrapper — invisible on desktop, scroll container on mobile */
+.contact-body { display: contents; }
+
 /* Outer wrapper — centers the whole two-column block */
 .contact-split {
   display: flex;
@@ -5511,11 +5515,11 @@ a.contact-info-row { cursor: pointer; }
   .roadmap { align-items: center; width: 100%; margin: 0; }
   .roadmap-item { display: flex; flex-direction: column; align-items: center; }
   .rm-card {
-    width: min(360px, calc(100vw - 48px));
-    padding: 12px 18px;
+    width: calc(100vw - 32px);
+    padding: 11px 16px;
   }
-  .rm-num { font-size: 20px; width: 38px; }
-  .rm-title { font-size: clamp(10px, 3.8vw, 14px); padding-left: 14px; letter-spacing: 0.04em; }
+  .rm-num { font-size: 18px; width: 34px; }
+  .rm-title { font-size: clamp(8px, 2.3vw, 10px); padding-left: 12px; letter-spacing: 0.01em; white-space: nowrap; }
   .rm-corner { width: 8px; height: 8px; }
   .roadmap-line { width: 1.5px; height: 24px; }
   /* Ghost fix: hide cards when roadmap section is not open */
@@ -5800,23 +5804,130 @@ a.contact-info-row { cursor: pointer; }
   .laboo-v-wrap { grid-template-columns: 1fr; width: 58vw; margin: 10px auto 0; padding: 0; gap: 10px; }
   .laboo-v-item { opacity: 1 !important; animation: none !important; }
 
-  /* ── Contact — scrollable to reveal photo below form ── */
+  /* ── Contact — title pushed down on mobile ── */
+  .contact-headline-wrap { padding-top: 130px; padding-left: 28px; padding-right: 28px; }
+  .contact-headline { font-size: clamp(1.1rem, 5vw, 1.5rem); }
+  .contact-split { padding-left: 28px; padding-right: 28px; gap: 20px; }
+  .contact-left { padding: 0; max-width: 100%; }
+  /* Availability badge */
+  .contact-avail { width: fit-content; padding: 6px 14px; gap: 8px; }
+  .contact-avail-text { font-size: 10px; }
+  .contact-status-dot { width: 6px; height: 6px; }
+  /* Meta rows */
+  .contact-info-block { gap: 10px; }
+  .contact-meta { gap: 6px; }
+  .contact-meta-row { padding: 7px 4px; gap: 10px; }
+  .contact-meta-val { font-size: 12px; }
+  .contact-meta-icon { font-size: 13px; width: 18px; }
+  .contact-copy-btn { width: 26px; height: 26px; }
+  /* Form */
+  .contact-form { gap: 6px; }
+  .contact-label { font-size: 9px; margin-bottom: 4px; }
+  .contact-input { font-size: 12px; padding: 8px 12px; }
+  .contact-textarea { min-height: 64px; }
+  /* Buttons */
+  .contact-btn { padding: 10px 24px; font-size: 11px; letter-spacing: 0.14em; }
+  /* Services / tags */
+  .contact-services { gap: 10px; }
+  .contact-section-label { font-size: 8px; margin-bottom: 8px; }
+  .contact-tag { font-size: 9px; padding: 5px 10px; }
+
+  /* ── Contact — Exceptional animation: scale from center instead of letter-spacing ── */
+  .contact-headline-accent.ex-in {
+    animation: exAccentInMobile 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .contact-headline-accent.ex-out {
+    animation: exAccentOutMobile 0.42s ease-in forwards;
+  }
+  @keyframes exAccentInMobile {
+    0%   { transform: scale(1);    filter: drop-shadow(0 0 0px rgba(29,233,182,0)); }
+    40%  { transform: scale(1.1);  filter: drop-shadow(0 0 22px rgba(29,233,182,1)) drop-shadow(0 0 44px rgba(0,188,212,0.65)); }
+    100% { transform: scale(1.07); filter: drop-shadow(0 0 10px rgba(29,233,182,0.55)) drop-shadow(0 0 24px rgba(0,188,212,0.22)); }
+  }
+  @keyframes exAccentOutMobile {
+    0%   { transform: scale(1.07); filter: drop-shadow(0 0 10px rgba(29,233,182,0.55)) drop-shadow(0 0 24px rgba(0,188,212,0.22)); }
+    100% { transform: scale(1);    filter: drop-shadow(0 0 0px rgba(29,233,182,0)); }
+  }
+
+  /* ── Contact — inner scroll, back logo + socials stay fixed ── */
+  #contactPage.pp-active {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    touch-action: pan-y;
+  }
+  /* #contactBack stays absolute within fixed contact page = same as fixed to viewport */
+  #contactBack { position: absolute; }
+  /* Inner body scrolls, everything else is outside the scroll zone */
+  .contact-body {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+  .contact-headline-wrap {
+    position: relative;
+    width: 100%;
+  }
   .contact-split {
     flex-direction: column;
     align-items: center;
     height: auto;
-    min-height: 100%;
+    min-height: 0;
     overflow: visible;
-    padding: 64px 20px 40px;
-    gap: 32px;
+    padding: 16px 28px 24px;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .contact-left  { height: auto; padding: 0; width: 100%; max-width: 440px; }
+  .contact-left  { height: auto; padding: 0; width: 100%; max-width: 100%; }
   .contact-right {
     flex: 0 0 auto;
     width: min(72vw, 300px);
     margin: 0 auto;
   }
   .contact-right::after { display: none; }
+  /* Scale down all content below headline */
+  .contact-info-block { gap: 8px; }
+  .contact-meta { gap: 4px; }
+  .contact-meta-row { padding: 6px 4px; gap: 8px; }
+  .contact-meta-val { font-size: 12px; letter-spacing: 0.02em; }
+  .contact-meta-icon { font-size: 12px; width: 16px; }
+  .contact-copy-btn { width: 24px; height: 24px; border-radius: 6px; }
+  .contact-copy-btn svg { width: 12px; height: 12px; }
+  .contact-form { gap: 5px; }
+  .contact-field { margin: 0; }
+  .contact-label { font-size: 8px; margin-bottom: 3px; letter-spacing: 0.2em; }
+  .contact-input { font-size: 12px; padding: 7px 11px; border-radius: 8px; }
+  .contact-textarea { min-height: 60px; }
+  .contact-btn { padding: 9px 20px; font-size: 10px; letter-spacing: 0.12em; border-radius: 100px; }
+  .contact-services { gap: 8px; }
+  .contact-section-label { font-size: 8px; margin-bottom: 6px; letter-spacing: 0.2em; }
+  .contact-tag { font-size: 9px; padding: 4px 9px; }
+  /* Social icons — inline centered row in scroll content */
+  .contact-socials-footer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 0 32px;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    gap: 24px;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+  }
+  #contactPage.pp-active .contact-socials-footer {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* ── About page ── */
   #aboutPage.pp-active { overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -5897,9 +6008,9 @@ a.contact-info-row { cursor: pointer; }
   .its-gallery-3 .fca-work-item:nth-child(n),
   .its-bb-item { height: 36vw; }
 
-  .rm-card { padding: 10px 14px; }
-  .rm-num { font-size: 16px; width: 30px; }
-  .rm-title { font-size: clamp(9px, 3.5vw, 12px); padding-left: 10px; }
+  .rm-card { padding: 9px 12px; }
+  .rm-num { font-size: 14px; width: 28px; }
+  .rm-title { font-size: 8px; padding-left: 8px; letter-spacing: 0; }
   .rm-corner { width: 7px; height: 7px; }
   .roadmap-line { height: 16px; }
   .roadmap-typewriter { display: none; }
