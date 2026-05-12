@@ -3758,3 +3758,33 @@ window.addEventListener('beforeunload', function () {
     });
   });
 }());
+
+/* ── Gallery scroll reveal (mobile only) ── */
+(function () {
+  if (!window.matchMedia('(max-width: 600px)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  var sel = [
+    '#fcaPage .fca-work-item',
+    '#itsPage .its-bb-item',
+    '#itsPage .fca-work-item',
+    '#balliesPage .ballies-g-item',
+    '#balliesPage .ballies-m-item',
+    '#wsgPage .wsg-g-item',
+    '.laboo-v-item'
+  ].join(',');
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('sr-visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -10px 0px' });
+
+  document.querySelectorAll(sel).forEach(function (el) {
+    el.classList.add('sr-item');
+    obs.observe(el);
+  });
+}());

@@ -6015,6 +6015,30 @@ a.contact-info-row { cursor: pointer; }
   .roadmap-line { height: 16px; }
   .roadmap-typewriter { display: none; }
   .projects-title { font-size: clamp(0.95rem, 5vw, 1.2rem); }
+
+  /* ── Gallery scroll reveal ── */
+  #fcaPage .fca-work-item.sr-item,
+  #itsPage .its-bb-item.sr-item,
+  #itsPage .fca-work-item.sr-item,
+  #balliesPage .ballies-g-item.sr-item,
+  #balliesPage .ballies-m-item.sr-item,
+  #wsgPage .wsg-g-item.sr-item,
+  .laboo-v-item.sr-item {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    transition: opacity 0.42s ease-out, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    will-change: opacity, transform;
+  }
+  #fcaPage .fca-work-item.sr-visible,
+  #itsPage .its-bb-item.sr-visible,
+  #itsPage .fca-work-item.sr-visible,
+  #balliesPage .ballies-g-item.sr-visible,
+  #balliesPage .ballies-m-item.sr-visible,
+  #wsgPage .wsg-g-item.sr-visible,
+  .laboo-v-item.sr-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
 }
 
 /* ── 920px — contact stacking (kept from before) ── */
