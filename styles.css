@@ -5231,6 +5231,15 @@ a.contact-info-row { cursor: pointer; }
   .wsg-g-item:hover .wsg-g-img { transform: none !important; }
   .wsg-g-item:hover .wsg-bgroup-panel img { transform: none !important; }
   .wsg-g-item:hover .wsg-bgroup-label { color: rgba(29,233,182,0.5) !important; }
+
+  /* ── Allow vertical finger-scroll through all gallery items ── */
+  .fca-work-item, .fca-work-img-wrap img,
+  .its-bb-item,
+  .ballies-g-item, .ballies-v-item, .ballies-m-item,
+  .wsg-v-item, .wsg-g-item,
+  .laboo-v-item {
+    touch-action: pan-y;
+  }
 }
 
 /* ── 1800px — large monitors / widescreen laptops ── */

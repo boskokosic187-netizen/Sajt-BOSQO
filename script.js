@@ -1442,6 +1442,7 @@ window.addEventListener('beforeunload', function () {
   /* Wheel scroll on mosaic — intercept so global handler doesn't fire */
   if (mosaicWrap) {
     mosaicWrap.addEventListener('wheel', function (e) {
+      if ('ontouchstart' in window || window.innerWidth <= 600) return;
       e.preventDefault();
       e.stopPropagation();
       mosaicWrap.scrollTop += e.deltaY;
@@ -1789,6 +1790,7 @@ window.addEventListener('beforeunload', function () {
 
   if (galleryWrap) {
     galleryWrap.addEventListener('wheel', function (e) {
+      if ('ontouchstart' in window || window.innerWidth <= 600) return;
       e.preventDefault();
       e.stopPropagation();
       galleryWrap.scrollTop += e.deltaY;
@@ -2398,6 +2400,7 @@ window.addEventListener('beforeunload', function () {
   }
   if (wsgGalleryWrap) {
     wsgGalleryWrap.addEventListener('wheel', function (e) {
+      if ('ontouchstart' in window || window.innerWidth <= 600) return;
       e.preventDefault(); e.stopPropagation();
       wsgGalleryWrap.scrollTop += e.deltaY;
     }, { passive: false });
@@ -3621,6 +3624,7 @@ window.addEventListener('beforeunload', function () {
   var COOLDOWN  = 650;
 
   window.addEventListener('wheel', function (e) {
+    if ('ontouchstart' in window || window.innerWidth <= 600) return;
     if (!window._pageOpen) return;
     var page = window._activePage;
     if (!page || page === 'contact') return;
