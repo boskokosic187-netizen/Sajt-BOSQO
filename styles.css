@@ -6018,7 +6018,7 @@ a.contact-info-row { cursor: pointer; }
 }
 
 /* ── 920px — contact stacking (kept from before) ── */
-@media (max-width: 920px) {
+@media (min-width: 601px) and (max-width: 920px) {
   .contact-split {
     flex-direction: column;
     align-items: center;
