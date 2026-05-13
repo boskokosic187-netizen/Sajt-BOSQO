@@ -5399,7 +5399,7 @@ a.contact-info-row { cursor: pointer; }
 }
 
 /* ── 600px — phones ── */
-@media (max-width: 600px) {
+@media (max-width: 600px), (orientation: portrait) {
   /* ── Mobile background: deep space nebula ── */
   body { background: #050508; }
   body::before {

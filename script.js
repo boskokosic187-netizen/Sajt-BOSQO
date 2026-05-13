@@ -459,7 +459,7 @@
    ============================================ */
 
 (function () {
-  if (window.innerWidth <= 600) return;
+  if (window.innerWidth <= 600 || 'ontouchstart' in window || window.innerHeight > window.innerWidth) return;
 
   const wrapper = document.querySelector('.avatar-wrapper');
   if (!wrapper) return;
