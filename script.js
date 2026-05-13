@@ -1326,8 +1326,10 @@ window.addEventListener('beforeunload', function () {
 
   (function buildSlideshow() {
     if (!track1 || !track2) return;
+    var isMobileSlide = window.matchMedia('(max-width: 600px)').matches;
+    var reps = isMobileSlide ? 4 : 2;
     var html = '';
-    for (var rep = 0; rep < 2; rep++) {
+    for (var rep = 0; rep < reps; rep++) {
       for (var i = 1; i <= 20; i++) {
         var num = String(i).padStart(3, '0');
         html += '<div class="ballies-nft-card">'
@@ -1339,7 +1341,7 @@ window.addEventListener('beforeunload', function () {
       }
     }
     track1.innerHTML = html;
-    track2.innerHTML = html;
+    if (!isMobileSlide) track2.innerHTML = html;
   })();
 
   /* Hover: scale up hovered card, slow others 60% */
@@ -1822,6 +1824,9 @@ window.addEventListener('beforeunload', function () {
     });
   }
 
+  var _isMobileBallies = window.matchMedia('(max-width: 600px)').matches;
+  var nftLabel = slideshow ? slideshow.querySelector('.ballies-nft-label') : null;
+
   function goToPage(p) {
     if (balliesPage2 === p) return;
     var prev = balliesPage2;
@@ -1830,12 +1835,17 @@ window.addEventListener('beforeunload', function () {
     dots.forEach(function (d, i) { d.classList.toggle('ballies-dot--active', i + 1 === p); });
 
     function hideSlideshow() {
+      if (_isMobileBallies && nftLabel) nftLabel.classList.add('nft-label-out');
       if (slideshow) slideshow.style.display = 'none';
       setSlideshowState(false);
     }
     function showSlideshow() {
       if (slideshow) {
         slideshow.style.display = '';
+        if (_isMobileBallies && nftLabel) {
+          nftLabel.classList.add('nft-label-out');
+          requestAnimationFrame(function () { nftLabel.classList.remove('nft-label-out'); });
+        }
         slideshow.classList.remove('ballies-entering');
         requestAnimationFrame(function () {
           slideshow.classList.add('ballies-entering');
