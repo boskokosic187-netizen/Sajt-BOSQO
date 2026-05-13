@@ -5401,7 +5401,7 @@ a.contact-info-row { cursor: pointer; }
 /* ── 600px — phones ── */
 @media (max-width: 600px) {
   /* ── Mobile background: deep space nebula ── */
-  body { background: #0D0D0F; }
+  body { background: #050508; }
   body::before {
     content: '';
     position: fixed;
@@ -5496,10 +5496,10 @@ a.contact-info-row { cursor: pointer; }
     align-self: auto;
     margin: 0 0 0 0;
   }
-  .nav-logo-wrap { margin-top: 3vh; }
+  .nav-logo-wrap { margin-top: 10px; }
   .nav-logo img {
-    height: 120px;
-    transform: scale(3);
+    height: 160px;
+    transform: none;
     transition: filter 0.5s ease;
   }
   body.avatar-tapped .nav-logo img {
@@ -5550,8 +5550,8 @@ a.contact-info-row { cursor: pointer; }
 
   /* Avatar — never taller than the space between logo and buttons */
   .avatar-wrapper {
-    width: min(88vw, calc(100svh - 420px));
-    height: min(88vw, calc(100svh - 420px));
+    width: min(96vw, calc(100svh - 420px));
+    height: min(96vw, calc(100svh - 420px));
     margin-top: 0;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -5560,9 +5560,10 @@ a.contact-info-row { cursor: pointer; }
   }
   .avatar-ring,
   .avatar-border,
-  .avatar-outer-ring { display: none; }
+  .avatar-outer-ring,
+  .avatar-fill { display: none; }
   .avatar-glow { opacity: 0.5; }
-  .avatar-img-wrap { width: 94%; height: 94%; }
+  .avatar-img-wrap { width: 122%; height: 122%; }
 
   /* Hide socials — reachable via contact page */
   .hero-socials { display: none; }
@@ -6181,7 +6182,7 @@ a.contact-info-row { cursor: pointer; }
 /* ── 400px — small phones (iPhone SE, Galaxy A series) ── */
 @media (max-width: 400px) {
   .nav-link    { padding: 12px 0; font-size: 11px; width: min(82vw, 280px); }
-  .nav-logo img { height: 100px; }
+  .nav-logo img { height: 130px; }
 
   .avatar-wrapper {
     width: min(86vw, calc(100svh - 380px));
