@@ -1334,7 +1334,7 @@ window.addEventListener('beforeunload', function () {
         var num = String(i).padStart(3, '0');
         html += '<div class="ballies-nft-card">'
               +   '<div class="ballies-nft-inner">'
-              +     '<img src="assets/BALLIES/1/' + i + '.png" alt="Ballies #' + num + '" draggable="false">'
+              +     '<img src="assets/BALLIES/1/' + i + '.png" alt="Ballies #' + num + '" draggable="false" loading="lazy" decoding="async">'
               +   '</div>'
               +   '<div class="ballies-nft-num">#' + num + '</div>'
               + '</div>';
@@ -1412,7 +1412,7 @@ window.addEventListener('beforeunload', function () {
     files.forEach(function (f) {
       var alt = decodeURIComponent(f).replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
       html += '<div class="ballies-m-item">'
-            +   '<img src="assets/BALLIES/2/' + f + '" alt="' + alt + '" draggable="false">'
+            +   '<img src="assets/BALLIES/2/' + f + '" alt="' + alt + '" draggable="false" loading="lazy" decoding="async">'
             + '</div>';
     });
     mosaic.innerHTML = html;
@@ -2351,6 +2351,8 @@ window.addEventListener('beforeunload', function () {
           var img = document.createElement('img');
           img.src = 'assets/WSG/2/' + f;
           img.alt = f.replace('.png', '');
+          img.loading = 'lazy';
+          img.decoding = 'async';
           img.draggable = false;
           panel.appendChild(img);
           triptych.appendChild(panel);

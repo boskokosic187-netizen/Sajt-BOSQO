@@ -5336,6 +5336,14 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 600px — phones ── */
 @media (max-width: 600px) {
+  /* ── Futuristic mobile background: dot grid + ambient glow ── */
+  body {
+    background:
+      radial-gradient(circle, rgba(29,233,182,0.11) 1px, transparent 1px) 0 0 / 30px 30px,
+      radial-gradient(ellipse 160% 55% at 50% 115%, rgba(29,233,182,0.16) 0%, transparent 58%),
+      radial-gradient(ellipse 90% 28% at 50% -4%, rgba(29,233,182,0.07) 0%, transparent 52%),
+      #0D0D0F;
+  }
   /* ── Mobile performance: disable expensive GPU effects ── */
   body { cursor: auto; }
   *, *::before, *::after { cursor: auto !important; }
@@ -5553,6 +5561,22 @@ a.contact-info-row { cursor: pointer; }
   .project-page.pp-active > * { flex-shrink: 0; }
   /* Ensure every descendant passes pan-y through to the scroll container */
   .project-page.pp-active * { touch-action: pan-y; }
+  /* Pass all touch events through gallery/video images so iOS doesn't block scroll.
+     pointer-events:none on img is safe — every click handler is on the parent wrapper. */
+  .fca-work-item img,
+  .its-bb-item img,
+  .ballies-m-item img,
+  .ballies-g-item img,
+  .ballies-v-item img,
+  .wsg-g-item img,
+  .wsg-bgroup-panel img,
+  .wsg-v-item img,
+  .laboo-v-item img {
+    pointer-events: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
   /* Back button — fixed text, visible while scrolling */
   .pp-back {
     position: fixed;
