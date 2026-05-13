@@ -2631,7 +2631,59 @@ window.addEventListener('beforeunload', function () {
       item.classList.remove('its-bb-playing');
       scheduleHint();
     });
+
+    // Mobile: tap to open fullscreen lightbox with looping YT video
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', function () {
+        openItsBbLightbox(ytId);
+      });
+    }
   });
+
+  /* ---- Mobile lightbox ---- */
+  function openItsBbLightbox(ytId) {
+    var lb = document.createElement('div');
+    lb.className = 'its-mob-lb';
+
+    var inner = document.createElement('div');
+    inner.className = 'its-mob-lb__inner';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'its-mob-lb__close';
+    closeBtn.setAttribute('aria-label', 'Close');
+
+    var ifr = document.createElement('iframe');
+    ifr.className = 'its-mob-lb__frame';
+    ifr.src = 'https://www.youtube.com/embed/' + ytId
+            + '?autoplay=1&loop=1&playlist=' + ytId
+            + '&controls=1&rel=0&modestbranding=1&playsinline=1';
+    ifr.allow = 'autoplay; fullscreen';
+    ifr.allowFullscreen = true;
+
+    inner.appendChild(closeBtn);
+    inner.appendChild(ifr);
+    lb.appendChild(inner);
+    document.body.appendChild(lb);
+
+    // Animate in
+    requestAnimationFrame(function () { lb.classList.add('its-mob-lb--open'); });
+
+    function closeLb() {
+      lb.classList.remove('its-mob-lb--open');
+      setTimeout(function () {
+        ifr.src = '';
+        lb.parentNode && lb.parentNode.removeChild(lb);
+      }, 280);
+    }
+
+    closeBtn.addEventListener('click', function (e) { e.stopPropagation(); closeLb(); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+
+    document.addEventListener('keydown', function onEsc(e) {
+      if (e.key === 'Escape') { closeLb(); document.removeEventListener('keydown', onEsc); }
+    });
+  }
 
 })();
 
