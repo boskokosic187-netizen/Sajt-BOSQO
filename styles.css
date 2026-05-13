@@ -5628,7 +5628,7 @@ a.contact-info-row { cursor: pointer; }
   .projects-section:not(.projects-active) .rm-card { opacity: 0 !important; animation: none !important; }
 
   /* ── Project pages — scrollable on mobile ── */
-  .project-page { background: #0D0D0F; }
+  .project-page { background: transparent; }
   .project-page.pp-active {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
