@@ -452,7 +452,7 @@
   const wrapper = document.querySelector('.avatar-wrapper');
   if (!wrapper) return;
 
-  const iconNames = ['after', 'animate', 'illustrator', 'lightroom', 'photoshop', 'premiere', 'indesign'];
+  const iconNames = ['After', 'Animate', 'Illustrator', 'Lightroom', 'Photoshop', 'Premiere', 'Indesign'];
   const ICON_SIZE = 46;
   const ICON_HALF = ICON_SIZE / 2;
 
@@ -469,7 +469,7 @@
     const inner = document.createElement('div');
     inner.className = 'floating-icon-inner';
     const img = document.createElement('img');
-    img.src = `assets/svg/${name}.svg`;
+    img.src = `assets/SVG/${name}.svg`;
     img.alt = name;
     img.draggable = false;
     inner.appendChild(img);
