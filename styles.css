@@ -5400,13 +5400,23 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 600px — phones ── */
 @media (max-width: 600px) {
-  /* ── Futuristic mobile background: dot grid + ambient glow ── */
-  body {
+  /* ── Mobile background: deep space nebula ── */
+  body { background: #0D0D0F; }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
     background:
-      radial-gradient(circle, rgba(29,233,182,0.11) 1px, transparent 1px) 0 0 / 30px 30px,
-      radial-gradient(ellipse 160% 55% at 50% 115%, rgba(29,233,182,0.16) 0%, transparent 58%),
-      radial-gradient(ellipse 90% 28% at 50% -4%, rgba(29,233,182,0.07) 0%, transparent 52%),
-      #0D0D0F;
+      radial-gradient(ellipse 130% 60% at 15% 88%, rgba(29,233,182,0.11) 0%, transparent 55%),
+      radial-gradient(ellipse 90% 50% at 85% 14%, rgba(80,50,210,0.09) 0%, transparent 52%),
+      radial-gradient(ellipse 55% 38% at 52% 50%, rgba(29,233,182,0.05) 0%, transparent 58%);
+    animation: mobNebula 22s ease-in-out infinite alternate;
+  }
+  @keyframes mobNebula {
+    0%   { opacity: 0.45; }
+    100% { opacity: 1; }
   }
   /* ── Mobile performance: disable expensive GPU effects ── */
   body { cursor: auto; }
@@ -5557,11 +5567,11 @@ a.contact-info-row { cursor: pointer; }
   /* Hide socials — reachable via contact page */
   .hero-socials { display: none; }
 
-  /* ── Projects roadmap — vertically centered, evenly spaced ── */
+  /* ── Projects roadmap — logo clears top, items stack from there ── */
   .projects-section.projects-active {
     overflow-y: auto;
-    padding: 68px 20px 80px;
-    justify-content: center;
+    padding: 112px 16px 48px;
+    justify-content: flex-start;
     align-items: center;
   }
 
@@ -5571,10 +5581,10 @@ a.contact-info-row { cursor: pointer; }
     left: auto; right: auto; top: auto;
     transform: none;
     text-align: center;
-    padding: 10px 24px;
+    padding: 8px 20px;
     white-space: normal;
     width: auto;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     opacity: 0;
   }
   .projects-section.projects-active .projects-title-wrap {
@@ -5596,7 +5606,7 @@ a.contact-info-row { cursor: pointer; }
   /* Typewriter */
   .roadmap-typewriter {
     display: block !important;
-    margin: 0 0 32px;
+    margin: 0 0 34px;
     padding: 0 12px;
     opacity: 1 !important;
     visibility: visible !important;
@@ -5608,12 +5618,12 @@ a.contact-info-row { cursor: pointer; }
   .roadmap-item { display: flex; flex-direction: column; align-items: center; }
   .rm-card {
     width: calc(100vw - 32px);
-    padding: 11px 16px;
+    padding: 15px 20px;
   }
-  .rm-num { font-size: 18px; width: 34px; }
-  .rm-title { font-size: clamp(8px, 2.3vw, 10px); padding-left: 12px; letter-spacing: 0.01em; white-space: nowrap; }
+  .rm-num { font-size: 22px; width: 36px; }
+  .rm-title { font-size: clamp(13px, 3.8vw, 16px); padding-left: 14px; letter-spacing: 0.04em; white-space: nowrap; }
   .rm-corner { width: 8px; height: 8px; }
-  .roadmap-line { width: 1.5px; height: 24px; }
+  .roadmap-line { width: 1.5px; height: 28px; }
   /* Ghost fix: hide cards when roadmap section is not open */
   .projects-section:not(.projects-active) .rm-card { opacity: 0 !important; animation: none !important; }
 
@@ -5671,7 +5681,7 @@ a.contact-info-row { cursor: pointer; }
     border-radius: 0;
     backdrop-filter: none;
   }
-  .pp-back-logo { height: 102px; }
+  .pp-back-logo { height: 78px; }
 
   /* Scroll progress bar */
   #mobileProgressBar {
@@ -6185,11 +6195,11 @@ a.contact-info-row { cursor: pointer; }
   .its-gallery-3 .fca-work-item:nth-child(n),
   .its-bb-item { height: 36vw; }
 
-  .rm-card { padding: 9px 12px; }
-  .rm-num { font-size: 14px; width: 28px; }
-  .rm-title { font-size: 8px; padding-left: 8px; letter-spacing: 0; }
+  .rm-card { padding: 12px 14px; }
+  .rm-num { font-size: 19px; width: 30px; }
+  .rm-title { font-size: clamp(11px, 3.2vw, 13px); padding-left: 10px; letter-spacing: 0.02em; }
   .rm-corner { width: 7px; height: 7px; }
-  .roadmap-line { height: 16px; }
+  .roadmap-line { height: 20px; }
   .roadmap-typewriter { display: none; }
   .projects-title { font-size: clamp(0.95rem, 5vw, 1.2rem); }
 

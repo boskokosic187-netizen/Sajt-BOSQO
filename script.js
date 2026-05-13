@@ -10,7 +10,7 @@
   let w, h;
 
   const isMobile = window.innerWidth <= 600 || 'ontouchstart' in window;
-  const STAR_COUNT = isMobile ? 35 : 350;
+  const STAR_COUNT = isMobile ? 110 : 350;
   const MOUSE_RADIUS = 70;
   let mouse = { x: -9999, y: -9999 };
 
@@ -27,15 +27,17 @@
   }
 
   function createStar() {
+    const teal = isMobile && Math.random() < 0.15;
     return {
       x: Math.random() * w,
       y: Math.random() * h,
-      r: Math.random() * 0.9 + 0.2,
+      r: Math.random() * (isMobile ? 1.1 : 0.9) + 0.2,
       dx: (Math.random() - 0.5) * 0.1,
       dy: (Math.random() - 0.5) * 0.1,
-      opacity: Math.random() * 0.3 + 0.15,
+      opacity: Math.random() * 0.35 + 0.15,
       pulse: Math.random() * Math.PI * 2,
       pulseSpeed: Math.random() * 0.01 + 0.004,
+      teal,
     };
   }
 
@@ -101,7 +103,9 @@
       } else {
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(220, 230, 255, ${baseFlicker})`;
+        ctx.fillStyle = s.teal
+          ? `rgba(29, 233, 182, ${baseFlicker * 0.75})`
+          : `rgba(220, 230, 255, ${baseFlicker})`;
         ctx.fill();
       }
     }
