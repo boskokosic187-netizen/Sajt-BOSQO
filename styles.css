@@ -635,7 +635,7 @@ body.avatar-hovered .nav-logo {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 540px;
+  width: min(540px, 24vw);
   flex-shrink: 0;
   align-self: flex-start;
   padding-top: clamp(38px, calc(45vh - 252px), 208px);
@@ -653,7 +653,7 @@ body.avatar-hovered .nav-logo {
 
 .info-panel {
   position: relative;
-  width: 540px;
+  width: min(540px, 24vw);
   height: 152px;
   padding: 28px 48px;
   background-color: rgba(13, 13, 15, 0.55);
@@ -5312,11 +5312,38 @@ a.contact-info-row { cursor: pointer; }
   .project-page.pp-active { touch-action: pan-y; }
 }
 
-/* ── 1800px — large monitors / widescreen laptops ── */
-@media (max-width: 1800px) {
-  .info-panels { width: 440px; }
-  .info-panel  { width: 440px; }
-  .ip-rect { transform: scaleX(0.815); }
+/* ── 2200px — covers FHD (1920px) and near-2K monitors ── */
+@media (max-width: 2200px) {
+  .nav-link    { padding: 30px 72px; font-size: 24px; }
+  .nav-work    { margin-right: 80px; }
+  .nav-contact { margin-left:  80px; }
+  .info-panel  { padding: 24px 40px; }
+  .ip-name { font-size: 30px; }
+
+  .avatar-wrapper {
+    width:  min(clamp(480px, 68vh, 920px), 46vw);
+    height: min(clamp(480px, 68vh, 920px), 46vw);
+  }
+  .hero-content { height: min(clamp(480px, 68vh, 920px), 46vw); }
+
+  .project-page { padding-top: 60px; }
+  .pp-title-wrap, .projects-title-wrap { padding: 18px 44px; }
+  .projects-title-wrap { top: 88px; }
+  .projects-section { padding-top: 80px; }
+  .pp-typewriter { margin-top: 18px; }
+  .fca-gallery-wrap { margin-top: 50px; }
+  .its-gallery-wrap { margin-top: 50px; }
+  .ballies-slideshow { margin-top: 60px; padding-top: 32px; }
+  .laboo-v-wrap { margin: 48px auto 0; }
+  .wsg-gallery-outer { margin-top: 44px; }
+
+  .contact-headline { font-size: clamp(1.4rem, 3vw, 3rem); }
+  .contact-headline-wrap { padding: 20px 40px 0; }
+  .contact-subtext { margin-top: 10px; }
+  .contact-left { gap: 44px; height: min(68vh, 700px); }
+  .contact-img-frame { height: min(68vh, 700px); }
+  .contact-split { gap: 64px; }
+  .contact-meta-val { font-size: 15px; }
 }
 
 /* ── 1600px — 1600px monitors and 16:9 laptops ── */
@@ -5325,13 +5352,10 @@ a.contact-info-row { cursor: pointer; }
   .nav-work    { margin-right: 72px; min-width: 220px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
   .nav-contact { margin-left:  72px; min-width: 220px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
 
-  .info-panels { width: 360px; }
-  .info-panel  { width: 360px; padding: 22px 32px; }
+  .info-panel  { padding: 22px 32px; }
   .ip-name { font-size: 26px; }
   .info-panels-left  .info-panel { clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
   .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
-
-  .ip-rect { transform: scaleX(0.667); }
 
   /* Constrain avatar height so it never overlaps navbar on 768px-tall screens */
   .avatar-wrapper {
@@ -5339,6 +5363,17 @@ a.contact-info-row { cursor: pointer; }
     height: min(clamp(480px, 90vh, 920px), 46vw, calc(100vh - 210px));
   }
   .hero-content { height: min(clamp(480px, 90vh, 920px), 46vw, calc(100vh - 210px)); }
+
+  .project-page { padding-top: 56px; }
+  .pp-title-wrap, .projects-title-wrap { padding: 14px 36px; }
+  .projects-title-wrap { top: 76px; }
+  .projects-section { padding-top: 68px; }
+  .pp-typewriter { margin-top: 12px; }
+  .fca-gallery-wrap { margin-top: 36px; }
+  .its-gallery-wrap { margin-top: 36px; }
+  .ballies-slideshow { margin-top: 44px; padding-top: 24px; }
+  .laboo-v-wrap { margin: 32px auto 0; }
+  .wsg-gallery-outer { margin-top: 28px; }
 }
 
 /* ── 1400px — smaller 16:9 laptops (1366×768, 1280×720) ── */
@@ -5350,13 +5385,10 @@ a.contact-info-row { cursor: pointer; }
   .nav-work  { margin-right: 56px; min-width: 200px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
   .nav-contact { margin-left: 56px; min-width: 200px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
 
-  .info-panels { width: 340px; }
-  .info-panel  { width: 340px; padding: 20px 28px; }
+  .info-panel  { padding: 20px 28px; }
   .ip-name { font-size: 24px; }
   .info-panels-left .info-panel  { clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
   .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
-
-  .ip-rect { transform: scaleX(0.630); }
 
   /* Constrain avatar height so it never overlaps navbar on 768px-tall screens */
   .avatar-wrapper {
@@ -5364,6 +5396,17 @@ a.contact-info-row { cursor: pointer; }
     height: min(clamp(480px, 90vh, 920px), 46vw, calc(100vh - 200px));
   }
   .hero-content { height: min(clamp(480px, 90vh, 920px), 46vw, calc(100vh - 200px)); }
+
+  .project-page { padding-top: 50px; }
+  .pp-title-wrap, .projects-title-wrap { padding: 12px 28px; }
+  .projects-title-wrap { top: 68px; }
+  .projects-section { padding-top: 60px; }
+  .pp-typewriter { margin-top: 10px; }
+  .fca-gallery-wrap { margin-top: 28px; }
+  .its-gallery-wrap { margin-top: 28px; }
+  .ballies-slideshow { margin-top: 36px; padding-top: 20px; }
+  .laboo-v-wrap { margin: 26px auto 0; }
+  .wsg-gallery-outer { margin-top: 24px; }
 }
 
 /* ── 1280px — small laptops (1280×800, 1280×768) ── */
@@ -5372,15 +5415,23 @@ a.contact-info-row { cursor: pointer; }
   .nav-work    { margin-right: 40px; min-width: 150px; clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
   .nav-contact { margin-left:  40px; min-width: 150px; clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
 
-  .info-panels { width: 300px; }
-  .info-panel  { width: 300px; padding: 16px 22px; }
+  .info-panel  { padding: 16px 22px; }
   .ip-name { font-size: 20px; }
   .ip-text { font-size: 13px; }
   .ip-dropdown { padding: 0 28px; }
   .info-panels-left  .info-panel { clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px); }
   .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 14px) 0%, 100% 14px, 100% 100%, 14px 100%, 0% calc(100% - 14px)); }
 
-  .ip-rect { transform: scaleX(0.556); }
+  .project-page { padding-top: 44px; }
+  .pp-title-wrap, .projects-title-wrap { padding: 10px 22px; }
+  .projects-title-wrap { top: 60px; }
+  .projects-section { padding-top: 54px; }
+  .pp-typewriter { margin-top: 8px; }
+  .fca-gallery-wrap { margin-top: 22px; }
+  .its-gallery-wrap { margin-top: 22px; }
+  .ballies-slideshow { margin-top: 28px; padding-top: 16px; }
+  .laboo-v-wrap { margin: 20px auto 0; }
+  .wsg-gallery-outer { margin-top: 18px; }
 }
 
 /* ── 900px — tablets ── */
@@ -5397,6 +5448,20 @@ a.contact-info-row { cursor: pointer; }
   }
   .hero-content { height: clamp(340px, 70vw, 580px); }
 }
+
+/* ── Desktop project pages — scrollable when content exceeds viewport ── */
+.project-page.pp-active {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 233, 182, 0.2) transparent;
+}
+.project-page.pp-active::-webkit-scrollbar { width: 4px; }
+.project-page.pp-active::-webkit-scrollbar-thumb {
+  background: rgba(29, 233, 182, 0.3);
+  border-radius: 2px;
+}
+/* Contact page keeps its own visual clipping */
+.contact-page.pp-active { overflow: hidden; }
 
 /* ── 600px — phones ── */
 @media (max-width: 600px), (orientation: portrait) {

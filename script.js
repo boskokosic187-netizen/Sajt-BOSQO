@@ -501,6 +501,8 @@
   measure();
   window.addEventListener('resize', measure);
 
+  let initialized = false;
+
   // Init physics state — random front/back layer
   const state = iconEls.map((el, i) => {
     const angle = (i / iconEls.length) * Math.PI * 2;
@@ -566,7 +568,17 @@
   }
 
   function tick() {
-    if (circleR === 0) { requestAnimationFrame(tick); return; }
+    if (circleR === 0) { measure(); requestAnimationFrame(tick); return; }
+
+    if (!initialized) {
+      initialized = true;
+      state.forEach((s, i) => {
+        const angle = (i / state.length) * Math.PI * 2;
+        const r = circleR * (0.12 + Math.random() * 0.42);
+        s.x = Math.cos(angle) * r;
+        s.y = Math.sin(angle) * r;
+      });
+    }
 
     const boundary = circleR - ICON_HALF - 5;
 
