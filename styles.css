@@ -6019,8 +6019,10 @@ a.contact-info-row { cursor: pointer; }
   }
 
   /* ── Laboo — 1 per row, keep 9:16 aspect ratio ── */
-  .laboo-v-wrap { grid-template-columns: 1fr; width: 58vw; margin: 10px auto 0; padding: 0; gap: 10px; }
+  .laboo-v-wrap { grid-template-columns: repeat(2, 1fr); width: 64vw; margin: 10px auto 0; padding: 0; gap: 14px; }
+  .laboo-v-wrap--hidden { display: grid !important; margin-top: 14px !important; }
   .laboo-v-item { opacity: 1 !important; animation: none !important; }
+  .laboo-dots { display: none !important; }
 
   /* ── Contact — title pushed down on mobile ── */
   .contact-headline-wrap { padding-top: 130px; padding-left: 28px; padding-right: 28px; }
