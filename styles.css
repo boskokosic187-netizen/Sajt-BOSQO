@@ -669,12 +669,9 @@ body.avatar-hovered .nav-logo {
   box-sizing: border-box;
 }
 
-.info-panels-left .info-panel {
-  clip-path: polygon(20px 0%, 100% 0%, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0% 100%, 0% 20px);
-}
-
+.info-panels-left .info-panel,
 .info-panels-right .info-panel {
-  clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 20px, 100% 100%, 20px 100%, 0% calc(100% - 20px));
+  clip-path: polygon(20px 0%, calc(100% - 20px) 0%, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0% calc(100% - 20px), 0% 20px);
 }
 
 .info-panel.ip-visible {
@@ -796,13 +793,20 @@ body.avatar-hovered .nav-logo {
   width: calc(100% - 2px);
   height: calc(100% - 2px);
   fill: none;
-  stroke-width: 1;
+  stroke-width: 1.5;
   vector-effect: non-scaling-stroke;
   transform-origin: 0 0;
-  filter: drop-shadow(0 0 6px rgba(29, 233, 182, 0.5))
-          drop-shadow(0 0 18px rgba(29, 233, 182, 0.15));
+  filter: drop-shadow(0 0 5px rgba(29, 233, 182, 0.65))
+          drop-shadow(0 0 16px rgba(29, 233, 182, 0.22))
+          drop-shadow(0 0 32px rgba(29, 233, 182, 0.08));
   transition: filter 0.35s ease;
 }
+
+.ip-corners {
+  opacity: 0;
+  transition: opacity 0.45s ease 0.9s;
+}
+.info-panel.ip-visible .ip-corners { opacity: 1; }
 
 /* Gradient stop animations — same keyframes as navbar */
 .ip-stop1 { animation: gradStop1 4s ease-in-out infinite; }
@@ -5354,8 +5358,8 @@ a.contact-info-row { cursor: pointer; }
 
   .info-panel  { padding: 22px 32px; }
   .ip-name { font-size: 26px; }
-  .info-panels-left  .info-panel { clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
-  .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
+  .info-panels-left .info-panel,
+  .info-panels-right .info-panel { clip-path: polygon(16px 0%, calc(100% - 16px) 0%, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0% calc(100% - 16px), 0% 16px); }
 
   /* Constrain avatar height so it never overlaps navbar on 768px-tall screens */
   .avatar-wrapper {
@@ -5387,8 +5391,8 @@ a.contact-info-row { cursor: pointer; }
 
   .info-panel  { padding: 20px 28px; }
   .ip-name { font-size: 24px; }
-  .info-panels-left .info-panel  { clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
-  .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
+  .info-panels-left .info-panel,
+  .info-panels-right .info-panel { clip-path: polygon(16px 0%, calc(100% - 16px) 0%, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0% calc(100% - 16px), 0% 16px); }
 
   /* Constrain avatar height so it never overlaps navbar on 768px-tall screens */
   .avatar-wrapper {
@@ -5419,8 +5423,8 @@ a.contact-info-row { cursor: pointer; }
   .ip-name { font-size: 20px; }
   .ip-text { font-size: 13px; }
   .ip-dropdown { padding: 0 28px; }
-  .info-panels-left  .info-panel { clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px); }
-  .info-panels-right .info-panel { clip-path: polygon(0% 0%, calc(100% - 14px) 0%, 100% 14px, 100% 100%, 14px 100%, 0% calc(100% - 14px)); }
+  .info-panels-left .info-panel,
+  .info-panels-right .info-panel { clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px); }
 
   .project-page { padding-top: 44px; }
   .pp-title-wrap, .projects-title-wrap { padding: 10px 22px; }
