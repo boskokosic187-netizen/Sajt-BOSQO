@@ -123,15 +123,15 @@ body {
 
 .nav-work {
   justify-self: end;
-  margin-right: 90px;
-  min-width: 260px;
+  margin-right: clamp(40px, 4vw, 90px);
+  min-width: clamp(150px, 13vw, 260px);
   justify-content: center;
 }
 
 .nav-contact {
   justify-self: start;
-  margin-left: 90px;
-  min-width: 260px;
+  margin-left: clamp(40px, 4vw, 90px);
+  min-width: clamp(150px, 13vw, 260px);
   justify-content: center;
 }
 
@@ -170,9 +170,9 @@ body {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  padding: 34px 84px;
+  padding: clamp(18px, 1.5vw, 34px) clamp(40px, 3.2vw, 84px);
   font-family: 'Orbitron', sans-serif;
-  font-size: 26px;
+  font-size: clamp(17px, 1.4vw, 26px);
   font-weight: 700;
   letter-spacing: 0.3em;
   color: rgba(29, 233, 182, 0.7);
@@ -634,7 +634,7 @@ body.avatar-hovered .nav-logo {
 .info-panels {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(14px, 1.4vw, 24px);
   width: min(540px, 24vw);
   flex-shrink: 0;
   align-self: flex-start;
@@ -654,8 +654,8 @@ body.avatar-hovered .nav-logo {
 .info-panel {
   position: relative;
   width: min(540px, 24vw);
-  height: 152px;
-  padding: 28px 48px;
+  height: clamp(110px, 8vw, 152px);
+  padding: clamp(16px, 1.2vw, 28px) clamp(22px, 2.4vw, 48px);
   background-color: rgba(13, 13, 15, 0.55);
   box-shadow: none;
   opacity: 0;
@@ -824,7 +824,7 @@ body.avatar-hovered .nav-logo {
 
 .ip-name {
   font-family: 'Exo 2', sans-serif;
-  font-size: 32px;
+  font-size: clamp(20px, 1.6vw, 32px);
   font-weight: 700;
   letter-spacing: 0.1em;
   color: rgba(29, 233, 182, 0.92);
@@ -834,7 +834,7 @@ body.avatar-hovered .nav-logo {
 
 .ip-text {
   font-family: 'Inter', 'Segoe UI', sans-serif;
-  font-size: 15px;
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0.03em;
@@ -859,7 +859,7 @@ body.avatar-hovered .nav-logo {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 96px;
+  padding-top: clamp(54px, 4.2vw, 96px);
   z-index: 6;
   pointer-events: none;
   opacity: 0;
@@ -879,10 +879,10 @@ body.avatar-hovered .nav-logo {
 /* Title wrap */
 .projects-title-wrap {
   position: absolute;
-  top: 112px;
+  top: clamp(60px, 4.8vw, 112px);
   left: 50%;
   transform: translateX(-50%);
-  padding: 32px 72px;
+  padding: clamp(10px, 1.1vw, 32px) clamp(22px, 3.5vw, 72px);
   border-radius: 55px;
   white-space: nowrap;
   pointer-events: auto;
@@ -1130,7 +1130,7 @@ body.avatar-hovered .nav-logo {
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding-top: 80px;
+  padding-top: clamp(44px, 4.2vw, 80px);
   z-index: 8;
   pointer-events: none;
   opacity: 0;
@@ -1200,7 +1200,7 @@ body.avatar-hovered .nav-logo {
 /* Title wrap — same structure as journey-title-wrap */
 .pp-title-wrap {
   position: relative;
-  padding: 32px 72px;
+  padding: clamp(10px, 1.1vw, 32px) clamp(22px, 3.5vw, 72px);
   border-radius: 55px;
   pointer-events: none;
   transition: box-shadow 0.35s ease;
@@ -1280,7 +1280,7 @@ body.avatar-hovered .nav-logo {
 }
 
 .pp-typewriter {
-  margin-top: 36px;
+  margin-top: clamp(8px, 1.1vw, 36px);
   margin-bottom: 0;
 }
 
@@ -5318,23 +5318,12 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 2200px — covers FHD (1920px) and near-2K monitors ── */
 @media (max-width: 2200px) {
-  .nav-link    { padding: 30px 72px; font-size: 24px; }
-  .nav-work    { margin-right: 80px; }
-  .nav-contact { margin-left:  80px; }
-  .info-panel  { padding: 24px 40px; }
-  .ip-name { font-size: 30px; }
-
   .avatar-wrapper {
     width:  min(clamp(480px, 68vh, 920px), 46vw);
     height: min(clamp(480px, 68vh, 920px), 46vw);
   }
   .hero-content { height: min(clamp(480px, 68vh, 920px), 46vw); }
 
-  .project-page { padding-top: 60px; }
-  .pp-title-wrap, .projects-title-wrap { padding: 18px 44px; }
-  .projects-title-wrap { top: 88px; }
-  .projects-section { padding-top: 80px; }
-  .pp-typewriter { margin-top: 18px; }
   .fca-gallery-wrap { margin-top: 50px; }
   .its-gallery-wrap { margin-top: 50px; }
   .ballies-slideshow { margin-top: 60px; padding-top: 32px; }
@@ -5352,12 +5341,9 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 1600px — 1600px monitors and 16:9 laptops ── */
 @media (max-width: 1600px) {
-  .nav-link    { padding: 26px 64px; font-size: 22px; }
-  .nav-work    { margin-right: 72px; min-width: 220px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
-  .nav-contact { margin-left:  72px; min-width: 220px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
+  .nav-work    { min-width: 220px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
+  .nav-contact { min-width: 220px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
 
-  .info-panel  { padding: 22px 32px; }
-  .ip-name { font-size: 26px; }
   .info-panels-left .info-panel,
   .info-panels-right .info-panel { clip-path: polygon(16px 0%, calc(100% - 16px) 0%, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0% calc(100% - 16px), 0% 16px); }
 
@@ -5368,11 +5354,6 @@ a.contact-info-row { cursor: pointer; }
   }
   .hero-content { height: min(clamp(480px, 90vh, 920px), 46vw, calc(100vh - 210px)); }
 
-  .project-page { padding-top: 56px; }
-  .pp-title-wrap, .projects-title-wrap { padding: 14px 36px; }
-  .projects-title-wrap { top: 76px; }
-  .projects-section { padding-top: 68px; }
-  .pp-typewriter { margin-top: 12px; }
   .fca-gallery-wrap { margin-top: 36px; }
   .its-gallery-wrap { margin-top: 36px; }
   .ballies-slideshow { margin-top: 44px; padding-top: 24px; }
@@ -5382,15 +5363,9 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 1400px — smaller 16:9 laptops (1366×768, 1280×720) ── */
 @media (max-width: 1400px) {
-  .nav-link {
-    padding: 24px 56px;
-    font-size: 20px;
-  }
-  .nav-work  { margin-right: 56px; min-width: 200px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
-  .nav-contact { margin-left: 56px; min-width: 200px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
+  .nav-work    { min-width: 200px; clip-path: polygon(22px 0%, 100% 0%, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0% 100%, 0% 22px); }
+  .nav-contact { min-width: 200px; clip-path: polygon(0% 0%, calc(100% - 22px) 0%, 100% 22px, 100% 100%, 22px 100%, 0% calc(100% - 22px)); }
 
-  .info-panel  { padding: 20px 28px; }
-  .ip-name { font-size: 24px; }
   .info-panels-left .info-panel,
   .info-panels-right .info-panel { clip-path: polygon(16px 0%, calc(100% - 16px) 0%, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0% calc(100% - 16px), 0% 16px); }
 
@@ -5401,11 +5376,6 @@ a.contact-info-row { cursor: pointer; }
   }
   .hero-content { height: min(clamp(480px, 90vh, 920px), 46vw, calc(100vh - 200px)); }
 
-  .project-page { padding-top: 50px; }
-  .pp-title-wrap, .projects-title-wrap { padding: 12px 28px; }
-  .projects-title-wrap { top: 68px; }
-  .projects-section { padding-top: 60px; }
-  .pp-typewriter { margin-top: 10px; }
   .fca-gallery-wrap { margin-top: 28px; }
   .its-gallery-wrap { margin-top: 28px; }
   .ballies-slideshow { margin-top: 36px; padding-top: 20px; }
@@ -5415,22 +5385,13 @@ a.contact-info-row { cursor: pointer; }
 
 /* ── 1280px — small laptops (1280×800, 1280×768) ── */
 @media (max-width: 1280px) {
-  .nav-link    { padding: 18px 40px; font-size: 17px; }
-  .nav-work    { margin-right: 40px; min-width: 150px; clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
-  .nav-contact { margin-left:  40px; min-width: 150px; clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
+  .nav-work    { min-width: 150px; clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px); }
+  .nav-contact { min-width: 150px; clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 16px 100%, 0% calc(100% - 16px)); }
 
-  .info-panel  { padding: 16px 22px; }
-  .ip-name { font-size: 20px; }
-  .ip-text { font-size: 13px; }
   .ip-dropdown { padding: 0 28px; }
   .info-panels-left .info-panel,
   .info-panels-right .info-panel { clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px); }
 
-  .project-page { padding-top: 44px; }
-  .pp-title-wrap, .projects-title-wrap { padding: 10px 22px; }
-  .projects-title-wrap { top: 60px; }
-  .projects-section { padding-top: 54px; }
-  .pp-typewriter { margin-top: 8px; }
   .fca-gallery-wrap { margin-top: 22px; }
   .its-gallery-wrap { margin-top: 22px; }
   .ballies-slideshow { margin-top: 28px; padding-top: 16px; }
