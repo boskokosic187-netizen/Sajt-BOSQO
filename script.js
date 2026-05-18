@@ -3680,15 +3680,29 @@ window.addEventListener('beforeunload', function () {
    ============================================ */
 (function () {
   var lastPage = sessionStorage.getItem('lastPage');
-  if (!lastPage || !window._activateProjectsDirect) return;
+  if (!lastPage) return;
+
+  // Contact and About open directly from the navbar — they don't go through
+  // the projects roadmap, so restoring via _activateProjectsDirect would show
+  // both the roadmap and the page at once, causing overlap.
+  if (lastPage === 'contact' && window._openContact) {
+    document.body.classList.add('page-open');
+    window._openContact();
+    return;
+  }
+  if (lastPage === 'about' && window._openAbout) {
+    document.body.classList.add('page-open');
+    window._openAbout();
+    return;
+  }
+
+  if (!window._activateProjectsDirect) return;
 
   var onActive = lastPage === 'fca'     && window._openFCA     ? function () { window._openFCA(); }
                : lastPage === 'its'     && window._openITS     ? function () { window._openITS(); }
                : lastPage === 'ballies' && window._openBallies ? function () { window._openBallies(); }
                : lastPage === 'wsg'     && window._openWSG     ? function () { window._openWSG(); }
                : lastPage === 'laboo'   && window._openLaboo   ? function () { window._openLaboo(); }
-               : lastPage === 'contact' && window._openContact ? function () { window._openContact(); }
-               : lastPage === 'about'   && window._openAbout   ? function () { window._openAbout(); }
                : null;
 
   if (onActive) {
