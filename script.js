@@ -3409,6 +3409,18 @@ window.addEventListener('beforeunload', function () {
 
   if (contactBack) contactBack.addEventListener('click', closeContact);
 
+  // Book a Call button — Calendly popup
+  var bookBtn = contactPage.querySelector('.contact-btn-alt');
+  if (bookBtn) {
+    bookBtn.addEventListener('click', function () {
+      if (window.Calendly) {
+        Calendly.initPopupWidget({ url: 'https://calendly.com/boskokosic187/30min' });
+      } else {
+        window.open('https://calendly.com/boskokosic187/30min', '_blank');
+      }
+    });
+  }
+
   // Nav CONTACT button
   var navContact = document.querySelector('.nav-contact');
   if (navContact) {
