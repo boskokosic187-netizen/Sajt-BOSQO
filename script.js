@@ -3195,6 +3195,8 @@ window.addEventListener('beforeunload', function () {
 
   var labooSubPage = 1;
 
+  var isMobileLaboo = window.innerWidth <= 900 || window.innerHeight > window.innerWidth;
+
   function buildLabooGrid(container, ids) {
     ids.forEach(function (id, idx) {
       var item = document.createElement('div');
@@ -3239,6 +3241,15 @@ window.addEventListener('beforeunload', function () {
       item.appendChild(clip);
       item.appendChild(num);
       container.appendChild(item);
+
+      // On mobile: skip hover players entirely — tap opens lightbox directly.
+      // Loading 20 YT iframe instances simultaneously crashes mobile browsers.
+      if (isMobileLaboo) {
+        item.addEventListener('click', function () {
+          if (window._openVideoLb) window._openVideoLb(id, true);
+        });
+        return;
+      }
 
       function initPlayer() {
         if (item._player) return;
