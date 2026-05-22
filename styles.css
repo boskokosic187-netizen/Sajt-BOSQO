@@ -5989,11 +5989,20 @@ a.contact-info-row { cursor: pointer; }
     object-fit: unset;
     display: block;
   }
-  /* Ballies mosaic (page 2) — 1 per row */
+  /* Ballies mosaic (page 2) — 1 per row, no scrollbar */
   #balliesPage .ballies-mosaic-outer { width: 58vw; margin: 0 auto; height: auto; }
   #balliesPage .ballies-mosaic-wrap { height: auto; overflow: visible; }
   #balliesPage .ballies-mosaic { grid-template-columns: 1fr; gap: 10px; }
   #balliesPage .ballies-m-item { opacity: 1 !important; animation: none !important; }
+  #balliesPage .ballies-scrollbar { display: none !important; }
+
+  /* Ballies videos (page 3) — 1 per row */
+  #balliesPage .ballies-videos-outer { width: 88vw; margin-top: 14px; padding-bottom: 0; }
+  #balliesPage .ballies-videos { grid-template-columns: 1fr; gap: 12px; }
+  #balliesPage .ballies-v-item { opacity: 1 !important; animation: none !important; }
+
+  /* Ballies gallery (page 4) — no scrollbar */
+  #balliesPage .ballies-g-scrollbar { display: none !important; }
 
   /* ── WSG gallery — 1 per row, natural proportions ── */
   #wsgPage .wsg-gallery-outer { padding: 0; margin: 14px auto 0; width: 58vw; height: auto; }
