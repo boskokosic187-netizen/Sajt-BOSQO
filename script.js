@@ -58,12 +58,9 @@
   const FRAME_INTERVAL = isMobile ? 33 : 0; // ~30fps on mobile, uncapped on desktop
 
   function draw(ts) {
+    if (document.hidden) return;
     if (isMobile && ts - _lastFrame < FRAME_INTERVAL) { requestAnimationFrame(draw); return; }
     _lastFrame = ts;
-    if (document.hidden) {
-      requestAnimationFrame(draw);
-      return;
-    }
     ctx.clearRect(0, 0, w, h);
 
     for (const s of stars) {
@@ -122,6 +119,9 @@
     clearTimeout(_starsResizeTimer);
     _starsResizeTimer = setTimeout(resize, 90);
   });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) requestAnimationFrame(draw);
+  });
   init();
   draw();
 })();
@@ -177,10 +177,7 @@
   const SPAWN_INTERVAL = window.innerWidth <= 600 ? 5500 : 1000;
 
   function draw(timestamp) {
-    if (document.hidden) {
-      requestAnimationFrame(draw);
-      return;
-    }
+    if (document.hidden) return;
     ctx.clearRect(0, 0, w, h);
 
     if (!spawnTimer) spawnTimer = timestamp;
@@ -232,6 +229,9 @@
   window.addEventListener('resize', function () {
     clearTimeout(_dropResizeTimer);
     _dropResizeTimer = setTimeout(resize, 90);
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) requestAnimationFrame(draw);
   });
   resize();
   requestAnimationFrame(draw);
@@ -2171,7 +2171,7 @@ window.addEventListener('beforeunload', function () {
   }
 
   function closeWSG() {
-    window._pageOpen = false;
+    window._pageOpen = true;
     window._activePage = null;
     window._closeActivePage = null;
     wsgPage.classList.remove('pp-active');
@@ -2274,12 +2274,21 @@ window.addEventListener('beforeunload', function () {
         _wsgMo.observe(mount, { childList: true, subtree: true });
       }
 
+      var _wsgRafPending = false;
+      var _wsgLastE = null;
       item.addEventListener('mousemove', function (e) {
-        var r = item.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width  - 0.5;
-        var y = (e.clientY - r.top)  / r.height - 0.5;
-        inner.style.setProperty('--rx', (-y * 7) + 'deg');
-        inner.style.setProperty('--ry', ( x * 7) + 'deg');
+        _wsgLastE = e;
+        if (_wsgRafPending) return;
+        _wsgRafPending = true;
+        requestAnimationFrame(function () {
+          _wsgRafPending = false;
+          var ev = _wsgLastE;
+          var r = item.getBoundingClientRect();
+          var x = (ev.clientX - r.left) / r.width  - 0.5;
+          var y = (ev.clientY - r.top)  / r.height - 0.5;
+          inner.style.setProperty('--rx', (-y * 7) + 'deg');
+          inner.style.setProperty('--ry', ( x * 7) + 'deg');
+        });
       });
 
       item.addEventListener('mouseenter', function () {
