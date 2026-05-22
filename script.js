@@ -1,4 +1,4 @@
-
+﻿
 /* ============================================
    STAR FIELD
    ============================================ */
@@ -117,7 +117,11 @@
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('resize', resize);
+  var _starsResizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(_starsResizeTimer);
+    _starsResizeTimer = setTimeout(resize, 90);
+  });
   init();
   draw();
 })();
@@ -224,7 +228,11 @@
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('resize', resize);
+  var _dropResizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(_dropResizeTimer);
+    _dropResizeTimer = setTimeout(resize, 90);
+  });
   resize();
   requestAnimationFrame(draw);
 })();
@@ -499,7 +507,11 @@
   }
 
   measure();
-  window.addEventListener('resize', measure);
+  var _iconResizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(_iconResizeTimer);
+    _iconResizeTimer = setTimeout(measure, 90);
+  });
 
   let initialized = false;
 
@@ -1358,7 +1370,7 @@ window.addEventListener('beforeunload', function () {
         var num = String(i).padStart(3, '0');
         html += '<div class="ballies-nft-card">'
               +   '<div class="ballies-nft-inner">'
-              +     '<img src="assets/BALLIES/1/' + i + '.png" alt="Ballies #' + num + '" draggable="false" loading="lazy" decoding="async">'
+              +     '<img src="assets/BALLIES/1/' + i + '.webp" alt="Ballies #' + num + '" draggable="false" loading="lazy" decoding="async">'
               +   '</div>'
               +   '<div class="ballies-nft-num">#' + num + '</div>'
               + '</div>';
@@ -1418,19 +1430,19 @@ window.addEventListener('beforeunload', function () {
   (function buildMosaic() {
     if (!mosaic) return;
     var files = [
-      '1.png','1_1.png','1_1%20(1).png','2-Jun.png','4-Aug.png','4-Aug-(1).png',
-      '5-Sept-(1).png','11-July.png','16-July.png','16-May.png','18-2.png','19-2.png',
-      '19-11.png','20-2-(2).png','21-2.png','22-July.png','23-June.png',
-      '26-June.png','26-sept.png','29-July.png','31-July-(2).png','ALPHABOT.png','Airdrop.jpg',
-      'Ai-ambassadors-assemble.png','Ai-ballies-promo-2.png','Ai-game-predictor.png','BALL-ETH.png',
-      'Ballies-Is-Not-a-Bookmaker.png','Ballies-santa.png','Big-announcement.png',
-      'CLX.png','CLX-Launch.png','Christmas-post%20(1).png','Friday%20(1).png',
-      'Fusion.png','Halloween-badge.png','How-ballies-works.png','Hustler-League-post.png',
-      'Join-AI-testing.png','Join-or-Win.png','King-of-the-metacourt.png',
-      'Knockout-stage-begins.png','Monday.png','November-winner-recap.png',
-      'Rewards-discord.png','Roadmap.png','Season-10-pass.png','Season-11.png',
-      'Season-12.png','Soon.png','Thursday.png','brown-vs-gravity.png',
-      'defi-rewarded.png','h2h.png'
+      '1.webp','1_1.webp','1_1%20(1).webp','2-Jun.webp','4-Aug.webp','4-Aug-(1).webp',
+      '5-Sept-(1).webp','11-July.webp','16-July.webp','16-May.webp','18-2.webp','19-2.webp',
+      '19-11.webp','20-2-(2).webp','21-2.webp','22-July.webp','23-June.webp',
+      '26-June.webp','26-sept.webp','29-July.webp','31-July-(2).webp','ALPHABOT.webp','Airdrop.webp',
+      'Ai-ambassadors-assemble.webp','Ai-ballies-promo-2.webp','Ai-game-predictor.webp','BALL-ETH.webp',
+      'Ballies-Is-Not-a-Bookmaker.webp','Ballies-santa.webp','Big-announcement.webp',
+      'CLX.webp','CLX-Launch.webp','Christmas-post%20(1).webp','Friday%20(1).webp',
+      'Fusion.webp','Halloween-badge.webp','How-ballies-works.webp','Hustler-League-post.webp',
+      'Join-AI-testing.webp','Join-or-Win.webp','King-of-the-metacourt.webp',
+      'Knockout-stage-begins.webp','Monday.webp','November-winner-recap.webp',
+      'Rewards-discord.webp','Roadmap.webp','Season-10-pass.webp','Season-11.webp',
+      'Season-12.webp','Soon.webp','Thursday.webp','brown-vs-gravity.webp',
+      'defi-rewarded.webp','h2h.webp'
     ];
     var html = '';
     files.forEach(function (f) {
@@ -1692,14 +1704,11 @@ window.addEventListener('beforeunload', function () {
             item.classList.add('playing');
           }
         });
-        var styleApplyTimer = setInterval(function () {
+        var _bvMo = new MutationObserver(function () {
           var ifr = item._player && item._player.getIframe && item._player.getIframe();
-          if (ifr) {
-            ifr.style.pointerEvents = 'none';
-            clearInterval(styleApplyTimer);
-          }
-        }, 200);
-        setTimeout(function () { clearInterval(styleApplyTimer); }, 10000);
+          if (ifr) { ifr.style.pointerEvents = 'none'; _bvMo.disconnect(); }
+        });
+        _bvMo.observe(freshMount, { childList: true, subtree: true });
       }
 
       var io = new IntersectionObserver(function (entries) {
@@ -1755,23 +1764,23 @@ window.addEventListener('beforeunload', function () {
 
   // Layout: rows sized to content via aspect-ratio; ultra-wide banners span 3 cols
   var galleryItems = [
-    { file: 'all-stars-banner-1920-1080.jpg', span: 2, ar: '1920/1080' }, // row1: landscape
-    { file: 'kobe.png',                        span: 1, ar: '1082/1325' }, // row1: portrait
-    { file: 'badge-pack.png',                   span: 1, ar: '1392/2024' }, // row2: portrait × 3
-    { file: 'Drop-card.png',                    span: 1, ar: '967/1386'  },
-    { file: '5-Nov-DRJ.png',                    span: 1, ar: '1080/1308', deco: true },
-    { file: 'NFL-Games.png',                    span: 1, ar: '1/1'       }, // row3: squares × 3
-    { file: 'Ball-post-4.png',                  span: 1, ar: '1/1'       },
-    { file: 'You-vs-Ai.png',                    span: 1, ar: '1/1'       },
-    { file: 'starter-pack-banner.png',          span: 3, ar: '2018/451'  }, // row4: full-width ultra-wide
-    { file: 'drop-page.png',                    span: 2, ar: '1440/810'  }, // row5: landscape + portrait
-    { file: '2000_vince_carter.png',            span: 1, ar: '1080/1252' },
-    { file: '1360x680.png',                     span: 2, ar: '1360/680'  }, // row6: 2:1 + square
-    { file: '4.png',                            span: 1, ar: '1/1'       },
-    { file: 'Banner 2.png',                     span: 3, ar: '1500/500'  }, // row7: full-width wide
-    { file: '1000$.png',                        span: 1, ar: '1/1'       }, // row8: 3 squares
-    { file: '1 (1).png',                        span: 1, ar: '1/1'       },
-    { file: 'edelman-vs-gravity.png',           span: 1, ar: '1088/1080' },
+    { file: 'all-stars-banner-1920-1080.webp', span: 2, ar: '1920/1080' }, // row1: landscape
+    { file: 'kobe.webp',                        span: 1, ar: '1082/1325' }, // row1: portrait
+    { file: 'badge-pack.webp',                   span: 1, ar: '1392/2024' }, // row2: portrait × 3
+    { file: 'Drop-card.webp',                    span: 1, ar: '967/1386'  },
+    { file: '5-Nov-DRJ.webp',                    span: 1, ar: '1080/1308', deco: true },
+    { file: 'NFL-Games.webp',                    span: 1, ar: '1/1'       }, // row3: squares × 3
+    { file: 'Ball-post-4.webp',                  span: 1, ar: '1/1'       },
+    { file: 'You-vs-Ai.webp',                    span: 1, ar: '1/1'       },
+    { file: 'starter-pack-banner.webp',          span: 3, ar: '2018/451'  }, // row4: full-width ultra-wide
+    { file: 'drop-page.webp',                    span: 2, ar: '1440/810'  }, // row5: landscape + portrait
+    { file: '2000_vince_carter.webp',            span: 1, ar: '1080/1252' },
+    { file: '1360x680.webp',                     span: 2, ar: '1360/680'  }, // row6: 2:1 + square
+    { file: '4.webp',                            span: 1, ar: '1/1'       },
+    { file: 'Banner 2.webp',                     span: 3, ar: '1500/500'  }, // row7: full-width wide
+    { file: '1000$.webp',                        span: 1, ar: '1/1'       }, // row8: 3 squares
+    { file: '1 (1).webp',                        span: 1, ar: '1/1'       },
+    { file: 'edelman-vs-gravity.webp',           span: 1, ar: '1088/1080' },
   ];
 
   (function buildGallery() {
@@ -2258,11 +2267,11 @@ window.addEventListener('beforeunload', function () {
             item.classList.add('playing');
           }
         });
-        var styleTimer = setInterval(function () {
+        var _wsgMo = new MutationObserver(function () {
           var ifr = item._player && item._player.getIframe && item._player.getIframe();
-          if (ifr) { ifr.style.pointerEvents = 'none'; clearInterval(styleTimer); }
-        }, 200);
-        setTimeout(function () { clearInterval(styleTimer); }, 10000);
+          if (ifr) { ifr.style.pointerEvents = 'none'; _wsgMo.disconnect(); }
+        });
+        _wsgMo.observe(mount, { childList: true, subtree: true });
       }
 
       item.addEventListener('mousemove', function (e) {
@@ -2346,12 +2355,12 @@ window.addEventListener('beforeunload', function () {
 
   var wsgGalleryItems = [
     { type: 'bgroup', span: 2, ar: '16/9' },
-    { file: 'banner-wsg.png',                                     span: 1, ar: '1130/1500' },
-    { file: 'WhatsApp Image 2026-04-18 at 12.12.02.jpeg',         span: 1, ar: '1/1'       },
-    { file: 'wsg-nvidia-1.png',                                    span: 1, ar: '1600/1067' },
-    { file: 'WhatsApp Image 2026-04-18 at 12.12.05.jpeg',         span: 1, ar: '1600/1224' },
-    { file: 'pic11 (1).png',                                       span: 1, ar: '960/540'   },
-    { file: 'banner-restyle.png',                                  span: 2, ar: '1920/1118' },
+    { file: 'banner-wsg.webp',                                     span: 1, ar: '1130/1500' },
+    { file: 'WhatsApp Image 2026-04-18 at 12.12.02.webp',         span: 1, ar: '1/1'       },
+    { file: 'wsg-nvidia-1.webp',                                    span: 1, ar: '1600/1067' },
+    { file: 'WhatsApp Image 2026-04-18 at 12.12.05.webp',         span: 1, ar: '1600/1224' },
+    { file: 'pic11 (1).webp',                                       span: 1, ar: '960/540'   },
+    { file: 'banner-restyle.webp',                                  span: 2, ar: '1920/1118' },
   ];
 
   (function buildWsgGallery() {
@@ -2369,12 +2378,12 @@ window.addEventListener('beforeunload', function () {
       if (item.type === 'bgroup') {
         var triptych = document.createElement('div');
         triptych.className = 'wsg-bgroup';
-        ['B1.png', 'B2.png', 'B3.png'].forEach(function (f) {
+        ['B1.webp', 'B2.webp', 'B3.webp'].forEach(function (f) {
           var panel = document.createElement('div');
           panel.className = 'wsg-bgroup-panel';
           var img = document.createElement('img');
           img.src = 'assets/WSG/2/' + f;
-          img.alt = f.replace('.png', '');
+          img.alt = f.replace('.webp', '');
           img.loading = 'lazy';
           img.decoding = 'async';
           img.draggable = false;
@@ -2613,15 +2622,15 @@ window.addEventListener('beforeunload', function () {
           item.classList.add('its-bb-playing');
         }
       });
-      var styleApplyTimer = setInterval(function () {
+      var _itsMo = new MutationObserver(function () {
         var ifr = item._player && item._player.getIframe && item._player.getIframe();
         if (ifr) {
           ifr.classList.add('its-bb-player');
           ifr.style.pointerEvents = 'none';
-          clearInterval(styleApplyTimer);
+          _itsMo.disconnect();
         }
-      }, 200);
-      setTimeout(function () { clearInterval(styleApplyTimer); }, 10000);
+      });
+      _itsMo.observe(mount, { childList: true, subtree: true });
     }
 
     var io = new IntersectionObserver(function (entries) {
@@ -3239,11 +3248,11 @@ window.addEventListener('beforeunload', function () {
             item.classList.add('playing');
           }
         });
-        var styleTimer = setInterval(function () {
+        var _lbMo = new MutationObserver(function () {
           var ifr = item._player && item._player.getIframe && item._player.getIframe();
-          if (ifr) { ifr.style.pointerEvents = 'none'; clearInterval(styleTimer); }
-        }, 200);
-        setTimeout(function () { clearInterval(styleTimer); }, 10000);
+          if (ifr) { ifr.style.pointerEvents = 'none'; _lbMo.disconnect(); }
+        });
+        _lbMo.observe(mount, { childList: true, subtree: true });
       }
 
       var revealIo = new IntersectionObserver(function (entries) {
@@ -3542,7 +3551,11 @@ window.addEventListener('beforeunload', function () {
     var W, H, cx, cy, R;
     function setDims() { W = canvas.width; H = canvas.height; cx = W/2; cy = H/2; R = Math.min(W,H)*0.48; }
     setDims();
-    window.addEventListener('resize', function () { resize(); setDims(); });
+    var _particlesResizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(_particlesResizeTimer);
+      _particlesResizeTimer = setTimeout(function () { resize(); setDims(); }, 90);
+    });
 
     pts = [];
     for (var i = 0; i < 60; i++) pts.push(makePt(cx, cy, R));
@@ -3902,3 +3915,5 @@ window.addEventListener('beforeunload', function () {
     obs.observe(el);
   });
 }());
+
+
