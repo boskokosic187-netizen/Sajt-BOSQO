@@ -2402,8 +2402,12 @@ window.addEventListener('beforeunload', function () {
         var lbl = document.createElement('div');
         lbl.className = 'wsg-bgroup-label';
         lbl.textContent = 'B1 · B2 · B3';
+        var sub = document.createElement('div');
+        sub.className = 'wsg-bgroup-subtitle';
+        sub.textContent = 'WSG BRANDING';
         clip.appendChild(triptych);
         el.appendChild(lbl);
+        el.appendChild(sub);
         el.addEventListener('click', function () {
           if (wsgBgroupLb) wsgBgroupLb.classList.add('wsg-bgroup-lb--active');
         });
@@ -3653,6 +3657,11 @@ window.addEventListener('beforeunload', function () {
 
   function alignContactFooter() {
     if (!headLine1 || !footerBar) return;
+    if (window.innerWidth <= 600 || window.innerHeight > window.innerWidth) {
+      footerBar.style.left  = '';
+      footerBar.style.right = '';
+      return;
+    }
     var r = headLine1.getBoundingClientRect();
     footerBar.style.left  = r.left + 'px';
     footerBar.style.right = (window.innerWidth - r.right) + 'px';
