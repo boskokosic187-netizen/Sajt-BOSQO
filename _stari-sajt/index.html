@@ -1,0 +1,991 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOSQO — Boško Kosić</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css?v=98">
+  <!-- Preconnect for all third-party domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://assets.calendly.com">
+  <link rel="preconnect" href="https://assets.calendly.com">
+  <link rel="dns-prefetch" href="https://www.youtube.com">
+  <link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+  <link rel="dns-prefetch" href="https://api.web3forms.com">
+  <!-- Google Fonts (display=swap already in URL) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Exo+2:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Preload hero avatar image (LCP) -->
+  <link rel="preload" as="image" href="assets/ilustracija.svg" fetchpriority="high">
+  <!-- Preload floating icon SVGs (desktop only) -->
+  <link rel="preload" as="image" href="assets/SVG/After.svg"       media="(min-width: 601px)">
+  <link rel="preload" as="image" href="assets/SVG/Animate.svg"     media="(min-width: 601px)">
+  <link rel="preload" as="image" href="assets/SVG/Illustrator.svg" media="(min-width: 601px)">
+  <link rel="preload" as="image" href="assets/SVG/Lightroom.svg"   media="(min-width: 601px)">
+  <link rel="preload" as="image" href="assets/SVG/Photoshop.svg"   media="(min-width: 601px)">
+  <link rel="preload" as="image" href="assets/SVG/Premiere.svg"    media="(min-width: 601px)">
+  <link rel="preload" as="image" href="assets/SVG/Indesign.svg"    media="(min-width: 601px)">
+  <!-- Calendly -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B4G8NFN85M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B4G8NFN85M');
+  </script>
+</head>
+<body>
+<script>
+  (function () {
+    var s = parseInt(sessionStorage.getItem('lastStage'), 10);
+    if (s > 0) document.body.dataset.stage = s;
+  })();
+</script>
+
+  <!-- Custom cursor -->
+  <div id="custom-cursor">
+    <img id="cursor-img" src="assets/Cursor.svg" width="96" height="96" draggable="false" decoding="async">
+  </div>
+
+  <!-- Background canvases -->
+  <canvas id="stars"></canvas>
+  <canvas id="stardrops"></canvas>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#work" class="nav-link nav-work">WORK</a>
+      <div class="nav-logo-wrap">
+        <a href="/" class="nav-logo">
+          <img src="assets/logo.svg" alt="BOSQO" loading="lazy" decoding="async" />
+        </a>
+      </div>
+      <a href="#contact" class="nav-link nav-contact">CONNECT</a>
+      <a href="#about"   class="nav-link nav-about">ABOUT</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <!-- Info panels left -->
+      <div class="info-panels info-panels-left">
+        <div class="info-panel-wrap">
+          <div class="info-panel">
+            <svg class="ip-frame" viewBox="0 0 540 152" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ipG0" x1="0%" y1="0%" x2="100%" y2="0%"><stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/><stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/></linearGradient></defs><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="rgba(29,233,182,0.028)" stroke="none"/><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="none" stroke="rgba(29,233,182,0.1)" stroke-width="1"/><polygon class="ip-rect" points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" stroke="url(#ipG0)" stroke-dasharray="1400" stroke-dashoffset="1400"/><g class="ip-corners" stroke="rgba(29,233,182,0.55)" stroke-width="1.5" fill="none"><polyline points="1,44 1,21 21,1 44,1"/><polyline points="496,1 519,1 539,21 539,44"/><polyline points="539,108 539,131 519,151 496,151"/><polyline points="44,151 21,151 1,131 1,108"/></g></svg>
+            <p class="ip-name">Boško Kosić</p>
+          </div>
+          <div class="ip-dropdown">Creating visuals that connect, move, and stand out in the digital world — based in Belgrade, Serbia.</div>
+        </div>
+        <div class="info-panel-wrap">
+          <div class="info-panel">
+            <svg class="ip-frame" viewBox="0 0 540 152" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ipG1" x1="0%" y1="0%" x2="100%" y2="0%"><stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/><stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/></linearGradient></defs><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="rgba(29,233,182,0.028)" stroke="none"/><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="none" stroke="rgba(29,233,182,0.1)" stroke-width="1"/><polygon class="ip-rect" points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" stroke="url(#ipG1)" stroke-dasharray="1400" stroke-dashoffset="1400"/><g class="ip-corners" stroke="rgba(29,233,182,0.55)" stroke-width="1.5" fill="none"><polyline points="1,44 1,21 21,1 44,1"/><polyline points="496,1 519,1 539,21 539,44"/><polyline points="539,108 539,131 519,151 496,151"/><polyline points="44,151 21,151 1,131 1,108"/></g></svg>
+            <p class="ip-text">Multidisciplinary Visual Designer</p>
+          </div>
+          <div class="ip-dropdown ip-dropdown-skills">
+            <span class="ip-skills-title">Skills</span>
+            <div class="ip-skills-inner">
+            <div class="ip-skill-row">
+              <span class="ip-skill-name">Adobe Photoshop</span>
+              <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:96%">★★★★★</span></div>
+            </div>
+            <div class="ip-skill-row">
+              <span class="ip-skill-name">Adobe Illustrator</span>
+              <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:94%">★★★★★</span></div>
+            </div>
+            <div class="ip-skill-row">
+              <span class="ip-skill-name">Adobe After Effects</span>
+              <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:90%">★★★★★</span></div>
+            </div>
+            <div class="ip-skill-row">
+              <span class="ip-skill-name">Adobe Premiere Pro</span>
+              <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:88%">★★★★★</span></div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="info-panel-wrap">
+          <div class="info-panel">
+            <svg class="ip-frame" viewBox="0 0 540 152" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ipG2" x1="0%" y1="0%" x2="100%" y2="0%"><stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/><stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/></linearGradient></defs><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="rgba(29,233,182,0.028)" stroke="none"/><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="none" stroke="rgba(29,233,182,0.1)" stroke-width="1"/><polygon class="ip-rect" points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" stroke="url(#ipG2)" stroke-dasharray="1400" stroke-dashoffset="1400"/><g class="ip-corners" stroke="rgba(29,233,182,0.55)" stroke-width="1.5" fill="none"><polyline points="1,44 1,21 21,1 44,1"/><polyline points="496,1 519,1 539,21 539,44"/><polyline points="539,108 539,131 519,151 496,151"/><polyline points="44,151 21,151 1,131 1,108"/></g></svg>
+            <p class="ip-text">5+ years experience&nbsp;&nbsp;•&nbsp;&nbsp;Teaching Assistant in Graphic Design and NFT Technology</p>
+          </div>
+          <div class="ip-dropdown">Computer Multimedia Engineer (2022),<br>currently advancing through a Master's program<br>at ITS Belgrade while working as a Teaching Assistant.</div>
+        </div>
+      </div>
+
+      <!-- Avatar -->
+      <div class="avatar-wrapper">
+        <div class="avatar-glow"></div>
+        <div class="avatar-hover-glow"></div>
+        <div class="avatar-fill"></div>
+        <div class="avatar-border"></div>
+        <div class="avatar-ring">
+          <div class="ring-dot"></div>
+        </div>
+        <div class="avatar">
+          <div class="avatar-img-wrap">
+            <img src="assets/ilustracija.svg" alt="Boško Kosić" fetchpriority="high" decoding="sync" />
+          </div>
+        </div>
+        <div class="avatar-outer-ring"></div>
+      </div>
+
+      <!-- Info panels right -->
+      <div class="info-panels info-panels-right">
+        <div class="info-panel-wrap">
+          <div class="info-panel">
+            <svg class="ip-frame" viewBox="0 0 540 152" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ipG3" x1="100%" y1="0%" x2="0%" y2="0%"><stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/><stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/></linearGradient></defs><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="rgba(29,233,182,0.028)" stroke="none"/><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="none" stroke="rgba(29,233,182,0.1)" stroke-width="1"/><polygon class="ip-rect" points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" stroke="url(#ipG3)" stroke-dasharray="1400" stroke-dashoffset="1400"/><g class="ip-corners" stroke="rgba(29,233,182,0.55)" stroke-width="1.5" fill="none"><polyline points="1,44 1,21 21,1 44,1"/><polyline points="496,1 519,1 539,21 539,44"/><polyline points="539,108 539,131 519,151 496,151"/><polyline points="44,151 21,151 1,131 1,108"/></g></svg>
+            <p class="ip-text">Working across animation, video editing, visual effects, UI/UX design, and web development.</p>
+          </div>
+          <div class="ip-dropdown">From animated videos and advertising visuals to billboard designs — combined with UI/UX design and front-end web development.</div>
+        </div>
+        <div class="info-panel-wrap">
+          <div class="info-panel">
+            <svg class="ip-frame" viewBox="0 0 540 152" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ipG4" x1="100%" y1="0%" x2="0%" y2="0%"><stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/><stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/></linearGradient></defs><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="rgba(29,233,182,0.028)" stroke="none"/><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="none" stroke="rgba(29,233,182,0.1)" stroke-width="1"/><polygon class="ip-rect" points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" stroke="url(#ipG4)" stroke-dasharray="1400" stroke-dashoffset="1400"/><g class="ip-corners" stroke="rgba(29,233,182,0.55)" stroke-width="1.5" fill="none"><polyline points="1,44 1,21 21,1 44,1"/><polyline points="496,1 519,1 539,21 539,44"/><polyline points="539,108 539,131 519,151 496,151"/><polyline points="44,151 21,151 1,131 1,108"/></g></svg>
+            <p class="ip-text">NFT visuals and digital content for Web3 projects.</p>
+          </div>
+          <div class="ip-dropdown">Backed by years of experience collaborating<br>with Web3 companies making NFT collections,<br>with a solid understanding of crypto<br>and NFT ecosystems.</div>
+        </div>
+        <div class="info-panel-wrap">
+          <div class="info-panel">
+            <svg class="ip-frame" viewBox="0 0 540 152" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ipG5" x1="100%" y1="0%" x2="0%" y2="0%"><stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/><stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/></linearGradient></defs><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="rgba(29,233,182,0.028)" stroke="none"/><polygon points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" fill="none" stroke="rgba(29,233,182,0.1)" stroke-width="1"/><polygon class="ip-rect" points="21,1 519,1 539,21 539,131 519,151 21,151 1,131 1,21" stroke="url(#ipG5)" stroke-dasharray="1400" stroke-dashoffset="1400"/><g class="ip-corners" stroke="rgba(29,233,182,0.55)" stroke-width="1.5" fill="none"><polyline points="1,44 1,21 21,1 44,1"/><polyline points="496,1 519,1 539,21 539,44"/><polyline points="539,108 539,131 519,151 496,151"/><polyline points="44,151 21,151 1,131 1,108"/></g></svg>
+            <p class="ip-text">Leveraging advanced AI workflows to enhance creativity and production.</p>
+          </div>
+          <div class="ip-dropdown">I stay up to date with new AI systems and apply them to improve both the quality and speed of my work.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero social links -->
+    <div class="hero-socials">
+      <a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" class="contact-social" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/boskokosic/" target="_blank" class="contact-social" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.98-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.behance.net/bosko_kosic" target="_blank" class="contact-social" aria-label="Behance">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.051-2.051-5.051-5.01 0-2.99 2.066-5.013 5.051-5.013 3.062 0 4.683 1.968 5.048 4.41.041.28.063.564.063.853v.499H14.8c.104 2.172 1.705 2.84 3.085 2.84.786 0 1.61-.245 2.186-.858l2.655.259zm-2.78-3.625H14.8c.056-1.667 1.16-2.667 2.546-2.667 1.393 0 2.396.999 2.6 2.667zM7 11.5h2.5c.716 0 1.5-.308 1.5-1.5s-.784-1.5-1.5-1.5H7v3zm0 1v2.5h3c.766 0 1.5-.418 1.5-1.25S10.766 12.5 10 12.5H7zm-2-6.5H12c1.978 0 3.5 1.522 3.5 3.5 0 1.189-.562 2.246-1.5 2.854.976.606 1.5 1.624 1.5 2.646 0 2.043-1.522 3.5-3.5 3.5H5V6z"/></svg>
+      </a>
+      <a href="mailto:boskokosic187@gmail.com" class="contact-social" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Projects roadmap section -->
+  <div class="projects-section" id="projectsSection">
+    <button class="pp-back" id="projectsBack"><img src="assets/logo.svg" alt="Back" class="pp-back-logo" loading="lazy" decoding="async"></button>
+    <div class="projects-title-wrap">
+      <svg class="projects-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="projectsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="projects-rect" x="1" y="1" rx="55" ry="55" stroke="url(#projectsGrad)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h2 class="projects-title">PROJECTS ROADMAP</h2>
+    </div>
+
+    <!-- Typewriter text — appears below title -->
+    <div class="roadmap-typewriter" id="roadmapTypewriter">
+      <p class="tw-line" id="twLine1">Welcome to a curated journey through my selected work across multiple collaborations.</p>
+      <p class="tw-line" id="twLine2">Here, you'll experience a full spectrum of visual solutions, formats, and creative disciplines.</p>
+    </div>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item roadmap-item-link" id="rmItem1" style="--appear-delay:0.15s;--line-delay:0.5s">
+        <div class="rm-card">
+          <span class="rm-num">01</span>
+          <span class="rm-title">Faculty of Contemporary Arts</span>
+          <span class="rm-corner rm-tl"></span>
+          <span class="rm-corner rm-tr"></span>
+          <span class="rm-corner rm-bl"></span>
+          <span class="rm-corner rm-br"></span>
+        </div>
+        <div class="roadmap-line"></div>
+      </div>
+
+      <div class="roadmap-item roadmap-item-link" id="rmItem2" style="--appear-delay:0.55s;--line-delay:0.9s">
+        <div class="rm-card">
+          <span class="rm-num">02</span>
+          <span class="rm-title">Information Technology (High) School</span>
+          <span class="rm-corner rm-tl"></span>
+          <span class="rm-corner rm-tr"></span>
+          <span class="rm-corner rm-bl"></span>
+          <span class="rm-corner rm-br"></span>
+        </div>
+        <div class="roadmap-line"></div>
+      </div>
+
+      <div class="roadmap-item roadmap-item-link" id="rmItem3" style="--appear-delay:0.95s;--line-delay:1.3s">
+        <div class="rm-card">
+          <span class="rm-num">03</span>
+          <span class="rm-title">Ballies NFT</span>
+          <span class="rm-corner rm-tl"></span>
+          <span class="rm-corner rm-tr"></span>
+          <span class="rm-corner rm-bl"></span>
+          <span class="rm-corner rm-br"></span>
+        </div>
+        <div class="roadmap-line"></div>
+      </div>
+
+      <div class="roadmap-item roadmap-item-link" id="rmItem4" style="--appear-delay:1.35s;--line-delay:1.7s">
+        <div class="rm-card">
+          <span class="rm-num">04</span>
+          <span class="rm-title">Wall Street Games</span>
+          <span class="rm-corner rm-tl"></span>
+          <span class="rm-corner rm-tr"></span>
+          <span class="rm-corner rm-bl"></span>
+          <span class="rm-corner rm-br"></span>
+        </div>
+        <div class="roadmap-line"></div>
+      </div>
+
+      <div class="roadmap-item roadmap-item-link" id="rmItem5" style="--appear-delay:1.75s">
+        <div class="rm-card">
+          <span class="rm-num">05</span>
+          <span class="rm-title">La Boo</span>
+          <span class="rm-corner rm-tl"></span>
+          <span class="rm-corner rm-tr"></span>
+          <span class="rm-corner rm-bl"></span>
+          <span class="rm-corner rm-br"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Faculty of Contemporary Arts page -->
+  <div class="project-page" id="fcaPage">
+    <button class="pp-back" id="fcaBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad1)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">Faculty of Contemporary Arts</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="fcaTypewriter">
+      <p class="tw-line" id="fcaTwLine1"></p>
+      <p class="tw-line" id="fcaTwLine2"></p>
+    </div>
+
+    <div class="fca-gallery-wrap" id="fcaGalleryWrap">
+
+      <!-- GALLERY 1 -->
+      <div class="fca-gallery" id="fcaGallery">
+        <!-- g1: portrait 3:4, spans both rows -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 1.webp" alt="Work 1" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Visual Identity</div>
+          </div>
+        </div>
+        <!-- g2: landscape 2:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 2.webp" alt="Work 2" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Poster Design</div>
+          </div>
+        </div>
+        <!-- g3: square 1:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 3.webp" alt="Work 3" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Typography</div>
+          </div>
+        </div>
+        <!-- g4: portrait 3:4 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 4.webp" alt="Work 4" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Illustration</div>
+          </div>
+        </div>
+        <!-- g5: 1:1 square (25vh col) -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 5.webp" alt="Work 5" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Branding</div>
+          </div>
+        </div>
+        <!-- g6: landscape 2:1, merged (same width as g2 above) -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 6.webp" alt="Work 6" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Editorial</div>
+          </div>
+        </div>
+        <!-- g8: square 1:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 8.webp" alt="Work 8" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Motion</div>
+          </div>
+        </div>
+        <!-- g9: portrait 3:4 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 9.webp" alt="Work 9" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Concept Art</div>
+          </div>
+        </div>
+        <!-- g10: 1:1 square (25vh col) -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/1/Work 10.webp" alt="Work 10" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Packaging</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY 2 — layout matched to actual image aspect ratios -->
+      <div class="fca-gallery-2" id="fcaGallery2">
+        <!-- h1: col1+2 row1 (~2:1 landscape) — Nova Godina abstract face 1.91:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/1200x628 (2).webp" alt="Nova Godina. Prava Odluka." draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Nova Godina</div>
+          </div>
+        </div>
+        <!-- h2: col3 row1 (~0.8:1 portrait) — Agilni Menadžment 0.75:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/Threads (2).webp" alt="Agilni Projektni Menadžment" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Agilni Menadžment</div>
+          </div>
+        </div>
+        <!-- h3: col4 row1 (~0.8:1 portrait) — AI FilmFest 0.67:1 portrait -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/Pinterest (2).webp" alt="AI FilmFest Serbia" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">AI FilmFest</div>
+          </div>
+        </div>
+        <!-- h4: col5 row1 (~0.6:1 portrait) — FSU Workshop 0.75:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/Threads (1).webp" alt="I Ove Subote Na FSU" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">FSU Workshop</div>
+          </div>
+        </div>
+        <!-- h5: col6 row1 (1:1 square) — Just Dance 1:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/FB IG.webp" alt="Just Dance 2025" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Just Dance 2025</div>
+          </div>
+        </div>
+        <!-- h6: col1 row2 (~1.2:1 landscape) — Dođite 1.91:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/Linkedin (4).webp" alt="Dođite na otvaranje izložbe" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Galerija FSU</div>
+          </div>
+        </div>
+        <!-- h7: col2+3 row2 (~1.6:1 landscape) — Veštine Za Uspeh 1.91:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/Linkedin (5).webp" alt="Veštine Za Uspeh" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Veštine Za Uspeh</div>
+          </div>
+        </div>
+        <!-- h8: col4 row2 (~0.8:1 square-ish) — Predupis 2025/26 1:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/1080x1080.webp" alt="Predupis u Generaciju 2025/26" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Predupis 2025/26</div>
+          </div>
+        </div>
+        <!-- h9: col5+6 row2 (~1.6:1 landscape) — Santa Christmas 1.92:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/2/1200x628 (1).webp" alt="Još Samo 3 Dana — 200€" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">FSU Promo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY 3 — wide landscape top-left, tall portrait right -->
+      <div class="fca-gallery-3" id="fcaGallery3">
+        <!-- j1: wide landscape (col1+2, row1) — Psihologija Potrošača 1.91:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/Linkedin (6).webp" alt="Psihologija Potrošača" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Psihologija Potrošača</div>
+          </div>
+        </div>
+        <!-- j2: col3 row1 (1:1 square) — Logo Konferencija perfect square -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/1080x1080.webp" alt="Napravi Logo I Dizajniraj Konferenciju" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Logo Konferencija</div>
+          </div>
+        </div>
+        <!-- j3: col4 row1 (1:1 square) — Prolećni Predupisni Rok 9:16 portrait -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/1080x1920 (4).webp" alt="Prolećni Predupisni Rok Je Otvoren" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Prolećni Predupisni Rok</div>
+          </div>
+        </div>
+        <!-- j4: col5 row1 (~0.75:1 portrait) — Brend Menadžment 2:3 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/Pinterest.webp" alt="Brend Menadžment" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Brend Menadžment</div>
+          </div>
+        </div>
+        <!-- j5: col6 rows 1+2 (tall ~0.48:1) — Postani Lider 9:16 portrait best fit -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/1080x1920 (7).webp" alt="Postani Lider U Kreativnim Komunikacijama" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Postani Lider</div>
+          </div>
+        </div>
+        <!-- j6: col1 row2 (~1.5:1 landscape) — Second Chance For College 1.91:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/1200x628.webp" alt="Second Chance For College" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Second Chance</div>
+          </div>
+        </div>
+        <!-- j7: landscape (col2+3, row2 ~2.07:1) — Bitmap I Vektorska Grafika 1.91:1 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/Linkedin (7).webp" alt="Bitmap I Vektorska Grafika" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Bitmap I Vektorska</div>
+          </div>
+        </div>
+        <!-- j8: col4 row2 (1:1 square) — Još 5 Mesta 9:16 portrait -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/1080x1920 (5).webp" alt="Još 5 Mesta" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Još 5 Mesta</div>
+          </div>
+        </div>
+        <!-- j9: col5 row2 (~0.75:1 portrait) — Otključajte Potencijal 9:16 -->
+        <div class="fca-work-item">
+          <div class="fca-work-inner">
+            <div class="fca-work-img-wrap"><img src="assets/FCA/3/1080x1920 (6).webp" alt="Otključajte Svoj Potencijal" draggable="false" loading="lazy"></div>
+            <div class="fca-work-caption">Otključajte Potencijal</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gallery pagination dots -->
+    <div class="fca-gallery-dots" id="fcaGalleryDots">
+      <button class="gallery-nav-btn" id="fcaPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <span class="fca-dot fca-dot--active" data-page="0"></span>
+      <span class="fca-dot" data-page="1"></span>
+      <span class="fca-dot" data-page="2"></span>
+      <button class="gallery-nav-btn" id="fcaNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+
+  </div>
+
+  <!-- Lightbox overlay (shared — position: fixed so works from any page) -->
+  <div class="fca-lightbox" id="fcaLightbox">
+    <div class="fca-lb-frame">
+      <button class="fca-lb-close" id="fcaLbClose">✕</button>
+      <div class="fca-lb-img-wrap">
+        <img id="fcaLbImg" src="" alt="" draggable="false">
+        <div class="fca-lb-shimmer"></div>
+      </div>
+    </div>
+    <div class="fca-lb-caption" id="fcaLbCaption"></div>
+  </div>
+
+  <!-- Information Technology School page -->
+  <div class="project-page" id="itsPage">
+    <button class="pp-back" id="itsBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad2)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">Information Technology School</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="itsTypewriter">
+      <p class="tw-line" id="itsTwLine1"></p>
+      <p class="tw-line" id="itsTwLine2"></p>
+    </div>
+
+    <div class="its-gallery-wrap" id="itsGalleryWrap">
+      <p class="its-section-label its-section-label--first">Animated Live Billboards</p>
+      <div class="its-gallery" id="itsGallery">
+
+        <div class="its-bb-item" data-yt="4f8GGBWoa-s">
+          <div class="its-bb-screen">
+            <img class="its-bb-thumb" src="https://img.youtube.com/vi/4f8GGBWoa-s/hqdefault.jpg" alt="Billboard Animation" draggable="false" loading="lazy">
+          <div class="its-bb-play"></div>
+          </div>
+        </div>
+
+        <div class="its-bb-item" data-yt="VvnWLHOg0wk">
+          <div class="its-bb-screen">
+            <img class="its-bb-thumb" src="https://img.youtube.com/vi/VvnWLHOg0wk/hqdefault.jpg" alt="Billboard Animation" draggable="false" loading="lazy">
+            <div class="its-bb-play"></div>
+          </div>
+        </div>
+
+        <div class="its-bb-item" data-yt="jgQh4_phn04">
+          <div class="its-bb-screen">
+            <img class="its-bb-thumb" src="https://img.youtube.com/vi/jgQh4_phn04/hqdefault.jpg" alt="Billboard Animation" draggable="false" loading="lazy">
+            <div class="its-bb-play"></div>
+          </div>
+        </div>
+
+        <div class="its-bb-item" data-yt="Amz50DdxxBU">
+          <div class="its-bb-screen">
+            <img class="its-bb-thumb" src="https://img.youtube.com/vi/Amz50DdxxBU/hqdefault.jpg" alt="Billboard Animation" draggable="false" loading="lazy">
+            <div class="its-bb-play"></div>
+          </div>
+        </div>
+
+        <div class="its-bb-item" data-yt="n7VUfDTYyc4">
+          <div class="its-bb-screen">
+            <img class="its-bb-thumb" src="https://img.youtube.com/vi/n7VUfDTYyc4/hqdefault.jpg" alt="Billboard Animation" draggable="false" loading="lazy">
+            <div class="its-bb-play"></div>
+          </div>
+        </div>
+
+        <div class="its-bb-item" data-yt="PfOXwtGI8h4">
+          <div class="its-bb-screen">
+            <img class="its-bb-thumb" src="https://img.youtube.com/vi/PfOXwtGI8h4/hqdefault.jpg" alt="Billboard Animation" draggable="false" loading="lazy">
+            <div class="its-bb-play"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="its-section-label">Digital Visuals</p>
+      <!-- GALLERY 2 — 14 landscape (2:1) + 2 portrait (2:3) image frames -->
+      <div class="its-gallery-2" id="itsGallery2">
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Pinterest%20%285%29.webp" alt="Visual Design" loading="lazy"></div><div class="fca-work-caption">Visual Design</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/SAJT%20%C5%A0LAJFNA.webp" alt="Typography" loading="lazy"></div><div class="fca-work-caption">Typography</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%2812%29.webp" alt="Poster" loading="lazy"></div><div class="fca-work-caption">Poster</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%2813%29.webp" alt="Branding" loading="lazy"></div><div class="fca-work-caption">Branding</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Pinterest%20%286%29.webp" alt="Illustration" loading="lazy"></div><div class="fca-work-caption">Illustration</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%2815%29.webp" alt="Editorial" loading="lazy"></div><div class="fca-work-caption">Editorial</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%2820%29.webp" alt="Concept Art" loading="lazy"></div><div class="fca-work-caption">Concept Art</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%284%29.webp" alt="Motion" loading="lazy"></div><div class="fca-work-caption">Motion</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%286%29.webp" alt="Digital" loading="lazy"></div><div class="fca-work-caption">Digital</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%287%29.webp" alt="Wayfinding" loading="lazy"></div><div class="fca-work-caption">Wayfinding</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%288%29.webp" alt="Art Direction" loading="lazy"></div><div class="fca-work-caption">Art Direction</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20%289%29.webp" alt="Photography" loading="lazy"></div><div class="fca-work-caption">Photography</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%202.webp" alt="Packaging" loading="lazy"></div><div class="fca-work-caption">Packaging</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt%20copy.webp" alt="Identity" loading="lazy"></div><div class="fca-work-caption">Identity</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/Sajt.webp" alt="Print" loading="lazy"></div><div class="fca-work-caption">Print</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/2/sajt%20%2819%29.webp" alt="Exhibition" loading="lazy"></div><div class="fca-work-caption">Exhibition</div></div></div>
+      </div>
+
+      <!-- GALLERY 3 — 14 landscape (2:1) + 2 portrait (2:3), identical to gallery 2 -->
+      <div class="its-gallery-3" id="itsGallery3">
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Pinterest%20%283%29.webp" alt="Campaign" loading="lazy"></div><div class="fca-work-caption">Campaign</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2821%29.webp" alt="Social Media" loading="lazy"></div><div class="fca-work-caption">Social Media</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2823%29.webp" alt="Print" loading="lazy"></div><div class="fca-work-caption">Print</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2824%29.webp" alt="Signage" loading="lazy"></div><div class="fca-work-caption">Signage</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Pinterest%20%284%29.webp" alt="Photography" loading="lazy"></div><div class="fca-work-caption">Photography</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2825%29.webp" alt="Annual Report" loading="lazy"></div><div class="fca-work-caption">Annual Report</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2826%29.webp" alt="Exhibition" loading="lazy"></div><div class="fca-work-caption">Exhibition</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2827%29.webp" alt="Event" loading="lazy"></div><div class="fca-work-caption">Event</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2828%29.webp" alt="Digital" loading="lazy"></div><div class="fca-work-caption">Digital</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2829%29.webp" alt="Branding" loading="lazy"></div><div class="fca-work-caption">Branding</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2830%29.webp" alt="Illustration" loading="lazy"></div><div class="fca-work-caption">Illustration</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2831%29.webp" alt="Motion" loading="lazy"></div><div class="fca-work-caption">Motion</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2832%29.webp" alt="Typography" loading="lazy"></div><div class="fca-work-caption">Typography</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2833%29.webp" alt="Identity" loading="lazy"></div><div class="fca-work-caption">Identity</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/Sajt%20%2834%29.webp" alt="Packaging" loading="lazy"></div><div class="fca-work-caption">Packaging</div></div></div>
+        <div class="fca-work-item"><div class="fca-work-inner"><div class="fca-work-img-wrap"><img src="assets/ITS/3/sajt%20%2822%29.webp" alt="Art Direction" loading="lazy"></div><div class="fca-work-caption">Art Direction</div></div></div>
+      </div>
+
+      <p class="its-hover-hint" id="itsHoverHint">Hover to play</p>
+    </div>
+    <div class="its-gallery-dots" id="itsGalleryDots">
+      <button class="gallery-nav-btn" id="itsPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <span class="its-dot its-dot--active" data-page="0"></span>
+      <span class="its-dot" data-page="1"></span>
+      <span class="its-dot" data-page="2"></span>
+      <button class="gallery-nav-btn" id="itsNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+
+  </div>
+
+  <!-- Ballies NFT page -->
+  <div class="project-page" id="balliesPage">
+    <button class="pp-back" id="balliesBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad3)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">Ballies NFT</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="balliesTypewriter">
+      <p class="tw-line" id="balliesTwLine1"></p>
+      <p class="tw-line" id="balliesTwLine2"></p>
+    </div>
+
+    <div class="ballies-slideshow" id="balliesSlideshow">
+      <div class="ballies-row ballies-row-rtl">
+        <div class="ballies-track" id="balliesTrack1"></div>
+      </div>
+      <div class="ballies-row ballies-row-ltr">
+        <div class="ballies-track" id="balliesTrack2"></div>
+      </div>
+      <p class="ballies-nft-label">9,999 unique NFT avatars</p>
+    </div>
+
+    <!-- Page 2: mosaic grid -->
+    <div class="ballies-mosaic-outer" id="balliesMosaicOuter">
+      <div class="ballies-mosaic-wrap" id="balliesMosaicWrap">
+        <div class="ballies-mosaic" id="balliesMosaic"></div>
+      </div>
+      <div class="ballies-scrollbar" id="balliesScrollbar">
+        <div class="ballies-sb-track" id="balliesSbTrack">
+          <div class="ballies-sb-thumb" id="balliesSbThumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 3: videos -->
+    <div class="ballies-videos-outer" id="balliesVideosOuter">
+      <div class="ballies-videos" id="balliesVideos"></div>
+    </div>
+
+    <!-- Page 4: editorial gallery -->
+    <div class="ballies-gallery-outer" id="balliesGalleryOuter">
+      <div class="ballies-gallery-wrap" id="balliesGalleryWrap">
+        <div class="ballies-gallery" id="balliesGallery"></div>
+      </div>
+      <div class="ballies-g-scrollbar" id="balliesGScrollbar">
+        <div class="ballies-g-sb-track">
+          <div class="ballies-g-sb-thumb" id="balliesGSbThumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page dots -->
+    <div class="ballies-dots" id="balliesDots">
+      <button class="gallery-nav-btn" id="balliesPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <span class="ballies-dot ballies-dot--active" data-page="1"></span>
+      <span class="ballies-dot" data-page="2"></span>
+      <span class="ballies-dot" data-page="3"></span>
+      <span class="ballies-dot" data-page="4"></span>
+      <button class="gallery-nav-btn" id="balliesNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+
+  <!-- Video lightbox (shared, fixed) -->
+  <div class="ballies-video-lb" id="balliesVideoLb">
+    <div class="ballies-video-lb-frame">
+      <button class="ballies-video-lb-close" id="balliesVideoLbClose">✕</button>
+      <div class="ballies-video-lb-wrap" id="balliesVideoLbWrap"></div>
+    </div>
+  </div>
+
+  <!-- Wall Street Games Page -->
+  <div class="project-page" id="wsgPage">
+    <button class="pp-back" id="wsgBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad4" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad4)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">Wall Street Games</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="wsgTypewriter">
+      <p class="tw-line" id="wsgTwLine1"></p>
+    </div>
+
+    <div class="wsg-videos" id="wsgVideos"></div>
+
+    <!-- WSG Page 2: image gallery -->
+    <div class="wsg-gallery-outer" id="wsgGalleryOuter">
+      <div class="wsg-gallery-wrap" id="wsgGalleryWrap">
+        <div class="wsg-gallery" id="wsgGallery"></div>
+      </div>
+      <div class="wsg-g-scrollbar" id="wsgGScrollbar">
+        <div class="wsg-g-sb-track">
+          <div class="wsg-g-sb-thumb" id="wsgGSbThumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WSG page dots -->
+    <div class="wsg-dots" id="wsgDots">
+      <button class="gallery-nav-btn" id="wsgPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <span class="wsg-dot wsg-dot--active" data-page="1"></span>
+      <span class="wsg-dot" data-page="2"></span>
+      <button class="gallery-nav-btn" id="wsgNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+
+  <!-- La Boo Page -->
+  <div class="project-page" id="labooPage">
+    <button class="pp-back" id="labooBack">← BACK</button>
+    <div class="pp-title-wrap">
+      <svg class="pp-frame" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ppGrad5" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop class="ip-stop1" offset="0%" stop-color="#0D0D0F"/>
+            <stop class="ip-stop2" offset="100%" stop-color="#1de9b6"/>
+          </linearGradient>
+        </defs>
+        <rect class="pp-rect" x="1" y="1" rx="55" ry="55" stroke="url(#ppGrad5)" stroke-dasharray="6000" stroke-dashoffset="6000"/>
+      </svg>
+      <h1 class="pp-title">La Boo</h1>
+    </div>
+
+    <div class="roadmap-typewriter pp-typewriter" id="labooTypewriter">
+      <p class="tw-line" id="labooTwLine1"></p>
+    </div>
+
+    <div class="laboo-v-wrap" id="labooVPage1"></div>
+    <div class="laboo-v-wrap laboo-v-wrap--hidden" id="labooVPage2"></div>
+
+    <div class="laboo-dots" id="labooDots">
+      <button class="gallery-nav-btn" id="labooPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <span class="laboo-dot laboo-dot--active" data-page="1"></span>
+      <span class="laboo-dot" data-page="2"></span>
+      <button class="gallery-nav-btn" id="labooNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+
+  <!-- WSG B-group lightbox (fixed, shared) -->
+  <div class="wsg-bgroup-lb" id="wsgBgroupLb">
+    <div class="wsg-bgroup-lb-inner">
+      <button class="wsg-bgroup-lb-close" id="wsgBgroupLbClose">✕</button>
+      <div class="wsg-bgroup-lb-grid">
+        <img src="assets/WSG/2/B1.webp" draggable="false" loading="lazy">
+        <img src="assets/WSG/2/B2.webp" draggable="false" loading="lazy">
+        <img src="assets/WSG/2/B3.webp" draggable="false" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Page -->
+  <div class="project-page contact-page" id="contactPage">
+    <button class="pp-back" id="contactBack"><img src="assets/logo.svg" alt="Back" class="pp-back-logo" loading="lazy" decoding="async"></button>
+
+    <div class="contact-body">
+    <div class="contact-headline-wrap">
+      <h1 class="contact-headline"><span class="contact-headline-line1">Let's Create Something</span><br><span class="contact-headline-accent">Exceptional</span></h1>
+    </div>
+
+    <div class="contact-split">
+
+      <!-- LEFT SIDE -->
+      <div class="contact-left">
+
+        <!-- Info block -->
+        <div class="contact-info-block">
+          <div class="contact-avail">
+            <span class="contact-status-dot"></span>
+            <span class="contact-avail-text">Available for new projects</span>
+          </div>
+          <div class="contact-meta">
+            <div class="contact-meta-row contact-meta-row--email">
+              <a href="mailto:boskokosic187@gmail.com" class="contact-meta-email-link">
+                <span class="contact-meta-icon">✉</span>
+                <span class="contact-meta-val">boskokosic187@gmail.com</span>
+              </a>
+              <button class="contact-copy-btn" id="copyEmailBtn" aria-label="Copy email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                <svg class="contact-copy-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </button>
+            </div>
+            <div class="contact-meta-row">
+              <span class="contact-meta-icon">◈</span>
+              <span class="contact-meta-val">Belgrade, Serbia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="contact-field">
+            <label class="contact-label" for="cName">Name</label>
+            <input type="text" class="contact-input" id="cName" placeholder="Your name" autocomplete="off">
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="cEmail">Email <span class="contact-field-err">* required</span></label>
+            <input type="email" class="contact-input" id="cEmail" placeholder="Your email" autocomplete="off">
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="cType">Project Type</label>
+            <select class="contact-input contact-select" id="cType">
+              <option value="" disabled selected>Select a service</option>
+              <option>Visual Design</option>
+              <option>Animation &amp; Motion</option>
+              <option>Web &amp; UI/UX</option>
+              <option>NFT &amp; Web3</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="cMessage">Message <span class="contact-field-err">* required</span></label>
+            <textarea class="contact-input contact-textarea" id="cMessage" placeholder="Tell me about your vision..." rows="4"></textarea>
+          </div>
+          <button type="submit" class="contact-btn">
+            <span class="contact-btn-text">Send Message</span>
+          </button>
+          <p class="contact-or">or</p>
+          <button type="button" class="contact-btn contact-btn-alt">
+            <span class="contact-btn-text">BOOK A CALL!</span>
+          </button>
+        </form>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="contact-right">
+        <div class="contact-img-frame" id="contactImgFrame">
+          <div class="contact-img-glow"></div>
+          <canvas class="contact-particles-canvas" id="contactParticles"></canvas>
+          <img src="assets/mojaslika.webp" alt="Boško Kosić" class="contact-img" loading="lazy" decoding="async">
+          <div class="contact-img-overlay"></div>
+          <div class="contact-img-scan"></div>
+          <div class="contact-img-border"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Social icons — inside scroll body so no bottom bar -->
+    <div class="contact-socials-footer">
+      <div class="contact-social-links">
+        <a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" class="contact-social" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/boskokosic/" target="_blank" class="contact-social" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.98-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.behance.net/bosko_kosic" target="_blank" class="contact-social" aria-label="Behance">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.051-2.051-5.051-5.01 0-2.99 2.066-5.013 5.051-5.013 3.062 0 4.683 1.968 5.048 4.41.041.28.063.564.063.853v.499H14.8c.104 2.172 1.705 2.84 3.085 2.84.786 0 1.61-.245 2.186-.858l2.655.259zm-2.78-3.625H14.8c.056-1.667 1.16-2.667 2.546-2.667 1.393 0 2.396.999 2.6 2.667zM7 11.5h2.5c.716 0 1.5-.308 1.5-1.5s-.784-1.5-1.5-1.5H7v3zm0 1v2.5h3c.766 0 1.5-.418 1.5-1.25S10.766 12.5 10 12.5H7zm-2-6.5H12c1.978 0 3.5 1.522 3.5 3.5 0 1.189-.562 2.246-1.5 2.854.976.606 1.5 1.624 1.5 2.646 0 2.043-1.522 3.5-3.5 3.5H5V6z"/></svg>
+        </a>
+      </div>
+    </div>
+    </div><!-- /.contact-body -->
+
+  </div>
+
+  <!-- About page (mobile-only) -->
+  <div class="project-page about-page" id="aboutPage">
+    <button class="pp-back" id="aboutBack"><img src="assets/logo.svg" alt="Back" class="pp-back-logo" loading="lazy" decoding="async"></button>
+
+    <div class="about-content">
+      <h1 class="about-heading">ABOUT</h1>
+
+      <div class="about-cards">
+
+        <div class="about-card">
+          <p class="about-card-name">Boško Kosić</p>
+          <p class="about-card-body">Creating visuals that connect, move, and stand out in the digital world — based in Belgrade, Serbia.</p>
+        </div>
+
+        <div class="about-card">
+          <p class="about-card-text">Multidisciplinary Visual Designer</p>
+          <div class="about-card-drop">
+            <span class="ip-skills-title">Skills</span>
+            <div class="ip-skills-inner about-skills-inner">
+              <div class="ip-skill-row">
+                <span class="ip-skill-name">Adobe Photoshop</span>
+                <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:96%">★★★★★</span></div>
+              </div>
+              <div class="ip-skill-row">
+                <span class="ip-skill-name">Adobe Illustrator</span>
+                <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:94%">★★★★★</span></div>
+              </div>
+              <div class="ip-skill-row">
+                <span class="ip-skill-name">Adobe After Effects</span>
+                <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:90%">★★★★★</span></div>
+              </div>
+              <div class="ip-skill-row">
+                <span class="ip-skill-name">Adobe Premiere Pro</span>
+                <div class="ip-stars"><span class="ip-stars-bg">★★★★★</span><span class="ip-stars-fg" style="width:88%">★★★★★</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <p class="about-card-text">5+ years experience&nbsp;&nbsp;•&nbsp;&nbsp;Teaching Assistant in Graphic Design and NFT Technology</p>
+          <p class="about-card-body">Computer Multimedia Engineer (2022), currently advancing through a Master's program at ITS Belgrade while working as a Teaching Assistant.</p>
+        </div>
+
+        <div class="about-card">
+          <p class="about-card-text">Working across animation, video editing, visual effects, UI/UX design, and web development.</p>
+          <p class="about-card-body">From animated videos and advertising visuals to billboard designs — combined with UI/UX design and front-end web development.</p>
+        </div>
+
+        <div class="about-card">
+          <p class="about-card-text">NFT visuals and digital content for Web3 projects.</p>
+          <p class="about-card-body">Backed by years of experience collaborating with Web3 companies making NFT collections, with a solid understanding of crypto and NFT ecosystems.</p>
+        </div>
+
+        <div class="about-card">
+          <p class="about-card-text">Leveraging advanced AI workflows to enhance creativity and production.</p>
+          <p class="about-card-body">I stay up to date with new AI systems and apply them to improve both the quality and speed of my work.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact toast -->
+  <div class="contact-toast" id="contactToast">Message sent — I'll be in touch soon.</div>
+
+  <!-- Mobile scroll helpers -->
+  <div id="mobileProgressBar"></div>
+  <button id="mobileScrollTop" aria-label="Scroll to top"></button>
+
+  <script src="script.js?v=29"></script>
+</body>
+</html>
+
+
+

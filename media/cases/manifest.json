@@ -1,0 +1,1445 @@
+{
+ "live-on-the-streets": {
+  "hero": [
+   {
+    "w": 960,
+    "h": 450,
+    "type": "video",
+    "url": "../../media/cases/live-on-the-streets/1bd639d8",
+    "label": "ITS × ITHS · Jul 2026 · AI school launch · DOOH 1152×540",
+    "matte": false
+   }
+  ],
+  "rows": [
+   [
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/1d00f1f8",
+     "label": "FSU · Dec 2025 · Pre-enrolment 2026/27",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/4fceb8b1",
+     "label": "FSU · Mar 2026 · Spring enrolment",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/945ffc33",
+     "label": "ITS · Oct 2025 · Enrolment",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/a86b41bb",
+     "label": "FSU · Oct 2025 · Enrolment",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 540,
+     "h": 960,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/89ca7a4f",
+     "label": "ITS · May 2026 · Animated ad 9:16",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 540,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/070b7343",
+     "label": "ITS · Animated academic calendar 2026/27",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/1c4dc3a2",
+     "label": "ITS · Nov 2025 · 38th Belgrade Trophy",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/4547b43d",
+     "label": "ITS · Feb 2026 · National maths competition",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/7d9b165e",
+     "label": "ITS × ITHS · Oct 2025 · Pupin Week",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/cdb79588",
+     "label": "ITHS · Nov 2025 · New programme",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/64d87e89",
+     "label": "ITS · Jan 2026 · Graduation ceremony",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 450,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/67d232aa",
+     "label": "ITS · Jul 2026 · “Below the line” enrolment",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/2582b22c",
+     "label": "ITS × ITHS · Apr 2026 · Enrolment",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 534,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/3278e7ea",
+     "label": "ITS × ITHS · Dec 2025 · New Year",
+     "matte": false
+    }
+   ]
+  ]
+ },
+ "ballies": {
+  "hero": [
+   {
+    "w": 960,
+    "h": 540,
+    "type": "video",
+    "url": "../../media/cases/ballies/4ec9a9d2",
+    "label": "Mascot fight · 16:9",
+    "matte": false
+   }
+  ],
+  "rows": [
+   [
+    {
+     "w": 1600,
+     "h": 1600,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/1dc7b1c4",
+     "label": "$BALL airdrop · 1:1",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/d3277e53",
+     "label": "AI launch · 1:1",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/a86ad300",
+     "label": "Explainer · 1:1",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 720,
+     "h": 720,
+     "type": "video",
+     "url": "../../media/cases/ballies/64bb1569",
+     "label": "Mascot fight · 1:1",
+     "matte": false
+    },
+    {
+     "w": 720,
+     "h": 720,
+     "type": "video",
+     "url": "../../media/cases/ballies/34d05afb",
+     "label": "Odds bar · game-day motion · 1:1",
+     "matte": false
+    },
+    {
+     "w": 540,
+     "h": 960,
+     "type": "video",
+     "url": "../../media/cases/ballies/0e34538a",
+     "label": "AI tools · story 9:16",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/04396846",
+     "label": "March Madness · 16:9",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/634dc979",
+     "label": "You vs AI",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1500,
+     "h": 1500,
+     "widths": [
+      800,
+      1500
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/3f89cd9a",
+     "label": "Season 11 pass",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/9bcf6610",
+     "label": "Season 12 pass",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 1866,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/00937c82",
+     "label": "Halloween badge drop",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/d4491ae4",
+     "label": "Ballies Arena · ad",
+     "matte": false
+    },
+    {
+     "w": 1084,
+     "h": 1087,
+     "widths": [
+      800,
+      1084
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/08416feb",
+     "label": "Ballies Arena · teaser",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/283083fd",
+     "label": "Product explainer",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/67d72846",
+     "label": "All-Stars · 1920×1080",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/03a61436",
+     "label": "Cricket launch · story",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1500,
+     "h": 1500,
+     "widths": [
+      800,
+      1500
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/1c1c849a",
+     "label": "Partnership template · Gangverse",
+     "matte": false
+    },
+    {
+     "w": 1500,
+     "h": 1500,
+     "widths": [
+      800,
+      1500
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/f8934f26",
+     "label": "Partnership template · Loaded Lions",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/19b73ffa",
+     "label": "BeClutch $CLX launch",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/2a746d05",
+     "label": "Leaderboard · 1:1",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/da352573",
+     "label": "Positioning · 1:1",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/7122c549",
+     "label": "Positioning · 1:1",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/5480406f",
+     "label": "Game day · 1:1",
+     "matte": false
+    },
+    {
+     "w": 1082,
+     "h": 1086,
+     "widths": [
+      800,
+      1082
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/ac8323bd",
+     "label": "Game day · 1:1",
+     "matte": false
+    },
+    {
+     "w": 700,
+     "h": 800,
+     "widths": [
+      700
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/37338eee",
+     "label": "Character drop",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1392,
+     "h": 2024,
+     "widths": [
+      800,
+      1392
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/5b56ca24",
+     "label": "Badge pack",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/1a3e04f9",
+     "label": "Badge drop · #CROFAM edition",
+     "matte": false
+    },
+    {
+     "w": 967,
+     "h": 1386,
+     "widths": [
+      800,
+      967
+     ],
+     "type": "image",
+     "url": "../../media/cases/ballies/b7eed3e5",
+     "label": "Drop card",
+     "matte": false
+    }
+   ]
+  ]
+ },
+ "key-art": {
+  "hero": [
+   {
+    "w": 1600,
+    "h": 900,
+    "widths": [
+     800,
+     1600
+    ],
+    "type": "image",
+    "url": "../../media/cases/key-art/993423fe",
+    "label": "Tsar Dušan — The Serbian Empire, 1346 · 3840×2160",
+    "matte": false
+   }
+  ],
+  "rows": [
+   [
+    {
+     "w": 1600,
+     "h": 1872,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/1cf5fb75",
+     "label": "Generated elements",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 848,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/457700e7",
+     "label": "Stock plates",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 2400,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/1a8e1607",
+     "label": "Cut-out · the Tsar",
+     "matte": true
+    },
+    {
+     "w": 1600,
+     "h": 896,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/e0cf0d4a",
+     "label": "Cut-out · nobles",
+     "matte": true
+    },
+    {
+     "w": 1536,
+     "h": 3072,
+     "widths": [
+      800,
+      1536
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/1c87dde9",
+     "label": "Cut-out · war banner",
+     "matte": true
+    },
+    {
+     "w": 1600,
+     "h": 652,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/8b165588",
+     "label": "Cut-out · eagle",
+     "matte": true
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/4926e8a4",
+     "label": "Batman v Superman — Clash in the Rain · fan art · 3840×2160",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1620,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/key-art/c9dea69d",
+     "label": "The Odyssey · fan poster",
+     "matte": false
+    }
+   ]
+  ],
+  "breakdown": [
+   {
+    "w": 1600,
+    "h": 900,
+    "widths": [
+     800,
+     1600
+    ],
+    "type": "image",
+    "url": "../../media/cases/key-art/e80036ba",
+    "label": "Blocking",
+    "matte": false
+   },
+   {
+    "w": 1600,
+    "h": 900,
+    "widths": [
+     800,
+     1600
+    ],
+    "type": "image",
+    "url": "../../media/cases/key-art/e5301017",
+    "label": "Final grade",
+    "matte": false
+   }
+  ]
+ },
+ "fsu-2026": {
+  "hero": [
+   {
+    "w": 1600,
+    "h": 900,
+    "widths": [
+     800,
+     1600
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/1b4fc720",
+    "label": "Study programmes · presentation · 1920×1080",
+    "matte": false
+   }
+  ],
+  "rows": [
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/f34cb23c",
+     "label": "Meeting Points · exhibition",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/56e500ef",
+     "label": "Creative Communication MA",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/078d4260",
+     "label": "Graphic Design programme",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/cd31cc64",
+     "label": "Space in the Making · exhibition",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/9da7701c",
+     "label": "A Closer Look · exhibition",
+     "matte": false
+    },
+    {
+     "w": 720,
+     "h": 720,
+     "type": "video",
+     "url": "../../media/cases/fsu-2026/63ec44e7",
+     "label": "Spirit of Belgrade · motion 1:1",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/624d7a1d",
+     "label": "FSU Doors · 1/3",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/06f1efd8",
+     "label": "FSU Doors · 2/3",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/1daa3146",
+     "label": "FSU Doors · 3/3",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/76bf8394",
+     "label": "Masterpiece · story 1/3",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/86b9355c",
+     "label": "Masterpiece · story 2/3",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/5432bd54",
+     "label": "Masterpiece · story 3/3",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/7aff43d7",
+     "label": "Enrolment 2027/28 · story",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 2262,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/3fe12cec",
+     "label": "Gallery That Grows · poster A3",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 2262,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/9854fd8e",
+     "label": "Three Graces · poster A3",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 2262,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/5db30c59",
+     "label": "Immersion · poster A3",
+     "matte": false
+    },
+    {
+     "w": 1055,
+     "h": 1492,
+     "widths": [
+      800,
+      1055
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/803b0f58",
+     "label": "AI FilmFest Serbia 2026 · poster",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 1132,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/eb902927",
+     "label": "Shift · poster A3",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/7def26ad",
+     "label": "Morning · exhibition",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/de98b2e5",
+     "label": "Only One Work · cover",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/67f72d1c",
+     "label": "Architecture handbook launch",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/0dca6970",
+     "label": "Limes plus journal",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/a3ce3b10",
+     "label": "Study programmes · slide",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/cdaf79f2",
+     "label": "Study programmes · slide",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 950,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/17ed2732",
+     "label": "Fluids · full set",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 814,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/fsu-2026/362b4449",
+     "label": "Enrolment centre · signage",
+     "matte": false
+    }
+   ]
+  ]
+ },
+ "series-at-scale": {
+  "hero": [
+   {
+    "w": 1200,
+    "h": 630,
+    "widths": [
+     800,
+     1200
+    ],
+    "type": "image",
+    "url": "../../media/cases/series-at-scale/c5453286",
+    "label": "Study programmes · Software development · 1200×630",
+    "matte": false
+   }
+  ],
+  "rows": [
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/92f2c3ba",
+     "label": "What does a … do? · 01/33",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/afaa9994",
+     "label": "What does a … do? · 03/33",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/e79c1838",
+     "label": "What does a … do? · 19/33",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/4f4d0beb",
+     "label": "Study programmes · 4:5",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/a9017513",
+     "label": "Study programmes · 4:5",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/569444b9",
+     "label": "Study programmes · 4:5",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/8fb14acc",
+     "label": "Study programmes · 4:5",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/90057a3f",
+     "label": "ChatGPT Commands · cover",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/dc92a0a7",
+     "label": "ChatGPT Commands · slide",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1350,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/c0cf8cdd",
+     "label": "ChatGPT Commands · cover",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/933e8c26",
+     "label": "Enrolment 2027/28 · ITHS · story",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1920,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/7aff43d7",
+     "label": "Enrolment 2027/28 · FSU · story",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/34c6afdb",
+     "label": "What does a … do? · 06/33",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/de91087a",
+     "label": "Student app · Calories Tracker",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/ad8458e9",
+     "label": "Student app · NailBook",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/d3c6f383",
+     "label": "Student app · Budget Manager",
+     "matte": false
+    },
+    {
+     "w": 1080,
+     "h": 1080,
+     "widths": [
+      800,
+      1080
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/92154291",
+     "label": "Student app · Šapa",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 1942,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/126c8288",
+     "label": "System overview · 10 programmes",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 5198,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/series-at-scale/6061d767",
+     "label": "System overview · 33 careers",
+     "matte": false
+    }
+   ]
+  ]
+ },
+ "baby-boo": {
+  "hero": [
+   {
+    "w": 540,
+    "h": 960,
+    "type": "video",
+    "url": "../../media/cases/baby-boo/ed696b69",
+    "label": "Manuka Honey · pilot film",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "type": "video",
+    "url": "../../media/cases/baby-boo/26f17ae0",
+    "label": "Valentine's · product film",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "type": "video",
+    "url": "../../media/cases/baby-boo/3772d45e",
+    "label": "Elephant · product film",
+    "matte": false
+   }
+  ],
+  "rows": [
+   [
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/ec7cd41b",
+     "label": "Manuka Honey · still",
+     "matte": false
+    },
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/662f78ef",
+     "label": "Break glass · still",
+     "matte": false
+    },
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/d2b2570e",
+     "label": "Claw machine · still",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 540,
+     "h": 960,
+     "type": "video",
+     "url": "../../media/cases/baby-boo/2ed6683a",
+     "label": "Honey · film",
+     "matte": false
+    },
+    {
+     "w": 540,
+     "h": 960,
+     "type": "video",
+     "url": "../../media/cases/baby-boo/1271252f",
+     "label": "Honey · film",
+     "matte": false
+    },
+    {
+     "w": 540,
+     "h": 960,
+     "type": "video",
+     "url": "../../media/cases/baby-boo/fcc10112",
+     "label": "Montenegro · mascot animation",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1152,
+     "h": 2048,
+     "widths": [
+      800,
+      1152
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/beef3cd5",
+     "label": "Cottonseed wash · still",
+     "matte": false
+    },
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/f064f492",
+     "label": "Spring · still",
+     "matte": false
+    },
+    {
+     "w": 893,
+     "h": 1600,
+     "widths": [
+      800,
+      893
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/d6feabfa",
+     "label": "Carousel · still",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/b11c9114",
+     "label": "Macadamia · still",
+     "matte": false
+    },
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/ce6853b7",
+     "label": "Roll-on · still",
+     "matte": false
+    },
+    {
+     "w": 900,
+     "h": 1600,
+     "widths": [
+      800,
+      900
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/ba79c40c",
+     "label": "Roll-on · still",
+     "matte": false
+    }
+   ],
+   [
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/d374f222",
+     "label": "Mascot scene · lion",
+     "matte": false
+    },
+    {
+     "w": 1600,
+     "h": 900,
+     "widths": [
+      800,
+      1600
+     ],
+     "type": "image",
+     "url": "../../media/cases/baby-boo/7f6fe790",
+     "label": "Mascot scene · giraffe",
+     "matte": false
+    }
+   ]
+  ]
+ }
+}

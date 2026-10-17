@@ -1,3 +1,9 @@
 node_modules/
 .DS_Store
 Thumbs.db
+# Freepik originals (large source files; web versions live in media/)
+_freepik/*
+!_freepik/LISTA.html
+# raw client originals (the web versions live in media/)
+_izvori/
+__pycache__/

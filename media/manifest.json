@@ -1,0 +1,404 @@
+{
+ "its-future": {
+  "type": "video",
+  "src": "D:/Desktop/ITS/Bilbord Jul/Animacija_1.mp4",
+  "start": 10.38,
+  "len": 4,
+  "w": 640,
+  "h": 300,
+  "kb": {
+   "mp4": 52,
+   "webp": 16
+  }
+ },
+ "fsu-predupis": {
+  "type": "video",
+  "src": "D:/Desktop/FSU Best/Animacija_1.mp4",
+  "start": 10.12,
+  "len": 4,
+  "w": 640,
+  "h": 356,
+  "kb": {
+   "mp4": 42,
+   "webp": 14
+  }
+ },
+ "fsu-prolecni": {
+  "type": "video",
+  "src": "D:/Desktop/FSU Best/FSU.mp4",
+  "start": 0.75,
+  "len": 4,
+  "w": 640,
+  "h": 356,
+  "kb": {
+   "mp4": 44,
+   "webp": 11
+  }
+ },
+ "its-diplome": {
+  "type": "video",
+  "src": "D:/Desktop/ITS/Svecana dodela diploma/1152x640.mp4",
+  "start": 3.0,
+  "len": 4,
+  "w": 640,
+  "h": 356,
+  "kb": {
+   "mp4": 150,
+   "webp": 24
+  }
+ },
+ "its-sah": {
+  "type": "video",
+  "src": "D:/Desktop/ITS/trofej beograda sah/animacija.mp4",
+  "start": 11.38,
+  "len": 4,
+  "w": 640,
+  "h": 356,
+  "kb": {
+   "mp4": 97,
+   "webp": 26
+  }
+ },
+ "its-maj": {
+  "type": "video",
+  "src": "D:/Desktop/ITS/Bilbord Maj/ITS ITHS animacija.mp4",
+  "start": 10.38,
+  "len": 4,
+  "w": 640,
+  "h": 278,
+  "kb": {
+   "mp4": 65,
+   "webp": 18
+  }
+ },
+ "its-matematika": {
+  "type": "video",
+  "src": "D:/Desktop/ITS/Republicko takmicenje iz matematike/1152x640.mp4",
+  "start": 0.75,
+  "len": 4,
+  "w": 640,
+  "h": 356,
+  "kb": {
+   "mp4": 110,
+   "webp": 8
+  }
+ },
+ "its-novogodisnji": {
+  "type": "video",
+  "src": "D:/Desktop/FSU/Novogodisnji bilbordi/ITS Vizuali/Animacija.mp4",
+  "start": 9.5,
+  "len": 4,
+  "w": 640,
+  "h": 356,
+  "kb": {
+   "mp4": 85,
+   "webp": 21
+  }
+ },
+ "kalendar-fsu": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/FSU/Kalendar nastave FSU/kalendar-fsu-2026-2027-1080p.mp4",
+  "start": 16.38,
+  "len": 4,
+  "w": 640,
+  "h": 360,
+  "kb": {
+   "mp4": 58,
+   "webp": 9
+  }
+ },
+ "ballies-strike": {
+  "type": "video",
+  "src": "D:/Desktop/Ballies Best/strike 1.mp4",
+  "start": 5.0,
+  "len": 3,
+  "w": 480,
+  "h": 480,
+  "kb": {
+   "mp4": 255,
+   "webp": 12
+  }
+ },
+ "fsu-duh": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU_DuhBeograda/video/Video DM.mp4",
+  "start": 4.62,
+  "len": 4,
+  "w": 480,
+  "h": 480,
+  "kb": {
+   "mp4": 135,
+   "webp": 12
+  }
+ },
+ "lisica": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/Testovi/Lisica mase/Lisica_mase-1080x1080.mp4",
+  "start": 0,
+  "len": 2.95,
+  "w": 480,
+  "h": 480,
+  "kb": {
+   "mp4": 57,
+   "webp": 11
+  }
+ },
+ "ballies-ai": {
+  "type": "video",
+  "src": "D:/Desktop/Ballies Best/9-16.mp4",
+  "start": 0.88,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 162,
+   "webp": 28
+  }
+ },
+ "manuka": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/Baby Boo/Manuka Honey Pilot/BabyBoo_ManukaHoney_Pilot-1080x1920.mp4",
+  "start": 1.38,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 84,
+   "webp": 9
+  }
+ },
+ "bb-med": {
+  "type": "video",
+  "src": "D:/Desktop/Ai Baby Boo/Gotove/med 4.mp4",
+  "start": 4.38,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 69,
+   "webp": 14
+  }
+ },
+ "bb-slon": {
+  "type": "video",
+  "src": "D:/Desktop/Ai Baby Boo/Slon.mp4",
+  "start": 0.75,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 96,
+   "webp": 7
+  }
+ },
+ "its-reklama": {
+  "type": "video",
+  "src": "D:/Desktop/ITS/Animirana reklama/Animacija.mp4",
+  "start": 4.75,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 215,
+   "webp": 30
+  }
+ },
+ "car-dusan": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.png",
+  "w": 3840,
+  "h": 2160,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "bvs": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/BOSQO/Batman vs Superman/BvS_Sudar_u_kisi-3840x2160.jpg",
+  "w": 3840,
+  "h": 2160,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "tacke-susreta": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Tacke susreta/DM.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "fsu-doors": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-1080x1080.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "master-kk": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Master kreativne komunikacije/FSU_Master-kreativne-komunikacije-1080x1080.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "graficki": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post1-1080x1080.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "ztv": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/ZTV Gaming Show/Dresovi 2XL/03_Priprema/PREGLED svih osam.png",
+  "w": 2230,
+  "h": 3666,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "pogled": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Pogled iz blizine/DM.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "odyssey": {
+  "type": "still",
+  "src": "D:/Desktop/odyssey_poster_web.jpg",
+  "w": 1080,
+  "h": 1620,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "ballies-post4": {
+  "type": "still",
+  "src": "D:/Desktop/Ballies Best/Ball-post-4.png",
+  "w": 2000,
+  "h": 2000,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "ballies-arena": {
+  "type": "still",
+  "src": "D:/Desktop/Ballies Best/ballies-arena-AD.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "ballies-allstars": {
+  "type": "still",
+  "src": "D:/Desktop/Ballies Best/all-stars-banner-1920-1080.jpg",
+  "w": 1920,
+  "h": 1080,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "tri-gracije": {
+  "type": "still",
+  "src": "D:/Desktop/tri gracije poster.tif",
+  "w": 3508,
+  "h": 4961,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "shift": {
+  "type": "still",
+  "src": "D:/Desktop/Poster A3.tif",
+  "w": 2480,
+  "h": 1754,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "galerija-raste": {
+  "type": "still",
+  "src": "D:/Desktop/galerija koja raste.tif",
+  "w": 3508,
+  "h": 4961,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "iths-calories": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "ai-filmfest": {
+  "type": "still",
+  "src": "D:/Desktop/poster.tif",
+  "w": 1055,
+  "h": 1491,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "portrait": {
+  "type": "still",
+  "src": "D:\\Desktop\\Sajt BOSQO/_freepik/about/mojaslika-chatgpt.webp",
+  "w": 927,
+  "h": 1697,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "sta-radi": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/ITS/ITS Sta radi zanimanja/01_Sta_radi_Build-Release_inzenjer/DM.png",
+  "w": 1080,
+  "h": 1080,
+  "widths": [
+   480,
+   960
+  ]
+ }
+}

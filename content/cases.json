@@ -1,0 +1,995 @@
+{
+  "_readme": "Source of truth for case-study pages. Paths: PV/ = Desktop/Production Visuals, D/ = Desktop, S/ = this repo. Run: python -I tools/build_cases.py",
+  "cases": [
+    {
+      "slug": "live-on-the-streets",
+      "title": "Live on the Streets",
+      "kicker": "Animated billboards · ITS · ITHS · FSU",
+      "line": "50+ billboards across Belgrade, designed for the three seconds a driver gives them.",
+      "client": "ITS · ITHS · FSU",
+      "years": "2024–2026",
+      "role": "Concept, design, animation, delivery",
+      "deliverables": [
+        "Animated DOOH billboards",
+        "Static billboards",
+        "Animated ads 9:16",
+        "Animated academic calendars",
+        "Matching social & web sets"
+      ],
+      "challenge": "Three schools in one group, all competing for the attention of teenagers and parents in a loud city. A driver gives a billboard a few seconds, and a new campaign was due almost every month.",
+      "idea": "Treat every billboard like the first three seconds of a reel: one message, one image, one move. Then a clean end frame that still works as a static poster.",
+      "system": "Each school gets its own colour, type and motion rules, so every new month starts from a system instead of a blank canvas. Every billboard ships with its social, web and email versions.",
+      "highlights": [
+        [
+          "Pre-enrolment 2026/27 & 2027/28",
+          "FSU · ITS · ITHS"
+        ],
+        [
+          "“The future is now” — AI school launch",
+          "ITS · ITHS"
+        ],
+        [
+          "38th Belgrade Trophy chess championship",
+          "ITS"
+        ],
+        [
+          "Graduation ceremony",
+          "ITS"
+        ],
+        [
+          "Pupin Week",
+          "ITS · ITHS"
+        ],
+        [
+          "Animated academic calendar 2026/27",
+          "ITS · FSU"
+        ]
+      ],
+      "result_big": "50+",
+      "result_label": "billboards live across Belgrade in two years",
+      "result": "Plus animated ads and animated academic calendars for both schools — one motion language across every street and screen.",
+      "hero": [
+        {
+          "src": "D/ITS/Bilbord Jul/Animacija_1.mp4",
+          "type": "video",
+          "label": "ITS × ITHS · Jul 2026 · AI school launch · DOOH 1152×540"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "src": "D/FSU Best/Animacija_1.mp4",
+            "type": "video",
+            "label": "FSU · Dec 2025 · Pre-enrolment 2026/27"
+          },
+          {
+            "src": "D/FSU Best/FSU.mp4",
+            "type": "video",
+            "label": "FSU · Mar 2026 · Spring enrolment"
+          }
+        ],
+        [
+          {
+            "src": "D/ITS/Bilbordi Oktobar/Animacija ITS.mp4",
+            "type": "video",
+            "label": "ITS · Oct 2025 · Enrolment"
+          },
+          {
+            "src": "D/FSU/Bilbord Oktobar/Animacija FSU.mp4",
+            "type": "video",
+            "label": "FSU · Oct 2025 · Enrolment"
+          }
+        ],
+        [
+          {
+            "src": "D/ITS/Animirana reklama/Animacija.mp4",
+            "type": "video",
+            "start": 4,
+            "dur": 12,
+            "label": "ITS · May 2026 · Animated ad 9:16"
+          },
+          {
+            "src": "PV/ITS/Kalendar nastave ITS/kalendar-its-2026-2027-1080p.mp4",
+            "type": "video",
+            "dur": 14,
+            "label": "ITS · Animated academic calendar 2026/27"
+          }
+        ],
+        [
+          {
+            "src": "D/ITS/trofej beograda sah/animacija.mp4",
+            "type": "video",
+            "label": "ITS · Nov 2025 · 38th Belgrade Trophy"
+          },
+          {
+            "src": "D/ITS/Republicko takmicenje iz matematike/1152x640.mp4",
+            "type": "video",
+            "label": "ITS · Feb 2026 · National maths competition"
+          }
+        ],
+        [
+          {
+            "src": "D/ITS/Pupinova nedelja/Animacija Pupinova nedelja.mp4",
+            "type": "video",
+            "label": "ITS × ITHS · Oct 2025 · Pupin Week"
+          },
+          {
+            "src": "D/ITS/Ekonomski tehnicar, bilbord/Animacija ET.mp4",
+            "type": "video",
+            "label": "ITHS · Nov 2025 · New programme"
+          }
+        ],
+        [
+          {
+            "src": "D/ITS/Svecana dodela diploma/1152x640.mp4",
+            "type": "video",
+            "dur": 15,
+            "label": "ITS · Jan 2026 · Graduation ceremony"
+          },
+          {
+            "src": "D/FSU/ISPOD CRTE/ITS/Animacija.mp4",
+            "type": "video",
+            "label": "ITS · Jul 2026 · “Below the line” enrolment"
+          }
+        ],
+        [
+          {
+            "src": "D/ITS/Bilbordi April/animacija its iths.mp4",
+            "type": "video",
+            "label": "ITS × ITHS · Apr 2026 · Enrolment"
+          },
+          {
+            "src": "D/FSU/Novogodisnji bilbordi/ITS Vizuali/Animacija.mp4",
+            "type": "video",
+            "label": "ITS × ITHS · Dec 2025 · New Year"
+          }
+        ]
+      ]
+    },
+    {
+      "slug": "ballies",
+      "title": "Ballies",
+      "kicker": "Brand universe · Web3 sports platform",
+      "line": "Three years of seasons, launches and mascots for a sports prediction platform.",
+      "client": "Ballies",
+      "years": "Jan 2023 – Jan 2026",
+      "role": "Digital Artist — campaigns, motion, characters, NFT art direction",
+      "deliverables": [
+        "Social campaigns 1:1 · 4:5 · 9:16 · 16:9",
+        "Season passes",
+        "$BALL token & airdrop launch",
+        "AI feature launch",
+        "Badge & drop system",
+        "Partnership templates",
+        "Mascot & logo animation",
+        "NFT collection art direction"
+      ],
+      "challenge": "Explain a new kind of sports product — peer-to-peer predictions, tokens, AI picks — to sports fans every single day, without losing the hype.",
+      "idea": "Make it feel like sport, not finance: stadium light, neon green, mascots that fight, athletes mid-air. The product does the explaining. The visuals do the shouting.",
+      "system": "One visual language across every season — Ballies green, the hexagon badge and bold condensed type — plus a partnership template that kept collaborations (Gangverse, Loaded Lions, Pudgy Penguins) on-brand at any pace.",
+      "highlights": [
+        [
+          "$BALL airdrop series",
+          "Token launch"
+        ],
+        [
+          "Season 10–12 passes",
+          "Seasonal campaigns"
+        ],
+        [
+          "“You vs AI”",
+          "AI feature launch"
+        ],
+        [
+          "Ballies Arena",
+          "Product launch"
+        ],
+        [
+          "Mascot fights",
+          "3D-style motion"
+        ],
+        [
+          "BeClutch $CLX on Base",
+          "Sub-brand launch"
+        ],
+        [
+          "9,999-piece NFT avatar collection",
+          "Art direction"
+        ]
+      ],
+      "result_big": "3 yrs",
+      "result_label": "of seasons, launches and mascots",
+      "result": "Hundreds of assets across feeds, stories, banners and video — all in one recognisable universe.",
+      "hero": [
+        {
+          "src": "D/Ballies/13 Oct Week/Roary vs Captain Fear.mp4",
+          "type": "video",
+          "start": 6,
+          "dur": 10,
+          "label": "Mascot fight · 16:9"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "src": "D/Ballies Best/Ball-post-4.png",
+            "type": "image",
+            "label": "$BALL airdrop · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/Ai-ballies-promo-2.png",
+            "type": "image",
+            "label": "AI launch · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/What-is-ballies.png",
+            "type": "image",
+            "label": "Explainer · 1:1"
+          }
+        ],
+        [
+          {
+            "src": "D/Ballies Best/strike 1.mp4",
+            "type": "video",
+            "start": 5,
+            "dur": 10,
+            "label": "Mascot fight · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/Washington Commanders vs Kansas City 2.mp4",
+            "type": "video",
+            "start": 4,
+            "dur": 10,
+            "label": "Odds bar · game-day motion · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/9-16.mp4",
+            "type": "video",
+            "label": "AI tools · story 9:16"
+          }
+        ],
+        [
+          {
+            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/march-madness_16x9.png",
+            "type": "image",
+            "label": "March Madness · 16:9"
+          },
+          {
+            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/You-vs-Ai.png",
+            "type": "image",
+            "label": "You vs AI"
+          }
+        ],
+        [
+          {
+            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/Season-11.png",
+            "type": "image",
+            "label": "Season 11 pass"
+          },
+          {
+            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/Season-12.png",
+            "type": "image",
+            "label": "Season 12 pass"
+          },
+          {
+            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/Halloween-badge.png",
+            "type": "image",
+            "label": "Halloween badge drop"
+          }
+        ],
+        [
+          {
+            "src": "D/Ballies Best/ballies-arena-AD.png",
+            "type": "image",
+            "label": "Ballies Arena · ad"
+          },
+          {
+            "src": "D/Ballies Best/Ballies-arena-starts-soon.png",
+            "type": "image",
+            "label": "Ballies Arena · teaser"
+          },
+          {
+            "src": "D/Ballies Best/Break-even.png",
+            "type": "image",
+            "label": "Product explainer"
+          }
+        ],
+        [
+          {
+            "src": "D/Ballies Best/all-stars-banner-1920-1080.jpg",
+            "type": "image",
+            "label": "All-Stars · 1920×1080"
+          },
+          {
+            "src": "D/Ballies Best/Story 2.png",
+            "type": "image",
+            "label": "Cricket launch · story"
+          }
+        ],
+        [
+          {
+            "src": "S/_izvori/drive-gmail/02_ballies-partnerstva/GANGVERSE.png",
+            "type": "image",
+            "label": "Partnership template · Gangverse"
+          },
+          {
+            "src": "S/_izvori/drive-gmail/02_ballies-partnerstva/LOADED_LIONS.png",
+            "type": "image",
+            "label": "Partnership template · Loaded Lions"
+          },
+          {
+            "src": "S/_izvori/drive-gmail/03_beclutch-clx/CLX-Launch.png",
+            "type": "image",
+            "label": "BeClutch $CLX launch"
+          }
+        ],
+        [
+          {
+            "src": "D/Ballies Best/Top-scorer.png",
+            "type": "image",
+            "label": "Leaderboard · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/Ballies-Is-Not-a-Bookmaker.png",
+            "type": "image",
+            "label": "Positioning · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/stop-donating-to-the-house.png",
+            "type": "image",
+            "label": "Positioning · 1:1"
+          }
+        ],
+        [
+          {
+            "src": "D/Ballies Best/forward-no-matter-what.png",
+            "type": "image",
+            "label": "Game day · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/299-pounds.jpg",
+            "type": "image",
+            "label": "Game day · 1:1"
+          },
+          {
+            "src": "D/Ballies Best/drop-image.png",
+            "type": "image",
+            "label": "Character drop"
+          }
+        ],
+        [
+          {
+            "src": "D/Ballies Best/badge-pack.png",
+            "type": "image",
+            "label": "Badge pack"
+          },
+          {
+            "src": "D/Ballies Best/1 (1).png",
+            "type": "image",
+            "label": "Badge drop · #CROFAM edition"
+          },
+          {
+            "src": "D/Ballies Best/Drop-card.png",
+            "type": "image",
+            "label": "Drop card"
+          }
+        ]
+      ]
+    },
+    {
+      "slug": "key-art",
+      "title": "Key Art",
+      "kicker": "Cinematic compositing · personal work",
+      "line": "Cinematic composites built from generated elements, stock and a lot of light — delivered in 4K and 8K.",
+      "client": "Personal",
+      "years": "2026",
+      "role": "Concept, generation, compositing, grading",
+      "deliverables": [
+        "Tsar Dušan — The Serbian Empire, 1346",
+        "Batman v Superman — Clash in the Rain (fan art)",
+        "The Odyssey — poster (fan art)",
+        "4K / 8K masters"
+      ],
+      "challenge": "Make a single frame carry an entire story — an empire, a duel, an odyssey — at a size where every flaw shows.",
+      "idea": "Direct it like a film shot: write a scene bible, block the composition first, then generate and source every element separately so light, scale and depth stay under control.",
+      "system": "Elements are generated one by one and matched with stock, cut out, relit with rim light toward a single sun, and composited and graded in a Python + Photoshop pipeline that renders at any resolution.",
+      "highlights": [
+        [
+          "Scene bible & blocking",
+          "Composition before pixels"
+        ],
+        [
+          "12 generated elements + 8 stock plates",
+          "Tsar Dušan"
+        ],
+        [
+          "Rim light, haze & grade in code",
+          "Python compositing"
+        ],
+        [
+          "4K and 8K masters",
+          "Print & screen"
+        ]
+      ],
+      "result_big": "8K",
+      "result_label": "print-ready masters from one pipeline",
+      "result": "Key art is where everything I know meets: composition, light, type and story — in one frame.",
+      "note": "Characters and titles in fan art belong to their owners.",
+      "hero": [
+        {
+          "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.jpg",
+          "type": "image",
+          "label": "Tsar Dušan — The Serbian Empire, 1346 · 3840×2160"
+        }
+      ],
+      "breakdown": {
+        "before": "PV/BOSQO/Car Dusan - Carstvo srpsko/03_radno/blocking_1920.jpg",
+        "after": "PV/BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_1920.jpg",
+        "before_label": "Blocking",
+        "after_label": "Final grade"
+      },
+      "rows": [
+        [
+          {
+            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/03_radno/sheet_mj.jpg",
+            "type": "image",
+            "label": "Generated elements"
+          },
+          {
+            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/03_radno/sheet_stock.jpg",
+            "type": "image",
+            "label": "Stock plates"
+          }
+        ],
+        [
+          {
+            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/car.png",
+            "type": "image",
+            "label": "Cut-out · the Tsar",
+            "matte": true
+          },
+          {
+            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/vlastela.png",
+            "type": "image",
+            "label": "Cut-out · nobles",
+            "matte": true
+          },
+          {
+            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/barjak.png",
+            "type": "image",
+            "label": "Cut-out · war banner",
+            "matte": true
+          },
+          {
+            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/orao.png",
+            "type": "image",
+            "label": "Cut-out · eagle",
+            "matte": true
+          }
+        ],
+        [
+          {
+            "src": "PV/BOSQO/Batman vs Superman/BvS_Sudar_u_kisi-3840x2160.jpg",
+            "type": "image",
+            "label": "Batman v Superman — Clash in the Rain · fan art · 3840×2160"
+          }
+        ],
+        [
+          {
+            "src": "D/odyssey_poster_web.jpg",
+            "type": "image",
+            "label": "The Odyssey · fan poster"
+          }
+        ]
+      ]
+    },
+    {
+      "slug": "fsu-2026",
+      "title": "FSU 2026",
+      "kicker": "Campaigns & exhibition identities · Faculty of Contemporary Arts",
+      "line": "An art school, art-directed: 30+ campaigns, exhibitions and events in one year.",
+      "client": "FSU — Faculty of Contemporary Arts, Belgrade",
+      "years": "2026",
+      "role": "Art direction, design, motion",
+      "deliverables": [
+        "Exhibition identities",
+        "Event & enrolment campaigns",
+        "Study-programme presentation",
+        "Signage",
+        "Email & web banners",
+        "Social in every format"
+      ],
+      "challenge": "People judge an art faculty by its own posters. Every exhibition, lecture and enrolment deadline needed an identity good enough to hang in its own gallery.",
+      "idea": "Every show gets its own concept. The constant is the frame: FSU's typographic system, so twenty different worlds still read as one school.",
+      "system": "A shared header, type scale and colour logic (black, violet, signal yellow) holds the identities together, and every campaign ships as feed, story, email, website card and website strip.",
+      "highlights": [
+        [
+          "Meeting Points",
+          "Student exhibition"
+        ],
+        [
+          "Space in the Making",
+          "Exhibition identity"
+        ],
+        [
+          "FSU Doors — “Create it. Move it. What did you open?”",
+          "Campaign"
+        ],
+        [
+          "Masterpiece — “Every masterpiece starts with a first stroke.”",
+          "Enrolment"
+        ],
+        [
+          "“POV: your scroll just stopped. Not by accident.”",
+          "Creative Communication MA"
+        ],
+        [
+          "Where is the Spirit of Belgrade?",
+          "Photo & video contest with Telegraf"
+        ],
+        [
+          "Only One Work",
+          "Exhibition system, 13 authors"
+        ]
+      ],
+      "result_big": "30+",
+      "result_label": "identities in one academic year",
+      "result": "Across print, social, email, web and gallery walls — each one its own world, all of them clearly FSU.",
+      "hero": [
+        {
+          "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd01-1920x1080.png",
+          "type": "image",
+          "label": "Study programmes · presentation · 1920×1080"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "src": "PV/FSU/FSU Tacke susreta/DM.png",
+            "type": "image",
+            "label": "Meeting Points · exhibition"
+          },
+          {
+            "src": "PV/FSU/FSU Master kreativne komunikacije/FSU_Master-kreativne-komunikacije-1080x1080.png",
+            "type": "image",
+            "label": "Creative Communication MA"
+          },
+          {
+            "src": "PV/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post1-1080x1080.png",
+            "type": "image",
+            "label": "Graphic Design programme"
+          }
+        ],
+        [
+          {
+            "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_2_Perspektiva/FSU_Prostor_u_nastajanju_R2-1080x1080.png",
+            "type": "image",
+            "label": "Space in the Making · exhibition"
+          },
+          {
+            "src": "PV/FSU/FSU Pogled iz blizine/DM.png",
+            "type": "image",
+            "label": "A Closer Look · exhibition"
+          },
+          {
+            "src": "PV/FSU/FSU_DuhBeograda/video/Video DM.mp4",
+            "type": "video",
+            "label": "Spirit of Belgrade · motion 1:1"
+          }
+        ],
+        [
+          {
+            "src": "PV/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-1080x1080.png",
+            "type": "image",
+            "label": "FSU Doors · 1/3"
+          },
+          {
+            "src": "PV/FSU/FSU Doors/Post_2_Pokreni/FSU_Doors_Post2-1080x1080.png",
+            "type": "image",
+            "label": "FSU Doors · 2/3"
+          },
+          {
+            "src": "PV/FSU/FSU Doors/Post_3_Otvorio/FSU_Doors_Post3-1080x1080.png",
+            "type": "image",
+            "label": "FSU Doors · 3/3"
+          }
+        ],
+        [
+          {
+            "src": "PV/FSU/FSU Remek-delo/Post_1_Prvi_potez/FSU_Remek-delo_Post1-1080x1920.png",
+            "type": "image",
+            "label": "Masterpiece · story 1/3"
+          },
+          {
+            "src": "PV/FSU/FSU Remek-delo/Post_2_Sutra_ih_stvaras/FSU_Remek-delo_Post2-1080x1920.png",
+            "type": "image",
+            "label": "Masterpiece · story 2/3"
+          },
+          {
+            "src": "PV/FSU/FSU Remek-delo/Post_3_Mermer/FSU_Remek-delo_Post3-1080x1920.png",
+            "type": "image",
+            "label": "Masterpiece · story 3/3"
+          },
+          {
+            "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1920.png",
+            "type": "image",
+            "label": "Enrolment 2027/28 · story"
+          }
+        ],
+        [
+          {
+            "src": "D/galerija koja raste.tif",
+            "type": "image",
+            "label": "Gallery That Grows · poster A3"
+          },
+          {
+            "src": "D/tri gracije poster.tif",
+            "type": "image",
+            "label": "Three Graces · poster A3"
+          },
+          {
+            "src": "D/immersion.tif",
+            "type": "image",
+            "label": "Immersion · poster A3"
+          },
+          {
+            "src": "D/poster.tif",
+            "type": "image",
+            "label": "AI FilmFest Serbia 2026 · poster"
+          }
+        ],
+        [
+          {
+            "src": "D/Poster A3.tif",
+            "type": "image",
+            "label": "Shift · poster A3"
+          },
+          {
+            "src": "PV/FSU/FSU Jutro/FSU_Jutro_DM-1080x1080.png",
+            "type": "image",
+            "label": "Morning · exhibition"
+          }
+        ],
+        [
+          {
+            "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_01_Naslovna-1080x1080.png",
+            "type": "image",
+            "label": "Only One Work · cover"
+          },
+          {
+            "src": "PV/FSU/FSU Istorija i teorija arhitekture i grada/FSU_Istorija-i-teorija-arhitekture-1080x1080.png",
+            "type": "image",
+            "label": "Architecture handbook launch"
+          },
+          {
+            "src": "PV/FSU/FSU Limes plus 2 2026/FSU_Limes-plus-2026-DM-1080x1080.png",
+            "type": "image",
+            "label": "Limes plus journal"
+          }
+        ],
+        [
+          {
+            "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd02-1920x1080.png",
+            "type": "image",
+            "label": "Study programmes · slide"
+          },
+          {
+            "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd03-1920x1080.png",
+            "type": "image",
+            "label": "Study programmes · slide"
+          }
+        ],
+        [
+          {
+            "src": "PV/FSU/FSU Marija Djuric Fluidi/FSU_Marija_Djuric_Fluidi_pregled.jpg",
+            "type": "image",
+            "label": "Fluids · full set"
+          },
+          {
+            "src": "PV/FSU/FSU Natpis Upisni centar/FSU_Natpis_Upisni_centar_pregled.jpg",
+            "type": "image",
+            "label": "Enrolment centre · signage"
+          }
+        ]
+      ]
+    },
+    {
+      "slug": "series-at-scale",
+      "title": "Series at Scale",
+      "kicker": "Content systems · ITS · ITHS",
+      "line": "Four series, 270+ assets, one system — careers, study programmes, AI prompts and enrolment.",
+      "client": "ITS — Information Technology School · ITHS — IT High School",
+      "years": "2026",
+      "role": "Art direction, design system, production",
+      "deliverables": [
+        "“What does a … do?” — 33 career profiles",
+        "10 study programmes × 6 formats",
+        "ChatGPT Commands — 9 carousels, 117 slides",
+        "Enrolment 2027/28 for three schools",
+        "Student app launch posts"
+      ],
+      "challenge": "Education marketing runs on volume: dozens of programmes, careers and deadlines, each needing its own post — without the feed turning into a template graveyard.",
+      "idea": "Give every series a strong, cinematic signature — portrait, light, type — and let the system carry the repetition, so post 33 looks as considered as post 1.",
+      "system": "Locked grids, type scales and colour rules per series, with copy and photography swapped in through a production pipeline. Every post ships in every format its channel needs.",
+      "highlights": [
+        [
+          "What does a … do?",
+          "33 career profiles · feed + web"
+        ],
+        [
+          "Study programmes & modules",
+          "10 programmes × 6 formats"
+        ],
+        [
+          "ChatGPT Commands",
+          "9 carousels · 117 slides"
+        ],
+        [
+          "Enrolment 2027/28",
+          "ITS · ITHS · FSU"
+        ],
+        [
+          "Student app launches",
+          "Calories Tracker · NailBook · Budget Manager · Šapa"
+        ]
+      ],
+      "result_big": "270+",
+      "result_label": "assets in one consistent system",
+      "result": "A feed that looks art-directed post after post — and a production speed that keeps up with the academic calendar.",
+      "hero": [
+        {
+          "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1200x630.png",
+          "type": "image",
+          "label": "Study programmes · Software development · 1200×630"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "src": "PV/ITS/ITS Sta radi zanimanja/01_Sta_radi_Build-Release_inzenjer/DM.png",
+            "type": "image",
+            "label": "What does a … do? · 01/33"
+          },
+          {
+            "src": "PV/ITS/ITS Sta radi zanimanja/03_Sta_radi_strucnjak_za_3D_skeniranje_i_modeliranje/DM.png",
+            "type": "image",
+            "label": "What does a … do? · 03/33"
+          },
+          {
+            "src": "PV/ITS/ITS Sta radi zanimanja/19_Sta_radi_product_owner/DM.png",
+            "type": "image",
+            "label": "What does a … do? · 19/33"
+          }
+        ],
+        [
+          {
+            "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
+            "type": "image",
+            "label": "Study programmes · 4:5"
+          },
+          {
+            "src": "PV/ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
+            "type": "image",
+            "label": "Study programmes · 4:5"
+          },
+          {
+            "src": "PV/ITS/ITS Studijski programi i moduli/Post_05_Digital_Business/meta/1080x1350.png",
+            "type": "image",
+            "label": "Study programmes · 4:5"
+          },
+          {
+            "src": "PV/ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
+            "type": "image",
+            "label": "Study programmes · 4:5"
+          }
+        ],
+        [
+          {
+            "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/Naslovna.png",
+            "type": "image",
+            "label": "ChatGPT Commands · cover"
+          },
+          {
+            "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/3.png",
+            "type": "image",
+            "label": "ChatGPT Commands · slide"
+          },
+          {
+            "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/Naslovna.png",
+            "type": "image",
+            "label": "ChatGPT Commands · cover"
+          }
+        ],
+        [
+          {
+            "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/Meta/ITHS_Upis-2027-28_Meta-1080x1920.png",
+            "type": "image",
+            "label": "Enrolment 2027/28 · ITHS · story"
+          },
+          {
+            "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1920.png",
+            "type": "image",
+            "label": "Enrolment 2027/28 · FSU · story"
+          },
+          {
+            "src": "PV/ITS/ITS Sta radi zanimanja/06_Sta_radi_frilens_strucnjak_za_racunarski_softver/DM.png",
+            "type": "image",
+            "label": "What does a … do? · 06/33"
+          }
+        ],
+        [
+          {
+            "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png",
+            "type": "image",
+            "label": "Student app · Calories Tracker"
+          },
+          {
+            "src": "PV/ITHS/ITHS NailBook/ITHS_NailBook_1080x1080.png",
+            "type": "image",
+            "label": "Student app · NailBook"
+          },
+          {
+            "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1080x1080.png",
+            "type": "image",
+            "label": "Student app · Budget Manager"
+          },
+          {
+            "src": "PV/ITHS/ITHS Sapa/ITHS_Sapa_1080x1080.png",
+            "type": "image",
+            "label": "Student app · Šapa"
+          }
+        ],
+        [
+          {
+            "src": "PV/ITS/ITS Studijski programi i moduli/ITS_Programi_pregled.jpg",
+            "type": "image",
+            "label": "System overview · 10 programmes"
+          },
+          {
+            "src": "PV/ITS/ITS Sta radi zanimanja/ITS_Sta_radi_pregled.jpg",
+            "type": "image",
+            "label": "System overview · 33 careers"
+          }
+        ]
+      ]
+    },
+    {
+      "slug": "baby-boo",
+      "title": "Baby Boo",
+      "kicker": "AI product campaign · natural cosmetics",
+      "line": "Product films and stills made with AI — honey that pours on cue, glass you break in case of a sudden voyage.",
+      "client": "Baby Boo — natural cosmetics “made by moms”",
+      "years": "2026",
+      "role": "Concept, AI generation, editing, finishing",
+      "deliverables": [
+        "Manuka Honey pilot film · 9:16 + 4K master",
+        "AI product film series",
+        "Conceptual product stills",
+        "Mascot animation"
+      ],
+      "challenge": "Premium product imagery and video for a small brand — without a studio, a crew or a shoot day.",
+      "idea": "Direct AI like a camera crew: packaging true to the real product, honey that pours on cue, bees in shallow focus — and a bold concept in every still. Then edit and grade it like a real commercial.",
+      "system": "A product-true reference set keeps labels, mascots and proportions consistent across every generation; films are cut, timed and graded in Premiere and After Effects.",
+      "highlights": [
+        [
+          "Manuka Honey pilot",
+          "Film · 9:16 + 4K"
+        ],
+        [
+          "Break glass in case of a sudden voyage",
+          "Concept still"
+        ],
+        [
+          "Claw machine, carousel, string bag",
+          "Concept stills"
+        ],
+        [
+          "Montenegro",
+          "Mascot animation · After Effects"
+        ]
+      ],
+      "result_big": "0",
+      "result_label": "studio days",
+      "result": "Vertical-first product films ready for Reels and TikTok, a 4K master for the web, and a library of concept stills for every launch.",
+      "hero": [
+        {
+          "src": "PV/Baby Boo/Manuka Honey Pilot/BabyBoo_ManukaHoney_Pilot-1080x1920.mp4",
+          "type": "video",
+          "label": "Manuka Honey · pilot film"
+        },
+        {
+          "src": "D/Ai Baby Boo/Valentines.mp4",
+          "type": "video",
+          "label": "Valentine's · product film"
+        },
+        {
+          "src": "D/Ai Baby Boo/Slon.mp4",
+          "type": "video",
+          "label": "Elephant · product film"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "src": "D/Ai Baby Boo/Gotove/Manuka.png",
+            "type": "image",
+            "label": "Manuka Honey · still"
+          },
+          {
+            "src": "D/Ai Baby Boo/Break-glass.png",
+            "type": "image",
+            "label": "Break glass · still"
+          },
+          {
+            "src": "D/Ai Baby Boo/Masina.png",
+            "type": "image",
+            "label": "Claw machine · still"
+          }
+        ],
+        [
+          {
+            "src": "D/Ai Baby Boo/Gotove/med 4.mp4",
+            "type": "video",
+            "label": "Honey · film"
+          },
+          {
+            "src": "D/Ai Baby Boo/Gotove/med 3.mp4",
+            "type": "video",
+            "label": "Honey · film"
+          },
+          {
+            "src": "D/BabyBoo/Montenegro/Montenegro.mp4",
+            "type": "video",
+            "label": "Montenegro · mascot animation"
+          }
+        ],
+        [
+          {
+            "src": "D/Ai Baby Boo/Gotove/Elephant.png",
+            "type": "image",
+            "label": "Cottonseed wash · still"
+          },
+          {
+            "src": "D/Ai Baby Boo/Zec-i-zirafa.png",
+            "type": "image",
+            "label": "Spring · still"
+          },
+          {
+            "src": "D/Ai Baby Boo/zirafe.png",
+            "type": "image",
+            "label": "Carousel · still"
+          }
+        ],
+        [
+          {
+            "src": "D/Ai Baby Boo/macadamia.png",
+            "type": "image",
+            "label": "Macadamia · still"
+          },
+          {
+            "src": "D/Ai Baby Boo/roll-on-girl.png",
+            "type": "image",
+            "label": "Roll-on · still"
+          },
+          {
+            "src": "D/Ai Baby Boo/boys-roll-on.png",
+            "type": "image",
+            "label": "Roll-on · still"
+          }
+        ],
+        [
+          {
+            "src": "D/BabyBoo/LAV.png",
+            "type": "image",
+            "label": "Mascot scene · lion"
+          },
+          {
+            "src": "D/BabyBoo/ZIRAFA.png",
+            "type": "image",
+            "label": "Mascot scene · giraffe"
+          }
+        ]
+      ]
+    }
+  ]
+}
