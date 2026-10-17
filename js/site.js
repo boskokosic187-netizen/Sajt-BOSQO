@@ -1270,6 +1270,28 @@
     return print;
   }
 
+  /* the small can (citylight) holds still, so it needs no 3D: the front half of the label
+     goes round it in 18 flat strips, each squeezed by the cosine of its angle and dropped
+     along the lid's ellipse (skewed, so neighbours meet), the way the big can's camera sees
+     it. Units: cqw of the can's body (the can is 100 wide, the label 2π·50 round). */
+  function fizzCan(body, print) {
+    const N = 18, R = 50, RY = 11.8, rad = Math.PI / 180, w = (R * Math.PI) / N;
+    for (let k = 0; k < N; k++) {
+      const a0 = (-90 + (k * 180) / N) * rad, a1 = a0 + (180 / N) * rad;
+      const x0 = R + R * Math.sin(a0), x1 = R + R * Math.sin(a1);
+      const s = (x1 - x0) / w, skew = Math.atan2(RY * (Math.cos(a1) - Math.cos(a0)), x1 - x0) / rad;
+      const st = document.createElement('div');
+      st.className = 'fz-cs';
+      // a hair wider than its share (0.8cqw once squeezed), so no seam shows between strips
+      st.style.cssText = `left:${x0.toFixed(3)}cqw;width:${(w + 0.8 / s).toFixed(3)}cqw;` +
+        `transform:translateY(${(RY * Math.cos(a0)).toFixed(3)}cqw) skewY(${skew.toFixed(3)}deg) scaleX(${s.toFixed(4)})`;
+      const p = print.cloneNode(true);
+      p.style.left = (-(Math.PI * R + R * a0)).toFixed(3) + 'cqw';   // the label at this angle (its middle faces us)
+      st.appendChild(p);
+      body.appendChild(st);
+    }
+  }
+
   function fizz(set, t0) {
     const T = 8000, OPEN = 1500;            // OPEN: the tab goes up
     const SMOOTH = 'cubic-bezier(.45,0,.55,1)', OUT = 'cubic-bezier(.12,.72,.32,1)', IN = 'cubic-bezier(.55,0,.9,.55)';
@@ -1541,7 +1563,7 @@
       if (!fizzBuilt) {
         fizzBuilt = true;
         const print = fizzRoll($('.bn--label', set)), body = $('.bn--city .fz__cbody', set);
-        if (body) body.appendChild(print.cloneNode(true));
+        if (body) fizzCan(body, print);
       }
       if (fizzIn) return;
       fizzIn = 1;

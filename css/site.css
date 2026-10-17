@@ -1321,11 +1321,12 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .fz-fly { position: absolute; left: 0; top: 0; z-index: 10; width: 0; height: 0; pointer-events: none; }
 .fz-fly i { left: 0; top: 0; width: 20px; height: 20px; }
 
-/* the small cans (citylight): a window on a copy of the label, the same metal */
+/* the small can (citylight): copies of the label bent round its front (strips built in js), the same metal */
 .fz__can { z-index: 2; aspect-ratio: 1 / 1.6893; container-type: inline-size; }
 .fz__can > * { position: absolute; }
-.fz__cbody { left: 0; top: 0; width: 100%; height: calc(100% + 11.8cqw); overflow: hidden; container-type: inline-size; }
-.fz__cbody > .bn { position: absolute; left: -107.23cqw; top: 0; width: 314.47cqw; height: 100%; aspect-ratio: auto; }
+.fz__cbody { left: 0; top: 0; width: 100%; height: calc(100% + 11.8cqw); overflow: hidden; container-type: inline-size; background: #fb4b88; }
+.fz-cs { position: absolute; top: 0; height: calc(100% - 11.8cqw); overflow: hidden; transform-origin: 0 0; }
+.fz-cs > .bn { position: absolute; top: 0; width: 314.16cqw; height: 100%; aspect-ratio: auto; }
 .fz__cshade { left: 0; top: 0; width: 100%; height: calc(100% + 11.8cqw); }
 .fz__cneck { left: -0.86cqw; top: -32.77cqw; width: 101.76cqw; height: 47.21cqw; }
 .fz__cbot { left: -0.86cqw; top: calc(100% - 1.72cqw); width: 101.76cqw; height: 31.91cqw; }
