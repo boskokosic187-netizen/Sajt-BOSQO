@@ -1352,7 +1352,7 @@
         for (let e = el; e && e !== set; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
         return [x, y];
       };
-      const [cx, cy] = off(can), S = [cx + 52.2 * k, cy - 6 * k];
+      const [cx, cy] = off(can), S = [cx + 47.5 * k, cy - 6.6 * k];   // the mouth
       const [hx, hy] = off(head), [wx, wy] = off(wob);
       const sz = set.offsetWidth / 100;
       $$('i', fly).forEach((b, i) => {

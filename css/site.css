@@ -1297,9 +1297,10 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .fz__wet i:nth-child(1) { left: 22%; top: 14%; }
 .fz__wet i:nth-child(2) { left: 61%; top: 30%; scale: 0.8; }
 .fz__wet i:nth-child(3) { left: 76%; top: 8%; scale: 1.15; }
-/* the pssst: a crown of lemonade out of the mouth, a word, bubbles */
-.fz__crown { left: 43cqw; top: -17.2cqw; width: 18cqw; aspect-ratio: 1.564; z-index: 6; transform-origin: 50% 100%; opacity: 0; pointer-events: none; }
-.fz__bubs { left: 46cqw; top: -9cqw; width: 12cqw; height: 4cqw; z-index: 6; pointer-events: none; }
+/* the pssst: a crown of lemonade out of the mouth, a word, bubbles. The mouth (the dark opening in
+   the lid) is centred at 47.5cqw / -6.6cqw; the crown's pool (51% across its width) sits on it */
+.fz__crown { left: 39.85cqw; top: -15.5cqw; width: 15cqw; aspect-ratio: 1.564; z-index: 6; transform-origin: 51% 100%; opacity: 0; pointer-events: none; }
+.fz__bubs { left: 41.5cqw; top: -9cqw; width: 12cqw; height: 4cqw; z-index: 6; pointer-events: none; }
 .fz__bubs i, .fz-fly i, .fz-lid b {
   position: absolute; border-radius: 50%; opacity: 0;
   background: radial-gradient(circle at 32% 30%, #fff 0 13%, transparent 17%), radial-gradient(circle, rgba(255, 244, 234, 0.12) 0 56%, rgba(255, 244, 234, 0.85) 64% 70%, transparent 73%);
@@ -1312,7 +1313,7 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .fz__bubs i:nth-child(5) { left: 36%; width: 0.9cqw; }
 .fz__bubs i:nth-child(6) { left: 56%; width: 1.7cqw; }
 .fz__pssst {
-  left: 61cqw; top: -15cqw; z-index: 7; font-size: 4.6cqw; font-weight: 900; font-stretch: 125%; letter-spacing: -0.02em; color: var(--cream);
+  left: 56cqw; top: -17cqw; z-index: 7; font-size: 4.6cqw; font-weight: 900; font-stretch: 125%; letter-spacing: -0.02em; color: var(--cream);
   -webkit-text-stroke: 0.05em var(--berry); paint-order: stroke fill; text-shadow: 0.05em 0.07em 0 var(--berry); transform: rotate(-10deg); opacity: 0; pointer-events: none;
 }
 /* the still of 05: the can is open */
