@@ -677,9 +677,10 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em;
 }
 .pj__dot:disabled { cursor: default; }
-.pj__dot--purr, .pj__dot--court, .pj__dot--fizz { border: 0; }
+.pj__dot--purr, .pj__dot--court, .pj__dot--fizz, .pj__dot--afterlight { border: 0; }
 .pj__dot--court .pj__face { background: radial-gradient(80% 70% at 50% 30%, #2a3a9a 0%, #0a0e22 70%); }
 .pj__dot--fizz .pj__face { background: radial-gradient(90% 80% at 34% 24%, #ff8ab2 0%, #ff4f8b 55%, #e8326f 100%); }
+.pj__dot--afterlight .pj__face { background: radial-gradient(90% 70% at 50% 100%, #8c3a1b 0%, #2a1420 45%, #07080c 80%); }
 .pj__dot:not(.is-active):not(:disabled) { opacity: 0.6; transition: opacity 0.25s; }
 .pj__dot:not(.is-active):not(:disabled):hover { opacity: 1; }
 .pj__face {
@@ -770,7 +771,7 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 /* one set of brief, board and artboards per project; only the current one is shown */
 .pj-set { position: absolute; inset: 0; }
 .pr:not([data-pj="purr"]) .pj-set[data-set="purr"], .pr:not([data-pj="court"]) .pj-set[data-set="court"],
-.pr:not([data-pj="fizz"]) .pj-set[data-set="fizz"] { display: none; }
+.pr:not([data-pj="fizz"]) .pj-set[data-set="fizz"], .pr:not([data-pj="afterlight"]) .pj-set[data-set="afterlight"] { display: none; }
 .pr__brief, .pr__board, .ab { position: absolute; visibility: hidden; opacity: 0; }
 .pr[data-step="1"] .pr__brief,
 .pr[data-step="2"] .pr__board,
@@ -861,7 +862,7 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .bn__guides::before { content: ""; position: absolute; left: 50%; top: -6cqw; bottom: -6cqw; border-left: 1px solid rgba(226, 32, 140, 0.5); }
 .pr[data-step="3"] .bn__guides { opacity: 1; }
 .bn__safe { inset: 0; display: none; opacity: 0; }
-.bn--9x16 .bn__safe, .bn--story .bn__safe { display: block; }
+.bn--9x16 .bn__safe, .bn--story .bn__safe, .bn--char .bn__safe { display: block; }
 .pr[data-step="4"] .bn__safe { opacity: 1; }
 .bn__safe i {
   position: absolute; left: 0; right: 0; display: grid; place-items: center;
@@ -1437,6 +1438,242 @@ html:not(.is-lite) .pr[data-step="5"]:not(.is-paused) .pr__live b { animation: r
 .pr.is-paused .pr__icon { width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 9px; border-color: transparent transparent transparent currentColor; }
 
 /* ==========================================================================
+   AFTERLIGHT (Process, project 4): key art for a made-up sci-fi film, composited from
+   photographs (tools/build_afterlight.py cuts and grades them into media/process/afterlight).
+   Every banner is the same stack of layers, back to front: sky, planet, dune, hero, dust,
+   grade, title, billing block (and the app's chrome); sizes in cqw of each banner. In 03 the
+   one-sheet comes apart into those layers in 3D and goes back together (js), so the layers
+   are wrappers of their own: the parts inside them keep their transforms for the moves
+   between the steps.
+   ========================================================================== */
+.pj-set[data-set="afterlight"] .pr__board {
+  background-color: #121216; background-image: radial-gradient(rgba(241, 230, 210, 0.08) 1px, transparent 1.3px); background-size: 18px 18px;
+}
+.pj-set[data-set="afterlight"] .brief__line strong { font-size: 4.1cqw; }
+/* the labels on the board: the parts are scaled there, the labels shouldn't be */
+.pr[data-step="2"] .ab--key .al [data-label]::after {
+  top: calc(100% + 1.6cqw / var(--bs, 1)); color: rgba(241, 230, 210, 0.6); font-size: calc(1.9cqw / var(--bs, 1)); text-shadow: none;
+}
+.ab--sheet { left: 32%; top: 6.5%; width: 36%; }
+.ab--char { left: 28.7%; top: 7%; width: 14.4%; }
+.ab--app { left: 46.1%; top: 7%; width: 45.5%; }
+.ab--bull { left: 8.4%; top: 56.5%; width: 83.2%; }
+.pr[data-step="4"] .ab--sheet, .pr[data-step="5"] .ab--sheet { left: 8.4%; top: 7%; width: 17.3%; }
+.pj-set[data-set="afterlight"] .ab__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }   /* (narrow frames: never into the next one's) */
+
+.bn.al { --ivory: #f1e6d2; --amber: #e08a3c; --rust: #8c3a1b; --space: #07080c; --visor: #8fd3e8; color: var(--ivory); perspective: 240cqw; }
+.bn--sheet { aspect-ratio: 27 / 40; }
+.bn--char { aspect-ratio: 9 / 16; }
+.bn--app { aspect-ratio: 16 / 9; }
+.bn--bull { aspect-ratio: 48 / 14; }
+.al__stack { inset: 0; transform-style: preserve-3d; transform-origin: 50% 55%; }
+.al__l { position: absolute; inset: 0; }
+.al__l > *, .al__stack > .bn__guides { position: absolute; margin: 0; }
+.al picture, .al img { display: block; width: 100%; height: auto; }
+/* each layer's frame and name, seen only while the one-sheet is pulled apart */
+.al__name {
+  inset: 0; display: block; padding: 2.2cqw 2.6cqw; border: 1px solid rgba(241, 230, 210, 0.5); background: rgba(241, 230, 210, 0.025);
+  opacity: 0; pointer-events: none; color: var(--ivory); font: normal 600 3.6cqw/1 var(--f-label); font-stretch: 80%; letter-spacing: 0.1em; text-transform: uppercase;
+}
+/* 01 sky: night over a warm horizon, --h is where the light sits; the stars fade out above it */
+.al .bn__bg {
+  --h: 64%; inset: 0;
+  background: linear-gradient(180deg, #040509 0%, #0b0a12 calc(var(--h) - 30%), #261320 calc(var(--h) - 13%), #7a3218 calc(var(--h) - 4%), #e08a3c var(--h), #7a3218 calc(var(--h) + 8%), #1e0d0a 100%);
+}
+.al .bn__bg::after {
+  opacity: 0.85; background: url("../media/process/afterlight/stars.webp") 0 0 / 40cqw repeat;
+  -webkit-mask-image: linear-gradient(#000 calc(var(--h) - 36%), transparent calc(var(--h) - 10%)); mask-image: linear-gradient(#000 calc(var(--h) - 36%), transparent calc(var(--h) - 10%));
+}
+/* 02 the planet: the disc's centre is at 53.2% / 52.3% of the plate; it leans a little, and glows */
+.al__planet { left: -51cqw; top: 20cqw; width: 190cqw; }
+.al__planet picture { transform: rotate(-7deg); transform-origin: 53.2% 52.3%; }
+.al__planet::before {
+  content: ""; position: absolute; left: 53.2%; top: 52.3%; width: 52%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(224, 138, 60, 0.3), rgba(224, 138, 60, 0.1) 62%, transparent);
+}
+/* 03 the dune, 04 the hero walking up its lit side */
+.al__dune { left: -118cqw; top: 66cqw; width: 230cqw; }
+.al__hero { left: 31cqw; top: 88.4cqw; width: 8cqw; aspect-ratio: 537 / 1236; }
+.al__hero > picture, .al__ants { position: absolute; inset: 0; }
+.al__raw, .al__ants { opacity: 0; }
+/* (the selection is drawn on with a clip-path on its wrapper: on the <svg> itself it wouldn't run on the compositor) */
+.al__ants svg { display: block; width: 100%; height: 100%; overflow: visible; fill: none; stroke: #18181b; stroke-width: 1.3px; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+.pr[data-step="5"] .al__hero { transform-origin: 50% 100%; }   /* he gets smaller from his feet */
+.al__shadow { position: absolute; left: -36%; right: -16%; bottom: -3%; height: 8%; border-radius: 50%; background: radial-gradient(closest-side, rgba(10, 4, 6, 0.8), transparent); }
+/* the close-up (the character poster's hero); the visor (an ellipse at 44.5% / 7.8%, 34.5% × 49.3%
+   of the photo) reflects the planet, mirrored */
+.al__face { display: none; aspect-ratio: 1000 / 824; }
+.al__visor { position: absolute; left: 44.5%; top: 7.8%; width: 34.5%; height: 49.3%; overflow: hidden; clip-path: ellipse(50% 50% at 50% 50%); mix-blend-mode: screen; }
+.al__visor picture { position: absolute; left: 42%; top: 18.2%; width: 60%; scale: -1 1; opacity: 0.8; }
+.al__glint {
+  position: absolute; top: -10%; bottom: -10%; left: 0; width: 24%; transform: translateX(-130%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 246, 232, 0.4), transparent);
+}
+/* 05 dust, 06 the grade */
+.al__dust { left: -20cqw; top: 58cqw; width: 140cqw; }
+.al__dust picture { opacity: 0.42; }
+.al__grade { inset: 0; background: linear-gradient(180deg, rgba(4, 4, 7, 0.55) 0%, transparent 20%, transparent 66%, rgba(4, 4, 7, 0.86) 84%, #040407 100%); }
+/* 07 the title: wide and light, like a film's; a hot copy of it shows through a window that
+   crosses it (the shine), with an anamorphic streak (js) */
+.al__tag, .al__title, .al__date { left: 0; width: 100cqw; text-align: center; white-space: nowrap; text-transform: uppercase; }
+.al__tag { top: 9cqw; font-size: 2.4cqw; font-weight: 500; font-stretch: 110%; letter-spacing: 0.42em; text-indent: 0.42em; color: rgba(241, 230, 210, 0.82); }
+.al__title {
+  top: 116cqw; font-size: 9.2cqw; font-weight: 300; font-stretch: 125%; line-height: 1; letter-spacing: 0.2em; text-indent: 0.2em;
+  text-shadow: 0 0 0.6em rgba(224, 138, 60, 0.35);
+}
+.al__title > span { display: block; }
+.al__shine {
+  position: absolute; left: 0; top: -0.3em; width: 26%; height: 1.6em; overflow: hidden; opacity: 0; transform: translateX(-100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 38%, #000 62%, transparent); mask-image: linear-gradient(90deg, transparent, #000 38%, #000 62%, transparent);
+}
+.al__shine > span { position: absolute; left: 0; top: 0.3em; width: calc(100% / 0.26); color: #fff8ec; text-shadow: 0 0 0.25em #ffd9a8, 0 0 0.8em rgba(224, 138, 60, 0.9); }
+.al__flare {
+  left: 8cqw; top: 120.4cqw; width: 84cqw; height: 0.45cqw; opacity: 0; border-radius: 50%; filter: blur(0.12cqw);
+  background: linear-gradient(90deg, transparent, rgba(143, 211, 232, 0.85) 46%, #fff 50%, rgba(255, 196, 130, 0.85) 54%, transparent);
+}
+.al__date { top: 129.5cqw; font-size: 2.1cqw; font-weight: 600; font-stretch: 100%; letter-spacing: 0.32em; text-indent: 0.32em; color: var(--amber); }
+.al__date i { font-style: normal; }
+.al__date i + i { display: none; }
+/* 08 the billing block: tall, narrow type, names in bold */
+.al__bill {
+  left: 13cqw; top: 135.5cqw; width: 74cqw; font-size: 1.32cqw; font-weight: 400; font-stretch: 62%; line-height: 1.15; letter-spacing: 0.04em;
+  text-align: center; text-transform: uppercase; color: rgba(241, 230, 210, 0.58);
+}
+.al__bill b { font-weight: 700; font-size: 1.4em; }
+/* the streaming app's chrome */
+.al__l--ui { display: none; }
+.al__nav {
+  left: 0; right: 0; top: 0; height: 6.6cqw; display: flex; align-items: center; gap: 2.6cqw; padding: 0 4cqw;
+  background: linear-gradient(rgba(4, 4, 7, 0.85), transparent); font-size: 1.45cqw; font-weight: 600; color: rgba(241, 230, 210, 0.66);
+}
+.al__nav b { margin-right: 1.5cqw; font-size: 2.4cqw; font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; color: var(--ivory); }
+.al__nav span:first-of-type { color: var(--ivory); }
+.al__new {
+  left: 5cqw; top: 13cqw; display: flex; align-items: center; gap: 0.8cqw; color: var(--amber);
+  font-size: 1.25cqw; font-weight: 700; font-stretch: 100%; letter-spacing: 0.24em; text-transform: uppercase;
+}
+.al__new::before { content: ""; width: 2.4cqw; height: 1px; background: currentColor; }
+.al__btns { left: 5cqw; top: 33cqw; display: flex; gap: 1.2cqw; font-size: 1.45cqw; font-weight: 700; white-space: nowrap; }
+.al__btns span { padding: 0.8em 1.4em; border-radius: 0.4em; background: var(--ivory); color: #0a0a0b; }
+.al__btns span + span { background: rgba(241, 230, 210, 0.14); color: var(--ivory); }
+.al__bar { left: 5cqw; top: 40.6cqw; width: 28cqw; height: 0.36cqw; background: rgba(241, 230, 210, 0.2); }
+.al__bar i { position: absolute; inset: 0; background: var(--amber); transform: scaleX(0.18); transform-origin: 0 0; }
+.al__row { left: 5cqw; top: 44.6cqw; display: flex; gap: 1.2cqw; }
+.al__row i { flex: none; width: 15.4cqw; height: 8.66cqw; border-radius: 0.5cqw; box-shadow: inset 0 0 0 1px rgba(241, 230, 210, 0.08); }
+.al__row i:nth-child(1) { background: linear-gradient(135deg, #6a2e1a, #1c0f0c); }
+.al__row i:nth-child(2) { background: linear-gradient(160deg, #20345a, #0c1220); }
+.al__row i:nth-child(3) { background: linear-gradient(135deg, #3d4a2c, #12160d); }
+.al__row i:nth-child(4) { background: linear-gradient(150deg, #5a1f3c, #160a12); }
+.al__row i:nth-child(5) { background: linear-gradient(135deg, #2c2c34, #0f0f12); }
+.al__dark { inset: 0; z-index: 5; background: #020203; opacity: 0; pointer-events: none; }
+.al .bn__pal, .al .bn__guides, .al .bn__safe, .al .bn__scan { z-index: 6; }
+.al .bn__guides { border-color: rgba(143, 211, 232, 0.7); }
+.al .bn__guides::before { border-color: rgba(143, 211, 232, 0.45); }
+.al .bn__safe i { color: rgba(241, 230, 210, 0.6); background: repeating-linear-gradient(45deg, rgba(241, 230, 210, 0.13) 0 1.4cqw, transparent 1.4cqw 2.8cqw); }
+.al .bn__pal i { box-shadow: inset 0 0 0 1px rgba(241, 230, 210, 0.25); }
+.al .bn__pal i:nth-child(1) { background: #07080c; }
+.al .bn__pal i:nth-child(2) { background: #e08a3c; }
+.al .bn__pal i:nth-child(3) { background: #8c3a1b; }
+.al .bn__pal i:nth-child(4) { background: #f1e6d2; }
+.al .bn__pal i:nth-child(5) { background: #8fd3e8; }
+
+/* character poster 9:16 · the close-up, the planet small above, Meta's safe zones */
+.bn--char .bn__bg { --h: 62%; }
+.bn--char .bn__safe { display: block; }
+.bn--char .al__planet { left: -12cqw; top: 9cqw; width: 112cqw; }
+.bn--char .al__dune { left: -70cqw; top: 84cqw; width: 210cqw; }
+.bn--char .al__hero, .bn--char .al__bill { display: none; }
+.bn--char .al__face { display: block; left: -36cqw; top: 55cqw; width: 150cqw; }
+.bn--char .al__dust { left: -30cqw; top: 88cqw; width: 160cqw; }
+.bn--char .al__grade { background: linear-gradient(180deg, rgba(4, 4, 7, 0.5), transparent 18%, transparent 52%, rgba(4, 4, 7, 0.86) 68%, #040407 84%); }
+.bn--char .al__tag { top: 110cqw; font-size: 2.6cqw; }
+.bn--char .al__title { top: 117cqw; }
+.bn--char .al__flare { top: 121.4cqw; }
+.bn--char .al__date { top: 130.5cqw; font-size: 2.6cqw; }
+.al__cta { display: none; }
+.bn--char .al__cta {
+  display: block; left: 27cqw; top: 137cqw; width: 46cqw; padding: 0.75em 0; border: 1px solid rgba(241, 230, 210, 0.45); border-radius: 999px;
+  background: rgba(241, 230, 210, 0.1); text-align: center; font-size: 2.5cqw; font-weight: 700; font-stretch: 100%; letter-spacing: 0.14em; text-transform: uppercase;
+}
+/* streaming app 16:9 · the art on the right, the app's type on the left */
+.bn--app .bn__bg { --h: 70%; }
+.bn--app .al__l--ui { display: block; }
+.bn--app .al__planet { left: 18cqw; top: -12cqw; width: 125cqw; }
+/* (the wide frames: the ring fades out before it reaches the type) */
+.bn--app .al__planet picture, .bn--bull .al__planet picture { -webkit-mask-image: linear-gradient(90deg, transparent 18%, #000 40%); mask-image: linear-gradient(90deg, transparent 18%, #000 40%); }
+.bn--app .al__dune { left: -8cqw; top: 28cqw; width: 125cqw; }
+.bn--app .al__hero { left: 61cqw; top: 31cqw; width: 5cqw; }
+.bn--app .al__dust { left: 20cqw; top: 16cqw; width: 90cqw; }
+.bn--app .al__bill { display: none; }
+.bn--app .al__grade { background: linear-gradient(90deg, rgba(4, 4, 7, 0.94) 0%, rgba(4, 4, 7, 0.7) 30%, transparent 58%), linear-gradient(0deg, #040407 0%, rgba(4, 4, 7, 0.8) 22%, transparent 45%); }
+.bn--app :is(.al__tag, .al__title, .al__date), .bn--bull :is(.al__tag, .al__title, .al__date) { width: auto; text-align: left; text-indent: 0; }
+.bn--app .al__title { left: 5cqw; top: 16.5cqw; font-size: 5.6cqw; }
+.bn--app .al__tag { left: 5cqw; top: 25cqw; font-size: 1.45cqw; letter-spacing: 0.3em; }
+.bn--app .al__date { left: 5cqw; top: 28.6cqw; font-size: 1.25cqw; letter-spacing: 0.14em; color: rgba(241, 230, 210, 0.7); }
+.bn--app .al__date i:first-child { display: none; }
+.bn--app .al__date i + i { display: inline; }
+.bn--app .al__flare { left: 2cqw; top: 19.1cqw; width: 52cqw; height: 0.3cqw; }
+/* bulletin 14×48 ft · the widest frame: the planet huge, the walker tiny, the title on the left */
+.bn--bull .bn__bg { --h: 78%; }
+.bn--bull .al__planet { left: 17cqw; top: -5cqw; width: 100cqw; }
+.bn--bull .al__dune { left: -8cqw; top: 8cqw; width: 112cqw; }
+.bn--bull .al__hero { left: 41cqw; top: 13.4cqw; width: 3cqw; }
+.bn--bull .al__dust { left: 0; top: -4cqw; width: 100cqw; }
+.bn--bull .al__bill { display: none; }
+.bn--bull .al__grade { background: linear-gradient(90deg, rgba(4, 4, 7, 0.9) 0%, rgba(4, 4, 7, 0.5) 28%, transparent 46%); }
+.bn--bull .al__tag { left: 5.4cqw; top: 6.4cqw; font-size: 1.05cqw; }
+.bn--bull .al__title { left: 5cqw; top: 9.4cqw; font-size: 5cqw; }
+.bn--bull .al__flare { left: 2cqw; top: 11.8cqw; width: 38cqw; height: 0.25cqw; }
+.bn--bull .al__date { left: 5.4cqw; top: 17.6cqw; font-size: 1.1cqw; }
+
+/* 02 · the board (in one-sheet cqw; the sheet sits in the middle at 36% of the stage): the
+   plates on the left over a transparency grid, the hero being cut out in the middle, the close-up
+   and the type on the right */
+.bn--sheet .al__planet { --bx: -21cqw; --by: -14cqw; --bs: 0.35; }
+.bn--sheet .al__dune { --bx: 46cqw; --by: -26cqw; --bs: 0.288; }
+.bn--sheet .al__dust { --bx: -40cqw; --by: 34cqw; --bs: 0.3; }
+.bn--sheet .al__hero { --bx: 0cqw; --by: -80.4cqw; --bs: 4.8; }
+.bn--sheet .al__face { --bx: 107cqw; --by: 6cqw; --bs: 0.68; }
+.bn--sheet .al__tag { --bx: 106cqw; --by: 65cqw; --bs: 0.72; }
+.bn--sheet .al__title { --bx: 106cqw; --by: -34cqw; --bs: 0.72; }
+.bn--sheet .al__date { --bx: 106cqw; --by: -31cqw; --bs: 0.72; }
+.bn--sheet .al__bill { --bx: 95cqw; --by: -27cqw; --bs: 0.9; }
+.bn--sheet .bn__pal { left: 108cqw; top: 128cqw; gap: 2.2cqw; }
+.bn--sheet .bn__pal i { width: 7cqw; }
+.pr[data-step="2"] .ab > .bn--sheet .al__face { display: block; left: 0; top: 0; width: 100cqw; }
+.pr[data-step="2"] .ab > .bn--sheet :is(.al__planet, .al__dune, .al__dust, .al__hero) {
+  background: repeating-conic-gradient(#1d1d23 0 25%, #26262d 0 50%) 0 0 / 6cqw 6cqw;
+}
+.pr[data-step="2"] .ab > .bn--sheet .al__dust picture { opacity: 1; }
+.pr[data-step="2"] .ab > .bn--sheet :is(.al__grade, .al__shadow, .al__flare) { display: none; }
+.pr[data-step="2"] .ab > .bn--sheet .al__tag, .pr[data-step="2"] .ab > .bn--sheet .al__title, .pr[data-step="2"] .ab > .bn--sheet .al__date { text-align: left; text-indent: 0; }
+
+/* 03 · the key visual. Its layers clip themselves, so the sheet can come apart outside its frame
+   (but not while the parts are still flying in from the board) */
+.pr[data-step="3"] .ab > .bn--sheet { overflow: visible; }
+.pr[data-step="3"] .ab > .bn--sheet .al__l { overflow: hidden; }
+.pr[data-step="3"] .ab > .bn--sheet.is-flying .al__l { overflow: visible; }
+/* beside it, the layers panel, as in the app it was made in */
+.al-panel {
+  position: absolute; left: 71.5%; top: 17%; width: 20%; margin: 0; padding: 1cqw 0 0.4cqw; list-style: none; visibility: hidden; opacity: 0;
+  border: 1px solid var(--line-2); border-radius: 0.6cqw; background: rgba(18, 18, 22, 0.94); color: rgba(241, 230, 210, 0.78);
+  font: normal 600 1.05cqw/1 var(--f-label); font-stretch: 85%; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.al-panel::before { content: "Layers"; display: block; padding: 0 1.2cqw 0.9cqw; color: var(--text); letter-spacing: 0.1em; }
+.pr[data-step="3"] .al-panel { visibility: visible; opacity: 1; }
+.al-panel li { display: flex; align-items: center; gap: 0.9cqw; padding: 0.72cqw 1.2cqw; border-top: 1px solid rgba(241, 230, 210, 0.07); }
+.al-panel li::before { content: ""; width: 0.9cqw; height: 0.55cqw; border-radius: 50%; border: 1px solid currentColor; opacity: 0.7; }   /* the eye */
+.al-panel i { width: 2.6cqw; aspect-ratio: 1.45; border-radius: 0.2cqw; box-shadow: inset 0 0 0 1px rgba(241, 230, 210, 0.15); }
+.al-panel li:nth-child(1) i { background: repeating-linear-gradient(0deg, rgba(241, 230, 210, 0.5) 0 1px, #15151a 1px 3px); }
+.al-panel li:nth-child(2) i { background: #15151a radial-gradient(60% 30% at 50% 50%, #f1e6d2, transparent); }
+.al-panel li:nth-child(3) i { background: linear-gradient(#040407, transparent 40%, #040407); }
+.al-panel li:nth-child(4) i { background: #15151a radial-gradient(closest-side, rgba(255, 226, 190, 0.6), transparent); }
+.al-panel li:nth-child(5) i { background: #15151a radial-gradient(18% 40% at 50% 55%, #f1e6d2, transparent); }
+.al-panel li:nth-child(6) i { background: linear-gradient(170deg, transparent 45%, #b8652c 46%, #3a160c); }
+.al-panel li:nth-child(7) i { background: #07080c radial-gradient(circle at 50% 55%, #e0b07a 0 26%, transparent 28%); }
+.al-panel li:nth-child(8) i { background: linear-gradient(#040509, #261320 70%, #e08a3c); }
+
+/* ==========================================================================
    ABOUT (home). The portrait runs the whole height on the left. Beside it the
    intro stands free, big, with three numbers; under it two columns of cards,
    each card cut for what it holds: the experience on a rail with a dot per
@@ -1832,6 +2069,7 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .bn--poster .nc__lights { --bx: -70cqw; --by: 100cqw; --bs: 0.6; }
   .pr[data-step="2"] .bn--poster .nc__bug { left: 104cqw; top: 22cqw; }
   .bn--poster .bn__pal { left: 104cqw; top: 52cqw; }
+  .al-panel { display: none; }   /* (its type would be a few pixels high) */
   /* fizz: the label nearly as wide as the stage, the board squeezed into it; then the can on the left */
   .ab--label { left: 3%; top: 12%; width: 92%; }
   .pr[data-step="4"] .ab--label, .pr[data-step="5"] .ab--label { left: -23%; top: 23.9%; width: 72%; }

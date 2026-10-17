@@ -1480,6 +1480,116 @@
       [5250, 'rotate(-1.6deg)'], [7000, 'rotate(0deg)']], t0);
   }
 
+  /* ------------------------------------------------ Afterlight: project 4 of the demo
+     Key art for a made-up sci-fi film, composited from photographs (the layers are images
+     in media/process/afterlight, in the set's markup, so they load when the set is built).
+     03 pulls the one-sheet apart into its layers in 3D and puts it back together; in 05
+     every format is a motion poster: out of the black, the camera creeps in, the planet
+     rises behind the dune, dust blows across and the title catches the light. */
+  const AL_DUR = [0, 4400, 4200, 6400, 4300, 16000];   // 05 runs the 8 s loop twice
+  const AL_LAYERS = ['sky', 'planet', 'dune', 'hero', 'dust', 'grade', 'type', 'bill'];
+
+  // 03: the layers fan out along z while the stack turns to show them edge on, then close up
+  function alApart(bn, t0) {
+    const stack = $('.al__stack', bn);
+    if (!stack) return;
+    const CUT = 'cubic-bezier(.75,0,.15,1)';
+    const T = 2600, gap = bn.offsetWidth * 0.2, mid = (AL_LAYERS.length - 1) / 2;
+    const o = (ms) => ms / T;
+    const a = (el, kf) => el && el.animate(kf, { duration: T, delay: t0, fill: 'both', easing: 'linear' });
+    const TURN = 'translateX(-20%) rotateX(14deg) rotateY(-38deg) scale(.62)';   // (left: the layers panel is on the right)
+    a(stack, [{ transform: 'none', offset: 0, easing: CUT }, { transform: TURN, offset: o(900) }, { transform: TURN, offset: o(1700), easing: CUT }, { transform: 'none', offset: 1 }]);
+    AL_LAYERS.forEach((n, i) => {
+      const z = `translateZ(${((i - mid) * gap).toFixed(1)}px)`;
+      a($('.al__l--' + n, bn), [{ transform: 'translateZ(0px)', offset: 0, easing: CUT }, { transform: z, offset: o(900) },
+        { transform: z, offset: o(1700), easing: CUT }, { transform: 'translateZ(0px)', offset: 1 }]);
+      a($(`.al__l--${n} > .al__name`, bn), [{ opacity: 0, offset: 0 }, { opacity: 0, offset: o(500) }, { opacity: 1, offset: o(900) },
+        { opacity: 1, offset: o(1500) }, { opacity: 0, offset: o(1900) }, { opacity: 0, offset: 1 }]);
+    });
+  }
+
+  // steps 03-04: the dust drifts a little; on the board (02) everything holds still
+  function alLife(bn, t0, phase, n) {
+    const dust = $('.al__dust', bn);
+    if (n === 2 || !dust || !dust.getClientRects().length) return;
+    const k = bn.offsetWidth / 100;
+    dust.animate([{ translate: `${(-3 * k).toFixed(1)}px 0` }, { translate: `${(3 * k).toFixed(1)}px 0` }],
+      { duration: 9000, delay: t0, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out', iterationStart: phase, fill: 'both' });
+  }
+
+  function afterlight(set, t0) {
+    const T = 8000;
+    const SMOOTH = 'cubic-bezier(.45,0,.55,1)', OUT = 'cubic-bezier(.12,.72,.32,1)';
+    // keyframes at absolute ms, easing per segment; every part loops in step. Hidden parts
+    // (the walker on the close-up, ...) get nothing: an animation on them would run on the main thread
+    const at = (list, easing) => list.map(([ms, p, e]) => ({ offset: Math.min(1, ms / T), easing: e || easing || SMOOTH, ...p }));
+    const loop = (el, list, easing) => el && el.getClientRects().length &&
+      el.animate(at(list, easing), { duration: T, delay: t0, iterations: Infinity, fill: 'both', easing: 'linear' });
+    const op = (list) => list.map(([ms, o, e]) => [ms, { opacity: o }, e]);
+    const tf = (list) => list.map(([ms, v, e]) => [ms, { transform: v }, e]);
+    $$('.bn.al', set).forEach((bn) => {
+      const k = bn.offsetWidth / 100;                    // 1cqw of this banner, in px
+      const px = (v) => `${(v * k).toFixed(1)}px`;
+      const L = (n) => $('.al__l--' + n, bn);
+      // out of the black, and back into it
+      loop($('.al__dark', bn), op([[0, 1], [900, 0, OUT], [7300, 0], [7900, 1], [8000, 1]]), 'linear');
+      // the camera creeps in; the far layers move less than the near ones
+      loop($('.al__stack', bn), tf([[0, 'scale(1)'], [7900, 'scale(1.07)'], [8000, 'scale(1)']]), 'linear');
+      loop(L('sky'), tf([[0, `translateY(${px(-1.5)})`], [7900, 'translateY(0px)'], [8000, `translateY(${px(-1.5)})`]]), 'linear');
+      loop(L('dune'), tf([[0, 'translateY(0px)'], [7900, `translateY(${px(1.2)})`], [8000, 'translateY(0px)']]), 'linear');
+      // the planet comes up from behind the dune (and in the visor, mirrored)
+      loop(L('planet'), tf([[0, `translateY(${px(12)})`], [500, `translateY(${px(12)})`, OUT], [5200, 'translateY(0px)'], [8000, 'translateY(0px)']]));
+      const vp = $('.al__visor picture', bn);
+      if (vp) loop(vp, tf([[0, `translateY(${(vp.offsetHeight * 1.1).toFixed(1)}px)`], [500, `translateY(${(vp.offsetHeight * 1.1).toFixed(1)}px)`, OUT],
+        [5200, 'translateY(0px)'], [8000, 'translateY(0px)']]));
+      loop($('.al__glint', bn), tf([[0, 'translateX(-130%) skewX(-18deg)'], [4400, 'translateX(-130%) skewX(-18deg)'], [5200, 'translateX(520%) skewX(-18deg)'],
+        [8000, 'translateX(520%) skewX(-18deg)']]));
+      // he walks on, up the slope, smaller and smaller. Low gravity: three slow, soft bounces a
+      // loop (2.6 s each) and a gentle rock from foot to foot; sampled finely, so it stays smooth.
+      // The bounce is a share of his own height, so he floats the same in every format
+      const hero = $('.al__hero', bn);
+      if (hero && hero.getClientRects().length) {
+        const W = [], HOP = 7900 / 3, up = hero.offsetHeight * 0.04;
+        for (let t = 0; t < 7900; t += 100) {
+          const u = t / 7900;
+          const bob = -up * (1 - Math.cos((2 * Math.PI * t) / HOP)) / 2;
+          const rock = 1.6 * Math.sin((Math.PI * t) / HOP);
+          W.push([t, `translate(${px(-1.6 * u)},${(-1.4 * u * k + bob).toFixed(1)}px) rotate(${rock.toFixed(2)}deg) scale(${(1 - 0.06 * u).toFixed(3)})`, 'linear']);
+        }
+        W.push([7900, `translate(${px(-1.6)},${px(-1.4)}) rotate(0deg) scale(.94)`], [8000, 'translate(0px,0px) rotate(0deg) scale(1)']);
+        loop(hero, tf(W), 'linear');
+      }
+      loop($('.al__dust', bn), [[0, { opacity: 0, transform: `translateX(${px(-14)})` }], [1600, { opacity: 1, transform: `translateX(${px(-8.4)})` }],
+        [6200, { opacity: 1, transform: `translateX(${px(7.7)})` }], [7900, { opacity: 0, transform: `translateX(${px(14)})` }],
+        [8000, { opacity: 0, transform: `translateX(${px(-14)})` }]], 'linear');
+      // the type: the line, the title, then the light runs across it with a streak
+      loop($('.al__tag', bn), op([[0, 0], [1000, 0], [1900, 1], [8000, 1]]));
+      const ti = $('.al__title', bn);
+      loop(ti, [[0, { opacity: 0, transform: `translateY(${px(1.2)})` }], [1700, { opacity: 0, transform: `translateY(${px(1.2)})` }, OUT],
+        [2800, { opacity: 1, transform: 'translateY(0px)' }], [8000, { opacity: 1, transform: 'translateY(0px)' }]]);
+      const sh = ti && $('.al__shine', ti);
+      if (sh && ti.getClientRects().length) {
+        // the window and the copy in it move the same way in opposite directions: the copy holds still
+        const wt = ti.offsetWidth, w = sh.offsetWidth, S0 = 2900, S1 = 3900;
+        loop(sh, [[0, { opacity: 1, transform: `translateX(${-w}px)` }], [S0, { opacity: 1, transform: `translateX(${-w}px)` }, SMOOTH],
+          [S1, { opacity: 1, transform: `translateX(${wt}px)` }], [8000, { opacity: 1, transform: `translateX(${wt}px)` }]]);
+        loop(sh.firstElementChild, tf([[0, `translateX(${w}px)`], [S0, `translateX(${w}px)`, SMOOTH], [S1, `translateX(${-wt}px)`], [8000, `translateX(${-wt}px)`]]));
+      }
+      loop($('.al__flare', bn), [[0, { opacity: 0, transform: 'scaleX(.2)' }], [3150, { opacity: 0, transform: 'scaleX(.2)' }, OUT],
+        [3450, { opacity: 1, transform: 'scaleX(1.1)' }], [4200, { opacity: 0, transform: 'scaleX(1.5)' }], [8000, { opacity: 0, transform: 'scaleX(.2)' }]]);
+      loop($('.al__date', bn), op([[0, 0], [3700, 0], [4500, 1], [8000, 1]]));
+      loop($('.al__bill', bn), op([[0, 0], [4000, 0], [4800, 1], [8000, 1]]));
+      loop($('.al__cta', bn), op([[0, 0], [4400, 0], [5100, 1], [8000, 1]]));
+      // the app: the shelf slides in, the trailer plays, Play asks to be pressed
+      loop($('.al__row', bn), [[0, { opacity: 0, transform: `translateX(${px(8)})` }], [700, { opacity: 0, transform: `translateX(${px(8)})` }, OUT],
+        [1900, { opacity: 1, transform: 'translateX(0px)' }], [8000, { opacity: 1, transform: 'translateX(0px)' }]]);
+      loop($('.al__new', bn), op([[0, 0], [1200, 0], [1900, 1], [8000, 1]]));
+      loop($('.al__btns', bn), op([[0, 0], [3300, 0], [4000, 1], [8000, 1]]));
+      loop($('.al__btns span', bn), tf([[0, 'scale(1)'], [5000, 'scale(1)'], [5200, 'scale(1.08)'], [5500, 'scale(1)'], [8000, 'scale(1)']]));
+      loop($('.al__bar i', bn), tf([[0, 'scaleX(.04)'], [7900, 'scaleX(1)'], [8000, 'scaleX(.04)']]), 'linear');
+    });
+  }
+
   function setupProcess() {
     const pr = $('[data-pr]');
     if (!pr) return;
@@ -1671,6 +1781,25 @@
         },
       },
     };
+    PJ.afterlight = {
+      dur: AL_DUR, load() {}, life: alLife,
+      motion: () => afterlight(set, 250),
+      keep: () => [bn1, $('.bn--app', set)],
+      // 02: the hero is cut out of the studio shot: a selection runs round him, the backdrop goes
+      board() {
+        const h = $('.al__hero', bn1);
+        anim($('.al__raw', h), [{ opacity: 1 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }], { duration: 3000, easing: 'linear' });
+        anim($('.al__ants', h), [{ opacity: 1, clipPath: 'inset(0 0 100% 0)' }, { opacity: 1, clipPath: 'inset(0 0 0% 0)', offset: 0.4 },
+          { opacity: 1, clipPath: 'inset(0 0 0% 0)', offset: 0.75 }, { opacity: 0, clipPath: 'inset(0 0 0% 0)' }], { duration: 2200, delay: 1100, easing: 'linear' });
+      },
+      // 03: the key visual comes apart into its layers and back; the panel lights them one by one
+      key() {
+        alApart(bn1, 3300);
+        anim($('.al-panel', set), [{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 600, delay: 900 });
+        const rows = $$('.al-panel li', set);
+        rows.forEach((li, i) => anim(li, [{ opacity: 0.35 }, { opacity: 1 }], { duration: 300, delay: 3500 + (rows.length - 1 - i) * 90 }));
+      },
+    };
     const ORDER = Object.keys(PJ).filter((k) => SETS[k]);
     let pj = pr.dataset.pj || ORDER[0], P, set, brief, board, abs, ab1, others, bns, bn1, caps;
     function bind() {
@@ -1755,6 +1884,7 @@
         anim($('.bn__guides', bn1), [{ opacity: 0, clipPath: 'inset(0 100% 0 0)' }, { opacity: 1, clipPath: 'inset(0 0% 0 0)', offset: 0.22 },
           { opacity: 1, clipPath: 'inset(0 0% 0 0)', offset: 0.8 }, { opacity: 0, clipPath: 'inset(0 0% 0 0)' }], { duration: 2500, delay: 800, easing: 'linear' });
         anim($('.ab__label', ab1), [{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 1100 });
+        if (P.key) P.key();
         P.life(bn1, 300, 0, 3);
         probe(1200, () => (full = false));
       },
@@ -1788,7 +1918,7 @@
             : r.width && anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: d + 500 })));
           P.life($('.bn', a), d, (k + 1) / 4, 4);
         });
-        anim($('.bn--9x16 .bn__safe, .bn--story .bn__safe', set), [{ opacity: 0 }, { opacity: 1, offset: 0.15 }, { opacity: 1, offset: 0.8 }, { opacity: 0 }],
+        anim($('.bn--9x16 .bn__safe, .bn--story .bn__safe, .bn--char .bn__safe', set), [{ opacity: 0 }, { opacity: 1, offset: 0.15 }, { opacity: 1, offset: 0.8 }, { opacity: 0 }],
           { duration: 2300, delay: 1400, easing: 'linear' });
         probe(1200, () => { full = false; calm(); });
       },
