@@ -932,9 +932,10 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
    ========================================================================== */
 .pj-set[data-set="court"] .pr__board { background-color: #0f1430; background-image: radial-gradient(rgba(242, 239, 230, 0.09) 1px, transparent 1.3px); background-size: 18px 18px; }
 .pr[data-step="2"] .ab--key .nc [data-label]::after { color: rgba(242, 239, 230, 0.55); font-size: 3.2cqw; top: calc(100% + 2.4cqw); }
-.ab--tv { left: 4%; top: 18.2%; width: 44%; }
-.ab--poster { left: 51%; top: 7.5%; width: 22%; }
-.ab--story { left: 76.5%; top: 7.5%; width: 19.5%; }
+/* the passer on TV faces left, so the TV sits on the right and lobs the ball left into the poster */
+.ab--story { left: 4.5%; top: 7.5%; width: 19.5%; }
+.ab--poster { left: 27%; top: 7.5%; width: 22%; }
+.ab--tv { left: 52%; top: 18.2%; width: 44%; }
 .ab--led { left: 4%; top: 70%; width: 92%; }
 .pr[data-step="2"] .ab--poster, .pr[data-step="3"] .ab--poster { left: 36%; top: 9%; width: 28%; }
 
@@ -1300,8 +1301,9 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .fz__wet i:nth-child(2) { left: 61%; top: 30%; scale: 0.8; }
 .fz__wet i:nth-child(3) { left: 76%; top: 8%; scale: 1.15; }
 /* the pssst: a crown of lemonade out of the mouth, a word, bubbles. The mouth (the dark opening in
-   the lid) is centred at 47.5cqw / -6.6cqw; the crown's pool (51% across its width) sits on it */
-.fz__crown { left: 39.85cqw; top: -15.5cqw; width: 15cqw; aspect-ratio: 1.564; z-index: 6; transform-origin: 51% 100%; opacity: 0; pointer-events: none; }
+   the lid) is centred at 47.5cqw / -6.6cqw; the crown's pool (51% across its width) sits on it and
+   reaches below its front rim, so no dark edge of the opening shows under the lemonade */
+.fz__crown { left: 39.85cqw; top: -14.2cqw; width: 15cqw; aspect-ratio: 1.564; z-index: 6; transform-origin: 51% 100%; opacity: 0; pointer-events: none; }
 .fz__bubs { left: 41.5cqw; top: -9cqw; width: 12cqw; height: 4cqw; z-index: 6; pointer-events: none; }
 .fz__bubs i, .fz-fly i, .fz-lid b {
   position: absolute; border-radius: 50%; opacity: 0;
@@ -1821,9 +1823,9 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .bn--1x1 .bn__cta { --bx: 34cqw; --by: -46cqw; }
   .bn--1x1 .bn__cat { --bx: -42cqw; --by: 2cqw; --bs: 0.72; }
   .bn--1x1 .bn__pal { left: -17cqw; top: 24cqw; }
+  .ab--story { left: 2%; top: 9%; width: 20%; }
+  .ab--poster { left: 24%; top: 9%; width: 27%; }
   .ab--tv { left: 53%; top: 18%; width: 45%; }
-  .ab--poster { left: 2%; top: 9%; width: 27%; }
-  .ab--story { left: 31%; top: 9%; width: 20%; }
   .ab--led { left: 2%; top: 74%; width: 96%; }
   .pr[data-step="2"] .ab--poster, .pr[data-step="3"] .ab--poster { left: 30%; top: 4%; width: 40%; }
   .bn--poster .nc__hero { --bx: -68cqw; --by: 10cqw; --bs: 0.6; }
@@ -1880,16 +1882,15 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
 
 
 /* ==========================================================================
-   PIXEL SPARKS — little clusters of LED pixels keep rising out of empty patches of
-   the black page background and burning out, in bursts while scrolling (js:
+   PIXEL SPARKS — single LED pixels, scattered over the empty black page background,
+   each lighting up, flickering and going out on its own; more while scrolling (js:
    setupCyber). They sit in .field, behind every section, scroll with the page and
-   never land on text.
+   never land on text. Each box is placed by its animation's transform.
    ========================================================================== */
 body { position: relative; }
 .hero { background: var(--bg); } /* the wall keeps its own black between the screens */
 .field { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.cy { position: absolute; }
-.cy i { position: absolute; display: block; opacity: 0; background: currentColor; box-shadow: 0 0 4px currentColor;
+.cy { position: absolute; left: 0; top: 0; display: block; opacity: 0; background: currentColor;
   box-shadow: 0 0 3px currentColor, 0 0 10px color-mix(in srgb, currentColor 55%, transparent); }
 
 /* ==========================================================================

@@ -195,14 +195,16 @@
   }
 
   /* ------------------------------------------------- pixel sparks on the background
-     Little clusters of LED pixels keep rising out of empty patches of the black
-     background and burning out, a few at a time when the page is still and in bursts
-     while it scrolls (ahead of the scroll, where the eye is going). They live in
-     .field, behind every section and scrolling with the page, never on text or
-     images. Each pixel is its own HTML box animating only transform and opacity, so
-     the compositor runs them and scrolling stays smooth. Phones, weaker machines and
-     any device that drops frames get a thinner field; clusters that leave the screen,
-     or a hidden tab, are dropped at once. */
+     Single LED pixels, scattered: each one lights up on its own in an empty patch of the
+     black background, flickers, drifts up a little and goes out, then lights up again
+     somewhere else. New spots are picked far from the pixels already lit (the best of a
+     few random tries), so a handful covers the whole screen; more light up while the page
+     scrolls, ahead of the scroll, where the eye is going. They live in .field, behind every
+     section and scrolling with the page, never on text or images.
+     Cheap by design: a fixed pool of boxes made once and reused, each placed and moved only
+     by its own transform/opacity animation (no layout, the compositor plays it); a pixel's
+     next life starts when its animation ends, so there is no timer loop. Phones, weaker
+     machines and any device that drops frames get fewer; a hidden tab puts them all out. */
   function setupCyber() {
     const field = $('.field');
     if (!field || lite || reduceMotion || !('animate' in Element.prototype)) return;
@@ -210,20 +212,16 @@
     const WHITE = '#f2efea';
     const R = (a, b) => a + Math.random() * (b - a);
     const RI = (a, b) => Math.floor(R(a, b + 1));
-    const live = new Set(); // the clusters on the page (page rects), so they never overlap
 
-    // per device: clusters on screen [still, scrolling], pixels per cluster [still, burst]
-    // and the wait before the next cluster in ms [still, scrolling]
-    const FULL = { max: [5, 12], px: [[5, 9], [8, 14]], gap: [[200, 500], [40, 120]] };
-    const LESS = { max: [3, 7], px: [[4, 6], [6, 9]], gap: [[300, 700], [80, 200]] };
-    const PHONE = { max: [2, 4], px: [[3, 5], [5, 8]], gap: [[400, 900], [120, 260]] };
+    // pixels lit at once per device [still, scrolling]
+    const FULL = [16, 26], LESS = [10, 16], PHONE = [7, 12];
     let weak = false;
     const thin = () => { weak = true; field.dataset.sparks = 'less'; };
     if ((navigator.hardwareConcurrency || 8) < 8 || (navigator.deviceMemory || 8) < 8) thin();
     const tier = () => (!mqDesktop.matches ? PHONE : weak ? LESS : FULL);
 
     // a desktop that can't hold 40 fps while the sparks run (two slow readings in a row,
-    // at most four 1.5 s readings, taken while the page is still) gets the thinner field
+    // at most four 1.5 s readings, taken while the page is still) gets fewer pixels
     let probes = 0, slowRuns = 0, probing = false, probedAt = -1e4;
     function probe() {
       if (weak || probing || probes >= 4 || !mqDesktop.matches || performance.now() - probedAt < 8000) return;
@@ -253,86 +251,102 @@
       for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) return false;
       return getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)';
     };
-    const clear = (x, y, w, h) => {
-      for (const b of live) if (x < b.x + b.w + 24 && x + w + 24 > b.x && y < b.y + b.h + 24 && y + h + 24 > b.y) return false;
-      return true;
-    };
-    const PROBES = [[0, 0], [1, 0], [0, 1], [1, 1], [0.5, 0.5], [0.5, 0], [0.5, 1], [0, 0.5], [1, 0.5]];
-    // a free spot in the viewport; while scrolling, in the half the page is scrolling into
-    function spot(w, h, dir) {
-      const pad = 16;
-      if (innerWidth < w + 2 * pad || innerHeight < h + 140) return null;
-      let lo = 90, hi = innerHeight - h - 30;
-      if (dir > 0) lo = Math.max(lo, Math.min(hi, innerHeight * 0.45));
-      if (dir < 0) hi = Math.max(lo, Math.min(hi, innerHeight * 0.55 - h));
-      for (let k = dir ? 6 : 14; k > 0; k--) {          // fewer tries mid-scroll: the next frame tries again
-        const x = R(pad, innerWidth - w - pad);
-        const y = R(lo, hi);
-        if (!clear(x + scrollX, y + scrollY, w, h)) continue;
-        if (PROBES.every(([fx, fy]) => isEmpty(x + fx * w, y + fy * h))) return { x: x + scrollX, y: y + scrollY };
+    // the pixel, its glow on both sides and the way up it drifts
+    const PROBES = [[0, 0], [-12, 0], [12, 0], [0, 12], [0, -36]];
+    const GAP = 70;                                       // never two lit pixels closer than this
+    const lit = new Map();                                // pixel -> its spot on the page
+    // a free spot in the viewport, as far as it gets from the lit pixels; while scrolling,
+    // in the part of the screen the page is scrolling into
+    function spot(dir) {
+      let lo = 90, hi = innerHeight - 30;
+      if (hi - lo < 60 || innerWidth < 80) return null;
+      if (dir > 0) lo = Math.max(lo, innerHeight * 0.4);
+      if (dir < 0) hi = Math.min(hi, innerHeight * 0.6);
+      let best = null, far = GAP * GAP;
+      for (let k = 6; k > 0; k--) {
+        const x = R(16, innerWidth - 16), y = R(lo, hi);
+        const px = x + scrollX, py = y + scrollY;
+        let d = Infinity;
+        for (const q of lit.values()) d = Math.min(d, (q.x - px) ** 2 + (q.y - py) ** 2);
+        if (d <= far || !PROBES.every(([dx, dy]) => isEmpty(x + dx, y + dy))) continue;
+        best = { x: px, y: py };
+        far = d;
       }
-      return null;
+      return best;
     }
 
-    // one cluster: pixels start in the lower half of the box, rise, sway a little and burn out
-    function spawn(dir, burst, cap) {
-      const desk = mqDesktop.matches;                    // phones: smaller, to fit the gaps between blocks
-      const w = desk ? RI(40, 110) : RI(28, 64), h = desk ? RI(90, 190) : RI(56, 100), T = R(2400, 3600);
-      const at = spot(w, h, dir);
-      if (!at) return false;
-      const box = document.createElement('div');
-      box.className = 'cy';
-      box.style.cssText = `left:${at.x}px;top:${at.y}px;width:${w}px;height:${h}px`;
-      const sparks = [];
-      for (let i = RI(...cap.px[+burst]); i > 0; i--) {
-        const c = Math.random() < 0.15 ? RI(5, 6) : RI(2, 4);
-        const p = document.createElement('i');
-        p.style.cssText = `left:${RI(0, w - c)}px;top:${RI(h * 0.45, h - c)}px;width:${c}px;height:${c}px;color:${Math.random() < 0.3 ? WHITE : RED}`;
-        box.appendChild(p);
-        sparks.push(p);
-      }
-      field.appendChild(box);
-      const anims = sparks.map((p) => {
-        const rise = RI(40, h * 0.6), sway = RI(-8, 8);
-        return p.animate([
-          { transform: 'translate(0, 0)', opacity: 0 },
-          { transform: `translate(${sway * 0.3}px, -${rise * 0.15}px)`, opacity: 1, offset: 0.12 },
-          { transform: `translate(${sway}px, -${rise}px)`, opacity: 0 },
-        ], { duration: T * R(0.6, 1), delay: R(0, T * 0.3), easing: 'cubic-bezier(.3,0,.6,1)', fill: 'both' });
-      });
-      const cl = { x: at.x, y: at.y, w, h, done() { clearTimeout(cl.t); anims.forEach((a) => a.cancel()); box.remove(); live.delete(cl); } };
-      live.add(cl);
-      cl.t = setTimeout(cl.done, T * 1.3 + 100);
-      return true;
+    // the pool: made once, sizes and colours mixed, every box reused for life after life
+    const pool = [], idle = [];
+    function make() {
+      const p = document.createElement('i');
+      const c = Math.random() < 0.15 ? RI(5, 6) : RI(2, 4);
+      p.className = 'cy';
+      p.style.cssText = `width:${c}px;height:${c}px;color:${Math.random() < 0.3 ? WHITE : RED}`;
+      field.appendChild(p);
+      pool.push(p);
+      return p;
     }
 
-    // a few in view when the page is still, many more while it scrolls
-    let next = 0, lastY = scrollY, dir = 0, scrolledAt = -1e4, queued = false;
-    function step() {
-      const now = performance.now();
-      if (document.hidden || root.classList.contains('is-intro')) return;
-      const moving = now - scrolledAt < 350;
-      const top = scrollY, bottom = top + innerHeight;
-      let inView = 0;
-      for (const c of live) {
-        if (c.y + c.h < top - 100 || c.y > bottom + 100) c.done();   // scrolled away: no need to finish it
-        else if (c.y + c.h > top && c.y < bottom) inView++;
-      }
-      if (!moving && inView) probe();
-      const cap = tier();
-      if (inView >= cap.max[+moving] || (inView && now < next)) return;
-      if (!spawn(moving ? dir : 0, moving, cap)) return;
-      next = now + R(...cap.gap[+moving]);
+    let lastY = scrollY, dir = 0, scrolledAt = -1e4, queued = false;
+    const moving = () => performance.now() - scrolledAt < 350;
+    const want = () => tier()[+moving()];
+
+    // one life: snaps on, flickers like an LED, drifts up and goes out (some blink out).
+    // No free spot on screen right now (a full section): it looks again a little later
+    function light(p, delay = 0) {
+      clearTimeout(p.wait);
+      if (document.hidden || root.classList.contains('is-intro') || lit.size >= want()) { rest(p); return; }
+      const at = spot(moving() ? dir : 0);
+      if (!at) { rest(p); idle.splice(idle.indexOf(p), 1); p.wait = setTimeout(() => light(p), R(400, 1000)); return; }
+      lit.set(p, at);
+      const T = R(2200, 4200), rise = R(8, 32), sway = R(-4, 4);
+      const pos = (u) => `translate(${(at.x + sway * u).toFixed(1)}px,${(at.y - rise * u).toFixed(1)}px)`;
+      const out = Math.random() < 0.3
+        ? [{ opacity: 0.9, offset: 0.86 }, { opacity: 0, offset: 0.9 }, { opacity: 0.8, offset: 0.94 }]
+        : [{ opacity: 0.85, offset: 0.7 }];
+      const kf = [{ opacity: 0, offset: 0 }, { opacity: 1, offset: 0.05 }, { opacity: 0.3, offset: 0.09 }, { opacity: 1, offset: 0.14 }, ...out, { opacity: 0, offset: 1 }];
+      kf.forEach((k) => (k.transform = pos(k.offset)));
+      if (p.anim) p.anim.cancel();
+      p.anim = p.animate(kf, { duration: T, delay, easing: 'linear' });
+      p.anim.onfinish = () => { lit.delete(p); light(p); };
+      if (!moving()) probe();
     }
-    document.addEventListener('visibilitychange', () => { if (document.hidden) live.forEach((c) => c.done()); });
+    function rest(p) {
+      clearTimeout(p.wait);
+      lit.delete(p);
+      if (p.anim) { p.anim.cancel(); p.anim = null; }
+      if (!idle.includes(p)) idle.push(p);
+    }
+    // bring the lit pixels up to the count wanted now; staggered, so they never come on together
+    function fill(spread) {
+      let n = want() - lit.size;
+      while (n-- > 0) {
+        const p = idle.pop() || (pool.length < tier()[1] ? make() : null);
+        if (!p) return;
+        light(p, R(0, spread));
+      }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pool.forEach(rest);
+      else fill(1500);
+    });
     addEventListener('scroll', () => {
       const y = scrollY;
       if (y !== lastY) dir = y > lastY ? 1 : -1;
       lastY = y;
       scrolledAt = performance.now();
-      if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; step(); }); }
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        // pixels the page has carried far off screen start their next life in view
+        const top = scrollY - 100, bottom = scrollY + innerHeight + 100;
+        for (const [p, at] of lit) if (at.y < top || at.y > bottom) { lit.delete(p); light(p, R(0, 200)); }
+        fill(300);
+      });
     }, { passive: true });
-    setTimeout(function tick() { step(); setTimeout(tick, 250); }, 1200);
+    setTimeout(() => fill(2500), 1200);
   }
 
   /* ------------------------------------ red ambience behind section headings */
