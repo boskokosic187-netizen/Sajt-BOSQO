@@ -677,8 +677,9 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em;
 }
 .pj__dot:disabled { cursor: default; }
-.pj__dot--purr, .pj__dot--court { border: 0; }
+.pj__dot--purr, .pj__dot--court, .pj__dot--fizz { border: 0; }
 .pj__dot--court .pj__face { background: radial-gradient(80% 70% at 50% 30%, #2a3a9a 0%, #0a0e22 70%); }
+.pj__dot--fizz .pj__face { background: radial-gradient(90% 80% at 34% 24%, #ff8ab2 0%, #ff4f8b 55%, #e8326f 100%); }
 .pj__dot:not(.is-active):not(:disabled) { opacity: 0.6; transition: opacity 0.25s; }
 .pj__dot:not(.is-active):not(:disabled):hover { opacity: 1; }
 .pj__face {
@@ -735,8 +736,14 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 /* the cat is interactive from step 2 on (full motion only) */
 .pr__hint { display: none; margin-top: -10px; color: var(--muted); font-size: 14px; }
 .pr__hint::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #ffc83d; vertical-align: 1px; }
-.pr__hint-m { display: none; }
+.pr__hint-m, .pr__hint-fd, .pr__hint-fm { display: none; }
 html:not(.is-lite) .pr[data-pj="purr"]:not([data-step="1"]) .pr__hint { display: block; }
+/* fizz: the can opens on a click once it is a can (04, 05) */
+html:not(.is-lite) .pr[data-pj="fizz"]:is([data-step="4"], [data-step="5"]) .pr__hint { display: block; }
+.pr[data-pj="fizz"] .pr__hint::before { background: #ff4f8b; }
+.pr[data-pj="fizz"] .pr__hint-d, .pr[data-pj="fizz"] .pr__hint-m { display: none; }
+.pr[data-pj="fizz"] .pr__hint-fd { display: inline; }
+html:not(.is-lite) .pr:is([data-step="4"], [data-step="5"]) .ab > .bn--label > :is(.fz__shade, .fz__neck, .fz__bot) { cursor: pointer; }
 html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .pr__about {
   max-width: 30em; padding: 18px 20px 20px; border: 1px solid var(--line-2); border-radius: 14px;
@@ -762,7 +769,8 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .pr__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 /* one set of brief, board and artboards per project; only the current one is shown */
 .pj-set { position: absolute; inset: 0; }
-.pr[data-pj="purr"] .pj-set[data-set="court"], .pr[data-pj="court"] .pj-set[data-set="purr"] { display: none; }
+.pr:not([data-pj="purr"]) .pj-set[data-set="purr"], .pr:not([data-pj="court"]) .pj-set[data-set="court"],
+.pr:not([data-pj="fizz"]) .pj-set[data-set="fizz"] { display: none; }
 .pr__brief, .pr__board, .ab { position: absolute; visibility: hidden; opacity: 0; }
 .pr[data-step="1"] .pr__brief,
 .pr[data-step="2"] .pr__board,
@@ -1097,6 +1105,313 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .bn--poster .nc__cta { --bx: -57cqw; --by: -45.5cqw; }
 .pr[data-step="2"] .bn--poster .nc__bug { display: flex; left: 112cqw; top: 22cqw; font-size: 3.4cqw; height: 6.8cqw; }
 .pr[data-step="2"] .bn--poster .nc__dark { display: none; }
+
+/* ==========================================================================
+   FIZZ (Process, project 3): a pink lemonade in a can.
+   The key visual is the can's label, flat (208×115 mm, sizes in cqw of the label). In 04 it
+   rolls up into a 3D can: js cuts a copy of it into 30 strips, each a hinge turned 12° from
+   the one before (a closed ring), and tilts the ring 13.7° so we look at it from above, like
+   the lid; the metal (neck, lid, bottom) and the shading sit over it, flat. The other formats
+   are a citylight, a shelf wobbler and the six-pack. Drawings come from js/pr-fizz.js as
+   <use> symbols, so the copies of the label cost no paths.
+   ========================================================================== */
+.pj-set[data-set="fizz"] .pr__board { background-color: #fff4ea; background-image: radial-gradient(rgba(255, 79, 139, 0.3) 1px, transparent 1.3px); background-size: 18px 18px; }
+.pr[data-step="2"] .ab--key .fz [data-label]::after { color: rgba(58, 10, 38, 0.62); font-size: 1.25cqw; top: calc(100% + 1.1cqw); text-shadow: none; -webkit-text-stroke: 0; }
+.ab--label { left: 10%; top: 16.4%; width: 76%; }
+.ab--city { left: 31%; top: 12.5%; width: 31.2%; }
+.ab--wob { left: 71.5%; top: 10%; width: 19%; }
+.ab--six { left: 67.5%; top: 63.5%; width: 28.5%; }
+.pr[data-step="4"] .ab--label, .pr[data-step="5"] .ab--label { left: -17%; top: 23.8%; width: 64%; }
+.ab--label .ab__label i { font-style: normal; }
+.ab--label .ab__label i + i, .pr[data-step="4"] .ab--label .ab__label i:first-child, .pr[data-step="5"] .ab--label .ab__label i:first-child { display: none; }
+.pr[data-step="4"] .ab--label .ab__label, .pr[data-step="5"] .ab--label .ab__label { left: 34.2%; bottom: calc(100% + 6.6cqw + 6px); }
+.pr[data-step="4"] .ab--label .ab__label i + i, .pr[data-step="5"] .ab--label .ab__label i + i { display: inline; }
+
+.bn.fz { --pink: #ff4f8b; --berry: #3a0a26; --mint: #a6ebd0; --lemon: #ffe45c; --cream: #fff4ea; color: var(--berry); }
+.bn--label { aspect-ratio: 208 / 115; }
+.bn--city { aspect-ratio: 2 / 3; }
+.bn--wob { aspect-ratio: 1; border-radius: 50%; }
+.bn--six { aspect-ratio: 3 / 2; }
+:where(.fz) svg { display: block; width: 100%; height: 100%; overflow: visible; }   /* any class wins over this */
+.fz .bn__bg { background: var(--pink); }
+.fz .bn__bg::after { display: none; }
+.fz .bn__pal, .fz .bn__guides, .fz .bn__scan { z-index: 9; }
+.fz .bn__guides { border-color: rgba(58, 10, 38, 0.55); }
+.fz .bn__guides::before { border-color: rgba(58, 10, 38, 0.35); }
+.fz .bn__pal { gap: 1.1cqw; }
+.fz .bn__pal i { width: 4.2cqw; box-shadow: inset 0 0 0 1px rgba(58, 10, 38, 0.18); }
+.fz .bn__pal i:nth-child(1) { background: #ff4f8b; }
+.fz .bn__pal i:nth-child(2) { background: #3a0a26; }
+.fz .bn__pal i:nth-child(3) { background: #a6ebd0; }
+.fz .bn__pal i:nth-child(4) { background: #ffe45c; }
+.fz .bn__pal i:nth-child(5) { background: #fff4ea; }
+/* what only some formats have */
+.fz__back, .fz__band, .fz__can, .fz__cta, .fz__fall, .fz__lids, .fz__phases, .fz__sketch, .fz__ice, .fz__die,
+.fz__shadow, .fz__shade, .fz__bot, .fz__neck, .fz__wet, .fz__crown, .fz__bubs, .fz__pssst, .fz__liq, .fz__w6, .fz__b2 { display: none; }
+
+/* the parts, as the label has them */
+.fz__splash { aspect-ratio: 0.911; }
+.fz__hero { aspect-ratio: 1; z-index: 2; }
+.fz__logo {
+  z-index: 2; font-weight: 900; font-stretch: 125%; line-height: 0.78; letter-spacing: -0.05em; white-space: nowrap;
+  color: var(--cream); text-shadow: 0.045em 0.055em 0 var(--berry); transition: color 0.5s;
+}
+.fz__logo small {
+  display: block; margin-top: 0.34em; font-size: 0.15em; font-weight: 800; font-stretch: 100%; line-height: 1;
+  letter-spacing: 0.34em; text-transform: uppercase; text-shadow: none; color: var(--berry);
+}
+.fz__head { z-index: 2; font-weight: 900; font-stretch: 112%; line-height: 0.86; letter-spacing: -0.035em; white-space: nowrap; }
+.fz__head .fz__t { display: block; }
+.fz__head em { display: block; font-size: 1.3em; line-height: 0.86; letter-spacing: -0.01em; color: var(--cream); transition: color 0.5s; }
+.fz__w1 > span { display: block; }
+.fz__sub { z-index: 2; font: 800 1.45cqw/1.4 var(--f-label); font-stretch: 85%; letter-spacing: 0.2em; text-transform: uppercase; }
+.fz__badge {
+  z-index: 2; width: var(--bw); aspect-ratio: 1; display: grid; place-content: center; border-radius: 50%; rotate: -12deg;
+  background: var(--mint); color: var(--berry); font-size: calc(var(--bw) * 0.17); font-weight: 800; line-height: 0.9; text-align: center; text-transform: uppercase;
+}
+.fz__badge b { display: block; font-size: 2.1em; font-weight: 900; font-stretch: 112%; letter-spacing: -0.04em; }
+.fz__cta {
+  z-index: 2; padding: 0.7em 1.15em; border-radius: 999px; background: var(--mint); color: var(--berry);
+  font-weight: 800; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.fz__cta i { font-style: normal; }
+.fz__cta i + i { display: none; }
+
+/* the label · 208×115 mm: back panel, front (logo, lemon, splash), the line on the right */
+.bn--label .bn__bg {
+  background:
+    radial-gradient(circle, transparent 0 0.85cqw, rgba(255, 244, 234, 0.5) 0.9cqw 1.12cqw, transparent 1.17cqw) 1.5cqw 3cqw / 11cqw 12cqw,
+    radial-gradient(circle, rgba(255, 244, 234, 0.34) 0 0.42cqw, transparent 0.47cqw) 6.5cqw 8cqw / 7.5cqw 9cqw,
+    radial-gradient(120% 100% at 50% 35%, #ff6c9f, var(--pink) 55%, #f53d7d);
+}
+.bn--label .fz__back, .bn--six .fz__band, .bn--label .fz__band { display: block; }
+.fz__back { left: 4cqw; top: 6cqw; width: 22.5cqw; }
+.fz__facts { display: grid; gap: 0.45cqw; padding: 1.2cqw 1.4cqw 1.3cqw; border-radius: 1cqw; background: var(--cream); font-size: 1.15cqw; line-height: 1.15; font-weight: 600; }
+.fz__facts b { padding-bottom: 0.45cqw; border-bottom: 0.3cqw solid var(--berry); font-size: 1.9cqw; font-weight: 900; font-stretch: 112%; letter-spacing: -0.01em; text-transform: uppercase; }
+.fz__facts span { display: flex; justify-content: space-between; gap: 1cqw; padding-bottom: 0.35cqw; border-bottom: 1px solid rgba(58, 10, 38, 0.2); }
+.fz__facts em { font-style: normal; font-weight: 800; }
+.fz__code { width: 14cqw; margin-top: 1.4cqw; padding: 0.8cqw 1cqw 0.55cqw; border-radius: 0.5cqw; background: #fff; }
+.fz__code i {
+  display: block; height: 4.6cqw;
+  background: repeating-linear-gradient(90deg, var(--berry) 0 0.18cqw, transparent 0 0.36cqw, var(--berry) 0 0.66cqw, transparent 0 0.84cqw, var(--berry) 0 0.94cqw, transparent 0 1.26cqw);
+}
+.fz__code small { display: block; margin-top: 0.3cqw; font-size: 0.95cqw; font-weight: 600; letter-spacing: 0.14em; text-align: center; }
+.fz__ing { margin-top: 1.2cqw; font-size: 1.02cqw; font-weight: 600; line-height: 1.4; }
+.fz__band { left: 0; right: 0; bottom: 0; height: 5.2cqw; clip-path: inset(-2cqw 0 0 0); background: var(--mint); white-space: nowrap; }
+.fz__band::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 1.15cqw;
+  background: radial-gradient(circle at 50% 100%, var(--mint) 1.1cqw, transparent 1.15cqw) 0 0 / 3.2cqw 100% repeat-x;
+}
+.fz__band span { position: absolute; left: 0; top: 50%; translate: 0 -50%; font: 800 1.45cqw/1 var(--f-label); font-stretch: 80%; letter-spacing: 0.26em; text-transform: uppercase; }
+.bn--label .fz__splash { left: 34.5cqw; top: 1.5cqw; width: 31cqw; }
+.bn--label .fz__hero { left: 51.5cqw; top: 25.5cqw; width: 16cqw; }
+.bn--label .fz__logo { left: 28cqw; width: 44cqw; top: 9.5cqw; font-size: 15.5cqw; text-align: center; }
+.bn--label .fz__sub { left: 33cqw; width: 34cqw; top: 43cqw; text-align: center; }
+.bn--label .fz__head { left: 71cqw; top: 9cqw; font-size: 5.6cqw; }
+.bn--label .fz__badge { left: 79cqw; top: 31cqw; --bw: 11cqw; }
+
+/* 02 · the board: every part in a slot of its own, and what the label is made of */
+.bn--label .fz__logo { --bx: -28cqw; --by: -15.5cqw; --bs: 0.7; }
+.bn--label .fz__head { --bx: -37cqw; --by: -15cqw; }
+.bn--label .fz__sub { --bx: -2cqw; --by: -29.5cqw; }
+.bn--label .fz__badge { --bx: 21cqw; --by: -30.5cqw; }
+.bn--label .fz__splash { --bx: 40cqw; --by: -7.5cqw; --bs: 0.62; }
+.bn--label .fz__hero { --bx: 9.5cqw; --by: 7.5cqw; --bs: 0.85; }
+.bn--label .bn__pal { left: 0; top: 10.5cqw; }
+.pr[data-step="2"] .ab > .bn--label > .fz__phases { display: flex; align-items: flex-end; gap: 3cqw; left: 15cqw; top: 32cqw; height: 15cqw; }
+.fz__phases svg { width: auto; height: 100%; }
+.fz__phases svg:nth-child(1) { aspect-ratio: 0.682; }
+.fz__phases svg:nth-child(2) { aspect-ratio: 0.96; height: 88%; }
+.fz__phases svg:nth-child(3) { aspect-ratio: 1.921; height: 50%; }
+.pr[data-step="2"] .ab > .bn--label > .fz__sketch { display: block; left: -3cqw; top: 23cqw; width: 13cqw; aspect-ratio: 0.484; }
+.pr[data-step="2"] .ab > .bn--label > .fz__ice { display: block; left: 99cqw; top: 33cqw; width: 11cqw; aspect-ratio: 0.989; }
+.pr[data-step="2"] .ab > .bn--label > .fz__crown { display: block; left: 80cqw; top: 37cqw; width: 15cqw; opacity: 1; }
+.pr[data-step="2"] .ab > .bn--label > :is(.fz__back, .fz__band) { opacity: 0; }
+.pr[data-step="2"] .ab > .bn--label > .fz__logo, .pr[data-step="2"] .ab > .bn--label > .fz__head em { color: var(--pink); }
+
+/* 03 · the key visual: the label as the printer gets it. Cut line (magenta), bleed (cyan),
+   a strip for the glue, the sizes */
+.pr[data-step="3"] .ab > .bn--label { overflow: visible; }
+.pr[data-step="3"] .ab > .bn--label > .fz__die { display: block; }
+.fz__die { inset: 0; z-index: 8; pointer-events: none; outline: 1px dashed #ff3dac; color: #ff3dac; font: 700 1.15cqw/1 var(--f-label); font-stretch: 80%; letter-spacing: 0.14em; text-transform: uppercase; }
+.fz__die > * { position: absolute; }
+.fz__bleed { inset: -1.44cqw; border: 1px solid rgba(64, 196, 255, 0.85); }
+.fz__glue {
+  left: 100%; top: 0; bottom: 0; width: 3.4cqw; outline: 1px dashed #ff3dac;
+  background: repeating-linear-gradient(45deg, rgba(166, 235, 208, 0.75) 0 0.5cqw, rgba(166, 235, 208, 0.2) 0 1cqw);
+}
+.fz__glue span { position: absolute; left: 50%; top: 50%; translate: -50% -50%; rotate: 90deg; white-space: nowrap; color: #a6ebd0; }
+.fz__dim { border-color: currentColor; }
+.fz__dim--w { left: 0; right: 0; top: calc(100% + 3cqw); border-top: 1px solid; }
+.fz__dim--h { top: 0; bottom: 0; right: calc(100% + 3cqw); border-left: 1px solid; }
+.fz__dim::before, .fz__dim::after { content: ""; position: absolute; background: currentColor; }
+.fz__dim--w::before, .fz__dim--w::after { top: -0.7cqw; width: 1px; height: 1.4cqw; left: 0; }
+.fz__dim--w::after { left: auto; right: 0; }
+.fz__dim--h::before, .fz__dim--h::after { left: -0.7cqw; height: 1px; width: 1.4cqw; top: 0; }
+.fz__dim--h::after { top: auto; bottom: 0; }
+.fz__dim span { position: absolute; left: 50%; top: 0; translate: -50% -50%; padding: 0 0.8cqw; background: #0d0d0f; white-space: nowrap; }
+.fz__dim--h span { top: 50%; left: 0; rotate: -90deg; }
+.fz__note { right: 0; bottom: calc(100% + 2.4cqw); color: rgb(64, 196, 255); }
+.fz__front { left: 50%; bottom: calc(100% + 2.4cqw); translate: -50% 0; }
+.fz__front::after { content: ""; position: absolute; left: 50%; top: calc(100% + 0.5cqw); height: 1.5cqw; border-left: 1px solid; }
+
+/* 04 · the label rolls up into a can. The ring of strips (built in js) turns about the can's
+   axis, 15.857cqw behind the front strip (the apothem of 30 strips 3.333cqw wide); the can is
+   31.8cqw wide, its label's sides run from 0.785cqw to 54.51cqw (tilted 13.7°) */
+.fz-3d { inset: 0; z-index: 2; display: none; pointer-events: none; }
+.fz-roll, .fz-spin { position: absolute; inset: 0; transform-style: preserve-3d; transform-origin: 50% 50% -15.857cqw; }
+.fz-h { position: absolute; top: 0; height: 100%; transform-style: preserve-3d; }
+.fz-h--r { left: 100%; transform-origin: 0 50%; }
+.fz-h--l { right: 100%; transform-origin: 100% 50%; }
+.fz-f { position: absolute; inset: 0 -0.15cqw; overflow: hidden; backface-visibility: hidden; }   /* a hair wider: no seams */
+.fz-f > .bn { position: absolute; top: 0; width: 100cqw; }
+.fz-b { position: absolute; inset: 0; transform: rotateY(180deg); backface-visibility: hidden; background: linear-gradient(90deg, #ece6dc, #f7f2ea); }
+/* a pink plane through the axis, a little shorter than the label (under the lid's arc at the top) */
+.fz-core { position: absolute; left: 34.15cqw; width: 31.7cqw; top: 4.2cqw; height: 50.3cqw; transform: translateZ(-15.857cqw); background: #fb4b88; }
+.pr[data-step="4"] .ab > .bn--label, .pr[data-step="5"] .ab > .bn--label { overflow: visible; }
+.pr[data-step="4"] .ab > .bn--label > [data-print], .pr[data-step="5"] .ab > .bn--label > [data-print] { visibility: hidden; }
+.pr[data-step="4"] .bn--label .fz-3d, .pr[data-step="5"] .bn--label .fz-3d { display: block; }
+.pr[data-step="4"] .bn--label .fz-roll, .pr[data-step="5"] .bn--label .fz-roll { transform: rotateX(-13.7deg); }
+.pr[data-step="4"] .bn--label .fz-h--r, .pr[data-step="5"] .bn--label .fz-h--r { transform: rotateY(12deg); }
+.pr[data-step="4"] .bn--label .fz-h--l, .pr[data-step="5"] .bn--label .fz-h--l { transform: rotateY(-12deg); }
+.pr[data-step="4"] .ab > .bn--label > :is(.fz__shadow, .fz__shade, .fz__bot, .fz__neck, .fz__wet, .fz__crown, .fz__bubs, .fz__pssst),
+.pr[data-step="5"] .ab > .bn--label > :is(.fz__shadow, .fz__shade, .fz__bot, .fz__neck, .fz__wet, .fz__crown, .fz__bubs, .fz__pssst) { display: block; }
+/* the metal, from the Freepik can: the neck and lid above the label, the bottom under it */
+.fz__neck { left: 33.83cqw; top: -9.64cqw; width: 32.36cqw; height: 15.01cqw; z-index: 4; }
+.fz__mouth { opacity: 0; }
+.fz__tab { z-index: 5; transform-origin: 44.2% 27%; }
+.fz__bot { left: 33.83cqw; top: 53.96cqw; width: 32.36cqw; height: 10.15cqw; z-index: 4; }
+.fz__shade, .fz__cshade {
+  background: linear-gradient(90deg, rgba(58, 0, 30, 0.42), rgba(58, 0, 30, 0.1) 8%, transparent 14%, rgba(255, 255, 255, 0.38) 21%,
+    rgba(255, 255, 255, 0.08) 29%, transparent 44%, rgba(58, 0, 30, 0.08) 64%, rgba(58, 0, 30, 0.3) 85%, rgba(58, 0, 30, 0.52));
+}
+.fz__shade { left: 34.1cqw; width: 31.8cqw; top: 0.785cqw; height: 57.5cqw; z-index: 3; }
+.fz__shadow { left: 27cqw; width: 46cqw; top: 58cqw; height: 9cqw; z-index: 1; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent); }
+/* cold: drops of condensation on the can */
+.fz__wet { left: 34.1cqw; width: 31.8cqw; top: 3cqw; height: 50cqw; z-index: 5; pointer-events: none; }
+.fz__wet i {
+  position: absolute; width: 0.95cqw; height: 1.35cqw; border-radius: 50% 50% 50% 50% / 62% 62% 40% 40%;
+  background: radial-gradient(circle at 36% 34%, #fff 0 16%, rgba(255, 255, 255, 0.4) 30%, rgba(255, 255, 255, 0.12) 64%, rgba(255, 255, 255, 0.5) 86%);
+  box-shadow: 0.12cqw 0.18cqw 0 rgba(58, 10, 38, 0.3);
+}
+.fz__wet i:nth-child(1) { left: 22%; top: 14%; }
+.fz__wet i:nth-child(2) { left: 61%; top: 30%; scale: 0.8; }
+.fz__wet i:nth-child(3) { left: 76%; top: 8%; scale: 1.15; }
+/* the pssst: a crown of lemonade out of the mouth, a word, bubbles */
+.fz__crown { left: 43cqw; top: -17.2cqw; width: 18cqw; aspect-ratio: 1.564; z-index: 6; transform-origin: 50% 100%; opacity: 0; pointer-events: none; }
+.fz__bubs { left: 46cqw; top: -9cqw; width: 12cqw; height: 4cqw; z-index: 6; pointer-events: none; }
+.fz__bubs i, .fz-fly i, .fz-lid b {
+  position: absolute; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle at 32% 30%, #fff 0 13%, transparent 17%), radial-gradient(circle, rgba(255, 244, 234, 0.12) 0 56%, rgba(255, 244, 234, 0.85) 64% 70%, transparent 73%);
+}
+.fz__bubs i { width: 1.6cqw; aspect-ratio: 1; bottom: 0; }
+.fz__bubs i:nth-child(1) { left: 30%; }
+.fz__bubs i:nth-child(2) { left: 52%; width: 1.1cqw; }
+.fz__bubs i:nth-child(3) { left: 44%; width: 2cqw; }
+.fz__bubs i:nth-child(4) { left: 62%; width: 1.3cqw; }
+.fz__bubs i:nth-child(5) { left: 36%; width: 0.9cqw; }
+.fz__bubs i:nth-child(6) { left: 56%; width: 1.7cqw; }
+.fz__pssst {
+  left: 61cqw; top: -15cqw; z-index: 7; font-size: 4.6cqw; font-weight: 900; font-stretch: 125%; letter-spacing: -0.02em; color: var(--cream);
+  -webkit-text-stroke: 0.05em var(--berry); paint-order: stroke fill; text-shadow: 0.05em 0.07em 0 var(--berry); transform: rotate(-10deg); opacity: 0; pointer-events: none;
+}
+/* the still of 05: the can is open */
+.pr[data-step="5"] .ab > .bn--label > :is(.fz__crown, .fz__pssst, .fz__mouth) { opacity: 1; }
+.pr[data-step="5"] .ab > .bn--label > .fz__tab { transform: translateY(-3%) rotate(-30deg); }
+.fz-fly { position: absolute; left: 0; top: 0; z-index: 10; width: 0; height: 0; pointer-events: none; }
+.fz-fly i { left: 0; top: 0; width: 20px; height: 20px; }
+
+/* the small cans (citylight): a window on a copy of the label, the same metal */
+.fz__can { z-index: 2; aspect-ratio: 1 / 1.6893; container-type: inline-size; }
+.fz__can > * { position: absolute; }
+.fz__cbody { left: 0; top: 0; width: 100%; height: calc(100% + 11.8cqw); overflow: hidden; container-type: inline-size; }
+.fz__cbody > .bn { position: absolute; left: -107.23cqw; top: 0; width: 314.47cqw; height: 100%; aspect-ratio: auto; }
+.fz__cshade { left: 0; top: 0; width: 100%; height: calc(100% + 11.8cqw); }
+.fz__cneck { left: -0.86cqw; top: -32.77cqw; width: 101.76cqw; height: 47.21cqw; }
+.fz__cbot { left: -0.86cqw; top: calc(100% - 1.72cqw); width: 101.76cqw; height: 31.91cqw; }
+
+/* citylight 4:6 · a bus stop at night: the letters are empty glass that fills with lemonade */
+.bn--city > .bn__bg {
+  background: radial-gradient(64% 40% at 50% 66%, rgba(255, 79, 139, 0.78), rgba(255, 79, 139, 0.16) 62%, transparent 82%),
+    radial-gradient(100% 50% at 50% 0%, #5c1239, transparent 72%), var(--berry);
+}
+/* (child combinators here: the small can in the citylight holds a copy of the label, which these must not touch) */
+.bn--city > :is(.fz__can, .fz__cta, .fz__fall), .bn--city > .fz__head .fz__liq, .bn--city > .fz__badge .fz__b2 { display: block; }
+.bn--city > .fz__badge .fz__b1 { display: none; }
+.bn--city > .fz__head { left: 7cqw; top: 7cqw; font-size: 15.5cqw; color: var(--cream); }
+.bn--city > .fz__head > .fz__t { color: transparent; -webkit-text-stroke: 0.022em rgba(255, 244, 234, 0.85); }
+.bn--city > .fz__head > .fz__t em { color: transparent; -webkit-text-stroke-color: rgba(255, 228, 92, 0.9); }
+.bn--city > .fz__head em { font-size: 1.32em; color: var(--lemon); }
+.fz__liq { position: absolute; inset: -0.2em -0.4em; overflow: hidden; }
+.fz__liq > .fz__t {
+  position: absolute; left: 0.4em; top: 0.2em; right: 0.4em; color: transparent; -webkit-text-stroke: 0.022em rgba(255, 244, 234, 0.85);
+  background: radial-gradient(circle, rgba(255, 244, 234, 0.75) 0 0.035em, transparent 0.045em) 0 0 / 0.37em 0.41em,
+    radial-gradient(circle, rgba(255, 244, 234, 0.5) 0 0.022em, transparent 0.03em) 0.19em 0.2em / 0.29em 0.33em,
+    linear-gradient(#ff9cc0, var(--pink) 45%, #e8326f);
+  -webkit-background-clip: text; background-clip: text;
+}
+.fz__liq > .fz__t em { color: var(--lemon); -webkit-text-stroke-color: rgba(255, 228, 92, 0.9); }
+.bn--city > .fz__sub { left: 7.5cqw; top: 53cqw; font-size: 2.6cqw; color: rgba(255, 244, 234, 0.82); }
+.bn--city > .fz__can { left: 35cqw; top: 75cqw; width: 30cqw; }
+.bn--city > .fz__splash { left: 19cqw; top: 63cqw; width: 62cqw; }
+.bn--city > .fz__hero { left: 61cqw; top: 112cqw; width: 21cqw; }
+.bn--city > .fz__badge { left: 9cqw; top: 82cqw; --bw: 19cqw; background: var(--lemon); }
+.bn--city > .fz__logo { left: 63cqw; top: 136.5cqw; font-size: 10cqw; }
+.bn--city > .fz__logo small { display: none; }
+.bn--city > .fz__cta { left: 7cqw; top: 137cqw; font-size: 3.4cqw; }
+.fz__fall { inset: 0; z-index: 3; pointer-events: none; }
+.fz__fall svg { position: absolute; width: var(--w); height: auto; aspect-ratio: 1; }
+.fz__fall svg:nth-child(1) { left: 8cqw; top: 111cqw; --w: 17cqw; }
+.fz__fall svg:nth-child(2) { left: 72cqw; top: 93cqw; --w: 14cqw; }
+.fz__fall svg:nth-child(3) { left: 25cqw; top: 125cqw; --w: 13cqw; }
+
+/* wobbler Ø 100 mm · on a clear stem at the shelf edge; it rocks when it gets hit */
+.fz-swing { position: relative; transform-origin: 50% 132%; }
+.fz-stem {
+  position: absolute; left: 45.5%; width: 9%; top: 93%; height: 39%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.75) 30%, rgba(255, 255, 255, 0.22) 62%, rgba(255, 255, 255, 0.45));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+.fz-shelf { position: absolute; left: -14%; right: -14%; top: 131%; height: 11%; border-radius: 2px; background: linear-gradient(#d9dce0, #a2a8ae); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45); }
+.fz-shelf b { position: absolute; right: 9%; top: 18%; bottom: 18%; display: grid; place-items: center; padding: 0 4%; background: #fff; color: #1d1d1f; font: 800 1.2cqw/1 var(--f-label); font-stretch: 85%; }
+.bn--wob .bn__bg { background: radial-gradient(circle closest-side, var(--lemon) 0 76%, #ffd23e 80%, var(--cream) 80.5% 85%, var(--pink) 85.5%); }
+.bn--wob .fz__logo { left: 0; right: 0; top: 14cqw; text-align: center; font-size: 13cqw; color: var(--pink); }
+.bn--wob .fz__logo small, .bn--wob :is(.fz__head, .fz__sub, .fz__badge, .fz__splash) { display: none; }
+.bn--wob .fz__cta {
+  display: block; left: 8cqw; right: 8cqw; top: 31cqw; padding: 0; background: none; text-align: center; white-space: normal;
+  font-size: 12.5cqw; font-weight: 900; font-stretch: 112%; line-height: 0.88; letter-spacing: -0.03em;
+}
+.bn--wob .fz__cta i:first-child { display: none; }
+.bn--wob .fz__cta i + i { display: inline; }
+.bn--wob .fz__hero { left: 38.5cqw; top: 63cqw; width: 23cqw; }
+
+/* six-pack · the sleeve over six cans; their lids show above it and pop one by one */
+.bn--six { overflow: visible; }
+.bn--six .bn__bg { top: 24cqw; border-radius: 1cqw 1cqw 0 0; background: linear-gradient(#c3f5e2, var(--mint) 40%, #8ed9be); }
+.bn--six .fz__lids, .bn--six .fz__w6 { display: block; }
+.bn--six .fz__w1, .bn--six :is(.fz__badge, .fz__splash, .fz__cta) { display: none; }
+.fz__lids { left: 0; top: 0; width: 100%; height: 26cqw; z-index: 0; }
+.fz-lid { position: absolute; width: 30cqw; aspect-ratio: 2.156; }
+.fz-lid > svg { position: absolute; inset: 0; }
+.fz-lt { transform-origin: 44.2% 27%; }
+.fz-lid:nth-child(-n+3) { top: 3.5cqw; }
+.fz-lid:nth-child(n+4) { top: 10cqw; }
+.fz-lid:nth-child(3n+1) { left: 5cqw; }
+.fz-lid:nth-child(3n+2) { left: 35cqw; }
+.fz-lid:nth-child(3n) { left: 65cqw; }
+.fz-lid b { left: 47%; top: 10%; width: 3cqw; aspect-ratio: 1; }
+.fz-lid b + b { left: 58%; width: 2cqw; }
+.bn--six .fz__logo { left: 6cqw; top: 31cqw; font-size: 14cqw; color: var(--pink); }
+.bn--six .fz__head { left: 47cqw; top: 31.5cqw; font-size: 7cqw; }
+.bn--six .fz__head .fz__t { white-space: nowrap; }
+.bn--six .fz__head em { display: inline; color: var(--pink); }
+.bn--six .fz__sub { left: 47cqw; top: 44cqw; width: 28cqw; font-size: 1.75cqw; }
+.bn--six .fz__hero { left: 79cqw; top: 41cqw; width: 15cqw; }
+.bn--six .fz__band { height: 4.4cqw; background: var(--pink); }
+.bn--six .fz__band::before { background: radial-gradient(circle at 50% 100%, var(--pink) 1.1cqw, transparent 1.15cqw) 0 0 / 3.2cqw 100% repeat-x; }
+.bn--six .fz__band span { font-size: 1.3cqw; color: var(--cream); }
+/* the render pass would sweep past the can (the label doesn't clip in 04/05): the can has its own shine */
+.ab > .bn--label > .bn__scan { display: none; }
 
 /* 05 · on air */
 .pr__hud { display: flex; gap: 8px; align-items: center; }
@@ -1469,6 +1784,8 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .pr__hint { order: 1; margin: 8px 0 0; }
   .pr__hint-d { display: none; }
   .pr__hint-m { display: inline; }
+  .pr[data-pj="fizz"] .pr__hint-fd { display: none; }
+  .pr[data-pj="fizz"] .pr__hint-fm { display: inline; }
   .pr__n { font-size: 13px; }
   .pr__t { display: none; }
   .pr__stage { width: 100%; aspect-ratio: 10 / 7; background-size: 16px 16px; }
@@ -1509,6 +1826,20 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .bn--poster .nc__lights { --bx: -70cqw; --by: 100cqw; --bs: 0.6; }
   .pr[data-step="2"] .bn--poster .nc__bug { left: 104cqw; top: 22cqw; }
   .bn--poster .bn__pal { left: 104cqw; top: 52cqw; }
+  /* fizz: the label nearly as wide as the stage, the board squeezed into it; then the can on the left */
+  .ab--label { left: 3%; top: 12%; width: 92%; }
+  .pr[data-step="4"] .ab--label, .pr[data-step="5"] .ab--label { left: -23%; top: 23.9%; width: 72%; }
+  .ab--city { left: 27%; top: 10%; width: 37.3%; }
+  .ab--wob { left: 70.5%; top: 6%; width: 19%; }
+  .ab--six { left: 67%; top: 59%; width: 31%; }
+  .bn--label .fz__badge { --bx: 13cqw; }
+  .bn--label .fz__splash { --bx: 33cqw; --by: -6.5cqw; --bs: 0.5; }
+  .bn--label .fz__hero { --bx: 6.5cqw; }
+  .pr[data-step="2"] .ab > .bn--label > .fz__phases { left: 13cqw; gap: 2.5cqw; }
+  .pr[data-step="2"] .ab > .bn--label > .fz__sketch { left: 0; }
+  .pr[data-step="2"] .ab > .bn--label > .fz__ice { left: 90cqw; }
+  .pr[data-step="2"] .ab > .bn--label > .fz__crown { left: 72cqw; }
+  .pr[data-step="2"] .ab--key .fz [data-label]::after { font-size: 1.6cqw; }
   .about { font-size: 15px; }
   /* phones: one column; the portrait, the intro, then the cards */
   .about__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "photo" "intro" "cards"; gap: 28px; margin-top: 28px; }

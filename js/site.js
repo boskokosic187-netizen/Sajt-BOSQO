@@ -1203,6 +1203,246 @@
     }
   }
 
+  /* ------------------------------------------------ fizz: project 3 of the demo
+     A pink lemonade in a can (made up). The key visual is the can's label, flat, the way a
+     printer gets it. In step 04 a copy of it rolls up into a 3D can: 30 strips, each a hinge
+     turned 12° from the one before, close into a ring (CSS 3D, transforms only). In the motion
+     step the can turns, the tab goes up, and the pssst spills over the other formats. The
+     drawings (lemons, splashes, ice, the can's metal) wait in js/pr-fizz.js, built by
+     tools/build_fizz.py, as <use> symbols; it is fetched when the demo is about to show fizz. */
+  const FZ_DUR = [0, 4400, 3600, 3700, 4600, 16000];   // 05 plays the 8 s loop twice
+  const FZ_N = 30, FZ_A = 360 / FZ_N, FZ_TILT = -13.7;
+
+  // the label as printed: what the strips of the 3D can and the small can show
+  function fizzPrint(bn) {
+    const p = document.createElement('div');
+    p.className = 'bn fz bn--label';
+    $$('[data-print]', bn).forEach((el) => {
+      const c = el.cloneNode(true);
+      ['data-print', 'data-part', 'data-label'].forEach((a) => c.removeAttribute(a));
+      p.appendChild(c);
+    });
+    return p;
+  }
+
+  /* the ring: one strip in front (the middle of the label), the strips to its right hinged on
+     to its right edge one after another, the same to the left; two half strips meet at the
+     back. Flat until the CSS of 04/05 (or the roll-up) turns every hinge 12°. */
+  function fizzRoll(bn) {
+    const print = fizzPrint(bn), w = 100 / FZ_N;
+    const strip = (x, width, side) => {
+      const h = document.createElement('div');
+      h.className = 'fz-h' + (side ? ' fz-h--' + side : '');
+      h.style.width = width + 'cqw';
+      const f = document.createElement('div');
+      f.className = 'fz-f';
+      const p = print.cloneNode(true);
+      p.style.left = 0.15 - x + 'cqw';    // the face is 0.15cqw wider on each side
+      f.appendChild(p);
+      const b = document.createElement('i');
+      b.className = 'fz-b';                 // the back of the paper, seen while it rolls
+      h.append(f, b);
+      return h;
+    };
+    const root = strip(50 - w / 2, w, '');
+    root.style.left = 50 - w / 2 + 'cqw';
+    let r = root, l = root;
+    for (let k = 1; k <= FZ_N / 2; k++) {
+      const ww = k === FZ_N / 2 ? w / 2 : w;
+      const nr = strip(50 + w / 2 + (k - 1) * w, ww, 'r');
+      const nl = strip(50 - w / 2 - (k - 1) * w - ww, ww, 'l');
+      r.appendChild(nr);
+      l.appendChild(nl);
+      r = nr;
+      l = nl;
+    }
+    const wrap = document.createElement('div'), roll = document.createElement('div'), spin = document.createElement('div');
+    wrap.className = 'fz-3d';
+    roll.className = 'fz-roll';             // the tilt (we look from above)
+    spin.className = 'fz-spin';             // the turn about the can's axis
+    spin.appendChild(root);
+    roll.appendChild(spin);
+    const core = document.createElement('i');
+    core.className = 'fz-core';             // at the axis: what shows between the strips is pink, not the inside
+    roll.appendChild(core);
+    wrap.appendChild(roll);
+    bn.insertBefore(wrap, $('.fz__shade', bn));
+    return print;
+  }
+
+  function fizz(set, t0) {
+    const T = 8000, OPEN = 1500;            // OPEN: the tab goes up
+    const SMOOTH = 'cubic-bezier(.45,0,.55,1)', OUT = 'cubic-bezier(.12,.72,.32,1)', IN = 'cubic-bezier(.55,0,.9,.55)';
+    const at = (list, easing) => list.map(([ms, p, e]) => ({ offset: Math.min(1, ms / T), easing: e || easing || SMOOTH, ...p }));
+    const loop = (el, list, easing) => el && el.animate(at(list, easing), { duration: T, delay: t0, iterations: Infinity, fill: 'both', easing: 'linear' });
+    const op = (list) => list.map(([ms, o, e]) => [ms, { opacity: o }, e]);
+    const tf = (list) => list.map(([ms, v, e]) => [ms, { transform: v }, e]);
+    const B = (k) => $('.bn--' + k, set);
+    const can = B('label'), city = B('city'), wob = B('wob'), six = B('six');
+    if (!can || !city || !wob || !six) return;
+    const k = can.offsetWidth / 100, ck = city.offsetWidth / 100, sk = six.offsetWidth / 100;   // 1cqw, in px
+
+    /* the can: one turn to show the whole label, then the tab goes up: pssst. Later it turns
+       to the line on its side, and on round to the front */
+    loop($('.fz-spin', can), tf([[0, 'rotateY(0deg)', 'cubic-bezier(.55,0,.3,1)'], [1350, 'rotateY(-360deg)'], [5000, 'rotateY(-360deg)'],
+      [6200, 'rotateY(-470deg)'], [7000, 'rotateY(-470deg)', 'cubic-bezier(.5,0,.3,1)'], [8000, 'rotateY(-720deg)']]));
+    const TAB0 = 'translateY(0%) rotate(0deg)', TAB1 = 'translateY(-3%) rotate(-30deg)';
+    loop($('.fz__tab', can), tf([[0, TAB0], [OPEN - 80, TAB0, OUT], [OPEN + 40, TAB1], [7550, TAB1], [7800, TAB0], [8000, TAB0]]));
+    loop($('.fz__mouth', can), op([[0, 0], [OPEN + 20, 0], [OPEN + 40, 1], [7700, 1], [7720, 0], [8000, 0]]), 'linear');
+    const C0 = 'translateY(0%) scale(1,1)';
+    loop(can, tf([[0, C0], [OPEN + 30, C0, OUT], [OPEN + 90, 'translateY(0.8%) scale(1.025,.965)'], [OPEN + 220, 'translateY(-2%) scale(.985,1.03)'],
+      [OPEN + 380, C0], [8000, C0]]));
+    const CR0 = { opacity: 0, transform: 'translateY(0%) scale(.2)' };
+    loop($('.fz__crown', can), [[0, CR0], [OPEN + 30, CR0], [OPEN + 40, { opacity: 1, transform: 'translateY(0%) scale(.25)' }, OUT],
+      [OPEN + 260, { opacity: 1, transform: 'translateY(0%) scale(1.08)' }], [OPEN + 420, { opacity: 1, transform: 'translateY(0%) scale(1)' }],
+      [OPEN + 900, { opacity: 1, transform: 'translateY(3%) scale(1.02)' }, IN], [OPEN + 1250, { opacity: 0, transform: 'translateY(16%) scale(.9)' }], [8000, CR0]]);
+    const PS0 = { opacity: 0, transform: 'rotate(-24deg) scale(0)' }, PS1 = { opacity: 1, transform: 'rotate(-10deg) scale(1)' };
+    loop($('.fz__pssst', can), [[0, PS0], [OPEN + 60, PS0], [OPEN + 70, { opacity: 1, transform: 'rotate(-24deg) scale(.2)' }, OUT],
+      [OPEN + 260, { opacity: 1, transform: 'rotate(-6deg) scale(1.15)' }], [OPEN + 400, PS1], [OPEN + 1150, PS1],
+      [OPEN + 1350, { opacity: 0, transform: 'rotate(-10deg) scale(.85)' }], [8000, PS0]]);
+    // bubbles out of the mouth: a burst, then a slow fizz
+    const B0 = { opacity: 0, transform: 'translate(0px,0px) scale(.4)' };
+    $$('.fz__bubs i', can).forEach((b, i) => {
+      const L = [[0, B0]];
+      for (const s of [OPEN + 40 + i * 60, OPEN + 1300 + i * 380]) {
+        const dx = ((i % 3) - 1) * 1.6 * k, dy = (9 + (i % 4) * 2.5) * k;
+        L.push([s, B0, OUT], [s + 90, { opacity: 1, transform: `translate(${(dx * 0.2).toFixed(1)}px,${(-dy * 0.15).toFixed(1)}px) scale(.8)` }, 'linear'],
+          [s + 900, { opacity: 0, transform: `translate(${dx.toFixed(1)}px,${(-dy).toFixed(1)}px) scale(1.1)` }]);
+      }
+      L.push([T, B0]);
+      loop(b, L);
+    });
+    // cold: a drop of condensation now and then runs down (none while it spins)
+    const D0 = { opacity: 0, transform: 'translateY(0px)' }, D1 = { opacity: 1, transform: 'translateY(0px)' };
+    $$('.fz__wet i', can).forEach((d, i) => {
+      const s = [2600, 3400, 4100][i];
+      loop(d, [[0, D0], [1350, D0], [1600, D1], [s, D1, 'cubic-bezier(.5,0,.8,.6)'],
+        [s + 1300, { opacity: 0, transform: `translateY(${((20 + i * 6) * k).toFixed(1)}px)` }], [s + 1301, D0], [T, D0]]);
+    });
+
+    /* the pssst flies: a swarm of bubbles from the mouth over the stage, most into the
+       citylight's letters, the last three into the wobbler. Layout boxes, not the screen. */
+    const fly = $('.fz-fly', set), head = $(':scope > .fz__head', city);   // (not the one on the small can's label)
+    const HIT = 1620 + 9 * 45 + 760;        // when the wobbler gets hit
+    if (fly && head) {
+      const off = (el) => {
+        let x = 0, y = 0;
+        for (let e = el; e && e !== set; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+        return [x, y];
+      };
+      const [cx, cy] = off(can), S = [cx + 52.2 * k, cy - 6 * k];
+      const [hx, hy] = off(head), [wx, wy] = off(wob);
+      const sz = set.offsetWidth / 100;
+      $$('i', fly).forEach((b, i) => {
+        const toWob = i >= 9, r = (0.6 + ((i * 7) % 5) * 0.22) * sz;
+        b.style.width = b.style.height = (2 * r).toFixed(1) + 'px';
+        const E = toWob ? [wx + wob.offsetWidth * (0.3 + 0.2 * (i - 9)), wy + wob.offsetHeight * (0.36 + 0.1 * (i % 2))]
+          : [hx + head.offsetWidth * (((i * 37) % 100) / 100), hy + head.offsetHeight * (0.2 + ((i * 53) % 60) / 100)];
+        const s = 1620 + i * 45, d = toWob ? 760 : 680 + (i % 3) * 60, H = (10 + (i % 4) * 2.5) * sz;
+        const P0 = { opacity: 0, transform: `translate(${(S[0] - r).toFixed(1)}px,${(S[1] - r).toFixed(1)}px) scale(.3)` };
+        const L = [[0, P0], [s, P0]];
+        for (let j = 1; j <= 8; j++) {
+          const u = j / 8;
+          const x = S[0] + (E[0] - S[0]) * u + Math.sin(u * Math.PI * 3 + i) * 0.8 * sz, y = S[1] + (E[1] - S[1]) * u - H * 4 * u * (1 - u);
+          L.push([s + d * u, { opacity: 1, transform: `translate(${(x - r).toFixed(1)}px,${(y - r).toFixed(1)}px) scale(${(0.5 + 0.5 * u).toFixed(2)})` }, 'linear']);
+        }
+        L.push([s + d + 140, { opacity: 0, transform: `translate(${(E[0] - r).toFixed(1)}px,${(E[1] - r).toFixed(1)}px) scale(1.7)` }], [T, P0]);
+        loop(b, L, 'linear');
+      });
+    }
+
+    /* citylight: the letters are empty glass; the lemonade rises in them (a window that
+       slides up over a filled copy), stays, and drains before the loop starts over */
+    const liq = $(':scope > .fz__head .fz__liq', city), lq = liq && $('.fz__t', liq);
+    if (lq) {
+      const h = liq.offsetHeight;
+      const F = [[0, h], [2350, h, OUT], [3900, 0], [6500, 0, IN], [7400, h], [8000, h]];
+      loop(liq, F.map(([ms, y, e]) => [ms, { transform: `translateY(${y}px)` }, e]));
+      loop(lq, F.map(([ms, y, e]) => [ms, { transform: `translateY(${-y}px)` }, e]));
+    }
+    loop($(':scope > .fz__badge', city), tf([[0, 'scale(1)'], [3900, 'scale(1)'], [4000, 'scale(1.18)'], [4160, 'scale(.96)'], [4280, 'scale(1)'], [8000, 'scale(1)']]));
+    // ice and a slice drop in and bounce, then go before the next round
+    $$('.fz__fall svg', city).forEach((el, i) => {
+      const r = el.getBoundingClientRect(), s = 4000 + i * 230, a0 = [-50, 35, -25][i];
+      const y0 = -(r.bottom - city.getBoundingClientRect().top + 2 * ck);   // just above the poster (an <svg> has no offsetTop)
+      const up = { opacity: 1, transform: `translateY(${y0.toFixed(1)}px) rotate(${a0}deg)` }, rest = { opacity: 1, transform: 'translateY(0px) rotate(0deg)' };
+      loop(el, [[0, up], [s, up, IN], [s + 430, rest, OUT], [s + 560, { opacity: 1, transform: `translateY(${(-7 * ck).toFixed(1)}px) rotate(${(-a0 * 0.12).toFixed(1)}deg)` }, IN],
+        [s + 690, rest, OUT], [s + 760, { opacity: 1, transform: `translateY(${(-2 * ck).toFixed(1)}px) rotate(0deg)` }, IN], [s + 830, rest], [6900, rest],
+        [7300, { opacity: 0, transform: 'translateY(0px) rotate(0deg)' }], [7301, { opacity: 0, transform: up.transform }], [8000, up]]);
+    });
+
+    /* the wobbler: hit by the bubbles, it rocks on its stem, less and less */
+    const swing = wob.parentNode;
+    if (swing && swing.classList.contains('fz-swing')) {
+      const L = [];
+      for (let t = 0; t <= T; t += 80) {
+        const u = t - HIT, a = u < 0 ? 0 : 11 * Math.exp(-u / 1000) * Math.sin((2 * Math.PI * u) / 780);
+        L.push([t, { transform: `rotate(${a.toFixed(2)}deg)` }]);
+      }
+      loop(swing, L, 'linear');
+    }
+
+    /* the six-pack: the lids pop one by one, left to right, front and back in turn */
+    const lids = $$('.fz-lid', six);
+    [3, 0, 4, 1, 5, 2].forEach((n, j) => {
+      const lid = lids[n];
+      if (!lid) return;
+      const s = 3050 + j * 170, Y0 = 'translateY(0px)';
+      loop(lid, tf([[0, Y0], [s, Y0, OUT], [s + 100, `translateY(${(-5 * sk).toFixed(1)}px)`, IN], [s + 250, Y0, OUT],
+        [s + 320, `translateY(${(-1.2 * sk).toFixed(1)}px)`, IN], [s + 390, Y0], [T, Y0]]));
+      loop($('.fz-lt', lid), tf([[0, TAB0], [s + 40, TAB0, OUT], [s + 140, TAB1], [7400 + j * 40, TAB1], [7650 + j * 40, TAB0], [T, TAB0]]));
+      $$('b', lid).forEach((b, i) => loop(b, [[0, B0], [s + 60 + i * 60, B0, OUT],
+        [s + 140 + i * 60, { opacity: 1, transform: `translate(0px,${(-3 * sk).toFixed(1)}px) scale(.8)` }, 'linear'],
+        [s + 700 + i * 60, { opacity: 0, transform: `translate(${((i ? 1 : -1) * 1.5 * sk).toFixed(1)}px,${(-11 * sk).toFixed(1)}px) scale(1.1)` }], [T, B0]]));
+    });
+    loop($('.fz__head', six), tf([[0, 'scale(1)'], [4100, 'scale(1)'], [4180, 'scale(1.16)'], [4320, 'scale(.97)'], [4440, 'scale(1)'], [8000, 'scale(1)']]));
+  }
+
+  /* a click (or a tap) on the can: it cracks open on the spot. These go over whatever the
+     can is doing (in 05 the loop takes over again when they end). */
+  function fizzPop(bn) {
+    const now = performance.now();
+    if (now - (bn.popAt || 0) < 1500) return;
+    bn.popAt = now;
+    const OUT = 'cubic-bezier(.12,.72,.32,1)';
+    const a = (el, kf, o) => el && el.animate(kf, { easing: 'linear', ...o });
+    const TAB0 = 'translateY(0%) rotate(0deg)', TAB1 = 'translateY(-3%) rotate(-30deg)';
+    a($('.fz__tab', bn), [{ transform: TAB0, easing: OUT }, { transform: TAB1, offset: 0.08 }, { transform: TAB1, offset: 0.85 }, { transform: TAB0 }], { duration: 1700 });
+    a($('.fz__mouth', bn), [{ opacity: 0 }, { opacity: 1, offset: 0.04 }, { opacity: 1, offset: 0.9 }, { opacity: 0 }], { duration: 1700 });
+    a(bn, [{ transform: 'translateY(0%) scale(1,1)', easing: OUT }, { transform: 'translateY(0.8%) scale(1.025,.965)', offset: 0.15 },
+      { transform: 'translateY(-2%) scale(.985,1.03)', offset: 0.5 }, { transform: 'translateY(0%) scale(1,1)' }], { duration: 400, delay: 60, easing: 'cubic-bezier(.45,0,.55,1)' });
+    a($('.fz__crown', bn), [{ opacity: 1, transform: 'translateY(0%) scale(.25)', easing: OUT }, { opacity: 1, transform: 'translateY(0%) scale(1.08)', offset: 0.18 },
+      { opacity: 1, transform: 'translateY(0%) scale(1)', offset: 0.3 }, { opacity: 1, transform: 'translateY(3%) scale(1.02)', offset: 0.7 },
+      { opacity: 0, transform: 'translateY(16%) scale(.9)' }], { duration: 1250, delay: 60 });
+    a($('.fz__pssst', bn), [{ opacity: 1, transform: 'rotate(-24deg) scale(.2)', easing: OUT }, { opacity: 1, transform: 'rotate(-6deg) scale(1.15)', offset: 0.15 },
+      { opacity: 1, transform: 'rotate(-10deg) scale(1)', offset: 0.26 }, { opacity: 1, transform: 'rotate(-10deg) scale(1)', offset: 0.85 },
+      { opacity: 0, transform: 'rotate(-10deg) scale(.85)' }], { duration: 1300, delay: 80 });
+    const k = bn.offsetWidth / 100;
+    $$('.fz__bubs i', bn).forEach((b, i) => a(b, [{ opacity: 0, transform: 'translate(0px,0px) scale(.4)', easing: OUT },
+      { opacity: 1, transform: `translate(0px,${(-1.4 * k).toFixed(1)}px) scale(.8)`, offset: 0.1 },
+      { opacity: 0, transform: `translate(${(((i % 3) - 1) * 1.6 * k).toFixed(1)}px,${(-(9 + (i % 4) * 2.5) * k).toFixed(1)}px) scale(1.1)` }], { duration: 900, delay: 60 + i * 60 }));
+  }
+
+  /* 03: the dieline is drawn over the flat label. 04: once it is a can, it turns a little
+     now and then (it is round now); the wobbler sways. On the board (02) all holds still. */
+  function fizzLife(bn, t0, phase, n) {
+    const SMOOTH = 'cubic-bezier(.45,0,.55,1)';
+    const label = bn.classList.contains('bn--label');
+    if (n === 3 && label) {
+      const die = $('.fz__die', bn);
+      if (die) die.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, delay: t0 + 900, fill: 'both' });
+      return;
+    }
+    if (n !== 4) return;
+    const T = 7000;
+    const loop = (el, list, delay) => el && el.animate(list.map(([ms, v]) => ({ offset: ms / T, easing: SMOOTH, transform: v })),
+      { duration: T, delay, iterations: Infinity, iterationStart: phase, fill: 'both', easing: 'linear' });
+    if (label) loop($('.fz-spin', bn), [[0, 'rotateY(0deg)'], [1400, 'rotateY(-42deg)'], [2600, 'rotateY(-42deg)'], [4200, 'rotateY(28deg)'],
+      [5200, 'rotateY(28deg)'], [7000, 'rotateY(0deg)']], t0 + 1500);
+    else if (bn.classList.contains('bn--wob')) loop(bn.parentNode, [[0, 'rotate(0deg)'], [1750, 'rotate(1.8deg)'], [3500, 'rotate(0deg)'],
+      [5250, 'rotate(-1.6deg)'], [7000, 'rotate(0deg)']], t0);
+  }
+
   function setupProcess() {
     const pr = $('[data-pr]');
     if (!pr) return;
@@ -1292,6 +1532,29 @@
       s.onerror = () => (courtIn = 0);
       document.head.appendChild(s);
     }
+    /* fizz: the 3D can and the small can are copies of the label (no drawings needed for
+       that); the drawings come in a script of their own, the first time they're needed */
+    let fizzIn = 0, fizzBuilt = false;      // 0 not yet, 1 on its way, 2 in
+    function loadFizz() {
+      const set = SETS.fizz;
+      if (!set) return;
+      if (!fizzBuilt) {
+        fizzBuilt = true;
+        const print = fizzRoll($('.bn--label', set)), body = $('.bn--city .fz__cbody', set);
+        if (body) body.appendChild(print.cloneNode(true));
+      }
+      if (fizzIn) return;
+      fizzIn = 1;
+      const s = document.createElement('script');
+      s.src = 'js/pr-fizz.js';
+      s.onload = () => {
+        if (!window.prFizz) return;
+        fizzIn = 2;
+        stage.insertAdjacentHTML('beforeend', window.prFizz.defs);
+      };
+      s.onerror = () => (fizzIn = 0);
+      document.head.appendChild(s);
+    }
 
     /* what differs per project; the steps themselves are the same machine */
     const PJ = {
@@ -1313,6 +1576,26 @@
         board: () => courtParts(bn1, true, { duration: 700, delay: 1500 }),
         assemble: () => courtParts(bn1, false, { duration: 700, delay: 200 }),
       },
+      fizz: {
+        dur: FZ_DUR, load: loadFizz, life: fizzLife,
+        motion: () => fizz(set, 250),
+        keep: () => [bn1, $('.bn--city', set)],
+        // 02: what the label is made of comes in after its parts
+        board: () => [...$$('.fz__phases > svg', bn1), $('.fz__sketch', bn1), $('.fz__ice', bn1), $('.fz__crown', bn1)].forEach((el, i) =>
+          anim(el, [{ opacity: 0, translate: '0 3cqw' }, { opacity: 1, translate: '0 0' }], { duration: 550, delay: 1300 + i * 140 })),
+        assemble: () => [$('.fz__back', bn1), $('.fz__band', bn1)].forEach((el) => anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 600, delay: 650 })),
+        // 04: the flat label rolls up into the can; the metal closes in as it comes round
+        wrap() {
+          const roll = $('.fz-roll', bn1);
+          if (!roll) return;
+          const o = { duration: 1150, delay: 380, easing: 'cubic-bezier(.55,0,.25,1)' };
+          anim(roll, [{ transform: 'rotateX(0deg)' }, { transform: `rotateX(${FZ_TILT}deg)` }], o);
+          $$('.fz-h--r', bn1).forEach((h) => anim(h, [{ transform: 'rotateY(0deg)' }, { transform: `rotateY(${FZ_A}deg)` }], o));
+          $$('.fz-h--l', bn1).forEach((h) => anim(h, [{ transform: 'rotateY(0deg)' }, { transform: `rotateY(${-FZ_A}deg)` }], o));
+          $$(':scope > :is(.fz__neck, .fz__bot, .fz__shade, .fz__shadow, .fz__wet):not(.fz__mouth), .fz-core', bn1)
+            .forEach((el) => anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 380, delay: 1250 }));
+        },
+      },
     };
     const ORDER = Object.keys(PJ).filter((k) => SETS[k]);
     let pj = pr.dataset.pj || ORDER[0], P, set, brief, board, abs, ab1, others, bns, bn1, caps;
@@ -1324,7 +1607,7 @@
       abs = $$('.ab', set);
       ab1 = $('.ab--key', set);
       others = abs.filter((a) => a !== ab1);
-      bns = $$('.bn', set);
+      bns = abs.map((a) => $('.bn', a));    // not the copies of the fizz label inside them
       bn1 = $('.bn', ab1);
       caps = $$('.pj-caps li', set).map((li) => li.textContent);
     }
@@ -1423,6 +1706,7 @@
         if (first.ab1) flip(ab1, first.ab1, first.ab1now, { duration: 900 });
         else if (prev === 1) anim(ab1, [{ opacity: 0 }, { opacity: 1 }], { duration: 450, delay: 100 });
         P.life(bn1, 0, 0, 4);
+        if (P.wrap && prev < 4) P.wrap();
         plan.forEach(([a, parts], k) => {
           const d = (first.ab1 ? 450 : 100) + k * 160;
           anim(a, [{ opacity: 0, transform: 'scale(.94)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: d });
@@ -1576,6 +1860,10 @@
       }
       const hit = e.target.closest('.bn__cat'), bn = hit && hit.closest('.bn');
       if (bn && (step >= 4 || bn === bn1)) swat(bn);
+      if (pj === 'fizz' && step >= 4 && e.target.closest('.ab--label')) {
+        const r = rect($('.fz__shade', bn1));                    // the can, from just above the lid down
+        if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top - r.height * 0.22 && e.clientY <= r.bottom) fizzPop(bn1);
+      }
     });
 
     // start or stop the clock (and every animation) to match playing()
