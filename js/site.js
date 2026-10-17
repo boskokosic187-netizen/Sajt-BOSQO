@@ -838,7 +838,7 @@
         run(c(`paw${side}w`), f, { duration: 320, delay: t0 + d });
         run(c(`arm${side}w`), f.map(({ opacity, ...k }) => k), { duration: 320, delay: t0 + d });
       }
-      run(c('pawRsh'), [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0 + 1100 });
+      run(c('pawRshw'), [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0 + 1100 });
     }
     const pop = (el, d, from = 'translateY(40%) scale(.6)') => run(el, at([[0, { transform: from, opacity: 0 }],
       [290, { transform: 'scale(1.08)', opacity: 1 }], [420, { transform: 'none', opacity: 1 }]], 420), { duration: 420, delay: t0 + d });
@@ -899,14 +899,16 @@
       }
       loop(c('t' + i), list, 'forwards', 'linear');
     }
-    // the logo purrs, the sticker gets a nudge, the button asks for the click
-    const JIT = [[0, 'none'], [5000, 'none']];
-    for (let ms = 5040; ms < 6000; ms += 40) JIT.push([ms, `translate(${(ms / 40) % 2 ? 1.6 : -1.6}px,${(ms / 80) % 2 ? -0.8 : 0.8}px)`]);
-    JIT.push([6000, 'none'], [7000, 'none']);
-    loop($('.bn__logo', bn), tr(JIT));
-    loop(c('logo'), tr(JIT));
-    loop($('.bn__sticker', bn), rot([[0, -12], [1900, -12], [2050, -2], [2200, -18], [2350, -10], [2450, -12], [7000, -12]]));
-    loop($('.bn__cta', bn), [[0, 1], [6200, 1], [6350, 1.09], [6500, 0.98], [6620, 1], [7000, 1]].map(([ms, k]) => [ms, { transform: `scale(${k})` }]));
+    // the logo purrs, the sticker gets a nudge, the button asks for the click. They popped in
+    // with transform; these use translate, rotate and scale, so two animations never share one
+    // property (that would put both on the main thread). The sticker sits at -12° already.
+    const JIT = [[0, 0, 0], [5000, 0, 0]];
+    for (let ms = 5040; ms < 6000; ms += 40) JIT.push([ms, (ms / 40) % 2 ? 1.6 : -1.6, (ms / 80) % 2 ? -0.8 : 0.8]);
+    JIT.push([6000, 0, 0], [7000, 0, 0]);
+    loop($('.bn__logo', bn), JIT.map(([ms, x, y]) => [ms, { translate: `${x}px ${y}px` }]));
+    loop(c('logo'), JIT.map(([ms, x, y]) => [ms, { transform: x || y ? `translate(${x}px,${y}px)` : 'none' }]));
+    loop($('.bn__sticker', bn), [[0, -12], [1900, -12], [2050, -2], [2200, -18], [2350, -10], [2450, -12], [7000, -12]].map(([ms, a]) => [ms, { rotate: `${a + 12}deg` }]));
+    loop($('.bn__cta', bn), [[0, 1], [6200, 1], [6350, 1.09], [6500, 0.98], [6620, 1], [7000, 1]].map(([ms, k]) => [ms, { scale: `${k}` }]));
   }
 
   /* steps 02-04: the cat is already alive, just not on air yet. Still most of the time, then
@@ -1090,8 +1092,7 @@
       TS.push(T);
       const curve = (el, fn) => el && loop(el, TS.map((t) => [t, { transform: fn(t) }]), 'linear');
       const deg = (a) => `rotate(${a.toFixed(2)}deg)`;
-      curve(g('body'), (t) => ncSwing(sw(t)));
-      curve(g('bodyB'), (t) => ncSwing(sw(t)));
+      curve(g('body'), (t) => ncSwing(sw(t)));      // (bodyB only carries the ball, which the story doesn't show)
       curve(g('armB'), (t) => deg(-16 + 116 * up(t) + 9 * up(t) * wave(t, 4450, 450) + lag(t, 150)));
       curve(g('legB'), (t) => deg(8 + 6 * up(t) + 1.6 * lag(t, 200)));
       curve(g('legF'), (t) => deg(-12 - 6 * up(t) + 1.6 * lag(t, 200)));
@@ -1172,8 +1173,7 @@
     if (svg && bn.classList.contains('bn--story')) {
       const sw = (t) => 3 * Math.sin(2 * Math.PI * t / T);
       const kf = (fn) => [...Array(25)].map((_, i) => [i * 150, fn(i * 150)]);
-      loop($('.h-body', svg), kf((t) => ncSwing(sw(t))), 'linear');
-      loop($('.h-bodyB', svg), kf((t) => ncSwing(sw(t))), 'linear');
+      loop($('.h-body', svg), kf((t) => ncSwing(sw(t))), 'linear');   // (no ball on the story: bodyB stays)
       loop($('.h-legB', svg), kf((t) => `rotate(${(8 + 1.6 * (sw(t - 300) - sw(t))).toFixed(2)}deg)`), 'linear');
       loop($('.h-legF', svg), kf((t) => `rotate(${(-12 + 1.6 * (sw(t - 300) - sw(t))).toFixed(2)}deg)`), 'linear');
     } else if (svg) {
@@ -1185,7 +1185,7 @@
     }
     const lamps = $$('.nc__bank i', bn);
     const lamp = lamps[Math.floor(phase * 16 + 5) % 16];
-    if (lamp) lamp.animate([{ opacity: 1 }, { opacity: 1, offset: 0.6 }, { opacity: 0.25, offset: 0.62 }, { opacity: 1, offset: 0.64 },
+    if (lamp && lamp.getClientRects().length) lamp.animate([{ opacity: 1 }, { opacity: 1, offset: 0.6 }, { opacity: 0.25, offset: 0.62 }, { opacity: 1, offset: 0.64 },
       { opacity: 0.4, offset: 0.66 }, { opacity: 1, offset: 0.7 }, { opacity: 1 }], { duration: 4200, delay: t0, iterations: Infinity, iterationStart: phase });
   }
 
@@ -1194,10 +1194,11 @@
     armU: 'translate(80px,-120px) rotate(-6deg)', armUB: 'translate(80px,-120px) rotate(-6deg)', armB: 'translate(-110px,-20px)',
     head: 'translate(-40px,-110px)', legB: 'translate(-90px,110px)', legF: 'translate(110px,90px)', net: 'translate(150px,60px)', board: 'translate(190px,-60px)',
   };
-  function courtParts(bn, apart, o) {
+  function courtParts(bn, apart, o, but = []) {
     const svg = $('.nc-hero', bn);
     if (!svg) return;
     for (const [k, v] of Object.entries(NC_APART)) {
+      if (but.includes(k)) continue;
       const kf = [{ transform: 'none' }, { transform: v }];
       $('.h-' + k, svg).animate(apart ? kf : kf.reverse(), { fill: 'both', easing: 'cubic-bezier(.2,.8,.2,1)', ...o });
     }
@@ -1473,24 +1474,44 @@
     const dots = $$('.pj__dot[data-pj]');
     const cap = $('.pr__cap', pr);
     const pauseBtn = $('.pr__pause', pr);
-    // one set (brief, board, artboards) per project; each fills its banners from its template
-    const SETS = {};
-    $$('.pj-set', stage).forEach((s) => {
-      SETS[s.dataset.set] = s;
+    // one set (brief, board, artboards) per project; each fills its banners from its template,
+    // the first time it is needed: a project that isn't on yet adds nothing to the page
+    const SETS = {}, built = new Set();
+    $$('.pj-set', stage).forEach((s) => (SETS[s.dataset.set] = s));
+    function build(k) {
+      const s = SETS[k];
+      if (!s || built.has(k)) return;
+      built.add(k);
       const tpl = $('template[data-bn]', s);
       $$('.bn', s).forEach((b) => b.appendChild(tpl.content.cloneNode(true)));
+      // the court's line lights up letter by letter
+      $$('.nc__head > span', s).forEach((w) => {
+        const t = w.textContent;
+        w.textContent = '';
+        for (const c of t) {
+          if (c === ' ') { w.append(' '); continue; }
+          const l = document.createElement('i');
+          l.className = 'l';
+          l.textContent = c;
+          w.append(l);
+        }
+      });
+    }
+    const prep = (k) => { build(k); PJ[k].load(); };
+    // the active step fills up while it plays: a red layer slides in from the left over a
+    // dark copy of the label that holds still (two transforms, both on the compositor)
+    btns.forEach((b) => {
+      const f = document.createElement('span');
+      f.className = 'pr__fill';
+      f.setAttribute('aria-hidden', 'true');
+      f.appendChild($('.pr__lbl', b).cloneNode(true));
+      b.appendChild(f);
     });
-    // the court's line lights up letter by letter
-    $$('.nc__head > span', stage).forEach((w) => {
-      const t = w.textContent;
-      w.textContent = '';
-      for (const c of t) {
-        if (c === ' ') { w.append(' '); continue; }
-        const l = document.createElement('i');
-        l.className = 'l';
-        l.textContent = c;
-        w.append(l);
-      }
+    // the brief's highlighter is a layer of its own, so it can be drawn on the compositor too
+    $$('.brief__list mark', stage).forEach((m) => {
+      const hl = document.createElement('i');
+      hl.className = 'brief__hl';
+      m.prepend(hl);
     });
 
     // the stage takes the height left under the title and the steps, so a jump to
@@ -1508,7 +1529,13 @@
     const all = () => pr.getAnimations({ subtree: true });
     const E = 'cubic-bezier(.2,.8,.2,1)', CUT = 'cubic-bezier(.75,0,.15,1)';
     const anim = (el, kf, o) => el && el.animate(kf, { fill: 'both', easing: E, ...o });
-    const fadeOut = (els, ms = 350) => els.forEach((el) => anim(el, [{ opacity: 1, visibility: 'visible' }, { opacity: 0, visibility: 'hidden' }], { duration: ms, easing: 'ease-in' }));
+    // (the opacity and the visibility apart: the opacity can run on the compositor, the visibility can't)
+    const fadeOut = (els, ms = 350) => els.forEach((el) => {
+      anim(el, [{ opacity: 1 }, { opacity: 0 }], { duration: ms, easing: 'ease-in' });
+      anim(el, [{ visibility: 'visible' }, { visibility: 'hidden' }], { duration: ms, easing: 'ease-in' });
+    });
+    const shown = (el) => el && el.getClientRects().length > 0;   // not in a display:none
+
     // FLIP: from the box `from` to where el is laid out now (`r`, measured before anything moves)
     const flip = (el, from, r, o) => r.width && anim(el, [
       { transform: `translate(${from.left - r.left}px,${from.top - r.top}px) scale(${from.width / r.width})`, transformOrigin: '0 0' },
@@ -1530,6 +1557,14 @@
       stage.appendChild(defs);
       const bare = cat.cloneNode(true);
       $('defs', bare).remove();
+      // the paw's shadow fades in on a group of its own: its loop has the path's opacity
+      const sh = $('.c-pawRsh', bare);
+      if (sh) {
+        const w = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        w.setAttribute('class', 'c-pawRshw');
+        sh.replaceWith(w);
+        w.appendChild(sh);
+      }
       $$('.bn', SETS.purr).forEach((b) => {
         const c = $('.bn__cat', b);
         c.insertBefore(bare.cloneNode(true), c.firstChild);
@@ -1596,15 +1631,18 @@
         motion: () => court(set, 250),
         keep: () => [bn1, $('.bn--tv', set)],
         board: () => courtParts(bn1, true, { duration: 700, delay: 1500 }),
-        assemble: () => courtParts(bn1, false, { duration: 700, delay: 200 }),
+        // (the legs' hang-time loop takes them over at once in 03, so they don't get one too)
+        assemble: () => courtParts(bn1, false, { duration: 700, delay: 200 }, ['legB', 'legF']),
       },
       fizz: {
         dur: FZ_DUR, load: loadFizz, life: fizzLife,
         motion: () => fizz(set, 250),
         keep: () => [bn1, $('.bn--city', set)],
         // 02: what the label is made of comes in after its parts
+        // (the lemons are <svg>s: those move on the compositor with transform, not with translate)
         board: () => [...$$('.fz__phases > svg', bn1), $('.fz__sketch', bn1), $('.fz__ice', bn1), $('.fz__crown', bn1)].forEach((el, i) =>
-          anim(el, [{ opacity: 0, translate: '0 3cqw' }, { opacity: 1, translate: '0 0' }], { duration: 550, delay: 1300 + i * 140 })),
+          anim(el, el instanceof SVGElement ? [{ opacity: 0, transform: 'translateY(3cqw)' }, { opacity: 1, transform: 'none' }]
+            : [{ opacity: 0, translate: '0 3cqw' }, { opacity: 1, translate: '0 0' }], { duration: 550, delay: 1300 + i * 140 })),
         assemble: () => [$('.fz__back', bn1), $('.fz__band', bn1)].forEach((el) => anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 600, delay: 650 })),
         // 04: the flat label rolls up into the can; the metal closes in as it comes round
         wrap() {
@@ -1660,7 +1698,7 @@
         anim(brief, [{ opacity: 0, transform: 'translateY(2%) scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: 600, delay: prev > 1 ? 250 : 0 });
         $$('.brief__top, .brief__list > div', brief).forEach((r, i) =>
           anim(r, [{ opacity: 0, transform: 'translateY(0.8em)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: 300 + i * 150 }));
-        anim($('mark', brief), [{ backgroundSize: '0% 64%' }, { backgroundSize: '100% 64%' }], { duration: 500, delay: 1500, easing: 'ease-in-out' });
+        anim($('.brief__hl', brief), [{ transform: 'scaleX(0)' }, { transform: 'none' }], { duration: 500, delay: 1500, easing: 'ease-in-out' });
         const line = $('.brief__line', brief), strong = $('strong', line);
         const typing = `steps(${strong.textContent.length}, jump-end)`;
         anim(line, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 2000 });
@@ -1678,7 +1716,7 @@
         if (first.ab1) flip(ab1, first.ab1, first.ab1now, { duration: 700 });
         if (prev >= 3) anim($('.bn__bg', bn1), [{ opacity: 1 }, { opacity: 0 }], { duration: 400 });
         anim(board, [{ opacity: 0, transform: 'scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: 150 });
-        [...$$('[data-part]', bn1), $('.bn__pal', bn1)].forEach((el, i) =>
+        [...$$('[data-part]', bn1), $('.bn__pal', bn1)].forEach((el, i) => shown(el) &&
           anim(el, [{ opacity: 0, translate: '0 3cqw' }, { opacity: 1, translate: '0 0' }], { duration: 550, delay: 450 + i * 120 }));
         P.life(bn1, 600, 0, 2);
         if (P.board) P.board();
@@ -1692,12 +1730,12 @@
           fadeOut([board], 500);
           anim($('.bn__pal', bn1), [{ opacity: 1 }, { opacity: 0 }], { duration: 300 });
           if (P.assemble) P.assemble();
-          parts.forEach((el, i) => anim(el, [{ transform: first.parts[i], transformOrigin: '0 0' }, { transform: 'none', transformOrigin: '0 0' }],
+          parts.forEach((el, i) => shown(el) && anim(el, [{ transform: first.parts[i], transformOrigin: '0 0' }, { transform: 'none', transformOrigin: '0 0' }],
             { duration: 950, delay: 250 + i * 70, easing: CUT }));
         } else {
           if (prev === 1) fadeOut([brief]);
           if (prev >= 4) fadeOut(others);
-          parts.forEach((el, i) => anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 200 + i * 60 }));
+          parts.forEach((el, i) => shown(el) && anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 200 + i * 60 }));
         }
         anim($('.bn__bg', bn1), [{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { duration: 650, delay: 150, easing: CUT });
         anim($('.bn__guides', bn1), [{ opacity: 0, clipPath: 'inset(0 100% 0 0)' }, { opacity: 1, clipPath: 'inset(0 0% 0 0)', offset: 0.22 },
@@ -1733,7 +1771,7 @@
           const d = (first.ab1 ? 450 : 100) + k * 160;
           anim(a, [{ opacity: 0, transform: 'scale(.94)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: d });
           parts.forEach(([el, from, r], i) => (from ? flip(el, from, r, { duration: 1050, delay: d + 250 + i * 45 })
-            : anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: d + 500 })));
+            : r.width && anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: d + 500 })));
           P.life($('.bn', a), d, (k + 1) / 4, 4);
         });
         anim($('.bn--9x16 .bn__safe, .bn--story .bn__safe', set), [{ opacity: 0 }, { opacity: 1, offset: 0.15 }, { opacity: 1, offset: 0.8 }, { opacity: 0 }],
@@ -1781,10 +1819,12 @@
       const b = btns[n - 1];
       caption(`Step ${$('.pr__n', b).textContent} / 05`, $('.pr__t', b).textContent, caps[n - 1] || '');
       // the active button fills up while its step plays
-      anim(b, [{ '--pp': 0 }, { '--pp': 1 }], { duration: P.dur[n], easing: 'linear', fill: 'forwards' });
+      const fl = $('.pr__fill', b), fo = { duration: P.dur[n], easing: 'linear', fill: 'forwards' };
+      anim(fl, [{ transform: 'translateX(-100%)' }, { transform: 'none' }], fo);
+      anim(fl.firstChild, [{ transform: 'translateX(100%)' }, { transform: 'none' }], fo);
       if (first.ab1) first.ab1now = rect(ab1);
-      if (n > 1) P.load();
-      if (n >= 3 && ORDER.length > 1) PJ[ORDER[(ORDER.indexOf(pj) + 1) % ORDER.length]].load();   // the next one, ahead of time
+      if (n > 1) prep(pj);
+      if (n >= 3 && ORDER.length > 1) prep(ORDER[(ORDER.indexOf(pj) + 1) % ORDER.length]);   // the next one, ahead of time
       if (moving) ENTER[n](prev, first);
       else if (started) anim(stage, [{ opacity: 0.2 }, { opacity: 1 }], { duration: 380, fill: 'none' });
       left = P.dur[n];
@@ -1810,7 +1850,7 @@
           d.setAttribute('aria-current', String(on));
         });
       }
-      P.load();
+      prep(pj);
       step = 1;                             // a new project starts on its brief
       go(1);
     }
@@ -1939,11 +1979,11 @@
       const near = new IntersectionObserver(([en]) => {
         if (!en.isIntersecting) return;
         near.disconnect();
-        P.load();
+        prep(pj);
       }, { rootMargin: '800px 0px' });
       near.observe(pr);
     } else {
-      P.load();
+      prep(pj);
       inView = started = true;
       go(1);
     }

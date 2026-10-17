@@ -700,28 +700,28 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 /* the five steps: buttons in a row that read as one progress bar (like Stories): the active
    one fills up while it plays and its label turns dark where the fill has passed; the ones
    already played keep a warm tint */
-@property --pp { syntax: "<number>"; inherits: true; initial-value: 0; }
 .pr__steps { grid-area: steps; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 .pr__step {
   position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; gap: 12px;
   width: 100%; height: 56px; padding: 0 18px; border: 1px solid var(--line-2); border-radius: 14px;
   color: var(--muted); text-align: left; transition: color 0.25s, border-color 0.25s;
 }
-.pr__step::before, .pr__step::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
-.pr__step::after { z-index: -2; background: rgba(242, 239, 234, 0.02); transition: background-color 0.25s; }
-.pr__step::before { z-index: -1; background: var(--rec); transform: scaleX(var(--pp)); transform-origin: left; opacity: 0; }
+.pr__step::after { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; background: rgba(242, 239, 234, 0.02); transition: background-color 0.25s; }
 .pr__step:hover { color: var(--text); border-color: rgba(242, 239, 234, 0.4); }
 .pr__step.is-done { color: rgba(242, 239, 234, 0.8); border-color: rgba(255, 77, 31, 0.4); }
 .pr__step.is-done::after { background: rgba(255, 77, 31, 0.13); }
 .pr__step.is-active { border-color: var(--rec); }
 .pr__step.is-active::after { background: rgba(242, 239, 234, 0.07); }
-.pr__step.is-active::before { opacity: 1; }
 /* the label spans the whole button, so its text gradient lines up with the fill */
 .pr__lbl { position: absolute; inset: 0; display: flex; align-items: center; gap: inherit; padding: inherit; }
-.pr__step.is-active .pr__lbl {
-  color: transparent; -webkit-background-clip: text; background-clip: text;
-  background-image: linear-gradient(90deg, #0a0a0b calc(var(--pp) * 100%), var(--text) 0);
-}
+/* the active label is painted as a background clipped to the text (that keeps it as fine as it was) */
+.pr__step.is-active > .pr__lbl, .pr__fill > .pr__lbl { color: transparent; -webkit-background-clip: text; background-clip: text; }
+.pr__step.is-active > .pr__lbl { background-color: var(--text); }
+/* the fill (js): a red layer slides in from the left, and in it a dark copy of the label moves
+   the other way, so it holds still; both are transforms, so the compositor plays them */
+.pr__fill { position: absolute; inset: 0; overflow: hidden; gap: inherit; padding: inherit; background: var(--rec); opacity: 0; transform: translateX(-100%); pointer-events: none; }
+.pr__fill > .pr__lbl { background-color: #0a0a0b; transform: translateX(100%); }
+.pr__step.is-active .pr__fill { opacity: 1; }
 .pr__n { flex: none; font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; }
 .pr__t { overflow: hidden; font-weight: 600; font-stretch: 105%; font-size: 16px; white-space: nowrap; text-overflow: ellipsis; }
 .pr__d { display: none; }   /* the active one is written out beside the stage */
@@ -791,7 +791,9 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .brief__list div { display: grid; grid-template-columns: 13cqw 1fr; gap: 1.5cqw; align-items: baseline; }
 .brief__list dt { color: #8a8478; font-size: 1.35cqw; }
 .brief__list dd { margin: 0; font-weight: 500; font-size: 2cqw; line-height: 1.3; }
-.brief__list mark { padding: 0 0.15em; color: inherit; background: linear-gradient(#ffc83d, #ffc83d) 0 70% / 100% 64% no-repeat; }
+.brief__list mark { position: relative; z-index: 0; padding: 0 0.15em; color: inherit; background: none; }
+/* the highlighter (js): 64% of the line high, 70% of the way down, behind the word */
+.brief__hl { position: absolute; z-index: -1; left: 0; top: 25.2%; width: 100%; height: 64%; background: #ffc83d; transform-origin: 0 0; }
 .brief__line { margin-top: 2.6cqw; padding-top: 2cqw; border-top: 1px dashed rgba(22, 22, 22, 0.3); }
 .brief__line span { display: block; color: #8a8478; font-size: 1.35cqw; }
 .brief__line strong { display: inline-block; margin-top: 0.8cqw; font-weight: 900; font-stretch: 112%; font-size: 5.4cqw; line-height: 1; letter-spacing: -0.035em; }
@@ -2009,11 +2011,13 @@ body { position: relative; }
   background: radial-gradient(min(52vw, 820px) 40% at 86% 42%, rgba(255, 77, 31, 0.1), transparent 70%);
 }
 [data-lit].is-lit::before { opacity: 1; }
-/* once lit, the glow breathes slowly (desktop only; the delay lets the fade-in finish) */
+/* once lit, the glow breathes slowly (desktop only; the delay lets the fade-in finish). It breathes
+   with filter: opacity(), not opacity: the fade-in is a transition of opacity, and two animations
+   of one property would both drop off the compositor and tick on the main thread, all page long */
 @media (min-width: 768px) {
   html:not(.is-lite) [data-lit].is-lit::before { animation: litBreath 7s ease-in-out 1.6s infinite alternate; }
 }
-@keyframes litBreath { to { opacity: 0.5; } }
+@keyframes litBreath { to { filter: opacity(0.5); } }
 
 @media (max-width: 767px) {
   .topbar { height: 64px; }
