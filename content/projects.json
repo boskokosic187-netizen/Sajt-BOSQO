@@ -1,0 +1,61 @@
+{
+  "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
+  "projects": [
+    {
+      "slug": "struja",
+      "title": "STRUJA",
+      "kicker": "Living identity · Self-initiated · 2026",
+      "accent": "#ff7a1a",
+      "line": "A festival identity that is a behaviour, not a file: one line of light on the river, drawn by the music, cutting through the name.",
+      "idea": "One line of sodium streetlight on the Sava. At rest it is the river’s real course through Belgrade; the music bends it, every kick sends a wave downstream, and at the drop the line unwinds. One custom WebGL engine draws it from the track, and the same engine rendered the film, the posters and every screen.",
+      "role": "Concept, identity, motion, original score, creative code, front-end",
+      "facts": [
+        ["One engine", "Live site, film, posters, screens"],
+        ["20.5 km of the Sava", "The line’s rest shape, from map data"],
+        ["Original score", "124 BPM, composed in code"],
+        ["3 axes, 3 jobs", "Variable type that behaves"]
+      ],
+      "cta": [
+        {"label": "Play the film", "meta": "0:30 · sound", "cut": 3},
+        {"label": "Try it live", "cut": 2}
+      ],
+      "note": "STRUJA is a fictional festival and a self-initiated project. Water footage and mockups: Freepik (licensed). Stage plates: Midjourney. River data © OpenStreetMap contributors (ODbL). Typeface: Science Gothic (SIL OFL).",
+      "copy": [["PV/BOSQO/STRUJA/06_Web/struja-live", "projects/struja/live"]],
+      "monitors": [
+        {"type": "loop", "loop": "struja", "umd": "Loop", "label": "Living identity — the loop"},
+        {"type": "live", "href": "projects/struja/live/", "thumb": "PV/BOSQO/STRUJA/06_Web/struja-live/media/poster.webp",
+         "umd": "Live · WebGL", "label": "Live — play the track, use the mic, move the cursor"},
+        {"type": "film", "src": "PV/BOSQO/STRUJA/01_Film/STRUJA_film_16x9.mp4", "w": 1280, "dur": 30, "poster_at": 6,
+         "umd": "Film · sound", "label": "Brand film — 30 s, original score"},
+        {"type": "set", "cols": 2, "umd": "Social 9:16", "label": "Brand film 9:16 and the festival app", "items": [
+          {"type": "video", "src": "PV/BOSQO/STRUJA/01_Film/STRUJA_film_9x16.mp4", "w": 540, "dur": 30, "poster_at": 6},
+          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/phone.mp4", "w": 720}
+        ]},
+        {"type": "set", "cols": 3, "umd": "Posters ×6", "label": "Poster series — six moments of one night, 50×70", "items": [
+          {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_01_prvi_takt.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_02_tok.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_03_napon.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_04_drop.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_05_kratak_spoj.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_06_svice.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "DOOH", "label": "Digital outdoor — billboard and façade", "items": [
+          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/bb_orange.mp4", "w": 960},
+          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/bb_building.mp4", "w": 720}
+        ]},
+        {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/stage.mp4", "w": 1280, "umd": "Stage", "label": "Main stage on the Sava"},
+        {"type": "set", "cols": 2, "umd": "Street & merch", "label": "Street posters and the wristband", "items": [
+          {"type": "image", "src": "PV/BOSQO/STRUJA/04_Mockupi/posters_wall.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/04_Mockupi/posters_sidewalk.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/04_Mockupi/wristband.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "System", "label": "Identity system — mark, type, line and colour, an engine frame", "items": [
+          {"type": "image", "src": "PV/BOSQO/STRUJA/05_Sistem/board_01_mark.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/05_Sistem/board_02_type.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/05_Sistem/board_03_system.jpg"},
+          {"type": "image", "src": "PV/BOSQO/STRUJA/05_Sistem/breakdown_engine_04.jpg"}
+        ]}
+      ]
+    }
+  ]
+}

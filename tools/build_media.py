@@ -40,7 +40,11 @@ VIDEOS = [
     ("bb-med", DESK + "Ai Baby Boo/Gotove/med 4.mp4", 4, None),
     ("bb-slon", DESK + "Ai Baby Boo/Slon.mp4", 4, None),
     ("its-reklama", DESK + "ITS/Animirana reklama/Animacija.mp4", 4, None),
+    # seamless 4 s masters made for the wall (start 0, full length); -v is its own vertical cut
+    ("struja", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_16x9.mp4", 4, 0),
+    ("struja-v", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_9x16.mp4", 4, 0),
 ]
+TILE_W = {"struja": 960}  # the wall's big screen gets a wider loop
 
 STILLS = [
     ("car-dusan", PV + "BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.png"),
@@ -154,13 +158,16 @@ def build_videos(only, manifest):
             continue
         w, h, dur = probe(src)
         start = forced if forced is not None else best_window(src, length, dur)
-        length = min(length, max(1.0, dur - start - 0.05))
+        # a seamless master keeps every frame, or the loop jumps
+        length = min(length, max(1.0, dur - start - (0.0 if forced is not None else 0.05)))
         busy = slug in ("ballies-strike",)
-        size = encode(src, start, length, tile_scale(w, h), os.path.join(d, slug),
+        vf = f"scale={TILE_W[slug]}:-2" if slug in TILE_W else tile_scale(w, h)
+        size = encode(src, start, length, vf, os.path.join(d, slug),
                       34 if busy else 30, 46 if busy else 40)
         entry = {"type": "video", "src": src, "start": round(start, 2), "len": length,
                  "w": size[0], "h": size[1]}
-        if w / h > 0.8:  # landscape/square also gets a 9:16 version for mobile
+        own_v = any(s == slug + "-v" for s, *_ in VIDEOS)
+        if w / h > 0.8 and not own_v:  # landscape/square also gets a 9:16 version for mobile
             encode(src, start, length, VERTICAL_FILL, os.path.join(d, slug + "-v"),
                    35 if busy else 31, 47 if busy else 42)
         sizes = {ext: os.path.getsize(os.path.join(d, f"{slug}.{ext}")) // 1024

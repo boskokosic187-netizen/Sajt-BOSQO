@@ -503,6 +503,9 @@
 
     /* the wall director: a few screens run at once; every ~1.7 s it "cuts"
        to another one, and the red tally marks the latest cut */
+    const projTpl = {}; // projects that open in place (see "projects" below)
+    let proj = null; // the one that is open
+    $$('template[data-proj]').forEach((t) => (projTpl[t.dataset.proj] = t));
     const tiles = $$('.tile');
     const videoTiles = tiles.filter((t) => t.dataset.video);
     const MAX_LIVE = (navigator.hardwareConcurrency || 4) >= 8 ? 6 : 4;
@@ -514,14 +517,20 @@
       return r.right > 0 && r.left < innerWidth && r.bottom > 0 && r.top < innerHeight;
     };
     const ownVideo = (t) => t.querySelector('video:not(.fx-static)');
-    function goLive(t) {
+    function tileVideo(t) {
       let v = ownVideo(t);
       if (!v) {
         v = makeVideo(LOOPS + t.dataset.video + '.mp4');
         v.addEventListener('playing', () => t.classList.add('has-video'), { once: true });
         t.appendChild(v);
       }
-      play(v);
+      return v;
+    }
+    // a held screen (data-hold: the newest project) is always on air, outside the rotation
+    const held = videoTiles.filter((t) => t.hasAttribute('data-hold'));
+    const holdOn = () => held.forEach((t) => { const v = tileVideo(t); if (v.paused) play(v); });
+    function goLive(t) {
+      play(tileVideo(t));
       live.push(t);
       if (tally) tally.classList.remove('is-tally');
       tally = t;
@@ -547,21 +556,27 @@
       staticT = setTimeout(() => { t.classList.remove('is-cut'); staticV.pause(); }, 380);
     }
 
-    /* the focus reticle locks on to the screen under the cursor */
+    /* the focus reticle locks on to the screen under the cursor and names it (css: .hud__tag) */
+    const tag = document.createElement('span');
+    tag.className = 'hud__tag';
+    tag.setAttribute('aria-hidden', 'true');
+    hero.appendChild(tag);
     tiles.forEach((t) => {
-      t.addEventListener('mouseenter', () => hero.classList.add('is-aim'));
+      t.addEventListener('mouseenter', () => { tag.textContent = t.dataset.label; hero.classList.add('is-aim'); });
       t.addEventListener('mouseleave', () => hero.classList.remove('is-aim'));
     });
 
     function cut() {
-      if (document.hidden || !heroVisible) return;
-      const cand = videoTiles.filter((t) => !live.includes(t) && inView(t));
+      if (document.hidden || !heroVisible || proj) return;
+      holdOn();
+      const cand = videoTiles.filter((t) => !live.includes(t) && !held.includes(t) && inView(t));
       if (!cand.length) return;
       goLive(cand[(Math.random() * cand.length) | 0]);
       while (live.length > MAX_LIVE) goOff(live.shift());
     }
     function startDirector() {
       if (timer || lite || !mqDesktop.matches) return;
+      holdOn();
       cut();
       setTimeout(cut, 500);
       setTimeout(cut, 1000);
@@ -571,13 +586,19 @@
       clearInterval(timer);
       timer = null;
       live.forEach(goOff);
+      held.forEach(goOff);
       live = [];
     }
     tiles.forEach((t) => {
       t.style.setProperty('--d', Math.round(Math.random() * 900) + 'ms');
+      // take: a flash on the screen and the reticle snapping shut, then the cut to the case
       t.addEventListener('click', () => {
+        const own = projTpl[t.dataset.project] ? t.dataset.project : '';
         const slug = CASES[t.dataset.project];
-        if (slug) go('work/' + slug + '/');
+        if ((!own && !slug) || hero.classList.contains('is-take') || proj) return;
+        t.classList.add('is-take');
+        hero.classList.add('is-take');
+        setTimeout(() => (own ? openProject(own, t) : go('work/' + slug + '/')), reduceMotion ? 0 : 160);
       });
     });
 
@@ -608,6 +629,7 @@
       const ny = cy / innerHeight - 0.5;
       spot.style.translate = at;
       if (focus) focus.style.translate = at;
+      tag.style.translate = at;
       plane.style.setProperty('--px', (nx * -36).toFixed(2) + 'px');
       plane.style.setProperty('--py', (ny * -24).toFixed(2) + 'px');
       if (!lite) {
@@ -625,7 +647,7 @@
     }
     /* a light sweep across the chrome name now and then */
     setInterval(() => {
-      if (lite || document.hidden || !heroVisible || !mqDesktop.matches || !hero.classList.contains('is-on')) return;
+      if (lite || document.hidden || !heroVisible || proj || !mqDesktop.matches || !hero.classList.contains('is-on')) return;
       if (!sheen) sheen = copy('name__sh').map((c) => {
         // the word inside the box that carries the band (css: .name__sh > span)
         const band = document.createElement('span');
@@ -650,7 +672,7 @@
       const free = $$('i', fx);
       const flare = () => {
         setTimeout(flare, 260 + Math.random() * 700);
-        if (document.hidden || !heroVisible || !hero.classList.contains('is-on') || !free.length) return;
+        if (document.hidden || !heroVisible || proj || !hero.classList.contains('is-on') || !free.length) return;
         const f = free.pop();
         const x = Math.random() * fx.clientWidth;
         const y = fx.clientHeight * (0.35 + Math.random() * 0.4);
@@ -667,7 +689,7 @@
     }
 
     hero.addEventListener('pointermove', (e) => {
-      if (!mqHover.matches || reduceMotion) return;
+      if (!mqHover.matches || reduceMotion || proj) return;
       mx = e.clientX;
       my = e.clientY;
       if (!raf) raf = requestAnimationFrame(loop);
@@ -794,6 +816,12 @@
       if ('ResizeObserver' in window) new ResizeObserver(steps).observe(track); else steps();
     }
 
+    /* phone: the viewfinder frame ends above the text block (css: .hud --ch) */
+    const hud = $('.hud', hero), content = $('.hero__content', hero);
+    if (hud && content && 'ResizeObserver' in window) {
+      new ResizeObserver(() => hud.style.setProperty('--ch', content.offsetHeight + 'px')).observe(content);
+    }
+
     /* lite-mode chip in the on-air bar */
     if (lite && !reduceMotion) {
       const chip = document.createElement('button');
@@ -810,6 +838,188 @@
       $('.bar').insertBefore(chip, $('.bar__track'));
     }
     onLiteOff.push(startDirector, startMobileReel, setupFeed);
+    // back from a case (back/forward cache): the wall is as it was before the take
+    addEventListener('pageshow', (e) => {
+      if (!e.persisted) return;
+      hero.classList.remove('is-take');
+      $$('.tile.is-take').forEach((t) => t.classList.remove('is-take'));
+    });
+
+    /* ---------------------------------------------------------------- projects
+       A screen on the wall opens its project right here (markup: tools/build_projects.py,
+       css: PROJECTS IN PLACE). One view transition does the move: the clicked screen grows
+       into the program monitor while the wall, a single snapshot, pushes in and goes dark,
+       so the 34 screens never animate themselves. While a project is open the wall is hidden
+       and its loops, flares and light sweeps stop. ✕, Esc or Back put it back on the wall */
+    function setOrigin(el) {
+      const r = el.getBoundingClientRect();
+      root.style.setProperty('--tx', Math.round(r.left + r.width / 2) + 'px');
+      root.style.setProperty('--ty', Math.round(r.top + r.height / 2) + 'px');
+    }
+    function moveTo(cls, update) {
+      if (!document.startViewTransition || lite || reduceMotion) { update(false); return Promise.resolve(); }
+      root.classList.add(cls);
+      const vt = document.startViewTransition(() => update(true));
+      return vt.finished.catch(() => {}).finally(() => root.classList.remove(cls));
+    }
+    const tileFor = (slug) => $(`.tile[data-project="${slug}"][data-hold]`) || $(`.tile[data-project="${slug}"]`);
+    // stop what a monitor plays (a project's own page hears "<slug>:pause")
+    const hush = (box, slug) => {
+      $$('video', box).forEach((v) => v.pause());
+      $$('iframe', box).forEach((f) => { try { f.contentWindow.postMessage(slug + ':pause', '*'); } catch { /* gone */ } });
+    };
+
+    // what a monitor puts on program
+    function piece(m, p) {
+      if (m.kind === 'live') {
+        const f = document.createElement('iframe');
+        f.src = m.src;
+        f.title = m.label;
+        f.allow = 'autoplay; microphone';
+        f.referrerPolicy = 'no-referrer';
+        return f;
+      }
+      if (m.kind === 'image') {
+        const im = new Image();
+        im.decoding = 'async';
+        im.alt = m.label || '';
+        if (m.srcset) { im.srcset = m.srcset; im.sizes = m.sizes || Math.round(p.pgm.clientWidth) + 'px'; }
+        im.src = m.src;
+        return im;
+      }
+      if (m.kind === 'set') {
+        const box = document.createElement('div');
+        box.className = 'mv__set';
+        box.style.setProperty('--cols', m.cols);
+        box.style.setProperty('--rows', Math.ceil(m.items.length / m.cols));
+        const cellW = Math.round(p.pgm.clientWidth / m.cols) + 'px';
+        m.items.forEach((it) => {
+          const c = document.createElement('button');
+          c.type = 'button';
+          c.className = 'mv__cell';
+          c.setAttribute('aria-label', 'Enlarge');
+          c.appendChild(piece({ ...it, sizes: cellW, label: '' }, p));
+          c.addEventListener('click', () => {
+            const solo = !c.classList.contains('is-pick');
+            $$('.mv__cell', box).forEach((x) => x.classList.toggle('is-pick', solo && x === c));
+            box.classList.toggle('is-solo', solo);
+            const im = c.querySelector('img');
+            if (im && solo) im.sizes = Math.round(p.pgm.clientWidth) + 'px';
+          });
+          box.appendChild(c);
+        });
+        return box;
+      }
+      const v = makeVideo(m.src);
+      v.poster = m.poster;
+      if (m.kind === 'film') { // once, with its sound (the click is the permission) and controls
+        v.loop = false;
+        v.removeAttribute('muted');
+        v.muted = false;
+        v.controls = true;
+      }
+      play(v);
+      return v;
+    }
+    function showOn(p, i, flash = true) {
+      const m = p.mons[i];
+      hush(p.screen, p.slug);
+      // the wall's own loop goes back on as it was
+      const el = m.kind === 'loop' && p.tv ? p.tv : piece(m, p);
+      if (el === p.tv) play(el);
+      p.screen.replaceChildren(el);
+      p.screen.className = 'mv__screen is-' + m.fit;
+      p.pgm.classList.toggle('is-live', m.kind === 'live');
+      p.umd.textContent = m.label;
+      $$('.mv__mon', p.el).forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
+      p.cur = i;
+      if (flash) {
+        p.pgm.classList.remove('is-cut');
+        void p.pgm.offsetWidth;
+        p.pgm.classList.add('is-cut');
+      }
+    }
+
+    function openProject(slug, tile, how = 'push') {
+      const tpl = projTpl[slug];
+      if (!tpl || proj) return;
+      if (scrollY > 0) scrollTo({ top: 0, behavior: 'instant' });
+      const el = tpl.content.firstElementChild.cloneNode(true);
+      const p = proj = {
+        slug, el, tile, tv: null, cur: 0,
+        mons: JSON.parse($('script[data-mons]', el).textContent),
+        pgm: $('.proj__pgm', el), screen: $('[data-screen]', el), umd: $('[data-umd]', el),
+      };
+      el.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-cut]');
+        if (b) showOn(p, +b.dataset.cut - 1);
+        else if (e.target.closest('[data-proj-close]')) back();
+      });
+      if (tile) { setOrigin(tile); tile.style.viewTransitionName = 'take'; }
+      moveTo('vt-open', (animated) => {
+        if (tile) tile.style.viewTransitionName = '';
+        if (animated) p.pgm.style.viewTransitionName = 'take';
+        hero.classList.remove('is-take', 'is-aim');
+        $$('.tile.is-take').forEach((t) => t.classList.remove('is-take'));
+        // the screen's loop carries on in the monitor, from the frame it is on
+        const tv = tile && ownVideo(tile);
+        const running = tv && !tv.paused && p.mons[0].kind === 'loop' && tv.currentSrc.endsWith(p.mons[0].src);
+        stopDirector();
+        if (running) { p.tv = tv; p.screen.replaceChildren(tv); play(tv); } else showOn(p, 0, false);
+        hero.appendChild(el);
+        hero.classList.add('is-open');
+        root.classList.add('is-proj');
+        el.classList.add(animated ? 'is-in' : 'is-fade');
+      }).then(() => {
+        p.pgm.style.viewTransitionName = '';
+        if (proj === p) el.focus({ preventScroll: true });
+      });
+      if (how === 'push') history.pushState({ proj: slug }, '', '#' + slug);
+      else if (how === 'link') history.replaceState({ proj: slug, link: true }, '', '#' + slug);
+    }
+    function closeProject() {
+      const p = proj;
+      if (!p) return;
+      hush(p.el, p.slug);
+      proj = null;
+      const tile = p.tile || tileFor(p.slug);
+      p.pgm.style.viewTransitionName = 'take';
+      moveTo('vt-close', () => {
+        p.pgm.style.viewTransitionName = '';
+        p.el.remove();
+        hero.classList.remove('is-open');
+        root.classList.remove('is-proj');
+        if (tile) {
+          if (p.tv) tile.appendChild(p.tv);
+          tile.style.viewTransitionName = 'take';
+          setOrigin(tile);
+        }
+        startDirector();
+      }).then(() => { if (tile) tile.style.viewTransitionName = ''; });
+    }
+    // ✕ and Esc step back in history when the project added a step, so Back and ✕ agree
+    function back() {
+      if (history.state && history.state.proj && !history.state.link) history.back();
+      else { closeProject(); history.replaceState(null, '', location.pathname + location.search); }
+    }
+    addEventListener('popstate', (e) => {
+      const s = e.state && e.state.proj;
+      if (proj && proj.slug !== s) closeProject();
+      if (s && !proj && projTpl[s]) openProject(s, tileFor(s), 'none');
+    });
+    // a link to #slug from the page itself (or typed into the address bar)
+    addEventListener('hashchange', () => {
+      const s = decodeURIComponent(location.hash.slice(1));
+      if (projTpl[s] && !proj) openProject(s, tileFor(s), 'none');
+    });
+    addEventListener('keydown', (e) => {
+      if (!proj || e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
+      if (e.key === 'Escape') { e.preventDefault(); back(); return; }
+      if (/^(INPUT|TEXTAREA|SELECT|VIDEO)$/.test(e.target.tagName)) return;
+      const n = proj.mons.length, k = +e.key;
+      if (k >= 1 && k <= n) showOn(proj, k - 1);
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') showOn(proj, (proj.cur + (e.key === 'ArrowRight' ? 1 : n - 1)) % n);
+    });
 
     /* observers + boot */
     if ('IntersectionObserver' in window) {
@@ -820,6 +1030,7 @@
         if (v) heroVisible ? play(v) : v.pause();
         if (!heroVisible) {
           live.forEach(goOff);
+          held.forEach(goOff);
           live = [];
         }
       }, { threshold: 0.08 }).observe(hero);
@@ -843,6 +1054,8 @@
     Promise.race([fontsReady, new Promise((r) => setTimeout(r, 700))]).then(() => introReveal).then(() => {
       fitName();
       requestAnimationFrame(() => hero.classList.add('is-on'));
+      const linked = decodeURIComponent(location.hash.slice(1));
+      if (projTpl[linked]) openProject(linked, null, 'link');
     });
     fontsReady.then(fitName);
     addEventListener('load', () => {

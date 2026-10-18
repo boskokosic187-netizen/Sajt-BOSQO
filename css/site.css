@@ -147,6 +147,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   height: 100vh; height: 100svh; min-height: 640px;
+  --boot: 0.4s; /* the camera boots first, then the name is wiped in */
 }
 /* the cursor moves each part by its own property (js), so a frame restyles a handful of
    elements instead of the whole hero; these two stay on the plane, never inherited */
@@ -180,6 +181,10 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   transition: transform 0.6s var(--out), filter 0.6s var(--out);
 }
 .wall { --gap: 10px; }
+/* an upright tablet: six bigger columns, so the wall reaches the bottom of the screen */
+@media (min-width: 768px) and (max-aspect-ratio: 1/1) {
+  .wall__grid { --cell: calc((124vw - 5 * var(--gap)) / 6); grid-template-columns: repeat(6, 1fr); }
+}
 .tile.w { grid-column: span 2; }
 .tile.v { grid-row: span 2; }
 .tile.xl { grid-column: span 2; grid-row: span 2; }
@@ -204,7 +209,6 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .tile.is-tally::before { opacity: 1; transform: none; }
 .tile:hover { transform: translateZ(40px) scale(1.04); z-index: 3; }
 .tile:hover::after { box-shadow: inset 0 0 0 2px var(--text); }
-.tile:hover::before { content: "View — " attr(data-label); opacity: 1; transform: none; }
 
 /* each screen is a layer of its own (capable devices): a hover lifts it, a cut flashes it and
    the director's tally lights it without repainting the wall around it. A filter layer, not a
@@ -247,18 +251,22 @@ html:not(.is-lite) .tile { will-change: filter; }
 }
 .hero__content > * { pointer-events: auto; }
 .eyebrow { order: 1; color: var(--muted); margin-bottom: 18px; }
-.eyebrow span { color: var(--rec); }
+.eyebrow b { color: var(--rec); font-weight: inherit; }
+@media (min-width: 768px) { .eyebrow__role { display: none; } } /* the logo says it already */
 .hero__row {
   order: 2;
   display: grid; grid-template-columns: minmax(0, 600px) 1fr; align-items: end; gap: 40px;
 }
 .statement {
-  font-size: clamp(20px, 1.8vw, 30px); line-height: 1.18; font-weight: 450; letter-spacing: -0.01em;
+  font-size: clamp(20px, calc(1.1vw + 9px), 40px); line-height: 1.18; font-weight: 450; letter-spacing: -0.01em;
   text-wrap: balance;
 }
 .statement em { font-size: 1.08em; }
 .proof { justify-self: end; display: flex; gap: clamp(20px, 2.6vw, 44px); }
 .proof li { display: grid; gap: 4px; }
+@media (min-width: 768px) {
+  .proof { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 .proof span { max-width: 150px; } /* the word may be wider than the line under it ("Teaching") */
 .proof b { font-weight: 800; font-stretch: 112%; font-size: clamp(22px, 2vw, 32px); line-height: 1; }
 .proof span { color: var(--muted); font-size: 13px; line-height: 1.3; }
@@ -374,14 +382,14 @@ html:not(.is-lite) .tile { will-change: filter; }
 
 /* intro: broadcast wipe reveals each word */
 .js .hero:not(.is-on) :is(.name__t, .name__x, .name__sh) { visibility: hidden; }
-.js .hero.is-on :is(.name__t, .name__x, .name__sh) { transition: visibility 0s linear 0.52s; }
-.js .hero.is-on .name__b :is(.name__t, .name__x, .name__sh) { transition-delay: 0.7s; }
+.js .hero.is-on :is(.name__t, .name__x, .name__sh) { transition: visibility 0s linear calc(var(--boot) + 0.52s); }
+.js .hero.is-on .name__b :is(.name__t, .name__x, .name__sh) { transition-delay: calc(var(--boot) + 0.7s); }
 .js .hero.is-on .name > span::after {
   content: ""; position: absolute; inset: 0.04em -0.02em 0.02em;
   background: var(--rec); transform: scaleX(0);
-  animation: wipe 0.84s var(--cut) forwards;
+  animation: wipe 0.84s var(--cut) var(--boot) forwards;
 }
-.js .hero.is-on .name__b::after { animation-delay: 0.18s; }
+.js .hero.is-on .name__b::after { animation-delay: calc(var(--boot) + 0.18s); }
 @keyframes wipe {
   0% { transform: scaleX(0); transform-origin: 0 50%; }
   50% { transform: scaleX(1); transform-origin: 0 50%; }
@@ -406,9 +414,22 @@ html:not(.is-lite) .tile { will-change: filter; }
 /* timecode frames: a strip of 00–24, one step a frame, on the compositor (js builds it) */
 .tc__ff { display: inline-block; height: 1lh; overflow: hidden; vertical-align: top; }
 .tc__ff > span { display: block; animation: tcFrames 1s steps(25) infinite; }
+.js .hero:not(.is-on) .tc__ff > span { animation-play-state: paused; }
 @keyframes tcFrames { to { transform: translateY(-100%); } }
+/* ticker: the proof points crawl through the on-air bar like a news line (two copies of the
+   list, one move on the compositor; paused with the hero's other loops when it is out of view) */
+.ticker {
+  flex: 1; min-width: 0; overflow: hidden; white-space: nowrap;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.ticker__run { display: inline-flex; animation: ticker 48s linear infinite; }
+.ticker__run > span { display: inline-flex; align-items: center; gap: 0.6em; padding-right: 2.6em; }
+.ticker__run > span::before { content: ""; width: 5px; height: 5px; background: var(--rec); }
+.ticker b { color: var(--text); font-weight: 800; }
+@keyframes ticker { to { transform: translateX(-50%); } }
 .bar__track {
-  position: relative; flex: 1; height: 18px;
+  position: relative; flex: 0 0 clamp(120px, 15vw, 300px); height: 18px;
   background:
     repeating-linear-gradient(to right, var(--line-2) 0 1px, transparent 1px 60px) bottom left / 100% 12px no-repeat,
     repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px 12px) bottom left / 100% 6px no-repeat;
@@ -585,6 +606,16 @@ html:not(.is-lite) .tile { will-change: filter; }
    ========================================================================== */
 @media (max-width: 1199px) and (min-width: 768px) {
   .topnav { gap: 18px; }
+  .mark__txt small { display: none; } /* the eyebrow and the logo name are enough here */
+  .mark__txt b, .status { white-space: nowrap; }
+  .bar__track { display: none; } /* the ticker gets the room */
+}
+/* a narrow tablet: the logo, the menu and the status share one row without overlapping */
+@media (max-width: 900px) and (min-width: 768px) {
+  .topbar { grid-template-columns: auto 1fr auto; gap: 12px; }
+  .topnav { justify-self: center; }
+  .topnav a { padding: 8px 7px; font-size: 14px; }
+  .status { padding: 8px 12px; gap: 8px; font-size: 11.5px; }
   .hero__row { grid-template-columns: 1fr; gap: 20px; }
   .proof { justify-self: start; }
   .row__link { grid-template-columns: 44px minmax(0, 1fr) 70px 24px; grid-template-areas: "num title year go" "num line year go" "num tags year go"; row-gap: 8px; }
@@ -615,7 +646,7 @@ html:not(.is-lite) .tile { will-change: filter; }
   }
   .hero__spot { display: none; }
   .hero__content { bottom: calc(84px + env(safe-area-inset-bottom)); }
-  .eyebrow { font-size: 10px; margin-bottom: 10px; }
+  .eyebrow { font-size: 10px; margin-bottom: 10px; align-self: flex-start; padding: 5px 8px; border-radius: 4px; background: rgba(10, 10, 11, 0.62); color: var(--text); }
   .name { order: 2; margin: 0 0 16px; line-height: 0.95; white-space: normal; --ey: 0.6; --chrome: url("../media/fx/chrome-s.webp"); }
   @supports (background-image: image-set(url("x.avif") type("image/avif"))) {
     .name { --chrome: image-set(url("../media/fx/chrome-s.avif") type("image/avif"), url("../media/fx/chrome-s.webp") type("image/webp")); }
@@ -713,10 +744,13 @@ html:not(.is-lite) .tile { will-change: filter; }
 .process { padding-top: 96px; }
 .process .process__head { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 32px; margin-top: 20px; }
 .process__title { font-size: clamp(40px, 4.4vw, 80px); white-space: nowrap; }
-/* which project the demo shows: one circle each, with the project's hero inside */
-.pj { display: flex; gap: clamp(10px, 0.8vw, 16px); }
+/* which project the demo shows: one circle each, with the project's hero inside, in a pill
+   at the head of the steps row (project first, then its step), right above the stage */
+.pr__bar { grid-area: steps; display: flex; align-items: center; gap: 10px; }
+.pr__bar .pr__steps { flex: 1; min-width: 0; }
+.pj { flex: none; display: flex; gap: 10px; padding: 5px; border: 1px solid var(--line-2); border-radius: 999px; }
 .pj__dot {
-  --d: clamp(44px, 3.4vw, 64px);
+  --d: 44px;
   position: relative; display: grid; place-items: center; width: var(--d); height: var(--d); border-radius: 50%;
   border: 1px dashed rgba(242, 239, 234, 0.26); color: rgba(242, 239, 234, 0.4);
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em;
@@ -734,7 +768,7 @@ html:not(.is-lite) .tile { will-change: filter; }
 }
 .pj__face svg { display: block; width: 100%; height: 100%; transition: transform 0.35s cubic-bezier(.2, .8, .2, 1); }
 .pj__dot:not(:disabled):hover .pj__face svg { transform: translateY(-5%); }   /* the cat peeks up */
-.pj__dot.is-active::after { content: ""; position: absolute; inset: -5px; border: 2px solid var(--rec); border-radius: 50%; pointer-events: none; }
+.pj__dot.is-active::after { content: ""; position: absolute; inset: -4px; border: 2px solid var(--rec); border-radius: 50%; pointer-events: none; }
 
 /* ---------- the demo: steps on the side, a stage that plays them ----------
    data-step on .pr is the whole state: every step has a still frame in CSS (that is
@@ -2071,6 +2105,12 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .pr__t { font-size: 14px; }
   .case-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* below 1280 the project circles leave the steps too little room for their names: numbers only
+   (the active step's name is written out beside the stage) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .pr__t { display: none; }
+  .pr__step, .pr__lbl { justify-content: center; }
+}
 @media (max-width: 767px) {
   .process, .about { padding: 72px var(--pad); }
   .process__head, .about__head { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
@@ -2079,7 +2119,9 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .process__title { font-size: clamp(26px, 7.4vw, 40px); white-space: normal; }
   .process .process__head { grid-template-columns: 1fr; gap: 14px; }
   .pj__dot { --d: 40px; }
-  .pr { grid-template-columns: 1fr; grid-template-areas: "steps" "stage" "side"; gap: 12px; margin-top: 28px; }
+  .pr { grid-template-columns: 1fr; grid-template-areas: "steps" "stage" "side"; gap: 12px; margin-top: 20px; }
+  .pr__bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .pr__bar .pr__steps { width: 100%; }
   .pr__steps { gap: 6px; }
   .pr__step { justify-content: center; height: 44px; padding: 0; border-radius: 12px; }
   .pr__lbl { justify-content: center; }
@@ -2251,6 +2293,36 @@ body { position: relative; }
   transition: color 0.25s, scale 0.35s var(--cut);
 }
 .hero.is-aim .hud__focus { color: var(--rec); scale: 0.78; }
+/* the reticle names the screen it has locked on (js: .hud__tag follows the cursor) */
+.hud__tag {
+  position: absolute; left: 0; top: 0; z-index: 1; margin: 46px 0 0 -58px; pointer-events: none;
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 3px;
+  background: rgba(10, 10, 11, 0.8); color: var(--text); white-space: nowrap;
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
+  translate: 70vw 40vh; will-change: transform;
+  opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.3s var(--out);
+}
+.hud__tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--rec); }
+.hud__tag::after { content: "View \2197"; color: var(--rec); }
+.hero.is-aim .hud__tag { opacity: 1; transform: none; }
+@media (hover: none) { .hud__tag { display: none; } }
+/* take: a click cuts to the screen (flash, the reticle snaps shut) before the page changes */
+.hero.is-take .hud__focus { scale: 0.6; color: var(--text); transition-duration: 0.12s; }
+.tile.is-take > img, .tile.is-take > picture, .tile.is-take > video:not(.fx-static) { animation: cutFlash 0.3s steps(3, end); }
+
+/* the camera boots: corners snap in one by one, the readout flickers on, the wall pulls into
+   focus, REC lights; then the name is wiped in (--boot). One-off, transform/opacity/filter only */
+.js .hero.is-on .hud__c { animation: hudIn 0.45s var(--out) backwards; }
+.js .hero.is-on .hud__c--tl { --hx: 16px; --hy: 16px; }
+.js .hero.is-on .hud__c--tr { --hx: -16px; --hy: 16px; animation-delay: 0.08s; }
+.js .hero.is-on .hud__c--br { --hx: -16px; --hy: -16px; animation-delay: 0.16s; }
+.js .hero.is-on .hud__c--bl { --hx: 16px; --hy: -16px; animation-delay: 0.24s; }
+@keyframes hudIn { from { opacity: 0; translate: var(--hx) var(--hy); } }
+.js .hero.is-on .hud__tl { animation: hudFlick 0.36s steps(3, end) 0.3s backwards; }
+.js .hero.is-on .hud__rec { animation: hudFlick 0.36s steps(3, end) 0.55s backwards; }
+@keyframes hudFlick { 0% { opacity: 0; } 40% { opacity: 1; } 70% { opacity: 0.2; } }
+html.js:not(.is-lite) .hero.is-on .wall__plane { animation: focusPull 1.1s var(--out) backwards; }
+@keyframes focusPull { from { filter: blur(14px) brightness(0.55); } to { filter: blur(0) brightness(1); } }
 @media (hover: none) { .hud__focus { display: none; } }
 
 /* ==========================================================================
@@ -2327,10 +2399,222 @@ body { position: relative; }
   .mark__txt small { display: none; }
   .topbar__tc { display: none !important; }
   .status { font-size: 11.5px; padding: 8px 12px; }
-  .hud { inset: 76px var(--pad) auto; height: 36svh; }
+  /* the frame ends 14px above the text block, whatever the phone's height (js: --ch, the block's height) */
+  .hud { inset: 76px var(--pad) calc(84px + env(safe-area-inset-bottom) + var(--ch, 62svh) + 14px); }
   .hud__meta, .hud__focus { display: none; }
   .hud__c { width: 34px; height: 36px; }
   .hud__tl { left: 16px; top: 14px; }
   .hud__rec { right: 16px; top: 12px; width: 40px; height: 18px; }
   .hero__leak { width: 120vw; height: 60%; }
+}
+
+/* ==========================================================================
+   PROJECTS IN PLACE (home): a screen on the wall opens its project right here.
+   The screen grows into the program monitor (PGM) while the wall pushes in and goes dark,
+   then the project's other formats light up as preview monitors under it; a click (or 1–9)
+   cuts one to program. Markup: tools/build_projects.py; js: setupHome → projects
+   ========================================================================== */
+/* the newest project leads the wall: a big screen that is always on air */
+.tile.f { grid-column: 6 / span 3; grid-row: 2 / span 2; }
+.tile.fv { grid-column: 5; grid-row: 3 / span 2; } /* its 9:16 cut, beside it */
+@media (min-width: 768px) and (max-aspect-ratio: 1/1) {
+  .tile.f { grid-column: 2 / span 3; grid-row: 2 / span 2; }
+  .tile.fv { grid-column: 5; grid-row: 2 / span 2; }
+}
+.tile[data-hold]:not(:hover)::after { box-shadow: inset 0 0 0 2px var(--rec); }
+.tile[data-hold]::before { content: "● On air — " attr(data-label); opacity: 1; transform: none; }
+
+/* the page keeps its scrollbar's room, so locking the scroll under a project shifts nothing */
+html { scrollbar-gutter: stable; }
+html.is-proj { overflow: hidden; }
+.hero.is-open > :not(.proj, .bar) { visibility: hidden; }
+/* a hidden part has no layer to animate on, so its loops would tick on the main thread */
+.hero.is-open > :not(.proj, .bar), .hero.is-open > :not(.proj, .bar) * { animation-play-state: paused; }
+
+.proj {
+  position: absolute; z-index: 5; inset: 80px 0 48px;
+  container-type: size;
+  background: radial-gradient(60% 70% at 30% 45%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%), var(--bg);
+  outline: none;
+}
+.proj__in {
+  --g: 10px;
+  --hh: 36px;
+  /* one row of preview monitors as wide as the page; the program monitor takes what is left,
+     beside a column for the words */
+  --mw: clamp(100px, calc((100cqw - 2 * var(--pad) - (var(--n) - 1) * var(--g)) / var(--n)), 250px);
+  --mh: calc(var(--mw) * 9 / 16);
+  --pw: min(calc(100cqw - 2 * var(--pad) - clamp(270px, 27cqw, 520px) - 2 * var(--g)),
+            calc((100cqh - 16px - var(--hh) - var(--mh) - 2 * var(--g)) * 16 / 9));
+  height: 100%;
+  padding: 4px var(--pad) 12px;
+  display: grid; gap: var(--g) calc(var(--g) * 2);
+  grid-template-columns: var(--pw) minmax(0, 1fr);
+  grid-template-rows: var(--hh) minmax(0, 1fr) var(--mh);
+  grid-template-areas: "head head" "pgm info" "pvw pvw";
+}
+.proj__head {
+  grid-area: head; display: flex; align-items: center; gap: 24px; min-width: 0;
+  color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.proj__kick { display: flex; align-items: center; gap: 16px; margin: 0; min-width: 0; white-space: nowrap; overflow: hidden; }
+.proj__air { display: inline-flex; align-items: center; gap: 8px; color: var(--text); }
+.proj__air i { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); animation: blink 1.2s steps(2, jump-none) infinite; }
+.proj__keys { margin: 0 0 0 auto; white-space: nowrap; }
+.proj__keys kbd {
+  display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; margin: 0 2px;
+  border: 1px solid var(--line-2); border-radius: 4px; color: var(--text); font: inherit; font-size: 10.5px;
+}
+.proj__close {
+  display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--text); font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+.proj__close:hover, .proj__close:focus-visible { background: var(--rec); border-color: var(--rec); color: #000; outline: none; }
+.proj__close span { font-size: 13px; }
+
+/* program monitor */
+.proj__pgm {
+  grid-area: pgm; position: relative; align-self: start; margin: 0;
+  width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px; background: #050506;
+  box-shadow: 0 0 0 1px var(--line), 0 40px 90px -40px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.mv__screen { position: absolute; inset: 0; }
+.mv__screen > :is(img, video, iframe) {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; border: 0; object-fit: contain;
+}
+.mv__screen.is-cover > :is(img, video) { object-fit: cover; }
+.proj__pgm.is-cut .mv__screen { animation: cutFlash 0.3s steps(3, end); }
+/* a set: a grid of pieces on one monitor; a click puts one alone on it */
+.mv__set { position: absolute; inset: 0; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 8px; padding: 14px; }
+.mv__cell {
+  position: relative; flex: 0 0 calc((100% - (var(--cols) - 1) * 8px) / var(--cols)); height: calc((100% - (var(--rows) - 1) * 8px) / var(--rows));
+  padding: 0; border: 0; background: none; cursor: zoom-in;
+}
+.mv__cell > * { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+.mv__set.is-solo { padding: 0; }
+.mv__set.is-solo .mv__cell:not(.is-pick) { display: none; }
+.mv__set.is-solo .mv__cell { flex-basis: 100%; height: 100%; cursor: zoom-out; }
+.mv__umd {
+  position: absolute; left: 12px; top: 12px; z-index: 2; display: flex; max-width: calc(100% - 24px); pointer-events: none;
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.mv__tally { flex: none; padding: 5px 8px; border-radius: 3px 0 0 3px; background: var(--rec); color: #0a0a0b; font-weight: 800; }
+.mv__umd [data-umd] { padding: 5px 9px; border-radius: 0 3px 3px 0; background: rgba(10, 10, 11, 0.8); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.proj__pgm.is-live .mv__umd { left: auto; right: 12px; } /* a live page has its own label top left */
+
+/* the words */
+.proj__info {
+  grid-area: info; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent;
+  display: flex; flex-direction: column; gap: 16px; padding: 0 6px 30px 0;
+  /* a long text fades out at the foot of the column instead of being cut */
+  -webkit-mask: linear-gradient(#000 calc(100% - 34px), transparent); mask: linear-gradient(#000 calc(100% - 34px), transparent);
+}
+.proj__title { margin: 0; font-weight: 900; font-stretch: 125%; font-size: clamp(40px, 17cqw, 96px); line-height: 0.84; letter-spacing: -0.04em; text-transform: uppercase; }
+.proj__line { margin: 0; font-size: clamp(16px, 4.6cqw, 23px); line-height: 1.25; letter-spacing: -0.01em; text-wrap: pretty; }
+.proj__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.proj__cta .btn { height: 44px; padding: 0 18px; font-size: 14px; cursor: pointer; }
+.proj__idea { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; text-wrap: pretty; }
+.proj__facts { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.proj__facts li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.proj__facts b { font-weight: 600; font-size: 14.5px; }
+.proj__facts span, .proj__role, .proj__note {
+  color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.5;
+}
+.proj__facts span { text-align: right; }
+.proj__info { container-type: inline-size; } /* sizes in it follow the column (cqw) */
+@container (max-width: 340px) {
+  .proj__facts li { flex-direction: column; gap: 1px; }
+  .proj__facts span { text-align: left; }
+}
+.proj__role { margin: 0; color: var(--text); }
+.proj__role span { display: block; margin-bottom: 3px; color: var(--rec); }
+.proj__note { margin: 0; font-size: 10.5px; opacity: 0.8; }
+
+/* preview monitors */
+.proj__pvw { grid-area: pvw; display: flex; gap: var(--g); min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.mv__mon {
+  position: relative; flex: 0 0 var(--mw); height: var(--mh); padding: 0; border: 0; border-radius: 4px; overflow: hidden;
+  background: #050506; color: var(--text); cursor: pointer;
+}
+.mv__mon img { width: 100%; height: 100%; object-fit: cover; opacity: 0.72; transition: opacity 0.2s; }
+.mv__mon:hover img, .mv__mon:focus-visible img, .mv__mon[aria-pressed="true"] img { opacity: 1; }
+.mv__mon::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(242, 239, 234, 0.12); transition: box-shadow 0.2s;
+}
+.mv__mon:focus-visible { outline: none; }
+.mv__mon:hover::after, .mv__mon:focus-visible::after { box-shadow: inset 0 0 0 2px var(--text); }
+.mv__mon[aria-pressed="true"]::after { box-shadow: inset 0 0 0 2px var(--rec); }
+.mv__name {
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 7px; padding: 16px 8px 6px;
+  background: linear-gradient(transparent, rgba(5, 5, 6, 0.92)); text-align: left; white-space: nowrap; overflow: hidden;
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase;
+}
+.mv__name b { flex: none; display: grid; place-items: center; min-width: 17px; height: 17px; border-radius: 3px; background: rgba(242, 239, 234, 0.16); font-size: 10px; }
+.mv__mon[aria-pressed="true"] .mv__name b { background: var(--rec); color: #0a0a0b; }
+.mv__live {
+  position: absolute; right: 6px; top: 6px; padding: 3px 6px; border-radius: 3px; background: var(--rec); color: #0a0a0b; font-style: normal;
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 800; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* the rest of the project lights up once the monitor has landed */
+.proj.is-in .proj__head { animation: projUp 0.5s var(--out) 0.3s backwards; }
+.proj.is-in .proj__info > * { animation: projUp 0.7s var(--out) calc(0.36s + var(--k, 0) * 0.06s) backwards; }
+.proj.is-in .proj__info > :nth-child(2) { --k: 1; }
+.proj.is-in .proj__info > :nth-child(3) { --k: 2; }
+.proj.is-in .proj__info > :nth-child(4) { --k: 3; }
+.proj.is-in .proj__info > :nth-child(n + 5) { --k: 4; }
+.proj.is-in .mv__mon { animation: powerOn 0.6s steps(4, end) calc(0.42s + var(--i) * 0.06s) backwards; }
+.proj.is-fade { animation: projFade 0.35s ease-out; }
+@keyframes projUp { from { opacity: 0; transform: translateY(16px); } }
+@keyframes projFade { from { opacity: 0; } }
+
+/* the move (same-document view transition, js adds .vt-open / .vt-close to <html>):
+   the clicked screen is "take" on the wall and the program monitor in the project. The wall
+   is one snapshot that pushes in toward it and goes out of focus; the top bar and the
+   on-air bar stay where they are */
+html:is(.vt-open, .vt-close) .topbar { view-transition-name: topbar; }
+html:is(.vt-open, .vt-close) .hero > .bar { view-transition-name: onair; }
+::view-transition-group(topbar), ::view-transition-group(onair), ::view-transition-new(topbar), ::view-transition-new(onair) { animation: none; }
+::view-transition-old(topbar), ::view-transition-old(onair) { display: none; }
+html.vt-open::view-transition-old(root) { animation: vtWallIn 0.8s cubic-bezier(0.5, 0, 0.15, 1) both; transform-origin: var(--tx, 50%) var(--ty, 50%); }
+html.vt-open::view-transition-new(root) { animation: projFade 0.5s ease-out 0.24s both; }
+html.vt-close::view-transition-old(root) { animation: vtFadeOut 0.28s ease-in both; }
+html.vt-close::view-transition-new(root) { animation: vtWallOut 0.75s cubic-bezier(0.2, 0.75, 0.12, 1) both; transform-origin: var(--tx, 50%) var(--ty, 50%); }
+html.vt-open::view-transition-group(take) { animation-duration: 0.8s; animation-timing-function: cubic-bezier(0.22, 0.8, 0.12, 1); }
+html.vt-close::view-transition-group(take) { animation-duration: 0.65s; animation-timing-function: cubic-bezier(0.3, 0.7, 0.1, 1); }
+html:is(.vt-open, .vt-close)::view-transition-old(take), html:is(.vt-open, .vt-close)::view-transition-new(take) { height: 100%; object-fit: cover; }
+@keyframes vtWallIn { to { transform: scale(1.16); filter: blur(10px) brightness(0.35); opacity: 0; } }
+@keyframes vtWallOut { from { transform: scale(1.16); filter: blur(10px) brightness(0.35); opacity: 0; } }
+@keyframes vtFadeOut { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* an upright tablet: the monitor on top, the formats in two rows, the words under them */
+@media (min-width: 768px) and (max-aspect-ratio: 1/1) {
+  .proj__in {
+    --mw: calc((100cqw - 2 * var(--pad) - 4 * var(--g)) / 5);
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--hh) auto auto minmax(0, 1fr);
+    grid-template-areas: "head" "pgm" "pvw" "info";
+  }
+  .proj__pvw { flex-wrap: wrap; }
+  .proj__keys { display: none; }
+}
+/* a phone (no wall there: a link to /#slug opens it) — one column that scrolls */
+@media (max-width: 767px) {
+  .proj { position: fixed; inset: 64px 0 0; z-index: 39; overflow-y: auto; container-type: inline-size; }
+  .proj__in {
+    --mw: 42vw;
+    display: flex; flex-direction: column; height: auto; padding-bottom: calc(100px + env(safe-area-inset-bottom)); /* clear of the dock */
+  }
+  .proj__keys { display: none; }
+  .proj__kick > span:last-child { display: none; }
+  .proj__head { justify-content: space-between; }
+  .proj__pvw { order: 1; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); scroll-padding: 0 var(--pad); scroll-snap-type: x mandatory; }
+  .mv__mon { scroll-snap-align: start; }
+  .proj__info { order: 2; overflow: visible; padding: 8px 0 0; -webkit-mask: none; mask: none; }
+  .proj__title { font-size: 15vw; }
+  .proj__line { font-size: 18px; }
 }
