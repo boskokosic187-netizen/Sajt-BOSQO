@@ -1053,8 +1053,16 @@ html:not(.is-lite) .pr:not([data-step="1"]) .bn__cat { cursor: pointer; }
 .bn--tv { --hz: 64%; --gx: 71%; --gy: 46%; --ly: 1.6cqw; --lh: 4cqw; --lw: 15cqw; --l1: 6cqw; --by: 5cqw; --b1: 40%;
   --tx: 5cqw; --ty: 13.5cqw; --ts: 10cqw; --ux: 5.3cqw; --uy: 32.4cqw; --us: 1.7cqw;
   --dx: 44.5cqw; --dy: 21cqw; --bw: 9cqw; --cx: 5cqw; --cy: 37cqw; --cs: 1.9cqw; }
-.bn--tv .nc__bank { left: 52cqw; }
-.bn--tv .nc__bank + .nc__bank { left: auto; right: 7cqw; }
+/* the banks sit between the score bug and LIVE; each cone comes out of its own bank, one onto
+   the court, one onto the passer (the cones span the whole frame here, the shape is the clip) */
+.bn--tv .nc__bank { left: 40cqw; }
+.bn--tv .nc__bank + .nc__bank { left: 66cqw; right: auto; }
+/* the lamps' rows have no height of their own (only the glow shows): on this small bank that read
+   as a blur, so they get a bright core as thick as the poster's (~1.5 px) and a glow to match */
+.bn--tv .nc__bank i { min-height: 0.42cqw; box-shadow: 0 0 0.55cqw 0.16cqw rgba(255, 250, 228, 0.8); }
+.bn--tv .nc__beam::before, .bn--tv .nc__beam::after { left: 0; right: auto; width: 100%; }
+.bn--tv .nc__beam::before { clip-path: polygon(41% 0, 54% 0, 52% 100%, 20% 100%); }
+.bn--tv .nc__beam::after { clip-path: polygon(67% 0, 80% 0, 96% 100%, 60% 100%); }
 .bn--tv .nc__passer { display: block; left: 57cqw; bottom: 2.6cqw; width: 29cqw; }
 .bn--tv .nc__bug, .bn--tv .nc__l3, .bn--tv .nc__live { display: flex; }
 .bn--tv .nc__hero, .bn--tv .nc__logo { display: none; }
