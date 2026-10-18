@@ -13,14 +13,18 @@ and images, "cols"), live (a page of the project in an iframe, "href" + "thumb")
 Options: "w" video width, "dur"/"start" seconds, "poster_at" seconds for the poster frame.
 
 Usage:  python -I tools/build_projects.py
+        python -I tools/build_projects.py --check PV/BOSQO/<IME>/06_Web/projects.<slug>.json
+        (reads only: checks a handed-over project before it is pasted into content/projects.json)
 """
 import hashlib
 import html
 import json
 import math
 import os
+import re
 import shutil
 import subprocess
+import sys
 
 from PIL import Image
 
@@ -277,5 +281,136 @@ def _files(m):
     return out
 
 
+# ------------------------------------------------------------------ check
+TYPES = ("loop", "live", "film", "video", "image", "set")
+
+
+def check(path):
+    """A project handed over from its own session (06_Web/projects.<slug>.json): the same object as an
+    entry in content/projects.json plus "wall" (the two loop masters and the tiles' labels). Reads only."""
+    p = json.load(open(resolve(path), encoding="utf-8"))
+    errs, warns = [], []
+    err, warn = errs.append, warns.append
+
+    def streams(src):
+        j = json.loads(run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height:format=duration",
+                            "-of", "json", src]))
+        v = [x for x in j["streams"] if x["codec_type"] == "video"]
+        a = [x for x in j["streams"] if x["codec_type"] == "audio"]
+        return (v[0]["width"], v[0]["height"]) if v else (0, 0), float(j["format"].get("duration", 0)), bool(a)
+
+    def exists(src, what):
+        if not src:
+            err(f"{what}: no path")
+            return None
+        if not src.startswith(("PV/", "S/")):
+            warn(f"{what}: use the PV/ prefix, not {src[:40]}")
+        f = resolve(src)
+        if not os.path.isfile(f):
+            err(f"{what}: missing {src}")
+            return None
+        return f
+
+    for k in ("slug", "title", "kicker", "accent", "line", "idea", "role", "facts", "cta", "note", "monitors", "wall"):
+        if not p.get(k):
+            err(f"missing \"{k}\"")
+    slug = p.get("slug", "")
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", slug):
+        err(f"slug \"{slug}\": lowercase letters, digits and hyphens only")
+    have = [x["slug"] for x in json.load(open(os.path.join(ROOT, "content", "projects.json"), encoding="utf-8"))["projects"]]
+    if slug in have:
+        warn(f"slug \"{slug}\" is already on the site: it will replace it")
+    if not re.fullmatch(r"#[0-9a-fA-F]{6}", p.get("accent", "")):
+        err("accent: #rrggbb")
+    for k, n in (("line", 25), ("idea", 70)):
+        if len(p.get(k, "").split()) > n:
+            warn(f"{k}: {len(p[k].split())} words (≤ {n})")
+    if len(p.get("facts", [])) != 4 or any(len(f) != 2 for f in p.get("facts", [])):
+        err("facts: exactly 4 pairs [short, explanation]")
+
+    w = p.get("wall", {})
+    for k, ar, minw in (("loop", 16 / 9, 1920), ("loop_v", 9 / 16, 1080)):
+        f = exists(w.get(k), f"wall.{k}")
+        if f:
+            (vw, vh), d, _ = streams(f)
+            if abs(d - 4.0) > 0.08:
+                err(f"wall.{k}: {d:.2f} s, the loop must be exactly 4.0 s")
+            if abs(vw / max(vh, 1) - ar) > 0.02 or vw < minw:
+                err(f"wall.{k}: {vw}×{vh}, needs {'1920×1080' if ar > 1 else '1080×1920'}")
+    for k in ("label", "label_v"):
+        if not w.get(k):
+            err(f"wall.{k}: the tile's label, e.g. \"{p.get('title', 'NAME')} · living identity\"")
+
+    mons = p.get("monitors", [])
+    if not 8 <= len(mons) <= 9:
+        warn(f"{len(mons)} monitors (8–9)")
+    if mons and (mons[0].get("type") != "loop" or mons[0].get("loop") != slug):
+        err(f"monitor 1 must be {{\"type\": \"loop\", \"loop\": \"{slug}\"}}")
+    total = 0
+    for i, m in enumerate(mons, 1):
+        t, tag = m.get("type"), f"monitor {i}"
+        if t not in TYPES:
+            err(f"{tag}: type \"{t}\" ({', '.join(TYPES)})")
+            continue
+        if not m.get("umd") or not m.get("label"):
+            err(f"{tag}: needs \"umd\" (short, ≤ 16) and \"label\"")
+        elif len(m["umd"]) > 16:
+            warn(f"{tag}: umd \"{m['umd']}\" is long")
+        if t == "live":
+            exists(m.get("thumb"), f"{tag} thumb")
+            href = m.get("href", "")
+            cp = [c for c in p.get("copy", []) if href.rstrip("/") == c[1].rstrip("/")]
+            if not href.startswith(f"projects/{slug}/") or not cp:
+                err(f"{tag}: href \"projects/{slug}/live/\" and \"copy\": [[\"PV/…/06_Web/<ime>-live\", \"projects/{slug}/live\"]]")
+            elif not os.path.isfile(os.path.join(resolve(cp[0][0]), "index.html")):
+                err(f"{tag}: no index.html in {cp[0][0]}")
+            else:
+                page = open(os.path.join(resolve(cp[0][0]), "index.html"), encoding="utf-8", errors="ignore").read()
+                if re.search(r"(src|href)=[\"']https?://", page):
+                    warn(f"{tag}: the live page loads something from outside")
+                if ":pause" not in "".join(open(os.path.join(dp, f), encoding="utf-8", errors="ignore").read()
+                                           for dp, _d, fs in os.walk(resolve(cp[0][0])) for f in fs if f.endswith((".js", ".html"))):
+                    warn(f"{tag}: the live page should stop on postMessage('{slug}:pause')")
+        items = m.get("items", []) if t == "set" else [m] if t in ("film", "video", "image") else []
+        if t == "set" and not 1 <= len(items) <= 6:
+            err(f"{tag}: a set takes 1–6 pieces")
+        for j, it in enumerate(items, 1):
+            it_tag = tag + (f" piece {j}" if t == "set" else "")
+            f = exists(it.get("src"), it_tag)
+            if not f:
+                continue
+            total += os.path.getsize(f)
+            if it.get("type") in ("video", "film"):
+                (vw, vh), d, audio = streams(f)
+                if it["type"] == "film" and not audio:
+                    err(f"{it_tag}: the film has no sound")
+                if it.get("poster_at", 0) >= d:
+                    err(f"{it_tag}: poster_at {it['poster_at']} s is past the end ({d:.1f} s)")
+                if it.get("dur", 0) > d + 0.1:
+                    warn(f"{it_tag}: dur {it['dur']} s, the file is {d:.1f} s")
+                if max(vw, vh) < 1080:
+                    warn(f"{it_tag}: only {vw}×{vh}")
+            elif it.get("type") == "image":
+                im = Image.open(f)
+                if max(im.size) < 1600:
+                    warn(f"{it_tag}: only {im.width}×{im.height} (1600+ px)")
+            else:
+                err(f"{it_tag}: a piece is video, film or image")
+    for c in p.get("cta", []):
+        if not 1 <= c.get("cut", 0) <= len(mons):
+            err(f"cta \"{c.get('label')}\": cut {c.get('cut')} is not a monitor")
+
+    for x in warns:
+        print("  warn ", x)
+    for x in errs:
+        print("  ERROR", x)
+    print(f"{slug or '?'}: {len(mons)} monitors, {total / 1e6:.0f} MB of sources, "
+          + ("ready for the site" if not errs else f"{len(errs)} error(s) to fix"))
+    return not errs
+
+
 if __name__ == "__main__":
+    if sys.argv[1:2] == ["--check"] and len(sys.argv) == 3:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.exit(0 if check(sys.argv[2]) else 1)
     main()
