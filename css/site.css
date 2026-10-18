@@ -1831,23 +1831,19 @@ html:not(.is-lite) .pr[data-step="5"]:not(.is-paused) .pr__live b { animation: r
 .edu .is-now em { border-color: rgba(255, 77, 31, 0.45); background: rgba(255, 77, 31, 0.08); color: var(--rec); }
 .edu .is-now em::before { content: ""; width: 0.55em; height: 0.55em; border-radius: 50%; background: currentColor; }
 
-/* clients: big names rolling through, edge to edge, while About is on screen */
+/* clients: big names rolling through on an orange band, edge to edge, while About is on screen */
 .card--clients { padding-inline: 0; }
 .card--clients .marquee { margin-block: auto; }
 .card--clients .card__h { padding-inline: 1.5em; }
-.marquee {
-  min-width: 0; overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-.marquee__track { display: flex; width: max-content; animation: marquee 44s linear infinite; }
+.marquee { min-width: 0; overflow: hidden; padding-block: 0.5em; background: var(--rec); color: #0a0a0b; }
+.marquee__track { display: flex; width: max-content; animation: marquee 62s linear infinite; }   /* (the full school names made it longer: same speed) */
 html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { animation-play-state: paused; }
 .marquee__track span {
   display: inline-flex; align-items: center; gap: 0.9em; padding-right: 0.9em; white-space: nowrap;
   font-weight: 800; font-stretch: 112%; font-size: 1.9em; line-height: 1.1; letter-spacing: -0.02em;
 }
 .marquee__track span:nth-child(even) { font-family: var(--f-serif); font-style: italic; font-weight: 400; font-stretch: 100%; letter-spacing: 0; }
-.marquee__track span::after { content: ""; width: 0.2em; height: 0.2em; border-radius: 50%; background: var(--rec); }
+.marquee__track span::after { content: ""; width: 0.2em; height: 0.2em; border-radius: 50%; background: currentColor; opacity: 0.55; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* motion (full mode only): REC and the master's dot blink while About is on screen.

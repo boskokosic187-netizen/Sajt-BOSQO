@@ -315,7 +315,7 @@ Serbian (native) · English (professional)
 
 ### Clients & partners
 
-FSU · ITS · ITHS · Ballies · BeClutch · Wall Street Games · LINK Group · ZTV Gaming Show · Baby Boo · micro1 · KUN Podcast · VK Blog · Kultura Barbershop · InnovNation Competition Serbia · Telegraf
+Faculty of Contemporary Arts (FSU) · Information Technology School (ITS) · IT High School (ITHS) · Ballies · BeClutch · Wall Street Games · LINK Group · ArmaBeton · Baby Boo · micro1 · KUN Podcast · VK Blog · Kultura Barbershop · InnovNation Competition Serbia · Telegraf
 
 ---
 
