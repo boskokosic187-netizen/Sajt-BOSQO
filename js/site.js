@@ -293,9 +293,12 @@
 
     // one life: snaps on, flickers like an LED, drifts up and goes out (some blink out).
     // No free spot on screen right now (a full section): it looks again a little later
+    // the hero fills the screen: there is no background to light until the page scrolls
+    // (the scroll handler fills them in again), so nothing searches the screen meanwhile
+    const heroFills = () => !!hero && !isCase && scrollY + innerHeight - 30 <= hero.offsetTop + hero.offsetHeight;
     function light(p, delay = 0) {
       clearTimeout(p.wait);
-      if (document.hidden || root.classList.contains('is-intro') || lit.size >= want()) { rest(p); return; }
+      if (document.hidden || root.classList.contains('is-intro') || lit.size >= want() || heroFills()) { rest(p); return; }
       const at = spot(moving() ? dir : 0);
       if (!at) { rest(p); idle.splice(idle.indexOf(p), 1); p.wait = setTimeout(() => light(p), R(400, 1000)); return; }
       lit.set(p, at);
@@ -434,20 +437,25 @@
     }
   }
 
-  /* ---------------------------------------------------------- timecode/clock */
-  const tcEls = $$('[data-tc]');
-  const t0 = performance.now();
+  /* ---------------------------------------------------------- timecode/clock
+     Hours, minutes and seconds are text that changes once a second; the frames (00–24) are a
+     strip of 25 numbers that a CSS animation steps on the compositor (css: .tc__ff), so the
+     running timecode never re-lays-out and repaints the page 25 times a second. The strip
+     stops with the hero's other loops when the hero is out of view, and so does the count. */
   const pad = (n) => String(n).padStart(2, '0');
-  if (!reduceMotion && tcEls.length) {
-    setInterval(() => {
-      if (document.hidden || !heroOnScreen) return;
-      const ms = performance.now() - t0;
-      const s = Math.floor(ms / 1000);
-      const txt = `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}:${pad(Math.floor((ms % 1000) / 40))}`;
-      // only the ones on show: the copies hidden by CSS (phone bar, topbar) never repaint
-      for (const el of tcEls) if (el.getClientRects().length) el.textContent = txt;
-    }, 40);
-  }
+  if (!reduceMotion) $$('[data-tc]').forEach((el) => {
+    const hms = document.createElement('span');
+    const ff = document.createElement('span');
+    hms.textContent = '00:00:00';
+    ff.className = 'tc__ff';
+    ff.innerHTML = '<span>' + Array.from({ length: 25 }, (_, i) => pad(i)).join('<br>') + '</span>';
+    el.replaceChildren(hms, ':', ff);
+    // every lap of the strip is a second; elapsedTime counts only the time it has run
+    ff.addEventListener('animationiteration', (e) => {
+      const s = Math.round(e.elapsedTime);
+      hms.textContent = `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
+    });
+  });
   const clockFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Belgrade', hour: '2-digit', minute: '2-digit', hour12: false });
   const clock = () => { const t = clockFmt.format(new Date()); $$('[data-clock]').forEach((el) => (el.textContent = t)); };
   clock();
@@ -573,31 +581,61 @@
       });
     });
 
-    /* spotlight + parallax */
-    let mx = innerWidth * 0.7, my = innerHeight * 0.4, cx = mx, cy = my, raf = 0;
+    /* spotlight + parallax. Each moving part gets its own property on its own layer
+       (nothing on .hero itself, which every element below would inherit), so a frame
+       restyles six elements and repaints only the name's extrusion */
+    const plane = $('.wall__plane', hero);
+    const spot = $('.hero__spot', hero);
+    const focus = $('.hud__focus', hero);
+    const name = $('.name', hero);
+    const faces = $$('.name__t', name);
+    // a copy of each word on its own layer beside the face (css: .name__x, .name__sh), made when first needed
+    const copy = (cls) => faces.map((f) => {
+      const c = document.createElement('span');
+      c.className = cls;
+      c.setAttribute('aria-hidden', 'true');
+      c.textContent = f.dataset.t;
+      f.after(c);
+      return c;
+    });
+    let swing = null, sheen = null;
+    let mx = innerWidth * 0.7, my = innerHeight * 0.4, cx = mx, cy = my, raf = 0, ex = '', ey = '';
     function loop() {
       cx += (mx - cx) * 0.12;
       cy += (my - cy) * 0.12;
-      hero.style.setProperty('--mx', cx.toFixed(1) + 'px');
-      hero.style.setProperty('--my', cy.toFixed(1) + 'px');
-      hero.style.setProperty('--px', (((cx / innerWidth) - 0.5) * -36).toFixed(2) + 'px');
-      hero.style.setProperty('--py', (((cy / innerHeight) - 0.5) * -24).toFixed(2) + 'px');
+      const at = cx.toFixed(1) + 'px ' + cy.toFixed(1) + 'px';
+      const nx = cx / innerWidth - 0.5;
+      const ny = cy / innerHeight - 0.5;
+      spot.style.translate = at;
+      if (focus) focus.style.translate = at;
+      plane.style.setProperty('--px', (nx * -36).toFixed(2) + 'px');
+      plane.style.setProperty('--py', (ny * -24).toFixed(2) + 'px');
       if (!lite) {
         // the name turns to face the cursor; its extrusion swings the other way
-        const nx = cx / innerWidth - 0.5;
-        const ny = cy / innerHeight - 0.5;
-        name.style.setProperty('--nry', (nx * 10).toFixed(2) + 'deg');
-        name.style.setProperty('--nrx', (-ny * 7).toFixed(2) + 'deg');
-        name.style.setProperty('--ex', (-nx * 1.8).toFixed(3));
-        name.style.setProperty('--ey', (0.55 - ny * 1.1).toFixed(3));
+        // (the extrusion is the one thing that repaints, so only when it really moves)
+        if (!swing) { swing = copy('name__x'); name.classList.add('has-swing'); }
+        name.style.transform = `perspective(1600px) rotateX(${(-ny * 7).toFixed(2)}deg) rotateY(${(nx * 10).toFixed(2)}deg)`;
+        const x = (-nx * 1.8).toFixed(2), y = (0.55 - ny * 1.1).toFixed(2);
+        if (x !== ex || y !== ey) {
+          ex = x; ey = y;
+          swing.forEach((s) => { s.style.setProperty('--ex', x); s.style.setProperty('--ey', y); });
+        }
       }
       raf = Math.abs(mx - cx) + Math.abs(my - cy) > 0.5 ? requestAnimationFrame(loop) : 0;
     }
     /* a light sweep across the chrome name now and then */
-    const name = $('.name', hero);
     setInterval(() => {
       if (lite || document.hidden || !heroVisible || !mqDesktop.matches || !hero.classList.contains('is-on')) return;
-      name.classList.add('is-sheen');
+      if (!sheen) sheen = copy('name__sh').map((c) => {
+        // the word inside the box that carries the band (css: .name__sh > span)
+        const band = document.createElement('span');
+        const word = document.createElement('span');
+        word.textContent = c.textContent;
+        band.appendChild(word);
+        c.replaceChildren(band);
+        return c;
+      });
+      requestAnimationFrame(() => name.classList.add('is-sheen'));
     }, 6500);
     name.addEventListener('animationend', (e) => { if (e.animationName === 'sheen') name.classList.remove('is-sheen'); });
 

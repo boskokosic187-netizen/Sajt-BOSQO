@@ -147,8 +147,11 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   height: 100vh; height: 100svh; min-height: 640px;
-  --mx: 70vw; --my: 40vh;
 }
+/* the cursor moves each part by its own property (js), so a frame restyles a handful of
+   elements instead of the whole hero; these two stay on the plane, never inherited */
+@property --px { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --py { syntax: "<length>"; inherits: false; initial-value: 0px; }
 
 /* ---- the wall ---- */
 .wall {
@@ -158,7 +161,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 }
 .wall__plane {
   width: 100%; height: 100%;
-  transform: rotateX(13deg) rotateZ(-7deg) translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.03);
+  transform: rotateX(13deg) rotateZ(-7deg) translate3d(var(--px), var(--py), 0) scale(1.03);
   transform-origin: 50% 40%;
   will-change: transform;
 }
@@ -203,9 +206,14 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .tile:hover::after { box-shadow: inset 0 0 0 2px var(--text); }
 .tile:hover::before { content: "View — " attr(data-label); opacity: 1; transform: none; }
 
+/* each screen is a layer of its own (capable devices): a hover lifts it, a cut flashes it and
+   the director's tally lights it without repainting the wall around it. A filter layer, not a
+   transform one: measured with the cursor over the wall, it costs the GPU the least */
+html:not(.is-lite) .tile { will-change: filter; }
+
 /* power-on intro (only when JS runs and motion is allowed) */
 .js .tile { opacity: 0; }
-.js .hero.is-on .tile { animation: powerOn 0.7s steps(4, end) var(--d, 0ms) forwards; }
+.js .hero.is-on .tile { opacity: 1; animation: powerOn 0.7s steps(4, end) var(--d, 0ms) backwards; }
 .is-lite .tile, .no-motion .tile { opacity: 1 !important; animation: none !important; }
 @keyframes powerOn {
   0% { opacity: 0; filter: brightness(3) contrast(0.6); }
@@ -214,12 +222,17 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   100% { opacity: 1; filter: none; }
 }
 
-/* ---- veil: spotlight that follows the cursor + legibility gradient ---- */
+/* ---- veil: legibility gradient + a spotlight that follows the cursor ---- */
 .hero__veil {
-  position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(circle 460px at var(--mx) var(--my), rgba(10, 10, 11, 0) 0%, rgba(10, 10, 11, 0.42) 55%, rgba(10, 10, 11, 0.74) 100%),
-    linear-gradient(to top, rgba(10, 10, 11, 0.98) 0%, rgba(10, 10, 11, 0.9) 28%, rgba(10, 10, 11, 0.55) 46%, rgba(10, 10, 11, 0.08) 68%, rgba(10, 10, 11, 0.5) 100%);
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  background: linear-gradient(to top, rgba(10, 10, 11, 0.98) 0%, rgba(10, 10, 11, 0.9) 28%, rgba(10, 10, 11, 0.55) 46%, rgba(10, 10, 11, 0.08) 68%, rgba(10, 10, 11, 0.5) 100%);
+}
+/* twice the hero, centred on the cursor: painted once, then only moved (js: translate) */
+.hero__spot {
+  position: absolute; left: 0; top: 0; width: 200%; height: 200%;
+  background: radial-gradient(circle 460px at 50% 50%, rgba(10, 10, 11, 0) 0%, rgba(10, 10, 11, 0.42) 55%, rgba(10, 10, 11, 0.74) 100%);
+  translate: 70vw 40vh; transform: translate(-50%, -50%);
+  will-change: transform;
 }
 
 /* ---- mobile reel layer (hidden on desktop) ---- */
@@ -245,14 +258,15 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 }
 .statement em { font-size: 1.08em; }
 .proof { justify-self: end; display: flex; gap: clamp(20px, 2.6vw, 44px); }
-.proof li { display: grid; gap: 4px; max-width: 150px; }
+.proof li { display: grid; gap: 4px; }
+.proof span { max-width: 150px; } /* the word may be wider than the line under it ("Teaching") */
 .proof b { font-weight: 800; font-stretch: 112%; font-size: clamp(22px, 2vw, 32px); line-height: 1; }
 .proof span { color: var(--muted); font-size: 13px; line-height: 1.3; }
 .cta { order: 3; display: flex; gap: 12px; margin-top: 26px; }
 
 .name {
   order: 4;
-  margin-top: clamp(14px, 2.2vh, 28px);
+  margin-top: calc(0.16em + clamp(12px, 2vh, 24px)); /* the Š and Ć accents rise 0.16em above the box */
   font-weight: 900; font-stretch: 125%;
   font-size: 12.4vw; /* JS fits it to the exact width */
   line-height: 0.8; letter-spacing: -0.035em; text-transform: uppercase;
@@ -276,29 +290,23 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   padding: 0.18em 0.05em 0.08em; margin: -0.18em -0.05em -0.08em; /* room for the Š/Ć accents inside the clip */
   color: transparent; -webkit-text-fill-color: transparent;
   background-image:
-    linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, 0.3) 45%, #fff 50%, rgba(255, 255, 255, 0.3) 55%, transparent 62%),
     repeating-linear-gradient(to bottom, transparent 0 3px, rgba(10, 10, 11, 0.16) 3px 4px),
     linear-gradient(to bottom, #fff 0%, #fff 50%, #ffae96 100%),
     var(--chrome),
     linear-gradient(to bottom, #fff 0%, #e9e5df 40%, #8d8780 52%, #f2efea 62%, #bdb6ae 100%);
-  background-size: 300% 100%, auto, auto, cover, auto;
-  background-position: 100% 0, 0 0, 0 0, var(--cx, 50%) var(--cy, 50%), 0 0;
-  background-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat;
-  background-blend-mode: normal, normal, multiply, normal, normal;
+  background-size: auto, auto, cover, auto;
+  background-position: 0 0, 0 0, var(--cx, 50%) var(--cy, 50%), 0 0;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, multiply, normal, normal;
   -webkit-background-clip: text; background-clip: text;
 }
 .name__b .name__t { --cx: 80%; --cy: 30%; } /* a different part of the chrome for the second word */
-.name.is-sheen .name__t { animation: sheen 1.4s var(--cut); }
-@keyframes sheen {
-  from { background-position-x: 100%, 0, 0, var(--cx, 50%), 0; }
-  to { background-position-x: 0%, 0, 0, var(--cx, 50%), 0; }
-}
 .name__t::before, .name__t::after {
   content: attr(data-t); position: absolute; inset: 0; padding: inherit; pointer-events: none;
   background: none;
 }
 /* extrusion */
-.name__t::before {
+.name__t::before, .name__x {
   z-index: -1; color: #1c0806; -webkit-text-fill-color: #1c0806;
   text-shadow:
     calc(var(--ex) * 0.0062em) calc(var(--ey) * 0.0062em) 0 rgb(168, 44, 20),
@@ -323,6 +331,38 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   animation: nameGlow 4.5s ease-in-out infinite alternate;
 }
 @keyframes nameGlow { from { opacity: 0.5; } to { opacity: 1; } }
+/* light sweep: a white copy of the word seen through a soft band (a mask). The band sits on a box
+   three words wide that slides across while the word inside it slides back just as far, so the
+   word stays put and the band crosses it: two moves on the compositor, nothing repainted (js) */
+.name__sh { opacity: 0; }
+.name__sh > span {
+  position: absolute; top: 0; bottom: 0; left: -100%; width: 300%;
+  -webkit-mask: linear-gradient(100deg, transparent 38%, rgba(0, 0, 0, 0.3) 45%, #000 50%, rgba(0, 0, 0, 0.3) 55%, transparent 62%);
+  mask: linear-gradient(100deg, transparent 38%, rgba(0, 0, 0, 0.3) 45%, #000 50%, rgba(0, 0, 0, 0.3) 55%, transparent 62%);
+}
+.name__sh > span > span {
+  position: absolute; top: 0; bottom: 0; left: calc(100% / 3); width: calc(100% / 3);
+  padding: 0.18em 0.05em 0.08em; color: #fff; -webkit-text-fill-color: #fff;
+}
+.name.is-sheen .name__sh { opacity: 1; }
+.name.is-sheen .name__sh > span { animation: sheen 1.4s var(--cut) both; }
+.name.is-sheen .name__sh > span > span { animation: sheenBack 1.4s var(--cut) both; }
+@keyframes sheen { from { transform: translateX(calc(-100% / 3)); } to { transform: translateX(calc(100% / 3)); } }
+@keyframes sheenBack { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+/* On capable desktops the swinging extrusion (.name__x, in place of the ::before) and the sweep
+   (.name__sh) are copies of the word made by js, each on a layer of its own. They sit beside the
+   chrome face as blocks below its line that take no room (a negative bottom margin) and are moved
+   up over it (top), and each is a layout boundary: a change to one never re-lays-out the line,
+   which would repaint the face. So a frame of the swing repaints the extrusion alone and a sweep
+   only moves two layers; the chrome and the glow's wide blur stay as they were painted.
+   Their box is the face's padding box (padding .18em .05em .08em around one line). */
+.name__x, .name__sh {
+  display: block; position: relative; top: calc(-1lh - 0.18em); height: calc(1lh + 0.26em);
+  margin: 0 -0.05em calc(-1lh - 0.26em); padding: 0.18em 0.05em 0.08em;
+  contain: layout size style; pointer-events: none; will-change: transform;
+}
+.name.has-swing .name__t::before { content: none; }
+.name.has-swing, .name.has-swing .name__t::after { will-change: transform; }
 /* living glow (capable desktops): red flares light up random spots behind the letters (js) */
 .name > .name__fx { position: absolute; display: block; inset: -0.2em -0.1em -0.15em; z-index: -3; pointer-events: none; } /* beats .name > span */
 .name__fx i {
@@ -333,9 +373,9 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .name.has-flares .name__t::after { animation: none; opacity: 0.45; }
 
 /* intro: broadcast wipe reveals each word */
-.js .hero:not(.is-on) .name__t { visibility: hidden; }
-.js .hero.is-on .name__t { transition: visibility 0s linear 0.52s; }
-.js .hero.is-on .name__b .name__t { transition-delay: 0.7s; }
+.js .hero:not(.is-on) :is(.name__t, .name__x, .name__sh) { visibility: hidden; }
+.js .hero.is-on :is(.name__t, .name__x, .name__sh) { transition: visibility 0s linear 0.52s; }
+.js .hero.is-on .name__b :is(.name__t, .name__x, .name__sh) { transition-delay: 0.7s; }
 .js .hero.is-on .name > span::after {
   content: ""; position: absolute; inset: 0.04em -0.02em 0.02em;
   background: var(--rec); transform: scaleX(0);
@@ -363,6 +403,10 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .bar__rec { display: inline-flex; align-items: center; gap: 8px; color: var(--text); }
 .bar__rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); animation: blink 1.2s steps(2, jump-none) infinite; }
 .bar__tc { color: var(--text); font-variant-numeric: tabular-nums; min-width: 11ch; }
+/* timecode frames: a strip of 00–24, one step a frame, on the compositor (js builds it) */
+.tc__ff { display: inline-block; height: 1lh; overflow: hidden; vertical-align: top; }
+.tc__ff > span { display: block; animation: tcFrames 1s steps(25) infinite; }
+@keyframes tcFrames { to { transform: translateY(-100%); } }
 .bar__track {
   position: relative; flex: 1; height: 18px;
   background:
@@ -569,6 +613,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   .hero__veil {
     background: linear-gradient(to top, rgba(10, 10, 11, 0.97) 4%, rgba(10, 10, 11, 0.7) 36%, rgba(10, 10, 11, 0.05) 64%, rgba(10, 10, 11, 0.55) 100%);
   }
+  .hero__spot { display: none; }
   .hero__content { bottom: calc(84px + env(safe-area-inset-bottom)); }
   .eyebrow { font-size: 10px; margin-bottom: 10px; }
   .name { order: 2; margin: 0 0 16px; line-height: 0.95; white-space: normal; --ey: 0.6; --chrome: url("../media/fx/chrome-s.webp"); }
@@ -2199,9 +2244,10 @@ body { position: relative; }
 .hud__dot { fill: var(--rec); animation: blink 1.1s steps(1) infinite; }
 /* focus reticle: trails the cursor, locks (shrinks + turns red) over a screen */
 .hud__focus {
-  position: absolute; left: 0; top: 0; z-index: 1; width: 150px; height: 91px; pointer-events: none;
+  position: absolute; left: 0; top: 0; z-index: 1; width: 150px; height: 91px; margin: -45.5px 0 0 -75px; pointer-events: none;
   color: rgba(242, 239, 234, 0.75); fill: currentColor; stroke: currentColor; stroke-width: 2.5;
-  transform: translate3d(calc(var(--mx) - 50%), calc(var(--my) - 50%), 0);
+  translate: 70vw 40vh; /* js: the cursor */
+  will-change: transform;
   transition: color 0.25s, scale 0.35s var(--cut);
 }
 .hero.is-aim .hud__focus { color: var(--rec); scale: 0.78; }
