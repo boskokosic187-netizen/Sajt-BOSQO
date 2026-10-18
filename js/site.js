@@ -1486,26 +1486,30 @@
      03 pulls the one-sheet apart into its layers in 3D and puts it back together; in 05
      every format is a motion poster: out of the black, the camera creeps in, the planet
      rises behind the dune, dust blows across and the title catches the light. */
-  const AL_DUR = [0, 4400, 4200, 6400, 4300, 16000];   // 05 runs the 8 s loop twice
+  const AL_DUR = [0, 4400, 4200, 7600, 4300, 16000];   // 05 runs the 8 s loop twice
   const AL_LAYERS = ['sky', 'planet', 'dune', 'hero', 'dust', 'grade', 'type', 'bill'];
 
-  // 03: the layers fan out along z while the stack turns to show them edge on, then close up
+  // 03: first the sheet turns as one piece, then its layers peel off back to front, each showing
+  // its frame and name as it leaves; they close up front to back and the sheet turns back flat.
+  // Returns the timings, so the layers panel can follow along
   function alApart(bn, t0) {
     const stack = $('.al__stack', bn);
-    if (!stack) return;
-    const CUT = 'cubic-bezier(.75,0,.15,1)';
-    const T = 2600, gap = bn.offsetWidth * 0.2, mid = (AL_LAYERS.length - 1) / 2;
-    const o = (ms) => ms / T;
+    if (!stack) return null;
+    const CUT = 'cubic-bezier(.75,0,.15,1)', OUT = 'cubic-bezier(.2,.8,.2,1)';
+    const n = AL_LAYERS.length, T = 3900, gap = bn.offsetWidth * 0.2, mid = (n - 1) / 2;
+    const go = (i) => 700 + i * 90, back = (i) => 2400 + (n - 1 - i) * 80;
+    const o = (ms) => Math.min(1, ms / T);
     const a = (el, kf) => el && el.animate(kf, { duration: T, delay: t0, fill: 'both', easing: 'linear' });
     const TURN = 'translateX(-20%) rotateX(14deg) rotateY(-38deg) scale(.62)';   // (left: the layers panel is on the right)
-    a(stack, [{ transform: 'none', offset: 0, easing: CUT }, { transform: TURN, offset: o(900) }, { transform: TURN, offset: o(1700), easing: CUT }, { transform: 'none', offset: 1 }]);
-    AL_LAYERS.forEach((n, i) => {
-      const z = `translateZ(${((i - mid) * gap).toFixed(1)}px)`;
-      a($('.al__l--' + n, bn), [{ transform: 'translateZ(0px)', offset: 0, easing: CUT }, { transform: z, offset: o(900) },
-        { transform: z, offset: o(1700), easing: CUT }, { transform: 'translateZ(0px)', offset: 1 }]);
-      a($(`.al__l--${n} > .al__name`, bn), [{ opacity: 0, offset: 0 }, { opacity: 0, offset: o(500) }, { opacity: 1, offset: o(900) },
-        { opacity: 1, offset: o(1500) }, { opacity: 0, offset: o(1900) }, { opacity: 0, offset: 1 }]);
+    a(stack, [{ transform: 'none', offset: 0, easing: CUT }, { transform: TURN, offset: o(700) }, { transform: TURN, offset: o(3300), easing: CUT }, { transform: 'none', offset: 1 }]);
+    AL_LAYERS.forEach((name, i) => {
+      const z = `translateZ(${((i - mid) * gap).toFixed(1)}px)`, Z0 = 'translateZ(0px)';
+      a($('.al__l--' + name, bn), [{ transform: Z0, offset: 0 }, { transform: Z0, offset: o(go(i)), easing: OUT }, { transform: z, offset: o(go(i) + 650) },
+        { transform: z, offset: o(back(i)), easing: CUT }, { transform: Z0, offset: o(back(i) + 550) }, { transform: Z0, offset: 1 }]);
+      a($(`.al__l--${name} > .al__name`, bn), [{ opacity: 0, offset: 0 }, { opacity: 0, offset: o(go(i) + 100) }, { opacity: 1, offset: o(go(i) + 450) },
+        { opacity: 1, offset: o(back(i)) }, { opacity: 0, offset: o(back(i) + 250) }, { opacity: 0, offset: 1 }]);
     });
+    return { T, go, back };
   }
 
   // steps 03-04: the dust drifts a little; on the board (02) everything holds still
@@ -1792,12 +1796,42 @@
         anim($('.al__ants', h), [{ opacity: 1, clipPath: 'inset(0 0 100% 0)' }, { opacity: 1, clipPath: 'inset(0 0 0% 0)', offset: 0.4 },
           { opacity: 1, clipPath: 'inset(0 0 0% 0)', offset: 0.75 }, { opacity: 0, clipPath: 'inset(0 0 0% 0)' }], { duration: 2200, delay: 1100, easing: 'linear' });
       },
-      // 03: the key visual comes apart into its layers and back; the panel lights them one by one
+      // 03: a pointer flips the layers panel to 3D, the key visual comes apart into its layers
+      // (each row lights up while its layer is out), then back to 2D and it closes up
       key() {
-        alApart(bn1, 3300);
-        anim($('.al-panel', set), [{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 600, delay: 900 });
-        const rows = $$('.al-panel li', set);
-        rows.forEach((li, i) => anim(li, [{ opacity: 0.35 }, { opacity: 1 }], { duration: 300, delay: 3500 + (rows.length - 1 - i) * 90 }));
+        const S = 3300;                       // the view turns 3D here, once the guides have had their moment
+        const t = alApart(bn1, S);
+        const panel = $('.al-panel', set);
+        if (!t || !panel || !panel.getClientRects().length) return;   // (phones: no panel, the sheet just comes apart)
+        anim(panel, [{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 600, delay: 900 });
+        // one timeline for the whole step, so every element gets a single animation per property
+        const D = S + t.T;
+        const tl = (el, list) => el && el.animate(list.map(([ms, p, e]) => ({ offset: Math.min(1, ms / D), easing: e || 'linear', ...p })), { duration: D, fill: 'both' });
+        const rows = $$('.al-panel li', set);   // front (billing block) to back (sky)
+        rows.forEach((li, r) => {
+          const i = rows.length - 1 - r, on = S + t.go(i), off = S + t.back(i);
+          tl($('b', li), [[0, { opacity: 0 }], [on, { opacity: 0 }], [on + 250, { opacity: 1 }], [off, { opacity: 1 }], [off + 250, { opacity: 0 }], [D, { opacity: 0 }]]);
+        });
+        const off = (el) => {
+          let x = 0, y = 0;
+          for (let e = el; e && e !== set; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+          return [x, y];
+        };
+        const lab = $$('.al-3d i', set), cur = $('.al-cursor', set);
+        const at = (el) => { const [x, y] = off(el); return [x + el.offsetWidth * 0.5, y + el.offsetHeight * 0.6]; };
+        const [ax, ay] = off(ab1), p0 = [ax + ab1.offsetWidth * 0.78, ay + ab1.offsetHeight * 0.72], p3 = at(lab[1]), p2 = at(lab[0]);
+        const pos = ([x, y], s = 1) => ({ transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s})` });
+        const IO = 'cubic-bezier(.45,0,.2,1)', C1 = S - 300, C2 = S + t.back(rows.length - 1) - 250;   // the two clicks
+        tl(cur, [[0, { opacity: 0, ...pos(p0) }], [1900, { opacity: 0, ...pos(p0) }], [2150, { opacity: 1, ...pos(p0) }, IO],
+          [C1 - 120, { opacity: 1, ...pos(p3) }], [C1, { opacity: 1, ...pos(p3) }], [C1 + 80, { opacity: 1, ...pos(p3, 0.84) }], [C1 + 200, { opacity: 1, ...pos(p3) }],
+          [C2 - 380, { opacity: 1, ...pos(p3) }, IO], [C2 - 60, { opacity: 1, ...pos(p2) }], [C2, { opacity: 1, ...pos(p2) }], [C2 + 80, { opacity: 1, ...pos(p2, 0.84) }],
+          [C2 + 200, { opacity: 1, ...pos(p2) }], [C2 + 450, { opacity: 1, ...pos(p2) }], [C2 + 800, { opacity: 0, ...pos([p2[0] + 18, p2[1] + 26]) }], [D, { opacity: 0, ...pos(p0) }]]);
+        const ring = (s, o) => ({ opacity: o, transform: `scale(${s})` });
+        tl($('i', cur), [[0, ring(0.3, 0)], [C1, ring(0.3, 0)], [C1 + 30, ring(0.4, 0.9)], [C1 + 420, ring(1.6, 0)], [C2, ring(0.3, 0)],
+          [C2 + 30, ring(0.4, 0.9)], [C2 + 420, ring(1.6, 0)], [D, ring(1.6, 0)]]);
+        const X1 = `translateX(${lab[1].offsetLeft - lab[0].offsetLeft}px)`;
+        tl($('.al-3d em', set), [[0, { transform: 'translateX(0px)' }], [C1 + 40, { transform: 'translateX(0px)' }, IO], [C1 + 260, { transform: X1 }],
+          [C2 + 40, { transform: X1 }, IO], [C2 + 260, { transform: 'translateX(0px)' }], [D, { transform: 'translateX(0px)' }]]);
       },
     };
     const ORDER = Object.keys(PJ).filter((k) => SETS[k]);

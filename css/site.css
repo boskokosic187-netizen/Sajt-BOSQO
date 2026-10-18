@@ -1661,17 +1661,27 @@ html:not(.is-lite) .pr[data-step="5"]:not(.is-paused) .pr__live b { animation: r
 .pr[data-step="3"] .ab > .bn--sheet { overflow: visible; }
 .pr[data-step="3"] .ab > .bn--sheet .al__l { overflow: hidden; }
 .pr[data-step="3"] .ab > .bn--sheet.is-flying .al__l { overflow: visible; }
-/* beside it, the layers panel, as in the app it was made in */
+/* beside it, the layers panel, as in the app it was made in: a pointer flips its view switch to
+   3D, the sheet comes apart, and each row lights up while its layer is out (js) */
 .al-panel {
-  position: absolute; left: 71.5%; top: 17%; width: 20%; margin: 0; padding: 1cqw 0 0.4cqw; list-style: none; visibility: hidden; opacity: 0;
+  position: absolute; left: 71.5%; top: 17%; width: 20%; padding: 1cqw 0 0.4cqw; visibility: hidden; opacity: 0;
   border: 1px solid var(--line-2); border-radius: 0.6cqw; background: rgba(18, 18, 22, 0.94); color: rgba(241, 230, 210, 0.78);
   font: normal 600 1.05cqw/1 var(--f-label); font-stretch: 85%; letter-spacing: 0.06em; text-transform: uppercase;
 }
-.al-panel::before { content: "Layers"; display: block; padding: 0 1.2cqw 0.9cqw; color: var(--text); letter-spacing: 0.1em; }
 .pr[data-step="3"] .al-panel { visibility: visible; opacity: 1; }
-.al-panel li { display: flex; align-items: center; gap: 0.9cqw; padding: 0.72cqw 1.2cqw; border-top: 1px solid rgba(241, 230, 210, 0.07); }
+.al-panel__h { display: flex; align-items: center; justify-content: space-between; padding: 0 1.2cqw 0.9cqw; color: var(--text); letter-spacing: 0.1em; }
+.al-3d { position: relative; display: flex; padding: 0.2cqw; border-radius: 999px; background: rgba(241, 230, 210, 0.08); letter-spacing: 0.04em; }
+.al-3d i { position: relative; width: 2.6cqw; padding: 0.4cqw 0; text-align: center; font-style: normal; font-size: 0.92em; }
+.al-3d em { position: absolute; left: 0.2cqw; top: 0.2cqw; bottom: 0.2cqw; width: 2.6cqw; border-radius: 999px; background: rgba(143, 211, 232, 0.24); box-shadow: inset 0 0 0 1px rgba(143, 211, 232, 0.65); }
+.al-panel ol { margin: 0; padding: 0; list-style: none; }
+.al-panel li { position: relative; z-index: 0; display: flex; align-items: center; gap: 0.9cqw; padding: 0.72cqw 1.2cqw; border-top: 1px solid rgba(241, 230, 210, 0.07); }
 .al-panel li::before { content: ""; width: 0.9cqw; height: 0.55cqw; border-radius: 50%; border: 1px solid currentColor; opacity: 0.7; }   /* the eye */
-.al-panel i { width: 2.6cqw; aspect-ratio: 1.45; border-radius: 0.2cqw; box-shadow: inset 0 0 0 1px rgba(241, 230, 210, 0.15); }
+.al-panel li b { position: absolute; inset: 0; z-index: -1; opacity: 0; background: rgba(143, 211, 232, 0.12); box-shadow: inset 0.2cqw 0 0 #8fd3e8; }
+.al-panel li i { width: 2.6cqw; aspect-ratio: 1.45; border-radius: 0.2cqw; box-shadow: inset 0 0 0 1px rgba(241, 230, 210, 0.15); }
+/* the pointer that works the switch; its tip is the box's corner, and it presses from there */
+.al-cursor { position: absolute; left: 0; top: 0; z-index: 20; width: max(1.3cqw, 13px); opacity: 0; pointer-events: none; transform-origin: 0 0; }
+.al-cursor svg { display: block; width: 100%; height: auto; overflow: visible; fill: #fff; stroke: #111; stroke-width: 1.1; stroke-linejoin: round; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55)); }
+.al-cursor i { position: absolute; left: -0.9cqw; top: -0.9cqw; width: 1.8cqw; aspect-ratio: 1; border-radius: 50%; border: 1.5px solid rgba(143, 211, 232, 0.9); opacity: 0; }
 .al-panel li:nth-child(1) i { background: repeating-linear-gradient(0deg, rgba(241, 230, 210, 0.5) 0 1px, #15151a 1px 3px); }
 .al-panel li:nth-child(2) i { background: #15151a radial-gradient(60% 30% at 50% 50%, #f1e6d2, transparent); }
 .al-panel li:nth-child(3) i { background: linear-gradient(#040407, transparent 40%, #040407); }
@@ -2077,7 +2087,7 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .bn--poster .nc__lights { --bx: -70cqw; --by: 100cqw; --bs: 0.6; }
   .pr[data-step="2"] .bn--poster .nc__bug { left: 104cqw; top: 22cqw; }
   .bn--poster .bn__pal { left: 104cqw; top: 52cqw; }
-  .al-panel { display: none; }   /* (its type would be a few pixels high) */
+  .al-panel, .al-cursor { display: none; }   /* (its type would be a few pixels high) */
   /* fizz: the label nearly as wide as the stage, the board squeezed into it; then the can on the left */
   .ab--label { left: 3%; top: 12%; width: 92%; }
   .pr[data-step="4"] .ab--label, .pr[data-step="5"] .ab--label { left: -23%; top: 23.9%; width: 72%; }
