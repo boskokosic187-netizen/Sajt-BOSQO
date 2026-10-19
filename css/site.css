@@ -2417,9 +2417,11 @@ html.js:not(.is-lite) .hero.is-on .wall__plane { animation: focusPull 1.1s var(-
 /* the newest project leads the wall: a big screen that is always on air */
 .tile.f { grid-column: 6 / span 3; grid-row: 2 / span 2; }
 .tile.fv { grid-column: 5; grid-row: 3 / span 2; } /* its 9:16 cut, beside it */
+.tile.f2 { grid-column: 6 / span 2; grid-row: 4; } /* the project before it, just under */
 @media (min-width: 768px) and (max-aspect-ratio: 1/1) {
   .tile.f { grid-column: 2 / span 3; grid-row: 2 / span 2; }
   .tile.fv { grid-column: 5; grid-row: 2 / span 2; }
+  .tile.f2 { grid-column: 3 / span 2; grid-row: 4; }
 }
 .tile[data-hold]:not(:hover)::after { box-shadow: inset 0 0 0 2px var(--rec); }
 .tile[data-hold]::before { content: "● On air — " attr(data-label); opacity: 1; transform: none; }

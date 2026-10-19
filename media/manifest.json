@@ -424,5 +424,29 @@
    "mp4": 277,
    "webp": 10
   }
+ },
+ "umbra": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/UMBRA/06_Web/media/UMBRA_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 308,
+   "webp": 7
+  }
+ },
+ "umbra-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/UMBRA/06_Web/media/UMBRA_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 192,
+   "webp": 5
+  }
  }
 }

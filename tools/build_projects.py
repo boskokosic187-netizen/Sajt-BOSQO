@@ -10,7 +10,8 @@ loads until the visitor opens the project (js: setupHome → projects).
 Monitor types: loop (the wall's own loop from media/loops, so the screen carries on in the
 monitor), video, film (plays once, with sound and controls), image, set (a grid of videos
 and images, "cols"), live (a page of the project in an iframe, "href" + "thumb").
-Options: "w" video width, "dur"/"start" seconds, "poster_at" seconds for the poster frame.
+Options: "w" video width, "dur"/"start" seconds, "poster_at" seconds for the poster frame, "crf" for
+fine detail that smears at the default (28 film, 29 video).
 
 Usage:  python -I tools/build_projects.py
         python -I tools/build_projects.py --check PV/BOSQO/<IME>/06_Web/projects.<slug>.json
@@ -62,7 +63,7 @@ def fresh(out, src):
 
 
 def key(item):
-    o = {k: item[k] for k in ("w", "dur", "start", "poster_at", "type") if k in item}
+    o = {k: item[k] for k in ("w", "dur", "start", "poster_at", "type", "crf") if k in item}
     return hashlib.sha1((item["src"] + json.dumps(o, sort_keys=True)).encode("utf-8")).hexdigest()[:8]
 
 
@@ -79,7 +80,7 @@ def video(item, outdir, rel):
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{dur:.2f}", "-i", src]
             + (["-c:a", "aac", "-b:a", "128k"] if film else ["-an"])
             + ["-r", "25", "-vf", f"scale={width}:-2", "-c:v", "libx264", "-profile:v", "high", "-pix_fmt", "yuv420p",
-               "-crf", "28" if film else "29", "-preset", "slow", "-movflags", "+faststart", base + ".mp4"])
+               "-crf", str(item.get("crf", 28 if film else 29)), "-preset", "slow", "-movflags", "+faststart", base + ".mp4"])
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{item.get('poster_at', 0.4):.2f}", "-i", base + ".mp4",
              "-frames:v", "1", base + "_p.png"])
         p = Image.open(base + "_p.png").convert("RGB")

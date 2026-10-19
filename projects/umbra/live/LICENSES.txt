@@ -1,0 +1,4 @@
+UMBRA live page. Code and data: Boško Kosić, 2026 (self-initiated).
+Sun positions: NOAA solar position equations (public domain).
+Ground texture: derived from a Freepik premium photo (licensed to the author), downscaled, for this page only.
+No external requests, no fonts loaded, no tracking.

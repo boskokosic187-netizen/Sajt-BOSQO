@@ -43,8 +43,13 @@ VIDEOS = [
     # seamless 4 s masters made for the wall (start 0, full length); -v is its own vertical cut
     ("struja", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_16x9.mp4", 4, 0),
     ("struja-v", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_9x16.mp4", 4, 0),
+    ("umbra", PV + "BOSQO/UMBRA/06_Web/media/UMBRA_loop_16x9.mp4", 4, 0),
+    ("umbra-v", PV + "BOSQO/UMBRA/06_Web/media/UMBRA_loop_9x16.mp4", 4, 0),
 ]
-TILE_W = {"struja": 960}  # the wall's big screen gets a wider loop
+# a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider
+TILE_W = {"struja": 960, "umbra": 960}
+# fine lines on a pale, nearly still ground smear at the default crf 30, and they cost little more
+CRF = {"umbra": 22, "umbra-v": 23}
 
 STILLS = [
     ("car-dusan", PV + "BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.png"),
@@ -163,7 +168,7 @@ def build_videos(only, manifest):
         busy = slug in ("ballies-strike",)
         vf = f"scale={TILE_W[slug]}:-2" if slug in TILE_W else tile_scale(w, h)
         size = encode(src, start, length, vf, os.path.join(d, slug),
-                      34 if busy else 30, 46 if busy else 40)
+                      CRF.get(slug, 34 if busy else 30), 46 if busy else 40)
         entry = {"type": "video", "src": src, "start": round(start, 2), "len": length,
                  "w": size[0], "h": size[1]}
         own_v = any(s == slug + "-v" for s, *_ in VIDEOS)

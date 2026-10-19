@@ -2,6 +2,62 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "umbra",
+      "title": "UMBRA",
+      "kicker": "Identity & installation · Self-initiated · 2026",
+      "accent": "#4153FF",
+      "line": "An identity that exists for one minute: 139 pillars on a Belgrade plaza whose shadows spell the name only at 18:47 on 21 June.",
+      "idea": "UMBRA is a fictional architecture biennale whose name is never drawn. Cut into fifteen rows of concrete pillars, each exactly as tall as its shadow must be long when the sun stands at 288° and 15° over Belgrade, the field says nothing all day, gathers for half an hour and reads for one minute. One WebGL engine computes the real sun and rendered everything here.",
+      "role": "Concept, identity, spatial design, motion, original score, creative code, front-end",
+      "facts": [
+        ["139 pillars", "Each as tall as its shadow must be long"],
+        ["18:47, 21.06.2027", "The one minute the sun spells the name"],
+        ["One engine", "Live page, film, loops, posters, screens"],
+        ["Original score", "A clock that stops at 18:47, composed in code"]
+      ],
+      "cta": [
+        {"label": "Play the film", "meta": "0:26 · sound", "cut": 3},
+        {"label": "Move the sun", "cut": 2}
+      ],
+      "note": "UMBRA and the Belgrade Architecture Biennale 2027 are fictional; a self-initiated project. Sun positions: NOAA solar equations. Mockups and concrete-wall footage: Freepik (licensed). Opening-night plate: Midjourney. Typefaces: Archivo and IBM Plex Mono (SIL OFL). Score: original, composed in code.",
+      "copy": [["PV/BOSQO/UMBRA/06_Web/umbra-live", "projects/umbra/live"]],
+      "monitors": [
+        {"type": "loop", "loop": "umbra", "umd": "Loop", "label": "Living identity · a whole day in four seconds"},
+        {"type": "live", "href": "projects/umbra/live/", "thumb": "PV/BOSQO/UMBRA/06_Web/umbra-live/media/poster.webp", "umd": "Live · WebGL", "label": "Live · move the sun, or see what it does in Belgrade now"},
+        {"type": "film", "src": "PV/BOSQO/UMBRA/01_Film/UMBRA_film_16x9.mp4", "w": 1280, "dur": 26, "poster_at": 6, "crf": 22, "umd": "Film · sound", "label": "Brand film · 26 s, original score"},
+        {"type": "set", "cols": 2, "umd": "Social 9:16", "label": "Brand film 9:16 and the app that counts down to the minute", "items": [
+          {"type": "video", "src": "PV/BOSQO/UMBRA/01_Film/UMBRA_film_9x16.mp4", "w": 540, "dur": 26, "poster_at": 6, "crf": 23},
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/phone.mp4", "w": 720}
+        ]},
+        {"type": "set", "cols": 3, "umd": "Posters ×6", "label": "Poster series · six minutes of the opening day, 50×70", "items": [
+          {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_01_first_light.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_02_morning.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_03_noon.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_04_afternoon.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_05_the_minute.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_06_last_light.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "DOOH", "label": "Digital outdoor · the clock runs to 18:47 on the billboard and the façade", "items": [
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/billboard.mp4", "w": 960},
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/led_facade.mp4", "w": 720}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Event & space", "label": "Opening night on the plaza, and the plan in the pavilion", "items": [
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/opening.mp4", "w": 1280, "crf": 24},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/04_Mockupi/gallery.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Street & merch", "label": "Street posters and the tote", "items": [
+          {"type": "image", "src": "PV/BOSQO/UMBRA/04_Mockupi/posters_wall.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/04_Mockupi/tote.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "System", "label": "Identity system · mark, type and colour, the day, one engine", "items": [
+          {"type": "image", "src": "PV/BOSQO/UMBRA/05_Sistem/board_01_mark.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/05_Sistem/board_02_type.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/05_Sistem/board_03_system.jpg"},
+          {"type": "image", "src": "PV/BOSQO/UMBRA/05_Sistem/breakdown_engine_04.jpg"}
+        ]}
+      ]
+    },
+    {
       "slug": "struja",
       "title": "STRUJA",
       "kicker": "Living identity · Self-initiated · 2026",

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>UMBRA · live</title>
+<meta name="description" content="UMBRA: 139 pillars whose shadows spell the name for one minute, 21 June 2027, 18:47. Scrub the sun or see it now.">
+<style>
+:root{--paper:#F1EEE7;--ink:#17150F;--blue:#4153FF;--grey:#8C867C}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);overflow:hidden;
+font:500 13px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;-webkit-font-smoothing:antialiased}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;opacity:0;transition:opacity .5s}
+body.ready canvas{opacity:1}canvas:active{cursor:grabbing}
+.poster{position:fixed;inset:0;background:url(media/poster.webp) center/cover no-repeat}
+@media (max-aspect-ratio:4/5){.poster{background-image:url(media/poster-v.webp)}}
+#top{position:fixed;left:20px;top:18px;right:20px;display:flex;justify-content:space-between;gap:12px;pointer-events:none;letter-spacing:.04em}
+#top b{font-weight:600}#read{color:var(--grey)}#read.on{color:var(--blue);font-weight:700}#read.near{color:var(--ink)}
+#ui{position:fixed;left:20px;right:20px;bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#ui button{font:inherit;letter-spacing:.06em;background:rgba(241,238,231,.88);color:var(--ink);border:1px solid var(--ink);padding:7px 11px;cursor:pointer;border-radius:0}
+#ui button.on{background:var(--ink);color:var(--paper)}#ui button:focus-visible,#t:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.track{position:relative;flex:1;min-width:180px;height:30px;display:flex;align-items:center}
+#t{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--ink);margin:0}
+#t::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--ink);border:0;border-radius:0}
+#t::-moz-range-thumb{width:14px;height:14px;background:var(--ink);border:0;border-radius:0}
+.mark{position:absolute;left:calc(1127/1439*100%);top:3px;width:2px;height:8px;background:var(--blue);pointer-events:none}
+.hint{color:var(--grey);font-size:11px;letter-spacing:.04em;width:100%}
+.nogl canvas,.nogl #ui{display:none}.nogl .hint::after{content:" (WebGL 2 is not available: this is the poster)"}
+body.night #top,body.night .hint{color:var(--paper)}body.night #read.near{color:var(--paper)}
+@media (prefers-reduced-motion:reduce){canvas{transition:none}}
+</style></head>
+<body>
+<div class="poster" aria-hidden="true"></div>
+<canvas id="c" aria-label="UMBRA: a field of 139 pillars on a Belgrade plaza, lit by the sun of the selected minute"></canvas>
+<div id="top"><span><b>UMBRA</b> &nbsp;<span id="date">21.06.2027</span> &nbsp;<b id="clock">18:47</b> &nbsp;<span id="sun"></span></span><span id="read"></span></div>
+<div id="ui">
+  <button id="play" type="button" aria-pressed="true">PLAY THE DAY</button>
+  <button id="key" type="button">18:47</button>
+  <button id="now" type="button">NOW IN BELGRADE</button>
+  <div class="track"><input id="t" type="range" min="0" max="1439" value="1127" aria-label="Time of day, 21 June 2027"><span class="mark"></span></div>
+  <div class="hint">Drag to orbit · scroll to zoom · double-click for the view from above. Only the sun of 21 June 2027 at 18:47 makes the shadows spell the name.</div>
+</div>
+<script src="umbra.js"></script><script src="live.js"></script>
+</body></html>
