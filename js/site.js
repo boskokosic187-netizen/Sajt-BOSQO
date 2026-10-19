@@ -880,7 +880,8 @@
           f.referrerPolicy = 'no-referrer';
           return f;
         };
-        if (!lite) return frame();
+        const fromDisk = location.protocol === 'file:';
+        if (!lite && !fromDisk) return frame();
         // a weak device (or reduced motion) gets the still, and the live page only on request
         const box = document.createElement('div');
         box.className = 'mv__ask';
@@ -888,9 +889,16 @@
         im.decoding = 'async';
         im.alt = '';
         im.src = m.poster;
+        if (fromDisk) { // only on the author's machine: from disk a live page can't load its data
+          const note = document.createElement('p');
+          note.className = 'mv__note';
+          note.textContent = 'Živa strana radi preko servera: otvori sajt sa pokreni-sajt.bat';
+          box.append(im, note);
+          return box;
+        }
         const go = document.createElement('button');
         go.type = 'button';
-        go.className = 'btn btn--rec';
+        go.className = 'btn btn--live';
         go.innerHTML = '<span class="btn__play" aria-hidden="true"></span>Run it live';
         go.addEventListener('click', () => box.replaceWith(frame()));
         box.append(im, go);

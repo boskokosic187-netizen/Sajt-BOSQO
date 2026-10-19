@@ -168,7 +168,9 @@ def monitor(mon, outdir, rel):
         parts = [{"_frame": lp + ".webp"}]
     elif t == "live":
         th = image({"type": "image", "src": mon["thumb"]}, outdir, rel)
-        d = {"kind": "live", "src": mon["href"], "poster": th["src"]}
+        # the page itself, not its folder: opened from disk (file://) a folder shows as a listing
+        href = mon["href"] + ("index.html" if mon["href"].endswith("/") else "")
+        d = {"kind": "live", "src": href, "poster": th["src"]}
         parts = [th]
     elif t == "set":
         items = [piece(x, outdir, rel) for x in mon["items"]]
@@ -193,11 +195,14 @@ def render(p, mons, thumbs):
         f'aria-label="{E(m["label"])}"><img src="{thumbs[i]}" alt="" width="{THUMB[0]}" height="{THUMB[1]}" decoding="async">'
         f'<span class="mv__name"><b>{i + 1}</b>{E(mon["umd"])}</span>{"<i class=mv__live>Live</i>" if mon["type"] == "live" else ""}</button>'
         for i, (m, mon) in enumerate(zip(mons, p["monitors"])))
-    cta = "".join(
-        f'<button class="btn {"btn--rec" if j == 0 else "btn--ghost"}" type="button" data-cut="{c["cut"]}">'
-        + ('<span class="btn__play" aria-hidden="true"></span>' if j == 0 else "")
-        + f'{E(c["label"])}' + (f' <span class="btn__meta">{E(c["meta"])}</span>' if c.get("meta") else "") + "</button>"
-        for j, c in enumerate(p.get("cta", [])))
+    def cta_btn(j, c):
+        # the way into the live page is the loud one (orange); the first is the film
+        live = p["monitors"][c["cut"] - 1]["type"] == "live"
+        cls, icon = (("btn--live", '<span class="btn__dot" aria-hidden="true"></span>') if live else
+                     ("btn--rec", '<span class="btn__play" aria-hidden="true"></span>') if j == 0 else ("btn--ghost", ""))
+        return (f'<button class="btn {cls}" type="button" data-cut="{c["cut"]}">{icon}{E(c["label"])}'
+                + (f' <span class="btn__meta">{E(c["meta"])}</span>' if c.get("meta") else "") + "</button>")
+    cta = "".join(cta_btn(j, c) for j, c in enumerate(p.get("cta", [])))
     facts = "".join(f'<li><b>{E(a)}</b><span>{E(b)}</span></li>' for a, b in p.get("facts", []))
     data = json.dumps(mons, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     return f"""      <template data-proj="{slug}">

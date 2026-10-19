@@ -7,3 +7,4 @@ _freepik/*
 # raw client originals (the web versions live in media/)
 _izvori/
 __pycache__/
+pokreni-sajt.bat
