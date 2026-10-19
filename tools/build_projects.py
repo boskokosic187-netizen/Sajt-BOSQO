@@ -347,9 +347,14 @@ def check(path):
         if not w.get(k):
             err(f"wall.{k}: the tile's label, e.g. \"{p.get('title', 'NAME')} · living identity\"")
 
+    # an identity carries every format; a fan poster and a cartoon are lighter on purpose
+    fmt = p.get("format", "identity")
+    lo, hi = {"identity": (8, 9), "poster": (5, 6), "cartoon": (4, 6)}.get(fmt, (0, 0))
+    if not hi:
+        err(f"format \"{fmt}\": identity, poster or cartoon")
     mons = p.get("monitors", [])
-    if not 8 <= len(mons) <= 9:
-        warn(f"{len(mons)} monitors (8–9)")
+    if hi and not lo <= len(mons) <= hi:
+        warn(f"{len(mons)} monitors ({lo}–{hi} for a {fmt})")
     if mons and (mons[0].get("type") != "loop" or mons[0].get("loop") != slug):
         err(f"monitor 1 must be {{\"type\": \"loop\", \"loop\": \"{slug}\"}}")
     total = 0
