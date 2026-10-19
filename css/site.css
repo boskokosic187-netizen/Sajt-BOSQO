@@ -2486,6 +2486,10 @@ html.is-proj { overflow: hidden; }
   position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; border: 0; object-fit: contain;
 }
 .mv__screen.is-cover > :is(img, video) { object-fit: cover; }
+/* lite mode: a live page waits behind its still until asked for */
+.mv__ask { position: absolute; inset: 0; display: grid; place-items: center; }
+.mv__ask img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mv__ask .btn { position: relative; }
 .proj__pgm.is-cut .mv__screen { animation: cutFlash 0.3s steps(3, end); }
 /* a set: a grid of pieces on one monitor; a click puts one alone on it */
 .mv__set { position: absolute; inset: 0; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 8px; padding: 14px; }

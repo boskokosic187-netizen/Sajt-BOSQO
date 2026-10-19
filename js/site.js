@@ -872,12 +872,29 @@
     // what a monitor puts on program
     function piece(m, p) {
       if (m.kind === 'live') {
-        const f = document.createElement('iframe');
-        f.src = m.src;
-        f.title = m.label;
-        f.allow = 'autoplay; microphone';
-        f.referrerPolicy = 'no-referrer';
-        return f;
+        const frame = () => {
+          const f = document.createElement('iframe');
+          f.src = m.src;
+          f.title = m.label;
+          f.allow = 'autoplay; microphone';
+          f.referrerPolicy = 'no-referrer';
+          return f;
+        };
+        if (!lite) return frame();
+        // a weak device (or reduced motion) gets the still, and the live page only on request
+        const box = document.createElement('div');
+        box.className = 'mv__ask';
+        const im = new Image();
+        im.decoding = 'async';
+        im.alt = '';
+        im.src = m.poster;
+        const go = document.createElement('button');
+        go.type = 'button';
+        go.className = 'btn btn--rec';
+        go.innerHTML = '<span class="btn__play" aria-hidden="true"></span>Run it live';
+        go.addEventListener('click', () => box.replaceWith(frame()));
+        box.append(im, go);
+        return box;
       }
       if (m.kind === 'image') {
         const im = new Image();
