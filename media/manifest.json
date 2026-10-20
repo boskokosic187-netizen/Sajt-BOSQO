@@ -496,5 +496,17 @@
    "mp4": 255,
    "webp": 9
   }
+ },
+ "bigger": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/BIGGER/06_Web/media/BIGGER_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 201,
+   "webp": 12
+  }
  }
 }

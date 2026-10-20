@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIGGER. · Make it bigger</title>
+<meta name="description" content="You are the client. Press the button and make the logo bigger, and watch the designer cope. Ten presses later, someone gets hungry.">
+<link rel="preload" href="fonts/Chubbo-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Satoshi-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Chubbo;src:url(fonts/Chubbo-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Satoshi;src:url(fonts/Satoshi-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{--paper:#F4EEE3;--ink:#17161C;--pink:#FF4F8B;--pinkdk:#D93A72;--mute:#17161C99}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);overflow:hidden;font:500 15px/1.4 Satoshi;-webkit-font-smoothing:antialiased}
+.stage{position:relative;height:100%;display:flex;flex-direction:column;padding:clamp(14px,2.4vh,26px) clamp(16px,3vw,40px) clamp(16px,3vh,30px)}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.wm{height:clamp(22px,3.4vh,34px);width:auto;display:block}
+.kick{margin:0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);text-align:right}
+#scene{flex:1;min-height:0;width:100%;display:block;margin:clamp(8px,1.6vh,16px) 0}
+.ctl{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.btn{font:700 clamp(20px,2.6vh,26px)/1 Chubbo;color:#fff;background:var(--pink);border:0;border-radius:999px;padding:.72em 1.25em .78em 1.05em;
+  display:inline-flex;align-items:center;gap:.55em;cursor:pointer;box-shadow:0 .2em 0 var(--pinkdk),0 .6em 1.4em #FF4F8B47;transition:transform .08s,box-shadow .08s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:translateY(.14em) scale(.97);box-shadow:0 .06em 0 var(--pinkdk),0 .3em .8em #FF4F8B40}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+.btn i{width:.42em;height:.42em;border-radius:50%;background:#fff;display:block}
+.hint{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+#live{position:absolute;left:-9999px}
+#stamp{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-11deg) scale(2.4);opacity:0;pointer-events:none;
+  font:700 clamp(40px,9vh,92px)/1 Chubbo;color:var(--pink);border:.09em solid var(--pink);border-radius:.18em;padding:.08em .32em .14em;
+  background:#F4EEE3d9;mix-blend-mode:multiply}
+#stamp.on{opacity:.94;transform:translate(-50%,-50%) rotate(-11deg) scale(1);transition:transform .22s cubic-bezier(.2,1.6,.4,1),opacity .1s}
+.lite #stamp.on{transition:none}
+.ready #scene{opacity:1}
+@media (max-width:560px){.kick{display:none}.hint{display:none}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <header class="top"><svg class="wm" viewBox="-10 -1166 5107 1466" role="img" aria-label="BIGGER."><path fill="#17161C" d="M303 12C544 12 654 -75 654 -201C654 -276 610 -333 534 -361C579 -397 606 -449 606 -513C606 -644 500 -727 311 -727C276 -727 240 -726 202 -723C180 -721 133 -716 105 -712C36 -703 17 -687 17 -650C17 -614 39 -597 87 -597C100 -597 123 -599 149 -601C140 -588 136 -572 136 -552V-120C127 -121 118 -121 110 -121C55 -121 37 -103 37 -64C37 -26 51 -14 105 -4C162 4 238 12 303 12ZM317 -614C422 -614 471 -567 471 -504C471 -453 453 -414 416 -404C393 -398 341 -396 288 -396H272V-612C288 -613 304 -614 317 -614ZM272 -291C300 -289 328 -288 357 -287C492 -285 519 -247 519 -194C519 -151 474 -105 340 -105C314 -105 283 -106 249 -109C264 -124 272 -145 272 -171Z M836.9 0C869.9 0 931.5 3.3 960.1 3.3C1017.3 3.3 1037.1 -11 1037.1 -53.9C1037.1 -102.3 1007.4 -121 913.9 -121H908.4C921.6 -136.4 928.2 -157.3 928.2 -182.6V-665.5H931.5C1011.8 -665.5 1037.1 -687.5 1037.1 -732.6C1037.1 -774.4 1016.2 -792 970 -792C948 -792 909.5 -786.5 869.9 -786.5C836.9 -786.5 775.3 -789.8 746.7 -789.8C689.5 -789.8 669.7 -774.4 669.7 -732.6C669.7 -683.1 701.6 -665.5 797.3 -665.5H801.7C786.3 -649 778.6 -627 778.6 -599.5V-121H774.2C695 -121 669.7 -99 669.7 -53.9C669.7 -11 688.4 4.4 740.1 4.4C764.3 4.4 799.5 0 836.9 0Z M1481.7 14.5C1539.8 14.5 1593 2.4 1636.6 -19.4V27.8C1636.6 95.6 1600.3 137.9 1539.8 137.9C1467.2 137.9 1445.4 79.9 1391 79.9C1354.7 79.9 1330.5 113.7 1330.5 153.7C1330.5 217.8 1417.6 267.4 1532.5 267.4C1686.2 267.4 1772.1 181.5 1772.1 27.8V-261.4H1773.3C1802.4 -261.4 1830.2 -285.6 1830.2 -320.7C1830.2 -371.5 1806 -388.4 1710.4 -388.4H1594.2C1505.9 -388.4 1484.1 -370.3 1484.1 -321.9C1484.1 -278.3 1519.2 -256.5 1630.5 -256.5H1645.1C1639 -243.2 1636.6 -225.1 1636.6 -204.5V-151.3C1597.9 -135.5 1560.4 -129.5 1505.9 -129.5C1340.2 -129.5 1249.4 -237.2 1249.4 -430.8C1249.4 -619.5 1337.7 -723.6 1497.5 -723.6C1528.9 -723.6 1568.8 -716.3 1610 -704.2V-682.4C1610 -577.2 1624.5 -538.5 1683.8 -538.5C1743.1 -538.5 1761.2 -565.1 1761.2 -657V-706.6C1761.2 -776.8 1741.9 -809.5 1698.3 -834.9C1647.5 -863.9 1577.3 -879.7 1503.5 -879.7C1249.4 -879.7 1082.4 -699.4 1082.4 -425.9C1082.4 -150 1232.5 14.5 1481.7 14.5Z M2324.1 16C2388 16 2446.6 2.7 2494.5 -21.3V30.6C2494.5 105.1 2454.6 151.7 2388 151.7C2308.2 151.7 2284.2 87.8 2224.3 87.8C2184.4 87.8 2157.7 125.1 2157.7 169C2157.7 239.6 2253.6 294.2 2380 294.2C2549.1 294.2 2643.6 199.7 2643.6 30.6V-287.5H2644.9C2676.8 -287.5 2707.5 -314.1 2707.5 -352.7C2707.5 -408.6 2680.8 -427.3 2575.7 -427.3H2447.9C2350.7 -427.3 2326.8 -407.3 2326.8 -354C2326.8 -306.1 2365.4 -282.2 2487.8 -282.2H2503.8C2497.2 -267.5 2494.5 -247.6 2494.5 -224.9V-166.4C2451.9 -149.1 2410.6 -142.4 2350.7 -142.4C2168.4 -142.4 2068.6 -260.9 2068.6 -473.8C2068.6 -681.5 2165.7 -795.9 2341.4 -795.9C2376 -795.9 2420 -788 2465.2 -774.6V-750.7C2465.2 -634.9 2481.2 -592.3 2546.4 -592.3C2611.6 -592.3 2631.6 -621.6 2631.6 -722.7V-777.3C2631.6 -854.5 2610.3 -890.4 2562.4 -918.4C2506.5 -950.3 2429.3 -967.6 2348.1 -967.6C2068.6 -967.6 1884.9 -769.3 1884.9 -468.5C1884.9 -165 2049.9 16 2324.1 16Z M3391.9 -487.5C3391.9 -553.4 3365.5 -566.6 3238.1 -566.6H3084.4V-878.5C3173.7 -879.9 3251.3 -884.3 3326 -891.6L3352.3 -781.8C3367 -720.3 3394.8 -691.1 3438.7 -691.1C3497.3 -691.1 3535.3 -724.7 3535.3 -776C3535.3 -787.7 3533.9 -800.9 3530.9 -814C3513.4 -893.1 3498.7 -953.1 3482.6 -991.2C3462.1 -1041 3434.3 -1064.4 3397.7 -1064.4C3390.4 -1064.4 3383.1 -1062.9 3375.7 -1061.5C3312.8 -1048.3 3229.3 -1046.8 3122.5 -1046.8C3052.2 -1046.8 2923.3 -1049.8 2841.3 -1049.8C2750.6 -1049.8 2725.7 -1032.2 2725.7 -975.1C2725.7 -901.9 2768.1 -878.5 2902.8 -878.5H2908.7C2892.6 -858 2885.3 -830.1 2885.3 -797.9V-169.8H2869.2C2776.9 -169.8 2740.3 -137.6 2740.3 -71.7C2740.3 -10.2 2769.6 2.9 2878 2.9C2914.6 2.9 2974.6 0 3071.2 0C3144.4 0 3306.9 2.9 3402.1 7.3C3478.2 10.2 3519.2 -14.6 3532.4 -58.6C3547 -108.3 3557.3 -140.6 3579.3 -232.8C3582.2 -247.4 3583.6 -260.6 3583.6 -272.3C3583.6 -328 3547 -357.2 3489.9 -357.2C3446 -357.2 3416.7 -326.5 3403.6 -266.5L3378.7 -158.1C3267.4 -166.9 3157.6 -168.4 3065.4 -169.8C3078.5 -188.9 3084.4 -213.8 3084.4 -243V-405.6C3122.5 -401.2 3164.9 -398.2 3223.5 -398.2C3347.9 -398.2 3391.9 -421.7 3391.9 -487.5Z M4082.3 -1166C3985.7 -1166 3860.1 -1156.3 3726.4 -1141.9C3605.6 -1127.4 3584.7 -1114.5 3584.7 -1050.1C3584.7 -982.4 3620.1 -951.8 3705.5 -951.8C3731.2 -951.8 3760.2 -953.4 3792.4 -956.6H3794C3782.8 -935.7 3776.3 -911.5 3776.3 -880.9V-177.2H3761.8C3653.9 -177.2 3616.9 -143.3 3616.9 -78.9C3616.9 -16.1 3644.3 6.4 3720 6.4C3734.4 6.4 3815 0 3861.7 0C3892.3 0 4017.9 4.8 4021.1 4.8C4096.8 4.8 4124.2 -17.7 4124.2 -78.9C4124.2 -144.9 4087.2 -177.2 3979.2 -177.2H3966.4C3985.7 -199.7 3995.4 -230.3 3995.4 -267.3V-413.9C4056.6 -410.7 4112.9 -409.1 4164.5 -410.7C4206.3 -67.6 4351.3 17.7 4504.3 17.7C4639.6 17.7 4723.3 -40.3 4723.3 -132.1C4723.3 -185.2 4694.3 -231.9 4633.1 -231.9C4570.3 -231.9 4560.6 -177.2 4502.7 -177.2C4443.1 -177.2 4378.7 -227.1 4351.3 -454.2C4484.9 -517 4567.1 -644.2 4567.1 -802C4567.1 -1021.1 4402.8 -1166 4082.3 -1166ZM4092 -977.6C4280.4 -977.6 4346.4 -887.4 4346.4 -787.5C4346.4 -708.6 4306.2 -649 4257.9 -621.7C4228.9 -603.9 4172.5 -600.7 4045.3 -600.7H3995.4V-976C4029.2 -977.6 4061.4 -977.6 4092 -977.6Z"/><path fill="#FF4F8B" fill-rule="evenodd" transform="translate(4927.8 -215.2) rotate(8) scale(3.986)" d="M12-50C38-28 40 8 34 26C26 50-4 58-22 46C-40 34-40 6-30-14C-20-34-4-46 12-50ZM8-38C1-25-3-9 2 8C6-7 9-23 8-38Z"/></svg><p class="kick">Live · you are the client</p></header>
+  <svg id="scene" role="img" aria-label="An artboard with a tiny pink seed, the logo. The designer stands beside it." preserveAspectRatio="xMidYMid meet"></svg>
+  <div class="ctl"><button id="go" class="btn" type="button"><i aria-hidden="true"></i><span>Make it bigger</span></button><p class="hint">or press Space</p></div>
+  <p id="live" aria-live="polite"></p>
+  <div id="stamp" aria-hidden="true">Approved.</div>
+</main>
+<script src="live.min.js?v=6a8de746" defer></script>
+</body>
+</html>

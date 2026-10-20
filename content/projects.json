@@ -2,6 +2,51 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "bigger",
+      "format": "cartoon",
+      "title": "BIGGER.",
+      "kicker": "Animated short · Self-initiated · 2026",
+      "accent": "#FF4F8B",
+      "line": "Every designer has met this client. Few have watched him eat the logo.",
+      "idea": "“Make the logo bigger” is the most famous client note in the world. BIGGER. finally explains it: the client is a pigeon in a tailored suit, and the perfect minimal logo is a seed. Every click grows it, the music climbs a semitone, the designer sweats, and then a stomach growls. The seed is also the full stop of the wordmark, so the pigeon eats that too.",
+      "role": "Concept, script, character design, rig and animation, creative code, typography, sound design and original score, front-end",
+      "facts": [
+        ["12 lines", "Real voices; beaks and lips timed to their words"],
+        ["1 engine", "One SVG engine draws the film, the loops, the boards and the live page"],
+        ["On twos", "Characters at 12.5 drawings a second; the seed and the camera on ones"],
+        ["49 KB", "The live page: HTML, SVG and JS, before its fonts"]
+      ],
+      "cta": [
+        {"label": "Make it bigger", "cut": 2},
+        {"label": "Watch the film", "meta": "0:30 · sound", "cut": 3}
+      ],
+      "note": "BIGGER. is a self-initiated short. Voices and sound effects (stomach, peck, gulp, burp): ElevenLabs (paid plan, commercial licence). Pigeon coo and wings: Pixabay (Pixabay Content License). Phone mockup: Freepik (licensed). Midjourney sheets were used only as reference; every frame is drawn in code. Typefaces: Chubbo and Satoshi by Indian Type Foundry (Fontshare, ITF Free Font License). Music: original, synthesised in code.",
+      "copy": [["PV/BOSQO/BIGGER/06_Web/bigger-live", "projects/bigger/live"]],
+      "monitors": [
+        {"type": "loop", "loop": "bigger", "umd": "Loop", "label": "Loop · the client stares at the logo, then wants it bigger"},
+        {"type": "live", "href": "projects/bigger/live/", "thumb": "PV/BOSQO/BIGGER/06_Web/bigger-live/media/poster-wide.webp", "umd": "Live · Bigger", "label": "Live · you are the client: make the logo bigger"},
+        {"type": "film", "src": "PV/BOSQO/BIGGER/01_Film/BIGGER_film_16x9.mp4", "w": 1280, "dur": 30.5, "poster_at": 11.9, "crf": 22, "umd": "Film · sound", "label": "The film · 30 s, real voices, an original bossa that grows a semitone per click"},
+        {"type": "set", "cols": 3, "umd": "Social 9:16", "label": "The vertical film with captions (made for no sound), and on the phone", "items": [
+          {"type": "video", "src": "PV/BOSQO/BIGGER/01_Film/BIGGER_film_9x16.mp4", "w": 540, "dur": 30.5, "poster_at": 11.9, "crf": 23},
+          {"type": "image", "src": "PV/BOSQO/BIGGER/04_Mockupi/phone_social.jpg"},
+          {"type": "video", "src": "PV/BOSQO/BIGGER/04_Mockupi/phone_social.mp4", "w": 640, "dur": 7.4, "poster_at": 3.2, "crf": 23}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Characters", "label": "Turnarounds, moods, mouths and the pigeon walk", "items": [
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_01_pigeon_turnaround.jpg"},
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_02_pigeon_expressions.jpg"},
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_03_designer.jpg"},
+          {"type": "video", "src": "PV/BOSQO/BIGGER/05_Sistem/BIGGER_walk_cycle.mp4", "w": 960, "dur": 4, "crf": 23}
+        ]},
+        {"type": "set", "cols": 3, "umd": "Process", "label": "Script, storyboard, animatic, rig, squash and stretch", "items": [
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_05_script.jpg"},
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_06_storyboard.jpg"},
+          {"type": "video", "src": "PV/BOSQO/BIGGER/05_Sistem/BIGGER_animatic.mp4", "w": 960, "dur": 30.5, "poster_at": 15.2, "crf": 24},
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_07_rig.jpg"},
+          {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_08_squash_stretch.jpg"}
+        ]}
+      ]
+    },
+    {
       "slug": "accord",
       "format": "identity",
       "title": "ACCORD",

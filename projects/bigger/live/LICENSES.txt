@@ -1,0 +1,13 @@
+BIGGER. · Make it bigger: credits and licences
+
+Typefaces (self-hosted, the official WOFF2 files from Fontshare, unmodified):
+  Chubbo Bold and Satoshi Medium, Indian Type Foundry, ITF Free Font License 2.0 (fonts/ITF_FFL_2.0.txt).
+  The licence allows commercial and web use and self-hosting on one's own site. It does not allow
+  subsetting or converting the files, so they are served exactly as Fontshare ships them.
+  The BIGGER. wordmark is a drawing made from Chubbo Bold outlines (allowed); it is inline SVG, not text.
+
+Characters, seed and scene: drawn in code by the author (SVG), no images.
+Sound: synthesised in the browser (Web Audio). One line of voice, "Mmm. Love it. Approved."
+  (media/approved.mp3), is from the film's ElevenLabs recording (paid plan, commercial licence),
+  fetched only on the tenth press.
+Code: own, no libraries, no external requests.
