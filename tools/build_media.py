@@ -51,9 +51,11 @@ VIDEOS = [
     ("accord-v", PV + "BOSQO/ACCORD/06_Web/media/ACCORD_loop_9x16.mp4", 4, 0),
     ("bigger", PV + "BOSQO/BIGGER/06_Web/media/BIGGER_loop_16x9.mp4", 4, 0),
     ("bigger-v", PV + "BOSQO/BIGGER/06_Web/media/BIGGER_loop_9x16.mp4", 4, 0),
+    ("jurassic", PV + "BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_16x9.mp4", 4, 0),
+    ("jurassic-v", PV + "BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_9x16.mp4", 4, 0),
 ]
 # a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider
-TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960, "accord": 960, "bigger": 960}
+TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960, "accord": 960, "bigger": 960, "jurassic": 960}
 # fine lines on a pale, nearly still ground smear at the default crf 30, and they cost little more
 CRF = {"umbra": 22, "umbra-v": 23, "accord": 25, "accord-v": 24, "bigger": 22, "bigger-v": 24}
 

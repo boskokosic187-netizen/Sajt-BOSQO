@@ -2,6 +2,53 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "jurassic",
+      "format": "poster",
+      "title": "JURASSIC PARK",
+      "kicker": "Fan poster · Unofficial · 2026",
+      "accent": "#ED9429",
+      "line": "One fan poster, one double exposure: the T-rex keeps its face, and the island it rules lives inside its neck.",
+      "idea": "A double exposure is two negatives on one sheet. The first is the predator; the second is the misty island it owns. A mask painted along the jaw keeps the teeth and the eye, and lets the jungle into the skull and neck. Below it the same photograph spills onto the paper and becomes the ground, so the neck has no edge. The live page hands you the dial.",
+      "role": "Concept, art direction, double exposure and retouching, colour, title design, creative code, motion, front-end",
+      "facts": [
+        ["2 negatives", "A Midjourney T-rex and one photograph of a misty jungle. Nothing else is in the picture"],
+        ["1 mask", "Painted along the jaw: the teeth and the eye stay, the skull and neck become the island"],
+        ["0 hard edges", "Inside the neck the jungle is screened in, outside it is printed on the paper, so they meet without a seam"],
+        ["3 exposures", "The live dial cross-fades the predator, the poster and the island, light on any phone"]
+      ],
+      "cta": [
+        {"label": "Turn the exposure dial", "cut": 2},
+        {"label": "See the poster", "cut": 3}
+      ],
+      "note": "Unofficial fan art, not affiliated with Universal Pictures or Amblin Entertainment. Not for sale. Photograph: “Misty tropical jungle landscape with palm trees and mountains” by muhammad.abdullah on Freepik (free licence, with attribution). Mockups: Freepik (licensed). T-rex plate: Midjourney. Typefaces: Tanker and General Sans by Indian Type Foundry (Fontshare, ITF Free Font License).",
+      "copy": [["PV/BOSQO/JURASSIC/06_Web/jurassic-live", "projects/jurassic/live"]],
+      "monitors": [
+        {"type": "loop", "loop": "jurassic", "umd": "Loop", "label": "Living poster · the island drifts inside the T-rex, the mist rolls, the amber eye glints"},
+        {"type": "live", "href": "projects/jurassic/live/", "thumb": "PV/BOSQO/JURASSIC/06_Web/jurassic-live/media/poster-wide.webp", "umd": "Live · Exposure", "label": "Live · drag across the poster: more predator, or more island"},
+        {"type": "set", "cols": 2, "umd": "Poster", "label": "The poster · 50×70, the 16:9 key art and three details at 100 %", "items": [
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/02_Poster/JURASSIC_poster.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/02_Poster/JURASSIC_keyart_16x9.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/02_Poster/JURASSIC_crop_01_eye.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/02_Poster/JURASSIC_crop_02_neck.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/02_Poster/JURASSIC_crop_03_title.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Motion 9:16", "label": "Motion poster 9:16, and the same as a story on the phone", "items": [
+          {"type": "video", "src": "PV/BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_9x16.mp4", "w": 540},
+          {"type": "video", "src": "PV/BOSQO/JURASSIC/04_Mockupi/phone.mp4", "w": 720}
+        ]},
+        {"type": "set", "cols": 3, "umd": "In the wild", "label": "A framed print at home, a lit citylight as the train passes, lightboxes along the escalator", "items": [
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/04_Mockupi/room.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/04_Mockupi/subway.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/04_Mockupi/escalator.jpg"}
+        ]},
+        {"type": "set", "cols": 3, "umd": "Process", "label": "Two negatives and one mask, how the dial works, grid and type", "items": [
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/05_Sistem/board_01_two_negatives.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/05_Sistem/board_02_exposure_dial.jpg"},
+          {"type": "image", "src": "PV/BOSQO/JURASSIC/05_Sistem/board_03_grid_type.jpg"}
+        ]}
+      ]
+    },
+    {
       "slug": "bigger",
       "format": "cartoon",
       "title": "BIGGER.",

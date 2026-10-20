@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>JURASSIC PARK · The exposure dial</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Unofficial fan poster, a double exposure. Drag across it to choose how long each negative was exposed: the predator, the island, or both.">
+<style>
+@font-face{font-family:"Tanker";src:url(fonts/Tanker-Regular.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"General Sans";src:url(fonts/GeneralSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{--paper:#f1ece0;--ink:#0a1814;--dim:#5f6b64;--line:#d6cfbf;--amber:#ed9429;--sans:"General Sans",system-ui,sans-serif;--disp:"Tanker",Impact,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);overflow:hidden;font:500 12px/1.4 var(--sans);letter-spacing:.02em;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+#stage{position:fixed;inset:0 0 118px 0;display:grid;place-items:center;touch-action:pan-y;cursor:ew-resize}
+#poster{position:relative;height:min(calc(100% - 28px),calc((100vw - 32px) * 1.4));aspect-ratio:2500/3500;box-shadow:0 1px 0 var(--line),0 18px 40px -24px rgba(10,24,20,.35)}
+#poster img{position:absolute;inset:0;width:100%;height:100%;display:block}
+#de{will-change:opacity}#island{opacity:0;will-change:opacity}
+#dock{position:fixed;left:0;right:0;bottom:0;height:118px;display:grid;grid-template-columns:1fr minmax(280px,560px) 1fr;align-items:center;gap:24px;padding:0 24px;border-top:1px solid var(--line)}
+#dock h1{margin:0;font:400 26px/1 var(--disp);letter-spacing:.06em;white-space:nowrap}
+#dock .sub{color:var(--dim);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:6px}
+#dial{display:grid;gap:10px}
+#dial input{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0;cursor:ew-resize}
+#dial input::-webkit-slider-runnable-track{height:2px;background:var(--ink)}
+#dial input::-moz-range-track{height:2px;background:var(--ink)}
+#dial input::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-10px;border-radius:50%;background:var(--amber);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--ink)}
+#dial input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--amber);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--ink)}
+#dial input:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
+#marks{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.2em;color:var(--dim)}
+#marks b{font-weight:500}#marks b.on{color:var(--ink)}
+#hint{justify-self:end;text-align:right;color:var(--dim);font-size:11px;max-width:260px}
+#hint small{display:block;margin-top:6px;font-size:9px;letter-spacing:.18em;text-transform:uppercase}
+#run{position:fixed;left:50%;bottom:140px;transform:translateX(-50%);display:none;background:var(--amber);color:var(--ink);padding:12px 18px;font-size:12px;letter-spacing:.22em}
+body.lite #run{display:block}body.lite #dial{opacity:.35;pointer-events:none}
+@media (max-width:1000px){#dock{grid-template-columns:auto 1fr}#hint{display:none}}
+@media (max-width:760px){
+#stage{inset:0 0 150px 0}#dock{height:150px;grid-template-columns:1fr;gap:10px;padding:12px 16px}
+#dock .sub{display:none}#dock h1{font-size:20px}#run{bottom:170px}}
+/* polozen kadar (monitor 16:9 na sajtu): tockic ide desno od postera, poster dobija celu visinu */
+@media (min-aspect-ratio:11/10){
+#stage{inset:0 var(--side) 0 0}:root{--side:clamp(210px,34vw,380px)}
+#dock{left:auto;top:0;width:var(--side);height:auto;grid-template-columns:1fr;align-content:center;gap:22px;padding:24px;border-top:0;border-left:1px solid var(--line)}
+#hint{display:block;justify-self:start;text-align:left;max-width:none}#dock .sub{display:block}#dock h1{font-size:26px}
+#run{left:calc((100vw - var(--side)) / 2);bottom:24px}}
+@media (min-aspect-ratio:11/10) and (max-height:430px){#dock{gap:10px;padding:12px 14px}#dock h1{font-size:17px}#dock .sub,#hint{display:none}#dial{gap:4px}#marks{font-size:8px;letter-spacing:.12em}#poster{height:calc(100% - 16px)}}
+</style></head>
+<body>
+<div id="stage" role="img" aria-label="JURASSIC PARK fan poster: a T-rex head on paper, the misty island jungle exposed into its neck.">
+ <div id="poster"><img id="rex" alt=""><img id="de" alt="" fetchpriority="high"><img id="island" alt=""></div>
+</div>
+<div id="dock">
+ <div><h1>THE EXPOSURE DIAL</h1><div class="sub">Jurassic Park · double exposure</div></div>
+ <div id="dial">
+  <input id="v" type="range" min="-100" max="100" value="0" step="1" aria-label="Exposure: predator to island" aria-valuetext="The poster: both negatives">
+  <div id="marks"><b>REX</b><b class="on">THE POSTER</b><b>ISLAND</b></div>
+ </div>
+ <div id="hint">Drag across the poster: more predator, or more island. Let go and it settles back.<small>Unofficial fan art · not for sale</small></div>
+</div>
+<button id="run" type="button">RUN IT LIVE</button>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const nav = navigator, Q = new URLSearchParams(location.search);
+  const RM = matchMedia('(prefers-reduced-motion: reduce)');
+  let lite = Q.has('lite') || !!(nav.connection && nav.connection.saveData) || (nav.deviceMemory && nav.deviceMemory <= 2) ||
+    (nav.hardwareConcurrency && nav.hardwareConcurrency <= 2) || RM.matches;
+  const poster = $('#poster'), de = $('#de'), isl = $('#island'), rex = $('#rex'), input = $('#v'), marks = [...document.querySelectorAll('#marks b')];
+  const sfx = poster.getBoundingClientRect().height * Math.min(devicePixelRatio || 1, 1.5) > 1150 ? '' : '-m';
+  de.src = 'data/de' + sfx + '.webp';
+  let v = 0, target = 0, raf = 0, dragging = false, loaded = false, lastMark = -1;
+
+  function load() {
+    if (loaded) return; loaded = true;
+    rex.src = 'data/rex' + sfx + '.webp'; isl.src = 'data/island' + sfx + '.webp';
+  }
+  function paint() {
+    de.style.opacity = v < 0 ? (1 + v).toFixed(3) : '1';
+    isl.style.opacity = v > 0 ? v.toFixed(3) : '0';
+    const m = v < -0.5 ? 0 : v > 0.5 ? 2 : 1;
+    if (m !== lastMark) {
+      lastMark = m; marks.forEach((b, i) => b.classList.toggle('on', i === m));
+      input.setAttribute('aria-valuetext', ['The predator only', 'The poster: both negatives', 'The island only'][m]);
+    }
+  }
+  function tick() {
+    raf = 0;
+    v += (target - v) * 0.18;
+    if (Math.abs(target - v) < 0.002) v = target;
+    paint();
+    if (!dragging) input.value = Math.round(v * 100);
+    if (v !== target) raf = requestAnimationFrame(tick);
+  }
+  function go(t) { target = Math.max(-1, Math.min(1, t)); if (!raf) raf = requestAnimationFrame(tick); }
+  function pause() { if (raf) cancelAnimationFrame(raf); raf = 0; target = v; }
+
+  function fromX(x) { const r = poster.getBoundingClientRect(); return ((x - r.left) / r.width) * 2 - 1; }
+  const stage = $('#stage');
+  stage.addEventListener('pointerdown', (e) => {
+    if (lite) return; load(); dragging = true; stage.setPointerCapture(e.pointerId); go(fromX(e.clientX) * 1.15);
+  });
+  stage.addEventListener('pointermove', (e) => { if (dragging) go(fromX(e.clientX) * 1.15); });
+  const up = () => { if (!dragging) return; dragging = false; setTimeout(() => { if (!dragging) go(0); }, 650); };
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+  input.addEventListener('input', () => { load(); go(input.value / 100); });
+
+  addEventListener('message', (ev) => { if (ev.data === 'jurassic:pause') pause(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+
+  function intro() {                    // jednom pokaze trik: ka predatoru, ka ostrvu, nazad u poster
+    load();
+    const seq = [[-0.85, 700], [0.85, 1700], [0, 2700]];
+    seq.forEach(([t, ms]) => setTimeout(() => { if (!dragging) go(t); }, ms));
+  }
+  if (lite) {
+    document.body.classList.add('lite');
+    $('#run').onclick = () => { lite = false; document.body.classList.remove('lite'); intro(); };
+  } else {
+    const ready = () => (rex.complete && isl.complete) ? intro() : Promise.all([rex, isl].map((i) => i.decode().catch(() => 0))).then(intro);
+    de.decode().catch(() => 0).then(() => { load(); setTimeout(ready, 400); });
+  }
+})();
+</script>
+</body></html>

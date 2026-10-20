@@ -508,5 +508,29 @@
    "mp4": 201,
    "webp": 12
   }
+ },
+ "jurassic": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 71,
+   "webp": 24
+  }
+ },
+ "jurassic-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 37,
+   "webp": 15
+  }
  }
 }
