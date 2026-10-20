@@ -2,6 +2,52 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "interstellar",
+      "format": "poster",
+      "title": "INTERSTELLAR",
+      "kicker": "Fan poster · Unofficial · 2026",
+      "accent": "#F0A646",
+      "line": "A fan poster series where gravity bends everything, the poster too: the title sits behind a ray-traced black hole and comes out curved.",
+      "idea": "Two unofficial posters share one grid, one wide typeface and one rule: the world bends the title. In GARGANTUA a Schwarzschild ray tracer bends a real Milky Way, a disk of real fire and the title itself, down to its upside-down ghost on the photon ring. In MILLER the horizon crosses the astronaut's helmet and the water round his legs is computed, reflection and all.",
+      "role": "Concept, art direction, compositing, ray tracer and creative code, typography, motion, front-end",
+      "facts": [
+        ["79 M rays", "Every pixel of GARGANTUA traced through curved spacetime"],
+        ["1 title, 2 images", "Bent under the hole, upside down on its photon ring"],
+        ["1 h = 7 y", "Live page: drag the hole near the astronaut and Earth time races"],
+        ["229 KB", "The live page before its first frame"]
+      ],
+      "cta": [
+        {"label": "Bend the light", "cut": 2},
+        {"label": "See the series", "cut": 3}
+      ],
+      "note": "Unofficial fan art, not affiliated with Paramount, Warner Bros., Legendary or Syncopy. Not for sale. Mockups and photographs (stars, fire, astronauts, dust, flare, film grain): Freepik (licensed); the floating astronaut is a NASA photograph. Plates: Midjourney. Typefaces: Anybody and Martian Mono (SIL OFL). Black hole: own Schwarzschild ray tracer.",
+      "copy": [["PV/BOSQO/INTERSTELLAR/06_Web/interstellar-live", "projects/interstellar/live"]],
+      "monitors": [
+        {"type": "loop", "loop": "interstellar", "umd": "Loop", "label": "Living poster · the disk turns, the stars stream round the hole"},
+        {"type": "live", "href": "projects/interstellar/live/", "thumb": "PV/BOSQO/INTERSTELLAR/06_Web/interstellar-live/media/poster-wide.webp", "umd": "Live · WebGL", "label": "Live · drag the black hole: the poster bends and Earth time races"},
+        {"type": "set", "cols": 2, "umd": "Posters ×2", "label": "Poster series · GARGANTUA and MILLER · 50×70", "items": [
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/02_Posteri/INTERSTELLAR_poster_01_gargantua.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/02_Posteri/INTERSTELLAR_poster_02_miller.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Motion 9:16", "label": "Motion poster 9:16, and the same as a story on the phone", "items": [
+          {"type": "video", "src": "PV/BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_9x16.mp4", "w": 540},
+          {"type": "video", "src": "PV/BOSQO/INTERSTELLAR/04_Mockupi/phone.mp4", "w": 720}
+        ]},
+        {"type": "set", "cols": 2, "umd": "In the wild", "label": "Cinema corridor, a bus stop at night, the street wall and a framed print", "items": [
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/04_Mockupi/lobby.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/04_Mockupi/busstop.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/04_Mockupi/street.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/04_Mockupi/frame.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Process", "label": "Grid and type, how the bend works, plates to posters, layer by layer", "items": [
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/05_Sistem/board_01_grid_type.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/05_Sistem/board_02_bend.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/05_Sistem/board_03_plates.jpg"},
+          {"type": "image", "src": "PV/BOSQO/INTERSTELLAR/05_Sistem/breakdown_engine_04.jpg"}
+        ]}
+      ]
+    },
+    {
       "slug": "umbra",
       "title": "UMBRA",
       "kicker": "Identity & installation · Self-initiated · 2026",

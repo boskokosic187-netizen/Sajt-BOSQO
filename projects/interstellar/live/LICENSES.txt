@@ -1,0 +1,8 @@
+INTERSTELLAR · Bend the light. Unofficial fan art, not affiliated with Paramount, Warner Bros., Legendary or Syncopy. Not for sale.
+Code, ray tracer and layout: Boško Kosić, 2026.
+Black hole: own Schwarzschild ray tracer (the hole sprite); the page bends the sky with the point-lens equation fitted to it.
+Sky plate: derived from a Freepik premium photo of the Milky Way (licensed to the author), downscaled, for this page only.
+Disk: derived from a Freepik premium photo of fire (licensed). Astronaut: NASA photograph via Freepik, relit.
+Flare: Freepik premium element (licensed).
+Typefaces: Anybody and Martian Mono (SIL OFL 1.1), embedded as local subsets in fonts/ (licence texts alongside) and baked into the layers.
+No external requests, no system fonts, no tracking.

@@ -45,9 +45,11 @@ VIDEOS = [
     ("struja-v", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_9x16.mp4", 4, 0),
     ("umbra", PV + "BOSQO/UMBRA/06_Web/media/UMBRA_loop_16x9.mp4", 4, 0),
     ("umbra-v", PV + "BOSQO/UMBRA/06_Web/media/UMBRA_loop_9x16.mp4", 4, 0),
+    ("interstellar", PV + "BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_16x9.mp4", 4, 0),
+    ("interstellar-v", PV + "BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_9x16.mp4", 4, 0),
 ]
 # a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider
-TILE_W = {"struja": 960, "umbra": 960}
+TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960}
 # fine lines on a pale, nearly still ground smear at the default crf 30, and they cost little more
 CRF = {"umbra": 22, "umbra-v": 23}
 

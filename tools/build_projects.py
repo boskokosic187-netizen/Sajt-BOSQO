@@ -206,7 +206,7 @@ def render(p, mons, thumbs):
     facts = "".join(f'<li><b>{E(a)}</b><span>{E(b)}</span></li>' for a, b in p.get("facts", []))
     data = json.dumps(mons, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     return f"""      <template data-proj="{slug}">
-        <div class="proj" style="--accent:{E(p.get('accent', '#ff4d1f'))};--n:{len(mons)}" role="region" aria-label="{E(p['title'])} — the project" tabindex="-1">
+        <div class="proj" style="--accent:{E(p.get('accent', '#ff4d1f'))};--n:{len(mons)};--tl:{len(p['title'])}" role="region" aria-label="{E(p['title'])} — the project" tabindex="-1">
           <div class="proj__in">
             <header class="proj__head">
               <p class="proj__kick"><span class="proj__air"><i></i>On air</span><span>{E(p['kicker'])}</span></p>

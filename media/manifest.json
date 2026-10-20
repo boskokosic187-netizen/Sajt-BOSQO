@@ -448,5 +448,29 @@
    "mp4": 192,
    "webp": 5
   }
+ },
+ "interstellar": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 291,
+   "webp": 42
+  }
+ },
+ "interstellar-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 124,
+   "webp": 22
+  }
  }
 }

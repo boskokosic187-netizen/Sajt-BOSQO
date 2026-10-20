@@ -2517,7 +2517,8 @@ html.is-proj { overflow: hidden; }
   /* a long text fades out at the foot of the column instead of being cut */
   -webkit-mask: linear-gradient(#000 calc(100% - 34px), transparent); mask: linear-gradient(#000 calc(100% - 34px), transparent);
 }
-.proj__title { margin: 0; font-weight: 900; font-stretch: 125%; font-size: clamp(40px, 17cqw, 96px); line-height: 0.84; letter-spacing: -0.04em; text-transform: uppercase; }
+/* a long title (--tl letters, ~0.8em each) shrinks so it still fits the column on one line */
+.proj__title { margin: 0; font-weight: 900; font-stretch: 125%; font-size: clamp(24px, min(17cqw, 112cqw / var(--tl, 6)), 96px); line-height: 0.84; letter-spacing: -0.04em; text-transform: uppercase; }
 .proj__line { margin: 0; font-size: clamp(16px, 4.6cqw, 23px); line-height: 1.25; letter-spacing: -0.01em; text-wrap: pretty; }
 .proj__cta { display: flex; flex-wrap: wrap; gap: 10px; }
 .proj__cta .btn { height: 44px; padding: 0 18px; font-size: 14px; cursor: pointer; }
@@ -2530,7 +2531,7 @@ html.is-proj { overflow: hidden; }
 .proj__idea { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; text-wrap: pretty; }
 .proj__facts { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .proj__facts li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); }
-.proj__facts b { font-weight: 600; font-size: 14.5px; }
+.proj__facts b { flex: none; font-weight: 600; font-size: 14.5px; white-space: nowrap; }
 .proj__facts span, .proj__role, .proj__note {
   color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.5;
 }
@@ -2628,6 +2629,6 @@ html:is(.vt-open, .vt-close)::view-transition-old(take), html:is(.vt-open, .vt-c
   .proj__pvw { order: 1; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); scroll-padding: 0 var(--pad); scroll-snap-type: x mandatory; }
   .mv__mon { scroll-snap-align: start; }
   .proj__info { order: 2; overflow: visible; padding: 8px 0 0; -webkit-mask: none; mask: none; }
-  .proj__title { font-size: 15vw; }
+  .proj__title { font-size: min(15vw, 105vw / var(--tl, 6)); }
   .proj__line { font-size: 18px; }
 }
