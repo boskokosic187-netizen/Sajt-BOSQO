@@ -162,17 +162,22 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 }
 .wall__plane {
   width: 100%; height: 100%;
-  transform: rotateX(13deg) rotateZ(-7deg) translate3d(var(--px), var(--py), 0) scale(1.03);
+  transform: rotateX(13deg) rotateZ(-4deg) translate3d(var(--px), var(--py), 0) scale(1.03);
   transform-origin: 50% 40%;
   will-change: transform;
 }
+/* 18 fine columns. Row 3 always starts just under the top bar (margin-top), so the clear band
+   above the text is the same rows at every screen: rows 3–4 from column 3 to 16, and row 5 on
+   the right. The projects are placed there (.p0–.p10, below); the older work fills the rest */
 .wall__grid {
-  --cell: calc((124vw - 9 * var(--gap)) / 10);
+  --cols: 18;
+  --cell: calc((124vw - (var(--cols) - 1) * var(--gap)) / var(--cols));
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(var(--cols), 1fr);
   grid-auto-rows: var(--cell);
   grid-auto-flow: dense;
   gap: var(--gap);
+  margin-top: calc(98px + 16vh - 2 * (var(--cell) + var(--gap)));
 }
 .tile {
   position: relative; overflow: hidden; border-radius: 4px;
@@ -181,13 +186,15 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   transition: transform 0.6s var(--out), filter 0.6s var(--out);
 }
 .wall { --gap: 10px; }
-/* an upright tablet: six bigger columns, so the wall reaches the bottom of the screen */
+/* an upright tablet: twelve bigger columns, so the wall reaches the bottom of the screen */
 @media (min-width: 768px) and (max-aspect-ratio: 1/1) {
-  .wall__grid { --cell: calc((124vw - 5 * var(--gap)) / 6); grid-template-columns: repeat(6, 1fr); }
+  .wall__grid { --cols: 12; }
 }
-.tile.w { grid-column: span 2; }
-.tile.v { grid-row: span 2; }
-.tile.xl { grid-column: span 2; grid-row: span 2; }
+/* the older work, around the projects: a square, a wide, an upright and a big screen */
+.tile { grid-column: span 2; grid-row: span 2; }
+.tile.w { grid-column: span 4; }
+.tile.v { grid-row: span 4; }
+.tile.xl { grid-column: span 4; grid-row: span 4; }
 .tile img, .tile video, .tile picture { width: 100%; height: 100%; object-fit: cover; }
 .tile video { position: absolute; inset: 0; opacity: 0; }
 .tile.has-video video { opacity: 1; }
@@ -208,6 +215,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .tile.is-tally::after { box-shadow: inset 0 0 0 2px var(--rec); }
 .tile.is-tally::before { opacity: 1; transform: none; }
 .tile:hover { transform: translateZ(40px) scale(1.04); z-index: 3; }
+.tile.s:not(.p0):hover { transform: translateZ(60px) scale(1.12); } /* the small project screens come forward more */
 .tile:hover::after { box-shadow: inset 0 0 0 2px var(--text); }
 
 /* each screen is a layer of its own (capable devices): a hover lifts it, a cut flashes it and
@@ -229,12 +237,12 @@ html:not(.is-lite) .tile { will-change: filter; }
 /* ---- veil: legibility gradient + a spotlight that follows the cursor ---- */
 .hero__veil {
   position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
-  background: linear-gradient(to top, rgba(10, 10, 11, 0.98) 0%, rgba(10, 10, 11, 0.9) 28%, rgba(10, 10, 11, 0.55) 46%, rgba(10, 10, 11, 0.08) 68%, rgba(10, 10, 11, 0.5) 100%);
+  background: linear-gradient(to top, rgba(10, 10, 11, 0.98) 0%, rgba(10, 10, 11, 0.9) 28%, rgba(10, 10, 11, 0.55) 46%, rgba(10, 10, 11, 0.08) 68%, rgba(10, 10, 11, 0.3) 100%);
 }
 /* twice the hero, centred on the cursor: painted once, then only moved (js: translate) */
 .hero__spot {
   position: absolute; left: 0; top: 0; width: 200%; height: 200%;
-  background: radial-gradient(circle 460px at 50% 50%, rgba(10, 10, 11, 0) 0%, rgba(10, 10, 11, 0.42) 55%, rgba(10, 10, 11, 0.74) 100%);
+  background: radial-gradient(circle 640px at 50% 50%, rgba(10, 10, 11, 0) 0%, rgba(10, 10, 11, 0.14) 55%, rgba(10, 10, 11, 0.3) 100%);
   translate: 70vw 40vh; transform: translate(-50%, -50%);
   will-change: transform;
 }
@@ -2414,14 +2422,38 @@ html.js:not(.is-lite) .hero.is-on .wall__plane { animation: focusPull 1.1s var(-
    then the project's other formats light up as preview monitors under it; a click (or 1–9)
    cuts one to program. Markup: tools/build_projects.py; js: setupHome → projects
    ========================================================================== */
-/* the newest projects lead the wall: big screens that are always on air */
-.tile.f { grid-column: 6 / span 3; grid-row: 2 / span 2; }
-.tile.fv { grid-column: 5; grid-row: 3 / span 2; } /* its 9:16 cut, beside it */
-.tile.f2 { grid-column: 2 / span 3; grid-row: 2 / span 2; } /* the project before it, across: clear of the text at every width */
+/* the projects own eleven fixed screens in the clear band (measured clear of the text at
+   1024–2560 px and on an upright tablet). p0 is the program screen: the newest project, always
+   on air. p1–p10 are the rest, wide (16:9) or upright (9:16); a project not made yet keeps its
+   screen with older work in it (data-slot names whose it is). q1 plugs the gap under the status */
+.tile.p0 { grid-column: 11 / span 4; grid-row: 3 / span 3; }
+.tile.p1 { grid-column: 3 / span 2; grid-row: 3; }
+.tile.p2 { grid-column: 3 / span 2; grid-row: 4; }
+.tile.p3 { grid-column: 5; grid-row: 3 / span 2; }
+.tile.p4 { grid-column: 6; grid-row: 3 / span 2; }
+.tile.p5 { grid-column: 7 / span 2; grid-row: 3; }
+.tile.p6 { grid-column: 7 / span 2; grid-row: 4; }
+.tile.p7 { grid-column: 9; grid-row: 3 / span 2; }
+.tile.p8 { grid-column: 10; grid-row: 3 / span 2; }
+.tile.p9 { grid-column: 15 / span 2; grid-row: 4; }
+.tile.p10 { grid-column: 15 / span 2; grid-row: 5; }
+.tile.q1 { grid-column: 15 / span 2; grid-row: 3; }
+/* the older work around them is the standby wall: dimmed, lit up again under the cursor */
+.wall__grid > .tile:not(.s) > img, .wall__grid > .tile:not(.s) > picture { filter: brightness(0.32) saturate(0.5); transition: filter 0.3s; }
+.wall__grid > .tile:not(.s):hover > img, .wall__grid > .tile:not(.s):hover > picture { filter: none; }
 @media (min-width: 768px) and (max-aspect-ratio: 1/1) {
-  .tile.f { grid-column: 2 / span 3; grid-row: 2 / span 2; }
-  .tile.fv { grid-column: 5; grid-row: 2 / span 2; }
-  .tile.f2 { grid-column: 2 / span 3; grid-row: 4 / span 2; }
+  .tile.p0 { grid-column: 3 / span 6; grid-row: 3 / span 3; }
+  .tile.p3 { grid-column: 9; grid-row: 3 / span 2; }
+  .tile.p4 { grid-column: 10; grid-row: 3 / span 2; }
+  .tile.p9 { grid-column: 9 / span 2; grid-row: 5; }
+  .tile.p1 { grid-column: 3 / span 2; grid-row: 6; }
+  .tile.p2 { grid-column: 3 / span 2; grid-row: 7; }
+  .tile.p7 { grid-column: 5; grid-row: 6 / span 2; }
+  .tile.p8 { grid-column: 6; grid-row: 6 / span 2; }
+  .tile.p5 { grid-column: 7 / span 2; grid-row: 6; }
+  .tile.p6 { grid-column: 7 / span 2; grid-row: 7; }
+  .tile.p10 { grid-column: 9 / span 2; grid-row: 6; }
+  .tile.q1 { grid-column: 9 / span 2; grid-row: 7; }
 }
 .tile[data-hold]:not(:hover)::after { box-shadow: inset 0 0 0 2px var(--rec); }
 .tile[data-hold]::before { content: "● On air — " attr(data-label); opacity: 1; transform: none; }

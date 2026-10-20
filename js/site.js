@@ -507,7 +507,8 @@
     let proj = null; // the one that is open
     $$('template[data-proj]').forEach((t) => (projTpl[t.dataset.proj] = t));
     const tiles = $$('.tile');
-    const videoTiles = tiles.filter((t) => t.dataset.video);
+    // only the projects' screens (.s) run; the older work around them stays a still, standby wall
+    const videoTiles = tiles.filter((t) => t.dataset.video && t.classList.contains('s'));
     const MAX_LIVE = (navigator.hardwareConcurrency || 4) >= 8 ? 6 : 4;
     let live = [];
     let timer = null;
