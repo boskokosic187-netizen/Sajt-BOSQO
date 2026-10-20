@@ -45,12 +45,11 @@
           {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/packaging.jpg"},
           {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/packaging_detail.jpg"}
         ]},
-        {"type": "set", "cols": 2, "umd": "System", "label": "Mark, type, colour and grid, the chord engine, behind the glass", "items": [
+        {"type": "set", "cols": 2, "umd": "System", "label": "Mark, type, colour and grid, and the chord engine", "items": [
           {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_01_mark.jpg"},
           {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_02_type.jpg"},
           {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_03_colour_grid.jpg"},
-          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_04_chord_engine.jpg"},
-          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/breakdown_behind_the_glass.jpg"}
+          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_04_chord_engine.jpg"}
         ]}
       ]
     },

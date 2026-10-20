@@ -139,11 +139,16 @@ def preview(mon, parts, out):
         pad, gap = round(W * 0.025), round(W * 0.012)
         cw = (W - 2 * pad - (cols - 1) * gap) / cols
         ch = (H - 2 * pad - (rows - 1) * gap) / rows
+        ars = [im.width / im.height for im in frames]
+        if max(ars) / min(ars) < 1.02:  # one shape: the cells hug the pieces (css: .mv__set.is-fit)
+            cw = min(cw, ch * ars[0])
+            ch = cw / ars[0]
+        top = pad + (H - 2 * pad - (rows * ch + (rows - 1) * gap)) / 2
         for i, im in enumerate(frames):
             row, col = divmod(i, cols)
             n_in_row = min(cols, len(frames) - row * cols)
             x0 = pad + (W - 2 * pad - (n_in_row * cw + (n_in_row - 1) * gap)) / 2 + col * (cw + gap)
-            y0 = pad + row * (ch + gap)
+            y0 = top + row * (ch + gap)
             r, at = fit(im, (round(cw), round(ch)), False)
             c.paste(r, (round(x0) + at[0], round(y0) + at[1]))
     c.save(out, quality=78, method=6)

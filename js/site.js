@@ -917,6 +917,12 @@
         box.className = 'mv__set';
         box.style.setProperty('--cols', m.cols);
         box.style.setProperty('--rows', Math.ceil(m.items.length / m.cols));
+        // pieces of one shape: the cells hug them, so every gutter is the same (css: .is-fit)
+        const ar = m.items.map((it) => it.w / it.h);
+        if (ar.every((a) => a > 0 && Math.abs(a / ar[0] - 1) < 0.02)) {
+          box.classList.add('is-fit');
+          box.style.setProperty('--ar', ar[0].toFixed(4));
+        }
         const cellW = Math.round(p.pgm.clientWidth / m.cols) + 'px';
         m.items.forEach((it) => {
           const c = document.createElement('button');
