@@ -2547,6 +2547,27 @@
     if (!introPlayed) addEventListener('load', () => setTimeout(() => flash('is-wink', 520), 1400));
   }
 
+  /* --------------------------------------------- Google Analytics
+     The same tag the old site had (G-B4G8NFN85M), fetched only once the page has
+     settled so it never competes with the first paint; never on a local copy. */
+  function setupAnalytics() {
+    if (!/^https?:$/.test(location.protocol) || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) return;
+    const ID = 'G-B4G8NFN85M';
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', ID);
+    const load = () => {
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
+      document.head.appendChild(s);
+    };
+    const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1200));
+    if (document.readyState === 'complete') idle(load, { timeout: 3000 });
+    else addEventListener('load', () => idle(load, { timeout: 3000 }));
+  }
+
   setupIntro();
   setupAvatar();
   setupHome();
@@ -2557,4 +2578,5 @@
   setupJumps();
   setupAbout();
   setupCyber();
+  setupAnalytics();
 })();
