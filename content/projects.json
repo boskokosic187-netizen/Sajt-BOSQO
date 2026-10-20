@@ -2,6 +2,59 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "accord",
+      "format": "identity",
+      "title": "ACCORD",
+      "kicker": "Fragrance identity · Self-initiated · 2026",
+      "accent": "#7E6CF0",
+      "line": "An eau de parfum built like a chord: three notes are three tones, and the light on the glass tunes them as the bottle turns.",
+      "idea": "In perfumery an accord is a few notes that blend into one scent; in music, a few tones that sound as one. ACCORD does both literally: bergamot, iris and amber are three tones tuned 4 : 5 : 6, and the mark is their sum. One 3D scene lights the bottle, the box and the bag; each note has its own lamp, so the glass itself plays the chord.",
+      "role": "Concept, identity, typography, 3D and lighting, compositing, original score, creative code, front-end",
+      "facts": [
+        ["4 : 5 : 6", "Three notes tuned as a pure major chord; the mark is their sum"],
+        ["3 lamps", "One light per note, caught by the glass as the bottle turns"],
+        ["96 frames", "One turntable feeds the live page, the loop and the film"],
+        ["79 KB", "The live page before its first frame"]
+      ],
+      "cta": [
+        {"label": "Spin the bottle", "cut": 2},
+        {"label": "Watch the film", "meta": "0:30 · sound", "cut": 3}
+      ],
+      "note": "ACCORD is a fictional fragrance brand and a self-initiated project. Photographs (limes, iris, amber, smoke) and mockups (billboard, citylight, magazine): Freepik (licensed). Bottle, box and bag: own 3D in Blender (Cycles); studio HDRI: Poly Haven (CC0). Typefaces: Zodiak and Switzer by Indian Type Foundry (Fontshare, ITF Free Font License). Music: original, synthesised in code.",
+      "copy": [["PV/BOSQO/ACCORD/06_Web/accord-live", "projects/accord/live"]],
+      "monitors": [
+        {"type": "loop", "loop": "accord", "umd": "Loop", "label": "Living identity · the bottle turns, the chord runs through the glass"},
+        {"type": "live", "href": "projects/accord/live/", "thumb": "PV/BOSQO/ACCORD/06_Web/accord-live/media/poster-wide.webp", "umd": "Live · Spin", "label": "Live · turn the bottle: the light on the glass tunes the chord"},
+        {"type": "film", "src": "PV/BOSQO/ACCORD/01_Film/ACCORD_film_16x9.mp4", "w": 1280, "dur": 30, "poster_at": 6, "crf": 22, "umd": "Film · sound", "label": "Brand film · 30 s, original score: top, heart, base, then one chord"},
+        {"type": "set", "cols": 4, "umd": "Posters ×4", "label": "Key visual THE CHORD and the three notes · 50×70", "items": [
+          {"type": "image", "src": "PV/BOSQO/ACCORD/02_Posteri/ACCORD_poster_00_the_chord.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/02_Posteri/ACCORD_poster_01_top.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/02_Posteri/ACCORD_poster_02_heart.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/02_Posteri/ACCORD_poster_03_base.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Motion 9:16", "label": "Motion 9:16 and the 15 s story", "items": [
+          {"type": "video", "src": "PV/BOSQO/ACCORD/06_Web/media/ACCORD_loop_9x16.mp4", "w": 540, "crf": 23},
+          {"type": "video", "src": "PV/BOSQO/ACCORD/01_Film/ACCORD_film_9x16.mp4", "w": 540, "dur": 15, "poster_at": 4, "crf": 23}
+        ]},
+        {"type": "set", "cols": 2, "umd": "Outdoor", "label": "Billboard over the avenue and a citylight at the stop", "items": [
+          {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/billboard.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/citylight.jpg"}
+        ]},
+        {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/magazine.jpg", "umd": "Print", "label": "Print · double-page spread in a magazine"},
+        {"type": "set", "cols": 2, "umd": "Packaging", "label": "Box and bag, rendered with the bottle in the same scene and light", "items": [
+          {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/packaging.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/04_Mockupi/packaging_detail.jpg"}
+        ]},
+        {"type": "set", "cols": 2, "umd": "System", "label": "Mark, type, colour and grid, the chord engine, behind the glass", "items": [
+          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_01_mark.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_02_type.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_03_colour_grid.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/board_04_chord_engine.jpg"},
+          {"type": "image", "src": "PV/BOSQO/ACCORD/05_Sistem/breakdown_behind_the_glass.jpg"}
+        ]}
+      ]
+    },
+    {
       "slug": "interstellar",
       "format": "poster",
       "title": "INTERSTELLAR",

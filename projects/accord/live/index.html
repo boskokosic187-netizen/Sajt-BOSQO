@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ACCORD · Spin the bottle</title>
+<meta name="description" content="Turn the ACCORD bottle: as the light crosses the glass the three notes swell and fade, and the chord is drawn from their sum.">
+<link rel="preload" href="fonts/Switzer-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Zodiak-Italic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Switzer";src:url(fonts/Switzer-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:"Zodiak";src:url(fonts/Zodiak-Italic.woff2) format("woff2");font-style:italic;font-weight:400;font-display:block}
+:root{--ink:#0D0C10;--bone:#F2EDE4;--berg:#D6E05A;--iris:#7E6CF0;--amber:#D08A2E;--mute:#F2EDE48f}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);color:var(--bone);overflow:hidden;
+  font:500 15px/1.4 "Switzer";font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.stage{position:relative;height:100%;display:grid;grid-template-columns:58fr 42fr;grid-template-rows:100%;align-items:center;
+  background:radial-gradient(42% 60% at 29% 45%,#1c191e 0%,#0D0C10 75%)}
+.bottle{position:relative;height:100%;display:flex;align-items:center;justify-content:center;touch-action:pan-y;cursor:grab;user-select:none}
+.bottle:active{cursor:grabbing}
+.bottle canvas,.bottle img{height:min(90vh,85vw);width:auto;aspect-ratio:2/3;display:block;max-width:100%;object-fit:contain}
+.bottle img{position:absolute}
+.bottle canvas,.bottle img{-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%)}
+.bottle canvas{position:relative;opacity:0;transition:opacity .4s}
+.ready .bottle canvas{opacity:1}
+.ready .bottle img{opacity:0;transition:opacity .4s}
+.hint{position:absolute;bottom:4.5%;left:0;right:0;text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0}
+.panel{padding:0 7% 0 2%;max-width:560px}
+.wm{display:block;width:150px;height:auto;margin:0 0 22px}
+.kick{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+h1{font:italic 400 clamp(30px,4.4vw,52px)/1.02 "Zodiak";margin:0 0 12px;letter-spacing:-.01em}
+.sub{margin:0 0 22px;color:#F2EDE4bb;max-width:34em;font-size:14px}
+.notes{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:9px}
+.notes li{display:grid;grid-template-columns:62px 1fr 64px 42px;align-items:center;gap:10px;font-size:13px}
+.notes b{font-weight:500;letter-spacing:.14em;font-size:11px}
+.notes i{font-style:normal;color:var(--mute);text-align:right;font-size:12px}
+.notes .bar{grid-column:1/-1;height:2px;background:#F2EDE41f;position:relative;margin-top:-3px}
+.notes .bar span{position:absolute;inset:0;background:currentColor;transform:scaleX(0);transform-origin:0 50%}
+.notes output{text-align:right}
+.n0{color:var(--berg)}.n1{color:var(--iris)}.n2{color:var(--amber)}
+.notes li span.nm{color:var(--bone)}
+#wave{display:block;width:100%;height:120px;margin:6px 0 16px}
+.row{display:flex;align-items:center;gap:18px}
+button{font:500 12px/1 "Switzer";letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:var(--bone);
+  border:0;border-radius:999px;padding:12px 18px;cursor:pointer}
+button.ghost{background:transparent;color:var(--bone);box-shadow:inset 0 0 0 1px #F2EDE466}
+button:focus-visible{outline:2px solid var(--iris);outline-offset:3px}
+.deg{color:var(--mute);font-size:12px;letter-spacing:.08em}
+.lite .hint{display:none}
+#go{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);display:none}
+.lite #go{display:block}
+@media (max-aspect-ratio:1/1){
+  .stage{grid-template-columns:1fr;grid-template-rows:55% 45%;align-items:start}
+  .bottle canvas,.bottle img{height:53vh}
+  .panel{padding:0 7%;max-width:none}
+  .wm,.sub{display:none}
+  h1{font-size:30px;margin-bottom:10px}
+  #wave{height:80px;margin:4px 0 10px}
+  .notes{gap:6px;margin-bottom:8px}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="bottle" id="bottle" aria-label="The ACCORD bottle. Drag, swipe or use the arrow keys to turn it." role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="359" aria-valuenow="0">
+    <img src="media/still.webp" alt="" width="720" height="1080" decoding="async">
+    <canvas id="spin" width="480" height="720"></canvas>
+    <p class="hint">Drag to turn</p>
+    <button id="go" type="button">Spin it live</button>
+  </div>
+  <section class="panel" aria-live="off">
+    <svg class="wm" viewBox="0 0 5004 700" role="img" aria-label="ACCORD"><path fill="#F2EDE4" fill-rule="evenodd" d="M101.0 616C87.0 655 75.0 666 51.0 666H10.0V700H223.0V666H169.0C145.0 666 134.0 658 146.0 623L201.0 468H483.0V464L538.0 620C549.0 651 541.0 666 509.0 666H455.0V700H727.0V666H687.0C658.0 666 648.0 649 634.0 609L412.0 0H325.0ZM213.0 433 342.0 65 472.0 433ZM1488.0 465H1447.0C1431.0 597 1339.0 669 1224.0 669C1072.0 669 984.0 553 984.0 349C984.0 157 1055.0 28 1214.0 28C1333.0 28 1404.0 103 1433.0 227H1478.0V0H1438.0L1432.0 116C1381.0 29 1305.0 -10 1208.0 -10C1009.0 -10 882.0 143 882.0 350C882.0 567 1023.0 710 1216.0 710C1359.0 710 1469.0 618 1488.0 465ZM2286.0 465H2245.0C2229.0 597 2137.0 669 2022.0 669C1870.0 669 1782.0 553 1782.0 349C1782.0 157 1853.0 28 2012.0 28C2131.0 28 2202.0 103 2231.0 227H2276.0V0H2236.0L2230.0 116C2179.0 29 2103.0 -10 2006.0 -10C1807.0 -10 1680.0 143 1680.0 350C1680.0 567 1821.0 710 2014.0 710C2157.0 710 2267.0 618 2286.0 465ZM2483.00,350.00a354.00,354.00 0 1,0 708.00,0a354.00,354.00 0 1,0 -708.00,0ZM2711.33,350.00a125.67,125.67 0 1,0 251.34,0a125.67,125.67 0 1,0 -251.34,0ZM2818.59,350.00a18.41,18.41 0 1,0 36.82,0a18.41,18.41 0 1,0 -36.82,0ZM3400.0 34H3458.0C3476.0 34 3487.0 44 3487.0 70V630C3487.0 656 3476.0 666 3458.0 666H3400.0V700H3668.0V666H3608.0C3590.0 666 3579.0 656 3579.0 630V380H3699.0C3831.0 380 3883.0 419 3883.0 532V597C3883.0 682 3923.0 710 3984.0 710C4048.0 710 4076.0 679 4076.0 620V563H4039.0V618C4039.0 654 4029.0 667 4007.0 667C3986.0 667 3976.0 650 3976.0 598V517C3976.0 432 3921.0 380 3829.0 363C3941.0 335 3988.0 271 3988.0 189C3988.0 67 3892.0 0 3695.0 0H3400.0ZM3665.0 34C3842.0 34 3891.0 95 3891.0 192C3891.0 285 3842.0 346 3672.0 346H3579.0V34ZM4256.0 34H4310.0C4328.0 34 4339.0 44 4339.0 70V630C4339.0 656 4328.0 666 4310.0 666H4256.0V700H4553.0C4806.0 700 4945.0 557 4945.0 347C4945.0 138 4797.0 0 4532.0 0H4256.0ZM4431.0 636V34H4526.0C4663.0 34 4844.0 90 4844.0 349C4844.0 573 4722.0 666 4548.0 666H4462.0C4441.0 666 4431.0 660 4431.0 636Z"/></svg>
+    <p class="kick">Eau de Parfum · Three notes. One chord.</p>
+    <h1>Spin the bottle.</h1>
+    <p class="sub">Each note has its own light. As the bottle turns, the light crosses the glass and the notes swell and fade; the chord below is drawn from their sum.</p>
+    <ol class="notes">
+      <li class="n0"><b>TOP</b><span class="nm">Bergamot</span><i>660 Hz</i><output id="o0">0.00</output><span class="bar"><span id="b0"></span></span></li>
+      <li class="n1"><b>HEART</b><span class="nm">Iris</span><i>275 Hz</i><output id="o1">0.00</output><span class="bar"><span id="b1"></span></span></li>
+      <li class="n2"><b>BASE</b><span class="nm">Amber</span><i>110 Hz</i><output id="o2">0.00</output><span class="bar"><span id="b2"></span></span></li>
+    </ol>
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <div class="row"><button id="snd" type="button" aria-pressed="false">Sound on</button><span class="deg" id="deg">θ 000°</span></div>
+  </section>
+</main>
+<script src="live.js?v=a4bd9f1d" defer></script>
+</body>
+</html>

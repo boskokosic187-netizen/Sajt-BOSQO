@@ -472,5 +472,29 @@
    "mp4": 124,
    "webp": 22
   }
+ },
+ "accord": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/ACCORD/06_Web/media/ACCORD_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 425,
+   "webp": 13
+  }
+ },
+ "accord-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/ACCORD/06_Web/media/ACCORD_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 255,
+   "webp": 9
+  }
  }
 }

@@ -1981,7 +1981,7 @@
       if (courtIn || !SETS.court) return;
       courtIn = 1;
       const s = document.createElement('script');
-      s.src = 'js/pr-court.js?v=91e4c5ea';
+      s.src = 'js/pr-court.js?v=a58b3f24';
       s.onload = () => {
         const art = window.prCourt, set = SETS.court;
         if (!art) return;
@@ -2007,7 +2007,7 @@
       if (fizzIn) return;
       fizzIn = 1;
       const s = document.createElement('script');
-      s.src = 'js/pr-fizz.js?v=e1072d88';
+      s.src = 'js/pr-fizz.js?v=fb546e39';
       s.onload = () => {
         if (!window.prFizz) return;
         fizzIn = 2;

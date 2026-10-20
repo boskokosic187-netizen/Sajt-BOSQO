@@ -1,0 +1,12 @@
+ACCORD · Spin the bottle — credits and licences
+
+Typefaces (self-hosted, official WOFF2 files from Fontshare, unmodified):
+  Zodiak Italic and Switzer Medium, Indian Type Foundry, ITF Free Font License 2.0 (fonts/ITF_FFL_2.0.txt).
+  The licence allows commercial and web use and self-hosting on one's own site; it does not allow
+  subsetting or converting the files, so they are served exactly as Fontshare ships them.
+
+Images: the bottle frames are the author's own renders (Blender, Cycles). The studio HDRI used for
+reflections is studio_small_09 from Poly Haven (CC0).
+
+Sound: three sine tones and a reverb synthesised in the browser (Web Audio). No audio files.
+Code: own, no libraries, no external requests.

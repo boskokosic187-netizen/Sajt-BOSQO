@@ -47,11 +47,13 @@ VIDEOS = [
     ("umbra-v", PV + "BOSQO/UMBRA/06_Web/media/UMBRA_loop_9x16.mp4", 4, 0),
     ("interstellar", PV + "BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_16x9.mp4", 4, 0),
     ("interstellar-v", PV + "BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_9x16.mp4", 4, 0),
+    ("accord", PV + "BOSQO/ACCORD/06_Web/media/ACCORD_loop_16x9.mp4", 4, 0),
+    ("accord-v", PV + "BOSQO/ACCORD/06_Web/media/ACCORD_loop_9x16.mp4", 4, 0),
 ]
 # a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider
-TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960}
+TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960, "accord": 960}
 # fine lines on a pale, nearly still ground smear at the default crf 30, and they cost little more
-CRF = {"umbra": 22, "umbra-v": 23}
+CRF = {"umbra": 22, "umbra-v": 23, "accord": 25, "accord-v": 24}
 
 STILLS = [
     ("car-dusan", PV + "BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.png"),
