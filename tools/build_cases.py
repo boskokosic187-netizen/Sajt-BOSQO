@@ -197,6 +197,8 @@ HEAD = """<!doctype html>
   <meta property="og:description" content="{desc}">
   <meta property="og:image" content="{og}">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="{R}favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="{R}apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
