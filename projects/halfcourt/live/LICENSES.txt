@@ -1,0 +1,15 @@
+HALFCOURT · Run the broadcast — credits and licences
+
+Self-initiated concept. Not affiliated with any league or federation. Teams, players and the tour are fictional.
+
+Typefaces (self-hosted, official WOFF2 files from Fontshare, unmodified):
+  Panchang Bold and Switzer Bold, Indian Type Foundry, ITF Free Font License 2.0 (fonts/ITF_FFL_2.0.txt).
+  The licence allows commercial and web use and self-hosting on one's own site; it does not allow
+  subsetting or converting the files, so they are served exactly as Fontshare ships them.
+
+Footage: Freepik (licensed): 3x3 game clips by mart production (Freepik 7069747, 7070703).
+  Lettering on the players' jerseys is blurred; only the numbers remain.
+
+Graphics: the HALFCOURT broadcast package, drawn live in DOM and SVG by the same engine that rendered the film.
+Sound: synthesised in the browser (Web Audio): the horn, the ticks, the plucks. No audio files.
+Code: own, no libraries, no external requests.

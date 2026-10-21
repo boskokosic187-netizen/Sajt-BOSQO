@@ -2,6 +2,215 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "halfcourt",
+      "format": "identity",
+      "title": "HALFCOURT",
+      "kicker": "Broadcast identity · Self-initiated · 2026",
+      "accent": "#CCF23D",
+      "line": "A world tour played on half a court, so the whole identity is built from one half: the arc.",
+      "idea": "3×3 basketball is played on half a court, under a twelve-second shot clock. HALFCOURT draws both with one line: the 6.75 m arc over the baseline, cut into twelve segments that fill as the clock runs and flash at the siren. Every graphic lives in the arc on twelve ticks: the score bug, the lower third, the replay wipe, the scoreboard, and the real arcs painted on six courts.",
+      "role": "Concept, identity, wordmark and typography, broadcast graphics, motion, compositing and tracking, original score, creative code, front-end",
+      "facts": [
+        [
+          "6.75 m",
+          "The 2-point arc is the mark and the shot clock: twelve segments, one per second"
+        ],
+        [
+          "1 module",
+          "One render(t) draws the film, the posters' type, the scoreboard and the live page"
+        ],
+        [
+          "±2 px",
+          "The volt arc sits on the real paint of six courts, laid by homography"
+        ],
+        [
+          "176 KB",
+          "The live page before its first frame"
+        ]
+      ],
+      "cta": [
+        {
+          "label": "Run the broadcast",
+          "cut": 2
+        },
+        {
+          "label": "Watch the film",
+          "meta": "0:24 · sound",
+          "cut": 3
+        }
+      ],
+      "note": "HALFCOURT is a fictional 3×3 world tour. Self-initiated concept. Not affiliated with any league or federation. Teams, players, stops and dates are invented. Footage, photographs and mockups (phone, billboard, LED scoreboard, TV, jerseys): Freepik (licensed). Sound effects (dribble, swish, crowd): Pixabay. Typefaces: Panchang and Switzer by Indian Type Foundry (Fontshare, ITF Free Font License). Music: original, composed in code on a twelve-step grid with the real dribble as the kick.",
+      "copy": [
+        [
+          "PV/BOSQO/HALFCOURT/06_Web/halfcourt-live",
+          "projects/halfcourt/live"
+        ]
+      ],
+      "monitors": [
+        {
+          "type": "loop",
+          "loop": "halfcourt",
+          "umd": "Loop",
+          "label": "Broadcast identity · the arc is the twelve-second shot clock"
+        },
+        {
+          "type": "live",
+          "href": "projects/halfcourt/live/",
+          "thumb": "PV/BOSQO/HALFCOURT/06_Web/halfcourt-live/media/poster-wide.webp",
+          "umd": "Live · Run",
+          "label": "Live · you run the graphics over a game, keys 1–6; the clock never stops"
+        },
+        {
+          "type": "film",
+          "src": "PV/BOSQO/HALFCOURT/01_Film/HALFCOURT_film_16x9.mp4",
+          "w": 1280,
+          "dur": 24,
+          "poster_at": 6,
+          "crf": 22,
+          "umd": "Film · sound",
+          "label": "Broadcast film · 24 s: open, bumper, the package, replay, sign-off"
+        },
+        {
+          "type": "set",
+          "cols": 3,
+          "umd": "Social 9:16",
+          "label": "The film in 9:16, a real vertical cut of the 4K, and on the phone",
+          "items": [
+            {
+              "type": "video",
+              "src": "PV/BOSQO/HALFCOURT/01_Film/HALFCOURT_film_9x16.mp4",
+              "w": 540,
+              "dur": 24,
+              "poster_at": 6,
+              "crf": 23
+            },
+            {
+              "type": "video",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/phone_social.mp4",
+              "w": 720,
+              "dur": 8,
+              "poster_at": 2.6,
+              "crf": 23
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/phone_social.jpg"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "cols": 3,
+          "umd": "Posters ×6",
+          "label": "Six stops, six real courts: the volt arc laid on each court's own paint · 50×70",
+          "items": [
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/02_Posteri/HALFCOURT_poster_01_paris.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/02_Posteri/HALFCOURT_poster_02_tokyo.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/02_Posteri/HALFCOURT_poster_03_manila.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/02_Posteri/HALFCOURT_poster_04_lagos.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/02_Posteri/HALFCOURT_poster_05_sao_paulo.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/02_Posteri/HALFCOURT_poster_06_new_york.jpg"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "cols": 3,
+          "umd": "DOOH",
+          "label": "The Manila stop on a rooftop billboard, and the scoreboard over the stands",
+          "items": [
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/dooh_billboard.jpg"
+            },
+            {
+              "type": "video",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/dooh_led.mp4",
+              "w": 1280,
+              "dur": 8,
+              "poster_at": 7,
+              "crf": 22
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/dooh_led.jpg"
+            }
+          ]
+        },
+        {
+          "type": "video",
+          "src": "PV/BOSQO/HALFCOURT/04_Mockupi/on_air_tv.mp4",
+          "w": 1280,
+          "dur": 8,
+          "poster_at": 5,
+          "crf": 22,
+          "umd": "On air",
+          "label": "On air · the broadcast on a living-room TV"
+        },
+        {
+          "type": "set",
+          "cols": 2,
+          "umd": "Court & merch",
+          "label": "A real half court repainted as the mark, and the two teams' jerseys",
+          "items": [
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/court_repaint.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/04_Mockupi/merch_jerseys.jpg"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "cols": 2,
+          "umd": "System",
+          "label": "The mark, the twelve ticks, type and colour, the package, and the court measured",
+          "items": [
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/05_Sistem/board_01_the_mark.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/05_Sistem/board_02_twelve_ticks.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/05_Sistem/board_03_type_colour.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/05_Sistem/board_04_package.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/HALFCOURT/05_Sistem/behind_the_scenes.jpg"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "slug": "jurassic",
       "format": "poster",
       "title": "JURASSIC PARK",

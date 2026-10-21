@@ -532,5 +532,29 @@
    "mp4": 37,
    "webp": 15
   }
+ },
+ "halfcourt": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/HALFCOURT/06_Web/media/HALFCOURT_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 118,
+   "webp": 41
+  }
+ },
+ "halfcourt-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/HALFCOURT/06_Web/media/HALFCOURT_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 102,
+   "webp": 21
+  }
  }
 }

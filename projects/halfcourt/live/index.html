@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HALFCOURT · Run the broadcast</title>
+<meta name="description" content="You are in the truck: fire the HALFCOURT broadcast package over a live game, keys 1 to 6. The twelve-second shot clock is the arc.">
+<link rel="preload" href="fonts/Panchang-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Switzer-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="halfcourt.js?v=abefc845">
+<style>
+@font-face{font-family:"Panchang";src:url(fonts/Panchang-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Switzer";src:url(fonts/Switzer-Bold.woff2) format("woff2");font-weight:500 800;font-display:block}
+:root{--ink:#111314;--chalk:#F2F1EC;--volt:#CCF23D;--deck:#0A0B0B;--key:#1A1C1D;--mute:rgba(242,241,236,.55)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--deck);color:var(--chalk);overflow:hidden;
+  font:700 13px/1.2 "Switzer";-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+#app{position:relative;height:100%;display:grid;grid-template-rows:1fr auto}
+#pgm{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:0}
+#frame{position:relative;aspect-ratio:16/9;width:min(100%,calc((100vh - var(--deckh,78px)) * 16 / 9));overflow:hidden;background:#000;
+  box-shadow:0 0 0 1px rgba(242,241,236,.08)}
+#scale{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+#poster,#v{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;display:block}
+#v{opacity:0;transition:opacity .4s}
+.playing #v{opacity:1}
+.tally{position:absolute;left:10px;top:10px;display:flex;gap:6px;align-items:center;font-size:10px;letter-spacing:.18em;z-index:3;pointer-events:none}
+.tally i{width:7px;height:7px;border-radius:50%;background:var(--volt);display:block}
+.tally b{font-weight:700;background:rgba(17,19,20,.72);padding:4px 7px;border-radius:2px}
+.paused .tally i{background:var(--mute)}
+#deck{display:grid;grid-template-columns:repeat(6,1fr) auto;gap:6px;padding:8px 10px 10px;background:var(--deck)}
+.k{appearance:none;border:0;border-radius:4px;background:var(--key);color:var(--chalk);cursor:pointer;
+  display:flex;align-items:center;gap:10px;padding:0 12px;height:56px;text-align:left;position:relative;overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(242,241,236,.07)}
+.k:hover{background:#222526}
+.k:focus-visible{outline:2px solid var(--volt);outline-offset:2px}
+.k .n{font:700 11px/1 "Switzer";color:var(--volt);width:16px;height:16px;border:1px solid rgba(204,242,61,.6);border-radius:3px;display:grid;place-items:center;flex:none}
+.k .l{font:700 15px/1 "Panchang";letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+.k .s{display:block;font:700 10px/1.2 "Switzer";letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:5px;white-space:nowrap}
+.k::after{content:"";position:absolute;inset:0;background:var(--volt);opacity:0;transition:opacity .35s}
+.k.hit::after{opacity:.28;transition:none}
+#snd{width:auto;min-width:96px;justify-content:center;font:700 11px/1 "Switzer";letter-spacing:.14em;text-transform:uppercase}
+#snd[aria-pressed=true]{color:var(--ink);background:var(--volt)}
+#go{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:none;z-index:4;appearance:none;border:0;border-radius:999px;
+  background:var(--volt);color:var(--ink);font:700 15px/1 "Panchang";letter-spacing:.04em;text-transform:uppercase;padding:18px 28px;cursor:pointer}
+.lite #go{display:block}
+.lite #deck{opacity:.35;pointer-events:none}
+.hint{position:absolute;right:10px;top:10px;z-index:3;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:rgba(17,19,20,.72);padding:5px 8px;border-radius:2px;transition:opacity .6s}
+.touched .hint{opacity:0}
+@media (max-width:760px){
+  .hint{display:none}
+  .tally{font-size:9px;left:6px;top:6px}
+  #deck{grid-template-columns:repeat(3,1fr);--deckh:150px}
+  #snd{grid-column:1/-1;height:38px}
+  .k{height:48px;padding:0 9px;gap:8px}
+  .k .l{font-size:12px}
+  .k .s{display:none}
+}
+@media (max-height:420px){.k .s{display:none}.k{height:44px}}
+</style>
+</head>
+<body>
+<main id="app">
+  <section id="pgm" aria-label="Program output">
+    <div id="frame">
+      <div id="scale">
+        <img id="poster" src="media/poster.webp" alt="A 3x3 game with the HALFCOURT score bug: the twelve-second shot clock is a half circle of twelve segments." width="1920" height="1080" decoding="async" fetchpriority="high">
+        <video id="v" muted playsinline loop preload="none" aria-hidden="true"></video>
+        <div id="stage"></div>
+      </div>
+      <div class="tally" aria-hidden="true"><i></i><b>PGM</b><b>STOP 03 · MANILA</b></div>
+      <div class="hint" aria-hidden="true">You run the graphics · keys 1–6</div>
+      <button id="go" type="button">Run it live</button>
+    </div>
+  </section>
+  <nav id="deck" aria-label="Graphics keys">
+    <button class="k" data-k="1" type="button"><span class="n">1</span><span><span class="l">Open</span><span class="s">Title sequence</span></span></button>
+    <button class="k" data-k="2" type="button"><span class="n">2</span><span><span class="l">+1</span><span class="s">Inside the arc</span></span></button>
+    <button class="k" data-k="3" type="button"><span class="n">3</span><span><span class="l">+2</span><span class="s">Beyond the arc</span></span></button>
+    <button class="k" data-k="4" type="button"><span class="n">4</span><span><span class="l">Player</span><span class="s">Lower third</span></span></button>
+    <button class="k" data-k="5" type="button"><span class="n">5</span><span><span class="l">Replay</span><span class="s">Sting</span></span></button>
+    <button class="k" data-k="6" type="button"><span class="n">6</span><span><span class="l">City</span><span class="s">Stop bumper</span></span></button>
+    <button class="k" id="snd" type="button" aria-pressed="false">Sound off</button>
+  </nav>
+</main>
+<script type="module" src="live.js?v=716f5f2f"></script>
+</body>
+</html>
