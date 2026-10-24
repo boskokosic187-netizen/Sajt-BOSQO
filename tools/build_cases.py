@@ -411,8 +411,14 @@ HEAD = """<!doctype html>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
   <link rel="stylesheet" href="{R}css/site.css">
   <script>
-    // js flag; a page reached through the cut opens under a plain cover (js/site.js: setupCut)
-    (function (d) {{ d.classList.add('js'); try {{ if (sessionStorage.getItem('bk-cut')) d.classList.add('is-cut'); }} catch (e) {{}} }})(document.documentElement);
+    // js flag; a page reached through the cut opens under the picture that brought it (js/site.js: setupCut)
+    (function (d) {{
+      d.classList.add('js');
+      try {{
+        var cut = sessionStorage.getItem('bk-cut');
+        if (cut) {{ d.classList.add('is-cut'); cut = JSON.parse(cut).img; if (cut) d.style.setProperty('--cut-img', 'url("' + cut + '")'); }}
+      }} catch (e) {{ /* storage blocked: no cut */ }}
+    }})(document.documentElement);
   </script>
   <script src="{R}js/site.js" defer></script>
 </head>"""

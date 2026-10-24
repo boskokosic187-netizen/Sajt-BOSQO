@@ -16,12 +16,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="../../css/site.css?v=92c3b656">
+  <link rel="stylesheet" href="../../css/site.css?v=e9bd95c2">
   <script>
-    // js flag; a page reached through the cut opens under a plain cover (js/site.js: setupCut)
-    (function (d) { d.classList.add('js'); try { if (sessionStorage.getItem('bk-cut')) d.classList.add('is-cut'); } catch (e) {} })(document.documentElement);
+    // js flag; a page reached through the cut opens under the picture that brought it (js/site.js: setupCut)
+    (function (d) {
+      d.classList.add('js');
+      try {
+        var cut = sessionStorage.getItem('bk-cut');
+        if (cut) { d.classList.add('is-cut'); cut = JSON.parse(cut).img; if (cut) d.style.setProperty('--cut-img', 'url("' + cut + '")'); }
+      } catch (e) { /* storage blocked: no cut */ }
+    })(document.documentElement);
   </script>
-  <script src="../../js/site.js?v=9a5d94c5" defer></script>
+  <script src="../../js/site.js?v=e15b70a8" defer></script>
 </head>
 <body class="page-case">
   <a class="skip" href="#case-main">Skip to content</a>

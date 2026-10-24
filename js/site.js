@@ -56,83 +56,146 @@
   };
 
   /* ------------------------------------------------ the cut between pages
-     Six shutters drop over the page, the first where you clicked, the others spreading
-     out from there, each with a red tally line on its leading edge. The next page opens
-     under the same shutters (its <head> puts up a plain cover from the first paint:
-     html.is-cut), shows its title card, and the shutters carry on down out of frame.
-     The top bar stays on air above it all. Transform only; in lite mode a link is just
-     a link (css: THE CUT) */
+     A take to program: the picture you click (a work card, a screen on the wall, the next
+     case; the very frame that was playing, if it was playing) leaves its slot and lands
+     whole on a big program monitor in the middle of the screen while the page around it
+     goes to black. The next page opens on that same monitor (its <head> puts it up from
+     the first paint: html.is-cut, --cut-img) and the black lifts away like a curtain,
+     monitor and all, the page's title rising under it. A link with no picture brings the
+     black up from the bottom and lifts it the same way. The monitor is sized so the small
+     card pictures stay sharp. The top bar stays on air above it all. Transform, opacity
+     and clip-path only; in lite mode a link is just a link (css: THE CUT) */
   const cutOK = () => !lite && 'animate' in Element.prototype;
-  const CUT_EASE = 'cubic-bezier(0.75, 0, 0.15, 1)';
-  const SHUTTERS = 6;
+  const CUT_EASE = 'cubic-bezier(0.76, 0, 0.24, 1)';
   let leaving = false;
-  function shutters() {
+  let cueGate = Promise.resolve(); // the sections' cues wait for the curtain (setupCues)
+  const shown = (el) => {
+    const r = el.getBoundingClientRect();
+    return r.width > 4 && r.height > 4 && +getComputedStyle(el).opacity > 0.5 ? r.width * r.height : 0;
+  };
+  // what the frame shows right now: its biggest playing video (as a still of this very frame) or picture
+  function pictureIn(frame) {
+    const seen = $$('video:not(.fx-static), img', frame)
+      .map((m) => [m, (m.tagName === 'VIDEO' ? m.readyState >= 2 && m.videoWidth : m.complete && m.naturalWidth) ? shown(m) : 0])
+      .filter(([, a]) => a)
+      .sort((x, y) => y[1] - x[1]);
+    for (const [m] of seen) {
+      if (m.tagName === 'IMG') return { el: m, w: m.naturalWidth, h: m.naturalHeight, src: m.currentSrc || m.src };
+      try {
+        const c = document.createElement('canvas');
+        c.width = m.videoWidth;
+        c.height = m.videoHeight;
+        c.getContext('2d').drawImage(m, 0, 0);
+        return { el: m, w: c.width, h: c.height, src: c.toDataURL('image/jpeg', 0.85) };
+      } catch { /* no still of this one: the next picture in the frame */ }
+    }
+    return null;
+  }
+  // how light the frame shows its picture (dimmed covers, a darker resting card)
+  function lightOf(el, frame) {
+    let k = 1;
+    for (let n = el; n && n !== frame.parentElement; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      k *= +cs.opacity;
+      const b = /brightness\(([\d.]+)\)/.exec(cs.filter);
+      if (b) k *= +b[1];
+    }
+    return Math.min(1, k);
+  }
+  function cutBox() {
     const box = document.createElement('div');
     box.className = 'cut';
     box.setAttribute('aria-hidden', 'true');
-    for (let i = 0; i < SHUTTERS; i++) box.appendChild(document.createElement('i'));
+    box.innerHTML = '<div class="cut__dim"></div><div class="cut__pic"></div>';
     document.body.appendChild(box);
     return box;
   }
-  // when each shutter moves: one step later per column away from where the cut started
-  const wave = (col, step) => (i) => Math.abs(i - col) * step;
-  const colAt = (x) => Math.max(0, Math.min(SHUTTERS - 1, Math.floor((x / innerWidth) * SHUTTERS)));
-  function go(href, x = innerWidth / 2) {
+  function go(href, frame) {
     if (!cutOK()) { location.href = href; return; }
     if (leaving) return;
     leaving = true;
-    const col = colAt(x);
-    const box = shutters();
-    const at = wave(col, 45);
-    let end = 0;
-    $$('i', box).forEach((s, i) => {
-      end = Math.max(end, at(i) + 420);
-      s.animate([{ transform: 'translateY(-101%)' }, { transform: 'none' }], { duration: 420, delay: at(i), easing: CUT_EASE, fill: 'both' });
-    });
-    store.set('bk-cut', String(col));
-    // the next page starts loading while the shutters close
+    const box = cutBox();
+    const pic = $('.cut__pic', box);
+    const vw = box.clientWidth, vh = box.clientHeight;
+    const fr = frame && frame.getBoundingClientRect();
+    const p = fr && fr.bottom > 0 && fr.top < vh && pictureIn(frame); // a slot out of view has nothing to carry
+    const T = 640;
+    const o = { duration: T, easing: CUT_EASE, fill: 'both' };
+    const dim = $('.cut__dim', box);
+    if (p) {
+      // the picture as the frame draws it (object-fit: cover at its object-position) ...
+      const r = p.el.getBoundingClientRect();
+      const pos = getComputedStyle(p.el).objectPosition.split(' ').map((v) => (v.endsWith('%') ? parseFloat(v) / 100 : 0.5));
+      const s0 = Math.max(r.width / p.w, r.height / p.h), w0 = p.w * s0, h0 = p.h * s0;
+      const x0 = r.left + (r.width - w0) * pos[0], y0 = r.top + (r.height - h0) * (pos[1] ?? 0.5);
+      // ... and whole on the monitor (76% x 70% of the screen, centred: css .cut__mon, html.is-cut::after)
+      const s1 = Math.min((vw * 0.76) / p.w, (vh * 0.7) / p.h), w1 = p.w * s1, h1 = p.h * s1;
+      const x1 = (vw - w1) / 2, y1 = (vh - h1) / 2, k = w0 / w1;
+      // the slot's window onto the picture, in the picture's own unscaled pixels
+      const f = frame.getBoundingClientRect();
+      const rad = parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0;
+      const win = [Math.max(f.top, 0) - y0, x0 + w0 - Math.min(f.right, vw), y0 + h0 - Math.min(f.bottom, vh), Math.max(f.left, 0) - x0]
+        .map((v) => Math.max(0, v) / k + 'px').join(' ');
+      const im = new Image();
+      im.alt = '';
+      im.src = p.src;
+      Object.assign(im.style, { width: w1 + 'px', height: h1 + 'px', left: x1 + 'px', top: y1 + 'px' });
+      pic.appendChild(im);
+      im.animate([
+        { transform: `translate(${x0 - x1}px, ${y0 - y1}px) scale(${k})`, clipPath: `inset(${win} round ${rad / k}px)`, opacity: lightOf(p.el, frame) },
+        { transform: 'none', clipPath: 'inset(0px 0px 0px 0px round 0px)', opacity: 1 },
+      ], o);
+      dim.animate([{ opacity: 0 }, { opacity: 1 }], { duration: T * 0.8, easing: 'ease-out', fill: 'both' });
+      store.set('bk-cut', JSON.stringify({ img: p.src }));
+    } else {
+      dim.animate([{ opacity: 1, clipPath: 'inset(100% 0px 0px 0px)' }, { opacity: 1, clipPath: 'inset(0% 0px 0px 0px)' }], o);
+      store.set('bk-cut', '{}');
+    }
+    // the next page starts loading while the picture opens
     const pre = document.createElement('link');
     pre.rel = 'prefetch';
     pre.href = href;
     document.head.appendChild(pre);
-    setTimeout(() => { location.href = href; }, end);
+    setTimeout(() => { location.href = href; }, T + 20);
   }
-  // the page that opens says what it is for a moment, then the shutters go
-  function titleCard() {
-    const t = $('.case-title');
-    if (t) return [($('.case-hero__top span') || t).textContent, t.textContent];
-    return ['Portfolio', location.hash === '#work' ? 'Selected work' : 'Boško Kosić'];
+  // the curtain goes up: the black lifts off the top, the monitor drifting a little slower than its edge
+  function lift(box) {
+    const o = { duration: 1000, delay: 80, easing: CUT_EASE, fill: 'both' };
+    box.animate([{ clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 100% 0%)' }], o);
+    const im = $('.cut__pic img', box);
+    if (im) im.animate([{ translate: '0 0' }, { translate: '0 -22vh' }], o);
+    setTimeout(() => { box.remove(); root.style.removeProperty('--cut-img'); }, 1150);
   }
-  function openCut(col, card) {
-    const box = shutters();
-    root.classList.remove('is-cut'); // the shutters stand in for the plain cover
-    let hold = 0;
-    if (card) {
-      const [k, t] = titleCard();
-      const c = document.createElement('div');
-      c.className = 'cut__card';
-      c.innerHTML = '<span class="cut__k"></span><span class="cut__t"><span></span></span>';
-      $('.cut__k', c).textContent = k;
-      $('.cut__t > span', c).textContent = t;
-      box.appendChild(c);
-      $('.cut__k', c).animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'backwards' });
-      $('.cut__t > span', c).animate([{ transform: 'translateY(105%)' }, { transform: 'none' }], { duration: 420, delay: 40, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'backwards' });
-      c.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-14px)' }], { duration: 260, delay: 560, easing: 'ease-in', fill: 'forwards' });
-      hold = 520;
+  function openCut(data) {
+    const box = cutBox();
+    box.remove();
+    $('.cut__dim', box).style.opacity = 1;
+    let ready = Promise.resolve();
+    if (data.img) {
+      const im = new Image();
+      im.alt = '';
+      im.className = 'cut__mon';
+      im.src = data.img;
+      $('.cut__pic', box).appendChild(im);
+      ready = im.decode().catch(() => {});
     }
-    const at = wave(col, 45);
-    let end = 0;
-    $$('i', box).forEach((s, i) => {
-      end = Math.max(end, hold + at(i) + 560);
-      s.animate([{ transform: 'none' }, { transform: 'translateY(101%)' }], { duration: 560, delay: hold + at(i), easing: CUT_EASE, fill: 'both' });
+    let open;
+    cueGate = new Promise((r) => { open = r; setTimeout(r, 1500); }); // never hold the page back for long
+    // the plain cover from <head> stays until the picture is ready to take its place
+    Promise.race([ready, new Promise((r) => setTimeout(r, 400))]).then(() => {
+      setTimeout(open, 380);
+      document.body.appendChild(box);
+      root.classList.remove('is-cut');
+      lift(box);
     });
-    setTimeout(() => box.remove(), end + 50);
   }
   function setupCut() {
-    const col = store.get('bk-cut');
+    const raw = store.get('bk-cut');
     store.del('bk-cut');
     if (root.classList.contains('is-cut')) {
-      if (cutOK()) openCut(+col || 0, true); else root.classList.remove('is-cut');
+      let data = {};
+      try { data = JSON.parse(raw) || {}; } catch { /* an old flag: no picture */ }
+      if (cutOK()) openCut(data); else root.classList.remove('is-cut');
     }
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href]');
@@ -141,16 +204,15 @@
       const u = new URL(a.href, location.href);
       if (u.origin !== location.origin || u.pathname === location.pathname || !cutOK()) return;
       e.preventDefault();
-      go(u.href, e.clientX);
+      go(u.href, a.closest('.row, .case-next'));
     });
-    // back/forward cache: a page left under its shutters opens them again
+    // back/forward cache: a page left under the picture lifts it again
     addEventListener('pageshow', (e) => {
       if (!e.persisted || !leaving) return;
       leaving = false;
-      const shut = $('.cut');
-      if (shut) shut.remove();
       store.del('bk-cut');
-      openCut(colAt(innerWidth / 2), false);
+      const box = $('.cut');
+      if (box) { box.getAnimations({ subtree: true }).forEach((x) => x.finish()); lift(box); }
     });
   }
 
@@ -414,10 +476,10 @@
     const aboutOwn = matchMedia('(min-width: 1024px) and (min-height: 600px)').matches; // About's one screen brings its cards in itself
     const CUES = {
       rule: 'main > section:not(.hero) > .sec-head',
-      lines: '.reel__title, .work__title, .process__title, .about__title, .contact__title',
+      lines: '.case-title, .reel__title, .work__title, .process__title, .about__title, .contact__title',
       screen: '.reel__player, .row, .cover__item, .case-next',
-      rise: '.reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
-      stack: '.ct__main, .ct__next, .story, .hl, .blk__head',
+      rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
+      stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head',
       panel: '.qb',
     };
     const all = [];
@@ -465,7 +527,7 @@
       if (up.length) cue(up);
     }, { rootMargin: '0px 0px -8% 0px' });
     root.classList.add('cues');
-    all.forEach((el) => io.observe(el));
+    cueGate.then(() => all.forEach((el) => io.observe(el)));
     // a keyboard landing on a part brings it in at once; so does printing
     document.addEventListener('focusin', (e) => {
       const el = e.target.closest && e.target.closest('[data-cue]:not(.is-cued)');
@@ -787,8 +849,7 @@
         if ((!own && !slug) || hero.classList.contains('is-take') || proj) return;
         t.classList.add('is-take');
         hero.classList.add('is-take');
-        const r = t.getBoundingClientRect();
-        setTimeout(() => (own ? openProject(own, t) : go('work/' + slug + '/', r.left + r.width / 2)), reduceMotion ? 0 : 160);
+        setTimeout(() => (own ? openProject(own, t) : go('work/' + slug + '/', t)), reduceMotion ? 0 : 160);
       });
     });
 

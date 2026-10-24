@@ -839,32 +839,24 @@ html:not(.is-lite) .tile { will-change: filter; }
 }
 
 /* ==========================================================================
-   THE CUT between pages (js: go, setupCut). Six shutters in the page's black drop
-   over it from where you clicked, a red tally line on each leading edge; the next
-   page opens under a plain cover (html.is-cut, from its <head>), puts up its title
-   card and the shutters carry on down. Below the top bar and the phone dock, so
-   those stay on air through the cut. Not in lite mode.
+   THE CUT between pages (js: go, setupCut). A take to program: the picture you click
+   lands whole on a big monitor in the middle (76% x 70% of the screen) as the page
+   goes to black; the next page opens on that same monitor (html.is-cut with --cut-img,
+   from its <head>: ::before the black, ::after the monitor) and the black lifts away.
+   No picture: plain black, up from the bottom. Below the top bar and the phone dock,
+   so those stay on air through the cut. Not in lite mode.
    ========================================================================== */
-.cut { position: fixed; inset: 0; z-index: 39; display: flex; overflow: hidden; pointer-events: none; } /* a parked tally line never peeks past the frame */
-.cut i { position: relative; flex: 1; background: var(--bg); transform: translateY(-101%); }
-.cut i + i { margin-left: -1px; } /* no hairline of page between two shutters */
-.cut i::before, .cut i::after { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: var(--rec); }
-.cut i::before { bottom: 100%; } /* leads when the shutters go down out of frame */
-.cut i::after { top: 100%; }     /* leads when they drop in */
-.cut__card {
-  position: absolute; inset: 0; z-index: 1; display: grid; place-content: center; justify-items: center; gap: 18px;
-  padding: 0 var(--pad); text-align: center;
-}
-.cut__k { color: var(--rec); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
-.cut__t {
-  display: block; overflow: hidden; padding: 0.06em 0.12em 0.14em;
-  font-weight: 800; font-stretch: 112%; font-size: clamp(44px, 7.4vw, 132px); line-height: 0.92; letter-spacing: -0.03em; text-wrap: balance;
-}
-.cut__t > span { display: inline-block; }
-html.is-cut::before {
-  content: ""; position: fixed; inset: 0; z-index: 39; background: var(--bg); pointer-events: none;
+.cut { position: fixed; inset: 0; z-index: 39; overflow: hidden; pointer-events: none; }
+.cut__dim { position: absolute; inset: 0; background: var(--bg); opacity: 0; }
+.cut__pic { position: absolute; inset: 0; }
+.cut__pic > img { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 0 0; }
+.cut__pic > .cut__mon { left: 12%; top: 15%; width: 76%; height: 70%; object-fit: contain; }
+html.is-cut::before, html.is-cut::after {
+  content: ""; position: fixed; inset: 0; z-index: 39; pointer-events: none;
   animation: cutSafety 0s 3s forwards; /* never strand the page if the script fails */
 }
+html.is-cut::before { background: var(--bg); }
+html.is-cut::after { inset: 15% 12%; background: var(--cut-img, none) center / contain no-repeat; }
 @keyframes cutSafety { to { visibility: hidden; } }
 
 /* ==========================================================================
