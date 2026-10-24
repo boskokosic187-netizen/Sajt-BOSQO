@@ -365,6 +365,77 @@
     els.forEach((el) => io.observe(el));
   }
 
+  /* ------------------------------------ sections come in as they scroll up
+     Each part of a section comes in once, as it rises into view, like cues called on air:
+     the rule over a section draws across, a title rises line by line out of its mask, a
+     picture opens like a monitor switching on, a group follows one after another. Parts
+     that come up together go in reading order. Compositor only (transform, opacity,
+     clip-path); never in lite mode, where everything is simply there (css: [data-cue]) */
+  function setupCues() {
+    if (lite || !('IntersectionObserver' in window)) return;
+    const aboutOwn = matchMedia('(min-width: 1024px) and (min-height: 600px)').matches; // About's one screen brings its cards in itself
+    const CUES = {
+      rule: 'main > section:not(.hero) > .sec-head',
+      lines: '.reel__title, .work__title, .process__title, .about__title, .contact__title',
+      screen: '.reel__player, .row, .cover__item, .case-next',
+      rise: '.reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
+      stack: '.ct__main, .ct__next, .story, .hl, .blk__head',
+      panel: '.qb',
+    };
+    const all = [];
+    Object.entries(CUES).forEach(([kind, sel]) => $$(sel).forEach((el) => {
+      if (el.dataset.cue) return;
+      el.dataset.cue = kind;
+      all.push(el);
+      if (kind === 'rule' || kind === 'stack' || kind === 'panel') Array.from(el.children).forEach((c, i) => c.style.setProperty('--i', i));
+    }));
+    if (!all.length) return;
+
+    // a title in lines (split at its <br>), each line in its own mask; the space between
+    // two lines stays outside them, for when the <br> is hidden and they share a line
+    $$('[data-cue="lines"]').forEach((t) => {
+      let line = [], l = 0;
+      const wrap = () => {
+        const nodes = line;
+        line = [];
+        if (!nodes.some((n) => n.nodeType !== 3 || n.nodeValue.trim())) return;
+        const tail = nodes[nodes.length - 1];
+        const gap = tail.nodeType === 3 && /\s$/.test(tail.nodeValue);
+        if (gap) tail.nodeValue = tail.nodeValue.replace(/\s+$/, '');
+        const box = document.createElement('span'), inner = document.createElement('span');
+        box.className = 'ln';
+        inner.className = 'ln__i';
+        box.style.setProperty('--l', l++);
+        nodes[0].before(box);
+        inner.append(...nodes);
+        box.append(inner);
+        if (gap) box.after(' ');
+      };
+      Array.from(t.childNodes).forEach((n) => (n.nodeName === 'BR' ? wrap() : line.push(n)));
+      wrap();
+    });
+
+    const cue = (els) => els
+      .sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1))
+      .forEach((el, k) => {
+        el.style.setProperty('--q', Math.min(k, 6));
+        el.classList.add('is-cued');
+        io.unobserve(el);
+      });
+    const io = new IntersectionObserver((entries) => {
+      const up = entries.filter((en) => en.isIntersecting).map((en) => en.target);
+      if (up.length) cue(up);
+    }, { rootMargin: '0px 0px -8% 0px' });
+    root.classList.add('cues');
+    all.forEach((el) => io.observe(el));
+    // a keyboard landing on a part brings it in at once; so does printing
+    document.addEventListener('focusin', (e) => {
+      const el = e.target.closest && e.target.closest('[data-cue]:not(.is-cued)');
+      if (el) cue([el]);
+    });
+    addEventListener('beforeprint', () => cue($$('[data-cue]:not(.is-cued)')));
+  }
+
   /* ------------------------------------ in-page links land on the section's top */
   // Sections that skip their rendering until they come near (content-visibility) only have a
   // guessed height at the click, which throws the jump off by hundreds of pixels; they are
@@ -2780,6 +2851,7 @@
   setupBlocks();
   setupBurn();
   setupLit();
+  setupCues();
   setupJumps();
   setupAbout();
   setupCyber();
