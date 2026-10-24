@@ -68,7 +68,7 @@ Status pill: **● Available, Q4 2026**
 |---|---|---|---|
 | 01 | **Live on the Streets** | 50+ billboards across Belgrade, designed for the three seconds a driver gives them. | ITS · ITHS · FSU · Motion · DOOH · 2024–26 |
 | 02 | **Ballies** | Three years of seasons, launches and mascots for a sports prediction platform. | Web3 · Campaigns · Motion · 2023–26 |
-| 03 | **Key Art** | Cinematic composites built from generated elements, stock and a lot of light — in 4K and 8K. | Compositing · Personal · 2026 |
+| 03 | **Personal Art** | Cinematic stills built from generated elements, stock and a lot of light — in 4K and 8K. | Compositing · Personal · 2026 |
 | 04 | **FSU 2026** | An art school, art-directed: 30+ campaigns, exhibitions and events in one year. | Art direction · Print · Social · 2026 |
 | 05 | **Series at Scale** | Eight series, 330+ assets, one system — careers, programmes, AI prompts, events and enrolment. | ITS · ITHS · Content systems · 2026 |
 | 06 | **Baby Boo** | Product films and stills made with AI — honey that pours on cue, vertical-first and in 4K. | AI video · Product · 2026 |
@@ -81,7 +81,7 @@ Status pill: **● Available, Q4 2026**
 | 01 | **Live on the Streets** | 50+ billboards across Belgrade, designed for the three seconds a driver gives them. | ITS · ITHS · FSU · Motion · DOOH · 2024–26 |
 | 02 | **Ballies** | Three years of seasons, launches and mascots for a sports prediction platform. | Web3 · Campaigns · Motion · 2023–26 |
 | 03 | **FSU 2026** | An art school, art-directed: 30+ campaigns, exhibitions and events in one year. | Art direction · Print · Social · 2026 |
-| 04 | **Key Art** | Cinematic composites built from generated elements, stock and a lot of light, delivered in 4K and 8K. | Compositing · Personal · 2026 |
+| 04 | **Personal Art** | Cinematic stills built from generated elements, stock and a lot of light, delivered in 4K and 8K. | Compositing · Personal · 2026 |
 | 05 | **Baby Boo** | Product films made with AI: honey that pours on cue, vertical-first and in 4K. | AI video · Product · 2026 |
 | 06 | **ZTV Gaming Show** | Eight teams, eight identities, one tournament look, all as print-ready jerseys. | Esports · Apparel · 2026 |
 
@@ -193,11 +193,11 @@ Every show gets its own concept. The constant is the frame: FSU's typographic sy
 
 ---
 
-## Case study 04: Key Art
+## Case study 04: Personal Art
 
-- **Pieces:** *Tsar Dušan: The Serbian Empire, 1346* · *Batman v Superman: Clash in the Rain* (personal fan art; characters © their owners)
+- **Pieces:** *The Battle of Kolubara, 1914* · *Batman v Superman: Clash in the Rain* (personal fan art; characters © their owners)
 - **Role:** Concept, generation, compositing, grading
-- **Statement:** Key art is where everything I know meets: composition, light, type and story, in one frame.
+- **Statement:** Personal art is where everything I know meets: composition, light, type and story, in one frame.
 
 **Process**
 1. Generate elements separately and source stock.

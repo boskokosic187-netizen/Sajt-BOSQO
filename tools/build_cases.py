@@ -130,6 +130,8 @@ def media_for(item, outdir, rel):
     info["url"] = url
     info["label"] = item.get("label", "")
     info["matte"] = item.get("matte", False)
+    if item.get("cap"):   # where the caption sits when the picture has its own type bottom left
+        info["cap"] = item["cap"]
     return info
 
 
@@ -385,7 +387,7 @@ TOPBAR = """
       <a href="{R}#reel">Reel</a>
       <a href="{R}#process">Process</a>
       <a href="{R}#about">About</a>
-      <a href="#contact">Contact</a>
+      <a class="topnav__cta" href="#contact">Contact</a>
     </nav>
     <a class="status" href="#contact"><i class="status__dot"></i>Available — Q4 2026</a>
     <span class="topbar__tc" data-tc aria-hidden="true">00:00:00:00</span>
@@ -410,16 +412,26 @@ HEAD = """<!doctype html>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
   <link rel="stylesheet" href="{R}css/site.css">
+  <!-- the cut needs the title and key visual on the first frame -->
+  <link rel="expect" href="#cover" blocking="render">
   <script>
-    // js flag; a page reached through the cut opens under the picture that brought it (js/site.js: setupCut)
     (function (d) {{
       d.classList.add('js');
       try {{
-        var cut = sessionStorage.getItem('bk-cut');
-        if (cut) {{ d.classList.add('is-cut'); cut = JSON.parse(cut).img; if (cut) d.style.setProperty('--cut-img', 'url("' + cut + '")'); }}
-      }} catch (e) {{ /* storage blocked: no cut */ }}
+        // opened from another page of the site: the cut carries the top bar (and on a case its
+        // title and key visual) over from the page before (css: THE CUT, js/site.js: setupCut)
+        var act = window.navigation && navigation.activation;
+        if (act && act.from && act.navigationType !== 'reload' && 'onpagereveal' in window) {{
+          d.classList.add('vt-in');
+          addEventListener('pagereveal', function (e) {{
+            if (e.viewTransition) e.viewTransition.finished.then(function () {{ d.classList.remove('vt-in'); }});
+            else d.classList.remove('vt-in');
+          }});
+        }}
+      }} catch (e) {{ /* no cut */ }}
     }})(document.documentElement);
   </script>
+  <script type="speculationrules">{{"prefetch": [{{"where": {{"href_matches": "/work/*"}}, "eagerness": "moderate"}}]}}</script>
   <script src="{R}js/site.js" defer></script>
 </head>"""
 
@@ -505,11 +517,12 @@ def render_case(c, i, cases, media):
     num = f"{i + 1:02d}"
     hero = media["hero"]
     trio = len(hero) > 1
+    cap_cls = lambda m: ' class="is-right"' if m.get("cap") == "right" else ""
     hero_html = "".join(
         f'<figure class="cover__item" style="--ar:{m["w"] / m["h"]:.4f}">'
         + (video_tag(m, eager=True) if m["type"] == "video"
            else picture(m, "100vw" if not trio else "33vw", eager=True))
-        + f'<figcaption>{E(m["label"])}</figcaption></figure>'
+        + f'<figcaption{cap_cls(m)}>{E(m["label"])}</figcaption></figure>'
         for m in hero)
     og = (hero[0]["url"] + (".webp" if hero[0]["type"] == "video" else f"-{hero[0]['widths'][-1]}.webp"))
 
@@ -560,7 +573,7 @@ def render_case(c, i, cases, media):
       <dl class="case-meta">{meta}</dl>
     </section>
 
-    <section class="cover{' is-trio' if trio else ''}" aria-label="Key visual">
+    <section class="cover{' is-trio' if trio else ''}" id="cover" aria-label="Key visual">
       {hero_html}
     </section>
 

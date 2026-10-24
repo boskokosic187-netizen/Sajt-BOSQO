@@ -393,34 +393,34 @@
       ]
     },
     {
-      "slug": "key-art",
-      "title": "Key Art",
+      "slug": "personal-art",
+      "title": "Personal Art",
       "kicker": "Cinematic compositing · personal work",
-      "line": "Cinematic composites built from generated elements, stock and a lot of light — delivered in 4K and 8K.",
+      "line": "Cinematic stills built from generated elements, stock and a lot of light — delivered in 4K and 8K.",
       "client": "Personal",
       "years": "2026",
       "role": "Concept, generation, compositing, grading",
       "deliverables": [
-        "Tsar Dušan — The Serbian Empire, 1346",
+        "The Battle of Kolubara, 1914",
         "Batman v Superman — Clash in the Rain (fan art)",
         "The Odyssey — poster (fan art)",
         "4K / 8K masters"
       ],
-      "challenge": "Make a single frame carry an entire story — an empire, a duel, an odyssey — at a size where every flaw shows.",
-      "idea": "Direct it like a film shot: write a scene bible, block the composition first, then generate and source every element separately so light, scale and depth stay under control.",
-      "system": "Elements are generated one by one and matched with stock, cut out, relit with rim light toward a single sun, and composited and graded in a Python + Photoshop pipeline that renders at any resolution.",
+      "challenge": "Make a single frame carry an entire story — a winter battle, a duel, an odyssey — at a size where every flaw shows.",
+      "idea": "Direct it like a film shot: lock the background plate and the light first, then generate and source every element separately so light, scale and depth stay under control.",
+      "system": "Elements are generated one by one and matched with stock, cut out, relit toward a single low sun, then composited with snow, haze and light rays and graded as one frame, mastered at 8K.",
       "highlights": [
         [
-          "Scene bible & blocking",
+          "Background plate first",
           "Composition before pixels"
         ],
         [
-          "12 generated elements + 8 stock plates",
-          "Tsar Dušan"
+          "11 generated elements + 5 stock plates",
+          "The Battle of Kolubara"
         ],
         [
-          "Rim light, haze & grade in code",
-          "Python compositing"
+          "Low sun, snow & haze",
+          "One light for every layer"
         ],
         [
           "4K and 8K masters",
@@ -429,57 +429,58 @@
       ],
       "result_big": "8K",
       "result_label": "print-ready masters from one pipeline",
-      "result": "Key art is where everything I know meets: composition, light, type and story — in one frame.",
+      "result": "Personal art is where everything I know meets: composition, light, type and story — in one frame.",
       "note": "Characters and titles in fan art belong to their owners.",
       "hero": [
         {
-          "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.jpg",
+          "src": "PV/BOSQO/Kolubarska bitka - 1914/04_finale/kolubara_3840.jpg",
           "type": "image",
-          "label": "Tsar Dušan — The Serbian Empire, 1346 · 3840×2160"
+          "label": "The Battle of Kolubara, 1914 · 7680×4320",
+          "cap": "right"
         }
       ],
       "breakdown": {
-        "before": "PV/BOSQO/Car Dusan - Carstvo srpsko/03_radno/blocking_1920.jpg",
-        "after": "PV/BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_1920.jpg",
-        "before_label": "Blocking",
+        "before": "PV/BOSQO/Kolubarska bitka - 1914/03_radno/plate_1920.jpg",
+        "after": "PV/BOSQO/Kolubarska bitka - 1914/04_finale/kolubara_1920.jpg",
+        "before_label": "Background plate",
         "after_label": "Final grade"
       },
       "rows": [
         [
           {
-            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/03_radno/sheet_mj.jpg",
+            "src": "PV/BOSQO/Kolubarska bitka - 1914/03_radno/sheet_mj.jpg",
             "type": "image",
             "label": "Generated elements"
           },
           {
-            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/03_radno/sheet_stock.jpg",
+            "src": "PV/BOSQO/Kolubarska bitka - 1914/03_radno/sheet_stock.jpg",
             "type": "image",
             "label": "Stock plates"
           }
         ],
         [
           {
-            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/car.png",
+            "src": "PV/BOSQO/Kolubarska bitka - 1914/cut/general.png",
             "type": "image",
-            "label": "Cut-out · the Tsar",
+            "label": "Cut-out · General Mišić",
             "matte": true
           },
           {
-            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/vlastela.png",
+            "src": "PV/BOSQO/Kolubarska bitka - 1914/cut/zastava.png",
             "type": "image",
-            "label": "Cut-out · nobles",
+            "label": "Cut-out · flag bearer",
             "matte": true
           },
           {
-            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/barjak.png",
+            "src": "PV/BOSQO/Kolubarska bitka - 1914/cut/stroj.png",
             "type": "image",
-            "label": "Cut-out · war banner",
+            "label": "Cut-out · the line",
             "matte": true
           },
           {
-            "src": "PV/BOSQO/Car Dusan - Carstvo srpsko/cut/orao.png",
+            "src": "PV/BOSQO/Kolubarska bitka - 1914/cut/oficiri.png",
             "type": "image",
-            "label": "Cut-out · eagle",
+            "label": "Cut-out · staff officers",
             "matte": true
           }
         ],

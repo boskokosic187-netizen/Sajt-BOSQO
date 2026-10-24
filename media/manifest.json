@@ -203,17 +203,6 @@
    "webp": 30
   }
  },
- "car-dusan": {
-  "type": "still",
-  "src": "D:/Desktop/Production Visuals/BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.png",
-  "w": 3840,
-  "h": 2160,
-  "widths": [
-   480,
-   960,
-   1600
-  ]
- },
  "bvs": {
   "type": "still",
   "src": "D:/Desktop/Production Visuals/BOSQO/Batman vs Superman/BvS_Sudar_u_kisi-3840x2160.jpg",
@@ -555,6 +544,17 @@
   "widths": [
    480,
    960
+  ]
+ },
+ "kolubara": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/BOSQO/Kolubarska bitka - 1914/04_finale/kolubara_3840.jpg",
+  "w": 3840,
+  "h": 2160,
+  "widths": [
+   480,
+   960,
+   1600
   ]
  }
 }

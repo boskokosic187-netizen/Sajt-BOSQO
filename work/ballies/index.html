@@ -16,18 +16,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="../../css/site.css?v=e9bd95c2">
+  <link rel="stylesheet" href="../../css/site.css?v=6b4db1aa">
+  <!-- the cut needs the title and key visual on the first frame -->
+  <link rel="expect" href="#cover" blocking="render">
   <script>
-    // js flag; a page reached through the cut opens under the picture that brought it (js/site.js: setupCut)
     (function (d) {
       d.classList.add('js');
       try {
-        var cut = sessionStorage.getItem('bk-cut');
-        if (cut) { d.classList.add('is-cut'); cut = JSON.parse(cut).img; if (cut) d.style.setProperty('--cut-img', 'url("' + cut + '")'); }
-      } catch (e) { /* storage blocked: no cut */ }
+        // opened from another page of the site: the cut carries the top bar (and on a case its
+        // title and key visual) over from the page before (css: THE CUT, js/site.js: setupCut)
+        var act = window.navigation && navigation.activation;
+        if (act && act.from && act.navigationType !== 'reload' && 'onpagereveal' in window) {
+          d.classList.add('vt-in');
+          addEventListener('pagereveal', function (e) {
+            if (e.viewTransition) e.viewTransition.finished.then(function () { d.classList.remove('vt-in'); });
+            else d.classList.remove('vt-in');
+          });
+        }
+      } catch (e) { /* no cut */ }
     })(document.documentElement);
   </script>
-  <script src="../../js/site.js?v=e15b70a8" defer></script>
+  <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
+  <script src="../../js/site.js?v=3d19c36f" defer></script>
 </head>
 <body class="page-case">
   <a class="skip" href="#case-main">Skip to content</a>
@@ -75,7 +85,7 @@
       <a href="../../#reel">Reel</a>
       <a href="../../#process">Process</a>
       <a href="../../#about">About</a>
-      <a href="#contact">Contact</a>
+      <a class="topnav__cta" href="#contact">Contact</a>
     </nav>
     <a class="status" href="#contact"><i class="status__dot"></i>Available — Q4 2026</a>
     <span class="topbar__tc" data-tc aria-hidden="true">00:00:00:00</span>
@@ -90,7 +100,7 @@
       <dl class="case-meta"><div><dt>Client</dt><dd>Ballies</dd></div><div><dt>Year</dt><dd>Jan 2023 – Jan 2026</dd></div><div><dt>Role</dt><dd>Digital Artist — campaigns, motion, characters, NFT art direction</dd></div><div><dt>Deliverables</dt><dd><ul><li>Social campaigns 1:1 · 4:5 · 9:16 · 16:9</li><li>Season passes</li><li>$BALL token &amp; airdrop launch</li><li>AI feature launch</li><li>Badge &amp; drop system</li><li>Partnership templates</li><li>Mascot &amp; logo animation</li><li>NFT collection art direction</li></ul></dd></div></dl>
     </section>
 
-    <section class="cover" aria-label="Key visual">
+    <section class="cover" id="cover" aria-label="Key visual">
       <figure class="cover__item" style="--ar:1.7778"><video muted loop playsinline preload="auto" data-autoplay poster="../../media/cases/ballies/4ec9a9d2.webp" width="960" height="540" src="../../media/cases/ballies/4ec9a9d2.mp4" aria-label="Mascot fight · 16:9"></video><figcaption>Mascot fight · 16:9</figcaption></figure>
     </section>
 
@@ -137,11 +147,11 @@
       <p class="result__text">Hundreds of assets across feeds, stories, banners and video — all in one recognisable universe.</p>
     </section>
 
-    <a class="case-next" href="../key-art/">
-      <span class="case-next__bg" aria-hidden="true"><img src="../../media/cases/key-art/993423fe-800.webp" alt="" loading="lazy" decoding="async"></span>
+    <a class="case-next" href="../personal-art/">
+      <span class="case-next__bg" aria-hidden="true"><img src="../../media/cases/personal-art/58c6de0f-800.webp" alt="" loading="lazy" decoding="async"></span>
       <span class="case-next__label">Next case · 03</span>
-      <span class="case-next__title">Key Art</span>
-      <span class="case-next__line">Cinematic composites built from generated elements, stock and a lot of light — delivered in 4K and 8K.</span>
+      <span class="case-next__title">Personal Art</span>
+      <span class="case-next__line">Cinematic stills built from generated elements, stock and a lot of light — delivered in 4K and 8K.</span>
     </a>
 
     <section class="contact contact--mini" data-lit id="contact" aria-labelledby="contact-title">

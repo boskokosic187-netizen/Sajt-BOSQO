@@ -518,7 +518,7 @@
    ]
   ]
  },
- "key-art": {
+ "personal-art": {
   "hero": [
    {
     "w": 3840,
@@ -528,85 +528,85 @@
      1600
     ],
     "type": "image",
-    "url": "../../media/cases/key-art/993423fe",
-    "label": "Tsar Dušan — The Serbian Empire, 1346 · 3840×2160",
-    "matte": false
+    "url": "../../media/cases/personal-art/58c6de0f",
+    "label": "The Battle of Kolubara, 1914 · 7680×4320",
+    "matte": false,
+    "cap": "right"
    }
   ],
   "rows": [
    [
     {
      "w": 1880,
-     "h": 2199,
+     "h": 1176,
      "widths": [
       800,
       1600
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/1cf5fb75",
+     "url": "../../media/cases/personal-art/5b76c4d6",
      "label": "Generated elements",
      "matte": false
     },
     {
      "w": 1880,
-     "h": 996,
+     "h": 1235,
      "widths": [
       800,
       1600
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/457700e7",
+     "url": "../../media/cases/personal-art/8e38f646",
      "label": "Stock plates",
      "matte": false
     }
    ],
    [
     {
-     "w": 1792,
-     "h": 2688,
+     "w": 880,
+     "h": 1374,
      "widths": [
       800,
-      1600
+      880
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/1a8e1607",
-     "label": "Cut-out · the Tsar",
+     "url": "../../media/cases/personal-art/4bc879ed",
+     "label": "Cut-out · General Mišić",
      "matte": true
     },
     {
-     "w": 2912,
-     "h": 1632,
+     "w": 805,
+     "h": 1223,
      "widths": [
       800,
-      1600
+      805
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/e0cf0d4a",
-     "label": "Cut-out · nobles",
+     "url": "../../media/cases/personal-art/d83c9c79",
+     "label": "Cut-out · flag bearer",
      "matte": true
     },
     {
-     "w": 1536,
-     "h": 3072,
+     "w": 800,
+     "h": 808,
      "widths": [
-      800,
-      1536
+      800
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/1c87dde9",
-     "label": "Cut-out · war banner",
+     "url": "../../media/cases/personal-art/665dc7d6",
+     "label": "Cut-out · the line",
      "matte": true
     },
     {
-     "w": 5334,
-     "h": 2175,
+     "w": 929,
+     "h": 754,
      "widths": [
       800,
-      1600
+      929
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/8b165588",
-     "label": "Cut-out · eagle",
+     "url": "../../media/cases/personal-art/16bf8b5a",
+     "label": "Cut-out · staff officers",
      "matte": true
     }
    ],
@@ -619,7 +619,7 @@
       1600
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/4926e8a4",
+     "url": "../../media/cases/personal-art/4926e8a4",
      "label": "Batman v Superman — Clash in the Rain · fan art · 3840×2160",
      "matte": false
     }
@@ -633,7 +633,7 @@
       1080
      ],
      "type": "image",
-     "url": "../../media/cases/key-art/c9dea69d",
+     "url": "../../media/cases/personal-art/c9dea69d",
      "label": "The Odyssey · fan poster",
      "matte": false
     }
@@ -648,8 +648,8 @@
      1600
     ],
     "type": "image",
-    "url": "../../media/cases/key-art/e80036ba",
-    "label": "Blocking",
+    "url": "../../media/cases/personal-art/f43ec9fc",
+    "label": "Background plate",
     "matte": false
    },
    {
@@ -660,7 +660,7 @@
      1600
     ],
     "type": "image",
-    "url": "../../media/cases/key-art/e5301017",
+    "url": "../../media/cases/personal-art/638a9ff1",
     "label": "Final grade",
     "matte": false
    }

@@ -62,7 +62,7 @@ TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960, "accord": 960, "bigg
 CRF = {"umbra": 22, "umbra-v": 23, "accord": 25, "accord-v": 24, "bigger": 22, "bigger-v": 24}
 
 STILLS = [
-    ("car-dusan", PV + "BOSQO/Car Dusan - Carstvo srpsko/04_finale/car_dusan_3840.png"),
+    ("kolubara", PV + "BOSQO/Kolubarska bitka - 1914/04_finale/kolubara_3840.jpg"),
     ("bvs", PV + "BOSQO/Batman vs Superman/BvS_Sudar_u_kisi-3840x2160.jpg"),
     ("tacke-susreta", PV + "FSU/FSU Tacke susreta/DM.png"),
     ("fsu-doors", PV + "FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-1080x1080.png"),

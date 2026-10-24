@@ -11,7 +11,7 @@
   const LOOPS = 'media/loops/';
   const FX = new URL('../media/fx/', document.currentScript.src).href; // works from case pages too
   const CASES = {
-    live: 'live-on-the-streets', ballies: 'ballies', keyart: 'key-art',
+    live: 'live-on-the-streets', ballies: 'ballies', keyart: 'personal-art',
     fsu: 'fsu-2026', series: 'series-at-scale', babyboo: 'baby-boo',
   };
 
@@ -56,163 +56,44 @@
   };
 
   /* ------------------------------------------------ the cut between pages
-     A take to program: the picture you click (a work card, a screen on the wall, the next
-     case; the very frame that was playing, if it was playing) leaves its slot and lands
-     whole on a big program monitor in the middle of the screen while the page around it
-     goes to black. The next page opens on that same monitor (its <head> puts it up from
-     the first paint: html.is-cut, --cut-img) and the black lifts away like a curtain,
-     monitor and all, the page's title rising under it. A link with no picture brings the
-     black up from the bottom and lifts it the same way. The monitor is sized so the small
-     card pictures stay sharp. The top bar stays on air above it all. Transform, opacity
-     and clip-path only; in lite mode a link is just a link (css: THE CUT) */
-  const cutOK = () => !lite && 'animate' in Element.prototype;
-  const CUT_EASE = 'cubic-bezier(0.76, 0, 0.24, 1)';
-  let leaving = false;
-  let cueGate = Promise.resolve(); // the sections' cues wait for the curtain (setupCues)
-  const shown = (el) => {
-    const r = el.getBoundingClientRect();
-    return r.width > 4 && r.height > 4 && +getComputedStyle(el).opacity > 0.5 ? r.width * r.height : 0;
-  };
-  // what the frame shows right now: its biggest playing video (as a still of this very frame) or picture
-  function pictureIn(frame) {
-    const seen = $$('video:not(.fx-static), img', frame)
-      .map((m) => [m, (m.tagName === 'VIDEO' ? m.readyState >= 2 && m.videoWidth : m.complete && m.naturalWidth) ? shown(m) : 0])
-      .filter(([, a]) => a)
-      .sort((x, y) => y[1] - x[1]);
-    for (const [m] of seen) {
-      if (m.tagName === 'IMG') return { el: m, w: m.naturalWidth, h: m.naturalHeight, src: m.currentSrc || m.src };
-      try {
-        const c = document.createElement('canvas');
-        c.width = m.videoWidth;
-        c.height = m.videoHeight;
-        c.getContext('2d').drawImage(m, 0, 0);
-        return { el: m, w: c.width, h: c.height, src: c.toDataURL('image/jpeg', 0.85) };
-      } catch { /* no still of this one: the next picture in the frame */ }
-    }
-    return null;
-  }
-  // how light the frame shows its picture (dimmed covers, a darker resting card)
-  function lightOf(el, frame) {
-    let k = 1;
-    for (let n = el; n && n !== frame.parentElement; n = n.parentElement) {
-      const cs = getComputedStyle(n);
-      k *= +cs.opacity;
-      const b = /brightness\(([\d.]+)\)/.exec(cs.filter);
-      if (b) k *= +b[1];
-    }
-    return Math.min(1, k);
-  }
-  function cutBox() {
-    const box = document.createElement('div');
-    box.className = 'cut';
-    box.setAttribute('aria-hidden', 'true');
-    box.innerHTML = '<div class="cut__dim"></div><div class="cut__pic"></div>';
-    document.body.appendChild(box);
-    return box;
-  }
+     The picture you click becomes the next page: a work card, a screen on the wall or the
+     next case grows straight into the case's key visual while its title flies into the
+     page title, and the page around them is already there, rising into place. No cover,
+     no hold: the browser carries the two pages over (cross-document view transitions).
+     The names go on the clicked slot here, on the way out; the case puts them on its
+     title and key visual from its <head> (html.vt-in). The top bar stays on air. In lite
+     mode, or where it isn't supported, a link is just a link (css: THE CUT) */
+  let slot = null; // the card, screen or next case the visitor clicked on the way out
   function go(href, frame) {
-    if (!cutOK()) { location.href = href; return; }
-    if (leaving) return;
-    leaving = true;
-    const box = cutBox();
-    const pic = $('.cut__pic', box);
-    const vw = box.clientWidth, vh = box.clientHeight;
-    const fr = frame && frame.getBoundingClientRect();
-    const p = fr && fr.bottom > 0 && fr.top < vh && pictureIn(frame); // a slot out of view has nothing to carry
-    const T = 640;
-    const o = { duration: T, easing: CUT_EASE, fill: 'both' };
-    const dim = $('.cut__dim', box);
-    if (p) {
-      // the picture as the frame draws it (object-fit: cover at its object-position) ...
-      const r = p.el.getBoundingClientRect();
-      const pos = getComputedStyle(p.el).objectPosition.split(' ').map((v) => (v.endsWith('%') ? parseFloat(v) / 100 : 0.5));
-      const s0 = Math.max(r.width / p.w, r.height / p.h), w0 = p.w * s0, h0 = p.h * s0;
-      const x0 = r.left + (r.width - w0) * pos[0], y0 = r.top + (r.height - h0) * (pos[1] ?? 0.5);
-      // ... and whole on the monitor (76% x 70% of the screen, centred: css .cut__mon, html.is-cut::after)
-      const s1 = Math.min((vw * 0.76) / p.w, (vh * 0.7) / p.h), w1 = p.w * s1, h1 = p.h * s1;
-      const x1 = (vw - w1) / 2, y1 = (vh - h1) / 2, k = w0 / w1;
-      // the slot's window onto the picture, in the picture's own unscaled pixels
-      const f = frame.getBoundingClientRect();
-      const rad = parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0;
-      const win = [Math.max(f.top, 0) - y0, x0 + w0 - Math.min(f.right, vw), y0 + h0 - Math.min(f.bottom, vh), Math.max(f.left, 0) - x0]
-        .map((v) => Math.max(0, v) / k + 'px').join(' ');
-      const im = new Image();
-      im.alt = '';
-      im.src = p.src;
-      Object.assign(im.style, { width: w1 + 'px', height: h1 + 'px', left: x1 + 'px', top: y1 + 'px' });
-      pic.appendChild(im);
-      im.animate([
-        { transform: `translate(${x0 - x1}px, ${y0 - y1}px) scale(${k})`, clipPath: `inset(${win} round ${rad / k}px)`, opacity: lightOf(p.el, frame) },
-        { transform: 'none', clipPath: 'inset(0px 0px 0px 0px round 0px)', opacity: 1 },
-      ], o);
-      dim.animate([{ opacity: 0 }, { opacity: 1 }], { duration: T * 0.8, easing: 'ease-out', fill: 'both' });
-      store.set('bk-cut', JSON.stringify({ img: p.src }));
-    } else {
-      dim.animate([{ opacity: 1, clipPath: 'inset(100% 0px 0px 0px)' }, { opacity: 1, clipPath: 'inset(0% 0px 0px 0px)' }], o);
-      store.set('bk-cut', '{}');
-    }
-    // the next page starts loading while the picture opens
-    const pre = document.createElement('link');
-    pre.rel = 'prefetch';
-    pre.href = href;
-    document.head.appendChild(pre);
-    setTimeout(() => { location.href = href; }, T + 20);
+    slot = frame;
+    location.href = href;
   }
-  // the curtain goes up: the black lifts off the top, the monitor drifting a little slower than its edge
-  function lift(box) {
-    const o = { duration: 1000, delay: 80, easing: CUT_EASE, fill: 'both' };
-    box.animate([{ clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 100% 0%)' }], o);
-    const im = $('.cut__pic img', box);
-    if (im) im.animate([{ translate: '0 0' }, { translate: '0 -22vh' }], o);
-    setTimeout(() => { box.remove(); root.style.removeProperty('--cut-img'); }, 1150);
-  }
-  function openCut(data) {
-    const box = cutBox();
-    box.remove();
-    $('.cut__dim', box).style.opacity = 1;
-    let ready = Promise.resolve();
-    if (data.img) {
-      const im = new Image();
-      im.alt = '';
-      im.className = 'cut__mon';
-      im.src = data.img;
-      $('.cut__pic', box).appendChild(im);
-      ready = im.decode().catch(() => {});
-    }
-    let open;
-    cueGate = new Promise((r) => { open = r; setTimeout(r, 1500); }); // never hold the page back for long
-    // the plain cover from <head> stays until the picture is ready to take its place
-    Promise.race([ready, new Promise((r) => setTimeout(r, 400))]).then(() => {
-      setTimeout(open, 380);
-      document.body.appendChild(box);
-      root.classList.remove('is-cut');
-      lift(box);
-    });
-  }
+  const inView = (el) => {
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.bottom > 0 && r.top < innerHeight;
+  };
   function setupCut() {
-    const raw = store.get('bk-cut');
-    store.del('bk-cut');
-    if (root.classList.contains('is-cut')) {
-      let data = {};
-      try { data = JSON.parse(raw) || {}; } catch { /* an old flag: no picture */ }
-      if (cutOK()) openCut(data); else root.classList.remove('is-cut');
-    }
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href]');
-      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (a.target || a.hasAttribute('download')) return;
-      const u = new URL(a.href, location.href);
-      if (u.origin !== location.origin || u.pathname === location.pathname || !cutOK()) return;
-      e.preventDefault();
-      go(u.href, a.closest('.row, .case-next'));
+      slot = a && a.closest('.row, .case-next');
+    }, true);
+    addEventListener('pageswap', (e) => {
+      const vt = e.viewTransition;
+      if (!vt) return;
+      if (lite) { vt.skipTransition(); return; }
+      root.classList.remove('vt-in'); // this page's own title and key visual stay where they are
+      const bar = $('.topbar');
+      if (bar) bar.style.viewTransitionName = 'topbar';
+      const to = e.activation && e.activation.entry && new URL(e.activation.entry.url);
+      if (!slot || !to || !/\/work\/[^/]+\/$/.test(to.pathname) || !inView(slot)) return;
+      const pic = $('.row__art, .case-next__bg', slot) || slot;
+      const title = $('.row__title, .case-next__title', slot);
+      if (pic.getClientRects().length) pic.style.viewTransitionName = 'cut-pic';
+      if (title && inView(title)) title.style.viewTransitionName = 'cut-title';
     });
-    // back/forward cache: a page left under the picture lifts it again
+    // back/forward cache: the page comes back as it was left
     addEventListener('pageshow', (e) => {
-      if (!e.persisted || !leaving) return;
-      leaving = false;
-      store.del('bk-cut');
-      const box = $('.cut');
-      if (box) { box.getAnimations({ subtree: true }).forEach((x) => x.finish()); lift(box); }
+      if (e.persisted) $$('.topbar, .row__art, .row__title, .case-next__bg, .case-next__title, .tile').forEach((el) => { el.style.viewTransitionName = ''; });
     });
   }
 
@@ -482,9 +363,11 @@
       stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head',
       panel: '.qb',
     };
+    // what the cut brings in from the page before (the case's title and key visual) is already there
+    const carried = (el) => root.classList.contains('vt-in') && (getComputedStyle(el).viewTransitionName || 'none') !== 'none';
     const all = [];
     Object.entries(CUES).forEach(([kind, sel]) => $$(sel).forEach((el) => {
-      if (el.dataset.cue) return;
+      if (el.dataset.cue || carried(el)) return;
       el.dataset.cue = kind;
       all.push(el);
       if (kind === 'rule' || kind === 'stack' || kind === 'panel') Array.from(el.children).forEach((c, i) => c.style.setProperty('--i', i));
@@ -527,7 +410,7 @@
       if (up.length) cue(up);
     }, { rootMargin: '0px 0px -8% 0px' });
     root.classList.add('cues');
-    cueGate.then(() => all.forEach((el) => io.observe(el)));
+    all.forEach((el) => io.observe(el));
     // a keyboard landing on a part brings it in at once; so does printing
     document.addEventListener('focusin', (e) => {
       const el = e.target.closest && e.target.closest('[data-cue]:not(.is-cued)');

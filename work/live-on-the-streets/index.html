@@ -16,18 +16,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="../../css/site.css?v=e9bd95c2">
+  <link rel="stylesheet" href="../../css/site.css?v=6b4db1aa">
+  <!-- the cut needs the title and key visual on the first frame -->
+  <link rel="expect" href="#cover" blocking="render">
   <script>
-    // js flag; a page reached through the cut opens under the picture that brought it (js/site.js: setupCut)
     (function (d) {
       d.classList.add('js');
       try {
-        var cut = sessionStorage.getItem('bk-cut');
-        if (cut) { d.classList.add('is-cut'); cut = JSON.parse(cut).img; if (cut) d.style.setProperty('--cut-img', 'url("' + cut + '")'); }
-      } catch (e) { /* storage blocked: no cut */ }
+        // opened from another page of the site: the cut carries the top bar (and on a case its
+        // title and key visual) over from the page before (css: THE CUT, js/site.js: setupCut)
+        var act = window.navigation && navigation.activation;
+        if (act && act.from && act.navigationType !== 'reload' && 'onpagereveal' in window) {
+          d.classList.add('vt-in');
+          addEventListener('pagereveal', function (e) {
+            if (e.viewTransition) e.viewTransition.finished.then(function () { d.classList.remove('vt-in'); });
+            else d.classList.remove('vt-in');
+          });
+        }
+      } catch (e) { /* no cut */ }
     })(document.documentElement);
   </script>
-  <script src="../../js/site.js?v=e15b70a8" defer></script>
+  <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
+  <script src="../../js/site.js?v=3d19c36f" defer></script>
 </head>
 <body class="page-case">
   <a class="skip" href="#case-main">Skip to content</a>
@@ -75,7 +85,7 @@
       <a href="../../#reel">Reel</a>
       <a href="../../#process">Process</a>
       <a href="../../#about">About</a>
-      <a href="#contact">Contact</a>
+      <a class="topnav__cta" href="#contact">Contact</a>
     </nav>
     <a class="status" href="#contact"><i class="status__dot"></i>Available — Q4 2026</a>
     <span class="topbar__tc" data-tc aria-hidden="true">00:00:00:00</span>
@@ -90,7 +100,7 @@
       <dl class="case-meta"><div><dt>Client</dt><dd>ITS · ITHS · FSU</dd></div><div><dt>Year</dt><dd>2024–2026</dd></div><div><dt>Role</dt><dd>Concept, design, animation, delivery</dd></div><div><dt>Deliverables</dt><dd><ul><li>Animated DOOH billboards</li><li>Static billboards</li><li>Animated ads 9:16</li><li>Animated academic calendars</li><li>Matching social &amp; web sets</li></ul></dd></div></dl>
     </section>
 
-    <section class="cover" aria-label="Key visual">
+    <section class="cover" id="cover" aria-label="Key visual">
       <figure class="cover__item" style="--ar:2.1333"><video muted loop playsinline preload="auto" data-autoplay poster="../../media/cases/live-on-the-streets/d705c98e.webp" width="960" height="450" src="../../media/cases/live-on-the-streets/d705c98e.mp4" aria-label="FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540"></video><figcaption>FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540</figcaption></figure>
     </section>
 

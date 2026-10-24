@@ -9,37 +9,43 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Boško Kosić — campaigns, key art &amp; motion">
   <meta property="og:description" content="50+ billboards across Belgrade. Three years building a Web3 sports brand. See the work.">
-  <meta property="og:image" content="media/stills/car-dusan-1600.webp">
+  <meta property="og:image" content="media/stills/kolubara-1600.webp">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="favicon.ico?v=0c991286" sizes="any">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=f911308f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=e9bd95c2">
+  <link rel="stylesheet" href="css/site.css?v=6b4db1aa">
   <script>
-    // js flag + the avatar intro decision, before first paint so the page never flashes under the intro;
-    // a page reached through the cut opens under a plain cover instead (js/site.js: setupCut)
-    // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per session)
+    // js flag + the avatar intro decision, before first paint so the page never flashes under the intro
+    // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per
+    // session, and not when the visitor comes back from another page of the site)
     (function (d) {
       d.classList.add('js');
       try {
-        var cut = sessionStorage.getItem('bk-cut');
-        if (cut) {
-          d.classList.add('is-cut');
-          try { cut = JSON.parse(cut).img; if (cut) d.style.setProperty('--cut-img', 'url("' + cut + '")'); } catch (e) { /* no picture */ }
+        // opened from another page of the site: the cut carries the top bar (and on a case its
+        // title and key visual) over from the page before (css: THE CUT, js/site.js: setupCut)
+        var act = window.navigation && navigation.activation;
+        if (act && act.from && act.navigationType !== 'reload' && 'onpagereveal' in window) {
+          d.classList.add('vt-in');
+          addEventListener('pagereveal', function (e) {
+            if (e.viewTransition) e.viewTransition.finished.then(function () { d.classList.remove('vt-in'); });
+            else d.classList.remove('vt-in');
+          });
         }
         var c = navigator.connection || {};
         var low = c.saveData || /(^|-)2g$/.test(c.effectiveType || '') ||
           (navigator.deviceMemory && navigator.deviceMemory < 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4);
-        if (!low && !sessionStorage.getItem('bk-intro') && !sessionStorage.getItem('bk-cut') &&
+        if (!low && !sessionStorage.getItem('bk-intro') && document.referrer.indexOf(location.origin + '/') !== 0 &&
             matchMedia('(min-width: 768px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           d.classList.add('is-intro');
         }
       } catch (e) { /* storage blocked: no intro */ }
     })(document.documentElement);
   </script>
-  <script src="js/site.js?v=e15b70a8" defer></script>
+  <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
+  <script src="js/site.js?v=3d19c36f" defer></script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
@@ -88,7 +94,7 @@
       <a href="#reel">Reel</a>
       <a href="#process">Process</a>
       <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a class="topnav__cta" href="#contact">Contact</a>
     </nav>
     <a class="status" href="#contact"><i class="status__dot"></i>Available — Q4 2026</a>
     <span class="topbar__tc" data-tc aria-hidden="true">00:00:00:00</span>
@@ -114,7 +120,7 @@
             <figure data-slot="hortus" class="tile s p10" data-video="fsu-prolecni" data-project="live" data-label="FSU · DOOH 1152×640"><img loading="lazy" src="media/loops/fsu-prolecni.webp" alt="" width="640" height="356" decoding="async"></figure>
             <figure class="tile q1" data-video="its-sah" data-project="live" data-label="ITS · DOOH 1152×640"><img loading="lazy" src="media/loops/its-sah.webp" alt="" width="640" height="356" decoding="async"></figure>
             <!-- the older work around them -->
-            <figure class="tile xl" data-project="keyart" data-label="Key art · 8K"><picture><source type="image/avif" srcset="media/stills/car-dusan-960.avif 960w, media/stills/car-dusan-1600.avif 1600w" sizes="34vw"><img loading="lazy" src="media/stills/car-dusan-960.webp" alt="" width="960" height="540" decoding="async"></picture></figure>
+            <figure class="tile xl" data-project="keyart" data-label="Personal art · 8K"><picture><source type="image/avif" srcset="media/stills/kolubara-960.avif 960w, media/stills/kolubara-1600.avif 1600w" sizes="34vw"><img loading="lazy" src="media/stills/kolubara-960.webp" alt="" width="960" height="540" decoding="async"></picture></figure>
             <figure class="tile" data-video="ballies-strike" data-project="ballies" data-label="Ballies · motion 1:1"><img loading="lazy" src="media/loops/ballies-strike.webp" alt="" width="480" height="480" decoding="async"></figure>
             <figure class="tile w" data-video="fsu-predupis" data-project="live" data-label="FSU · DOOH 1152×640"><img loading="lazy" src="media/loops/fsu-predupis.webp" alt="" width="640" height="356" decoding="async"></figure>
             <figure class="tile" data-project="fsu" data-label="FSU · exhibition"><picture><source type="image/avif" srcset="media/stills/tacke-susreta-480.avif"><img loading="lazy" src="media/stills/tacke-susreta-480.webp" alt="" width="480" height="480" decoding="async"></picture></figure>
@@ -395,8 +401,8 @@
         <p class="reel__sub">Billboards, campaigns, key art and product films — cut from three years of shipped work.</p>
         <button class="reel__player" type="button" data-reel aria-label="Play showreel">
           <picture>
-            <source type="image/avif" srcset="media/stills/car-dusan-1600.avif">
-            <img src="media/stills/car-dusan-1600.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="media/stills/kolubara-1600.avif">
+            <img src="media/stills/kolubara-1600.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
           </picture>
           <span class="reel__play"><span class="btn__play"></span>Play reel</span>
           <span class="reel__note">Teaser cut · full reel in production</span>
@@ -441,17 +447,17 @@
           <div class="row__art" aria-hidden="true"><span class="row__shot" data-loop="ballies-strike"><img src="media/loops/ballies-strike.webp" alt="" width="480" height="480" loading="lazy" decoding="async"></span></div>
           <div class="row__media" aria-hidden="true"><img src="media/loops/ballies-ai.webp" alt="" width="360" height="640" loading="lazy" decoding="async" data-vsrc="ballies-ai"></div>
         </li>
-        <li class="row" id="p-key-art" data-preview-still="car-dusan" style="--c:#8fb3ff;--span:3">
-          <a class="row__link" href="work/key-art/">
+        <li class="row" id="p-personal-art" data-preview-still="kolubara" style="--c:#8fb3ff;--span:3">
+          <a class="row__link" href="work/personal-art/">
             <span class="row__num">03</span>
-            <span class="row__title">Key Art</span>
-            <span class="row__line">Cinematic composites built from generated elements, stock and a lot of light — in 4K and 8K.</span>
+            <span class="row__title">Personal Art</span>
+            <span class="row__line">Cinematic stills built from generated elements, stock and a lot of light — in 4K and 8K.</span>
             <span class="row__tags">Compositing — Personal</span>
             <span class="row__year">2026</span>
             <span class="row__go" aria-hidden="true">→</span>
           </a>
-          <div class="row__art" aria-hidden="true"><span class="row__shot"><picture><source type="image/avif" srcset="media/stills/car-dusan-960.avif"><img src="media/stills/car-dusan-960.webp" alt="" width="960" height="540" loading="lazy" decoding="async"></picture></span></div>
-          <div class="row__media" aria-hidden="true"><picture><source type="image/avif" srcset="media/stills/car-dusan-960.avif"><img src="media/stills/car-dusan-960.webp" alt="" width="960" height="540" loading="lazy" decoding="async"></picture></div>
+          <div class="row__art" aria-hidden="true"><span class="row__shot"><picture><source type="image/avif" srcset="media/stills/kolubara-960.avif"><img src="media/stills/kolubara-960.webp" alt="" width="960" height="540" loading="lazy" decoding="async"></picture></span></div>
+          <div class="row__media" aria-hidden="true"><picture><source type="image/avif" srcset="media/stills/kolubara-960.avif"><img src="media/stills/kolubara-960.webp" alt="" width="960" height="540" loading="lazy" decoding="async"></picture></div>
         </li>
         <li class="row" id="p-fsu-2026" data-preview="fsu-duh" style="--c:#ffd21f;--span:4">
           <a class="row__link" href="work/fsu-2026/">
