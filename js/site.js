@@ -242,7 +242,7 @@
     }
 
     // empty background only: the page itself, or a bare layout box with no text and no fill
-    const SKIP = 'a,button,p,h1,h2,h3,li,dt,dd,img,picture,video,figure,input,label,blockquote,.hero,.topbar,.dock,.pr__stage,.peek,.intro,.card,.about__intro';
+    const SKIP = 'a,button,p,h1,h2,h3,li,dt,dd,img,picture,video,figure,input,label,blockquote,.hero,.topbar,.dock,.pr__stage,.intro,.card,.about__intro';
     const isEmpty = (x, y) => {
       const el = document.elementFromPoint(x, y);
       if (!el) return false;
@@ -813,59 +813,45 @@
       $$('.row__media').forEach((m) => io.observe(m));
     }
 
-    /* desktop: floating preview that follows the cursor over the rundown */
-    const peek = $('.peek');
-    const peekInner = $('.peek__inner');
-    let px = -999, py = -999, tx = -999, ty = -999, praf = 0, peekVideo = null;
-    function peekLoop() {
-      px += (tx - px) * 0.16;
-      py += (ty - py) * 0.16;
-      peek.style.setProperty('--x', px.toFixed(1) + 'px');
-      peek.style.setProperty('--y', py.toFixed(1) + 'px');
-      praf = Math.abs(tx - px) + Math.abs(ty - py) > 0.5 ? requestAnimationFrame(peekLoop) : 0;
-    }
-    function placePeek(e) {
-      const w = peek.offsetWidth, h = peek.offsetHeight;
-      tx = e.clientX + 28 + w > innerWidth ? e.clientX - w - 28 : e.clientX + 28;
-      ty = Math.min(Math.max(e.clientY - h / 2, 72), innerHeight - h - 16);
-      if (px < -900) { px = tx; py = ty; }
-      if (!praf) praf = requestAnimationFrame(peekLoop);
-    }
-    $$('.row').forEach((row) => {
-      row.addEventListener('mouseenter', (e) => {
-        if (!mqHover.matches || !mqDesktop.matches) return;
-        peekInner.textContent = '';
-        peek.classList.remove('is-vert', 'is-square');
-        const slug = row.dataset.preview;
-        if (slug && !lite) {
-          const v = peekVideo = makeVideo(LOOPS + slug + '.mp4');
-          v.addEventListener('loadedmetadata', () => { // the pointer may have left the row by now
-            const r = v.videoWidth / v.videoHeight;
-            peek.classList.toggle('is-vert', r < 0.8);
-            peek.classList.toggle('is-square', r >= 0.8 && r <= 1.2);
-          }, { once: true });
-          const poster = new Image();
-          poster.src = LOOPS + slug + '.webp';
-          peekInner.append(poster, peekVideo);
-          play(peekVideo);
-        } else {
-          const src = row.querySelector('.row__media img');
-          const img = new Image();
-          img.src = src.currentSrc || src.src;
-          const r = +src.getAttribute('width') / +src.getAttribute('height');
-          peek.classList.toggle('is-vert', r < 0.8);
-          peek.classList.toggle('is-square', r >= 0.8 && r <= 1.2);
-          peekInner.append(img);
+    /* desktop: the work cards. One card at a time is on air, like a director cutting between
+       sources: it plays its loop while the others rest on a still. Pointing at a card cuts to
+       it; the director carries on from there. Only while the cards are on screen. */
+    const rows = $$('.rundown .row');
+    let pgm = -1, pointed = false, cutTimer = 0;
+    const shots = (r) => $$('.row__shot[data-loop]', r);
+    const pause = (r) => shots(r).forEach((s) => { const v = $('video', s); if (v) v.pause(); });
+    function roll(r) {
+      if (lite) return;
+      shots(r).forEach((s) => {
+        let v = $('video', s);
+        if (!v) {
+          v = makeVideo(LOOPS + s.dataset.loop + '.mp4');
+          v.addEventListener('playing', () => s.classList.add('has-video'), { once: true });
+          s.appendChild(v);
         }
-        placePeek(e);
-        peek.classList.add('is-on');
+        play(v);
       });
-      row.addEventListener('mousemove', placePeek);
-      row.addEventListener('mouseleave', () => {
-        peek.classList.remove('is-on');
-        if (peekVideo) { peekVideo.pause(); peekVideo = null; }
+    }
+    function cutTo(i) {
+      if (i === pgm) return;
+      if (pgm >= 0) { rows[pgm].classList.remove('is-pgm'); pause(rows[pgm]); }
+      pgm = i;
+      rows[i].classList.add('is-pgm');
+      roll(rows[i]);
+    }
+    function direct(on) {
+      clearInterval(cutTimer);
+      if (!on || !mqDesktop.matches) { if (pgm >= 0) pause(rows[pgm]); return; }
+      if (pgm < 0) cutTo(0); else roll(rows[pgm]);
+      cutTimer = setInterval(() => { if (!pointed && !document.hidden) cutTo((pgm + 1) % rows.length); }, 3800);
+    }
+    if (rows.length && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([en]) => direct(en.isIntersecting), { threshold: 0.25 }).observe($('.rundown'));
+      rows.forEach((row, i) => {
+        row.addEventListener('mouseenter', () => { if (mqHover.matches && mqDesktop.matches) { pointed = true; cutTo(i); } });
+        row.addEventListener('mouseleave', () => { pointed = false; });
       });
-    });
+    }
 
     /* reel player */
     const dlg = $('[data-player]');

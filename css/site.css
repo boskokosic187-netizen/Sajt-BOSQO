@@ -50,7 +50,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 
 /* ---------- shared bits ---------- */
 .mono, .eyebrow, .sec-head, .bar, .status, .row__tags, .row__year, .row__num,
-.reel__note, .mail__hint, .foot, .dock, .peek__label, .tile::before {
+.reel__note, .mail__hint, .foot, .dock, .tile::before {
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600;
   font-size: 12.5px;
   letter-spacing: 0.07em;
@@ -505,63 +505,96 @@ html:not(.is-lite) .tile { will-change: filter; }
   background-repeat: no-repeat;
 }
 
-/* ---- selected work: rundown ---- */
-.work__head { display: grid; grid-template-columns: 1fr minmax(0, 420px); gap: 40px; align-items: end; margin: 40px 0 56px; }
+/* ---- selected work: six colour-coded cards, like sources on a multiviewer. Each project
+   has its own signal colour (--c): the bar on top, the number, the glow on hover. One card
+   at a time is on air and plays its loop; the rest wait on a still (js: setupWork). ---- */
+.work__head { display: grid; grid-template-columns: 1fr minmax(0, 420px); gap: 40px; align-items: end; margin: clamp(24px, 3.5vh, 40px) 0 clamp(22px, 3.5vh, 40px); }
 .work__intro { color: var(--muted); font-size: 18px; }
-.rundown { border-top: 1px solid var(--line); }
-.row { position: relative; border-bottom: 1px solid var(--line); transition: opacity 0.4s; }
-.rundown:hover .row:not(:hover) { opacity: 0.38; }
-.row__link {
-  position: relative;
-  display: grid; grid-template-columns: 56px minmax(0, 1.6fr) minmax(0, 1fr) 90px 28px;
-  grid-template-areas: "num title line year go" "num title tags year go";
-  column-gap: 24px; align-items: center;
-  padding: clamp(18px, 2.4vw, 30px) 0;
-}
-.row__link::before {
-  content: ""; position: absolute; inset: 0 calc(var(--pad) * -1); z-index: -1;
-  background: rgba(242, 239, 234, 0.035);
-  transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s var(--cut);
-}
-.row:hover .row__link::before { transform: scaleY(1); }
-.row__num { grid-area: num; color: var(--rec); align-self: start; padding-top: 0.9em; }
-.row__title {
-  grid-area: title;
-  font-weight: 800; font-stretch: 100%;
-  font-size: clamp(34px, 4vw, 72px); line-height: 0.95; letter-spacing: -0.03em;
-  white-space: nowrap;
-  transition: font-stretch 0.6s var(--cut), letter-spacing 0.6s var(--cut);
-}
-.row:hover .row__title { font-stretch: 125%; letter-spacing: -0.04em; }
-.row__line { grid-area: line; color: var(--text); opacity: 0.85; font-size: 15px; max-width: 40ch; align-self: end; }
-.row__tags { grid-area: tags; color: var(--muted); align-self: start; margin-top: 8px; }
-.row__year { grid-area: year; color: var(--muted); text-align: right; }
-.row__go { grid-area: go; font-size: 22px; transition: transform 0.4s var(--out), color 0.3s; }
-.row:hover .row__go { transform: translateX(6px); color: var(--rec); }
-.row__media { display: none; }
+.row { position: relative; transition: opacity 0.4s; }
+.row__link { position: relative; display: grid; column-gap: 24px; align-items: center; }
+.row__num { grid-area: num; }
+.row__title { grid-area: title; font-weight: 800; letter-spacing: -0.03em; }
+.row__line { grid-area: line; }
+.row__tags { grid-area: tags; }
+.row__year { grid-area: year; color: var(--muted); }
+.row__go { grid-area: go; }
+.row__num { color: var(--c, var(--rec)); }
+.row__tags { color: var(--muted); }
+.row__media, .row__art { display: none; }
 
-/* floating preview that follows the cursor */
-.peek {
-  position: fixed; left: 0; top: 0; z-index: 30; pointer-events: none;
-  width: 340px; aspect-ratio: 16 / 10;
-  transform: translate3d(var(--x, -999px), var(--y, -999px), 0);
-  will-change: transform;
+@media (min-width: 768px) {
+  .rundown {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 14px;
+    height: clamp(480px, calc(100svh - 330px), 780px);
+  }
+  .row {
+    grid-column: span var(--span, 4); overflow: hidden; isolation: isolate; border-radius: 14px; background: var(--bg-2);
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: opacity 0.45s, box-shadow 0.45s, transform 0.6s var(--out);
+  }
+  .row::before { /* the source colour, like the tally strip of a monitor */
+    content: ""; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 3px; background: var(--c);
+  }
+  .rundown:hover .row:not(:hover) { opacity: 0.55; }
+  .row:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--c), 0 26px 60px -24px var(--c); }
+
+  .row__art { position: absolute; inset: 0; z-index: -1; display: flex; gap: 3px; background: #000; }
+  .row__shot { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; }
+  .row__shot img, .row__shot picture, .row__shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .row__shot--face img { object-position: 50% 22%; } /* a portrait: keep the face in the band a wide card shows */
+  .row__shot img, .row__shot video { filter: brightness(0.78) saturate(0.95); transform: scale(1.001); transition: transform 1.4s var(--out), filter 0.6s; }
+  .row__shot video { opacity: 0; transition: opacity 0.5s, transform 1.4s var(--out), filter 0.6s; }
+  .row__shot.has-video video { opacity: 1; }
+  .row:is(:hover, .is-pgm) .row__shot img, .row:is(:hover, .is-pgm) .row__shot video { filter: none; transform: scale(1.04); }
+  .row__art::after { /* type stays readable; the project's colour rises from the bottom */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(to top, rgba(10, 10, 11, 0.96) 0%, rgba(10, 10, 11, 0.88) 30%, rgba(10, 10, 11, 0.42) 54%, rgba(10, 10, 11, 0) 76%),
+      linear-gradient(to top, color-mix(in srgb, var(--c) 30%, transparent), transparent 60%),
+      linear-gradient(to bottom, rgba(10, 10, 11, 0.55), rgba(10, 10, 11, 0) 26%);
+    transition: opacity 0.5s;
+  }
+
+  .row__link {
+    position: absolute; inset: 0; display: grid;
+    grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr auto auto auto;
+    grid-template-areas: "num year" ". ." "title title" "line line" "tags go";
+    row-gap: 8px; column-gap: 16px; padding: clamp(16px, 1.4vw, 22px);
+  }
+  .row__num {
+    justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 999px;
+    background: var(--c); color: #0a0a0b; font-weight: 700;
+  }
+  .row__num::after { /* on air: the card the director has cut to */
+    content: "On air"; display: none; padding-left: 8px; border-left: 1px solid rgba(10, 10, 11, 0.35);
+  }
+  .row.is-pgm .row__num::after { display: inline; }
+  .row__year { align-self: start; padding-top: 5px; color: rgba(242, 239, 234, 0.75); text-align: right; }
+  .row__title {
+    font-stretch: 112%; font-size: clamp(24px, 2.3vw, 42px); line-height: 0.98; text-wrap: balance;
+    transition: font-stretch 0.6s var(--cut);
+  }
+  .row:hover .row__title { font-stretch: 125%; }
+  .row__line {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+    max-width: 46ch; color: rgba(242, 239, 234, 0.82); font-size: 14.5px; line-height: 1.4;
+  }
+  .row__tags { align-self: center; color: var(--c); }
+  .row__go {
+    display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(242, 239, 234, 0.3); border-radius: 50%;
+    background: rgba(10, 10, 11, 0.45); font-size: 18px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.4s var(--out);
+  }
+  .row:hover .row__go { border-color: var(--c); background: var(--c); color: #0a0a0b; transform: translateX(3px); }
+
+  /* a narrow card keeps its words short */
+  .row:is([style*="--span:3"]) .row__line { -webkit-line-clamp: 3; font-size: 14px; }
 }
-.peek.is-vert { width: 250px; aspect-ratio: 9 / 16; }
-.peek.is-square { width: 300px; aspect-ratio: 1; }
-.peek__inner {
-  position: absolute; inset: 0; overflow: hidden; border-radius: 6px; background: var(--bg-2);
-  clip-path: inset(50% 0 50% 0);
-  transition: clip-path 0.5s var(--cut);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+/* a tablet: two cards a row */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .rundown { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: 300px; height: auto; }
+  .row { grid-column: auto; }
 }
-.peek.is-on .peek__inner { clip-path: inset(0 0 0 0); }
-.peek__inner img, .peek__inner video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.peek__label {
-  position: absolute; left: 10px; bottom: 10px; padding: 5px 8px; border-radius: 3px;
-  background: var(--rec); color: #000; opacity: 0; transition: opacity 0.2s 0.2s;
-}
-.peek.is-on .peek__label { opacity: 1; }
 
 /* ---- contact: one obvious next step. The quick brief turns three taps into a ready email,
    and its send button is the only filled orange thing in the section; the face, the honest
@@ -698,7 +731,6 @@ html:not(.is-lite) .tile { will-change: filter; }
   .status { padding: 8px 12px; gap: 8px; font-size: 11.5px; }
   .hero__row { grid-template-columns: 1fr; gap: 20px; }
   .proof { justify-self: start; }
-  .row__link { grid-template-columns: 44px minmax(0, 1fr) 70px 24px; grid-template-areas: "num title year go" "num line year go" "num tags year go"; row-gap: 8px; }
 }
 
 /* ==========================================================================
@@ -774,7 +806,8 @@ html:not(.is-lite) .tile { will-change: filter; }
   .row__tags { margin: 0; align-self: center; }
   .row__go { font-size: 0; }
   .row__go::before { content: "View case →"; font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; background: var(--text); color: var(--bg); }
-  .peek { display: none; }
+  .row::before { content: ""; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 3px; background: var(--c); }
+  .row__tags { color: var(--c); }
 
   .contact { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
   .contact::before { right: -40%; top: 40%; width: 140%; height: 50%; }
