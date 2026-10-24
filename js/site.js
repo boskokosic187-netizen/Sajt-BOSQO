@@ -476,6 +476,85 @@
     })
   );
 
+  /* ------------------------------------------------- contact: quick brief
+     Three taps build an email: what, when, send. The send link is a plain mailto that works
+     on its own; the taps only fill in its subject and body, so nothing leaves the page.
+     Beside it: the avatar from the top bar (cloned before setupAvatar, so it blinks too) and
+     an honest reply time, by the hour in Belgrade. */
+  function setupContact() {
+    const slot = $('[data-av-slot]');
+    const av = $('.mark__av svg');
+    if (slot && av) {
+      const c = av.cloneNode(true);
+      $('clipPath', c).id = 'av-clip-ct';
+      $('[clip-path]', c).setAttribute('clip-path', 'url(#av-clip-ct)');
+      slot.prepend(c);
+    }
+    const pres = $('[data-presence]');
+    if (pres) {
+      const hourFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Belgrade', hour: 'numeric', hourCycle: 'h23' });
+      const say = () => {
+        const now = new Date();
+        const h = +hourFmt.format(now);
+        const day = h >= 9 && h < 21;
+        if (slot) slot.classList.toggle('is-away', !day);
+        pres.textContent = `${clockFmt.format(now)} in Belgrade · ${day ? 'usually replies within a day' : 'replies in the morning'}`;
+      };
+      say();
+      setInterval(say, 60000);
+    }
+
+    const qb = $('[data-brief]');
+    if (!qb) return;
+    const send = $('[data-send]', qb);
+    const subj = $('[data-subject]', qb);
+    const to = send.getAttribute('href').split('?')[0];
+    const groups = $$('.qb__chips', qb);
+    function update() {
+      const picked = groups.map((g) => $$('[aria-pressed="true"]', g).map((b) => b.textContent.trim()));
+      const [need, when] = picked;
+      groups.forEach((g, i) => g.closest('.qb__q').classList.toggle('is-done', picked[i].length > 0));
+      qb.classList.toggle('is-armed', need.length > 0);
+      const s = need.length ? `Brief: ${need.join(' + ')}${when.length ? ` (${when[0].toLowerCase()})` : ''}` : 'Project brief';
+      const body = [
+        'Hi Boško,', '',
+        `What I need: ${need.join(', ') || '…'}`,
+        `When: ${when[0] || '…'}`, '',
+        'A few words about the project:', '', '',
+        'Links or references:', '', '',
+        'Budget (optional):', '', '',
+        'Thanks,', '',
+      ].join('\r\n');
+      send.href = `${to}?subject=${encodeURIComponent(s)}&body=${encodeURIComponent(body)}`;
+      subj.textContent = need.length ? `Subject: ${s}` : 'Opens your email with the brief filled in';
+    }
+    groups.forEach((g) => g.addEventListener('click', (e) => {
+      const b = e.target.closest('.qb__chip');
+      if (!b) return;
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      if (g.dataset.pick === 'one') $$('.qb__chip', g).forEach((c) => c.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', String(on));
+      update();
+    }));
+    update();
+    send.addEventListener('click', () => { if (window.gtag) window.gtag('event', 'generate_lead', { method: 'quick_brief' }); });
+
+    // the same soft pointer light as the About cards
+    if (mqHover.matches && !reduceMotion) {
+      let x = 0, y = 0, raf = 0;
+      qb.addEventListener('pointermove', (e) => {
+        x = e.clientX;
+        y = e.clientY;
+        if (!raf) raf = requestAnimationFrame(() => {
+          raf = 0;
+          const r = qb.getBoundingClientRect();
+          qb.style.setProperty('--mx', x - r.left + 'px');
+          qb.style.setProperty('--my', y - r.top + 'px');
+        });
+      });
+    }
+  }
+
   /* --------------------------------------------------- dialog helpers */
   function openDialog(d) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
   function closeDialog(d) {
@@ -759,9 +838,9 @@
         peek.classList.remove('is-vert', 'is-square');
         const slug = row.dataset.preview;
         if (slug && !lite) {
-          peekVideo = makeVideo(LOOPS + slug + '.mp4');
-          peekVideo.addEventListener('loadedmetadata', () => {
-            const r = peekVideo.videoWidth / peekVideo.videoHeight;
+          const v = peekVideo = makeVideo(LOOPS + slug + '.mp4');
+          v.addEventListener('loadedmetadata', () => { // the pointer may have left the row by now
+            const r = v.videoWidth / v.videoHeight;
             peek.classList.toggle('is-vert', r < 0.8);
             peek.classList.toggle('is-square', r >= 0.8 && r <= 1.2);
           }, { once: true });
@@ -2707,6 +2786,7 @@
   }
 
   setupIntro();
+  setupContact();
   setupAvatar();
   setupHome();
   setupProcess();

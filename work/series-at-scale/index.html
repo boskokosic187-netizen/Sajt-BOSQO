@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="../../css/site.css?v=e285b9f4">
+  <link rel="stylesheet" href="../../css/site.css?v=c5a53358">
   <script>document.documentElement.classList.add('js')</script>
-  <script src="../../js/site.js?v=80dc5b45" defer></script>
+  <script src="../../js/site.js?v=24e04220" defer></script>
 </head>
 <body class="page-case">
   <a class="skip" href="#case-main">Skip to content</a>
@@ -239,17 +239,65 @@
 
     <section class="contact contact--mini" data-lit id="contact" aria-labelledby="contact-title">
       <div class="sec-head"><span class="sec-head__num">●</span><span class="sec-head__label">Contact</span></div>
-      <h2 class="contact__title" id="contact-title">Got a brief?<br><em>Let’s make it move.</em></h2>
-      <button class="mail" type="button" data-copy="boskokosic187@gmail.com">
-        <span class="mail__addr">boskokosic187@gmail.com</span>
-        <span class="mail__hint" data-copy-hint>Click to copy</span>
-      </button>
-      <ul class="contact__links">
-        <li><a href="mailto:boskokosic187@gmail.com">Email</a></li>
-        <li><a href="https://calendly.com/boskokosic187/30min" target="_blank" rel="noopener">Book a 30-min call</a></li>
-        <li><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://www.behance.net/bosko_kosic" target="_blank" rel="noopener">Behance</a></li>
-      </ul>
+      <div class="ct">
+        <div class="ct__main">
+          <h2 class="contact__title" id="contact-title">Got a brief?<br><em>Let’s make it move.</em></h2>
+          <p class="contact__sub">Open to full-time roles, remote contracts and freelance projects worldwide.</p>
+          <div class="ct__me">
+            <span class="ct__av" data-av-slot aria-hidden="true"><i class="ct__dot"></i></span>
+            <p><b>Boško Kosić</b><span data-presence>Usually replies within a day</span></p>
+          </div>
+          <button class="mail" type="button" data-copy="boskokosic187@gmail.com">
+            <span class="mail__k">Email me directly</span>
+            <span class="mail__addr">boskokosic187@gmail.com</span>
+            <span class="mail__hint" data-copy-hint>Click to copy</span>
+          </button>
+          <ul class="ct__links">
+            <li><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" rel="noopener">LinkedIn <i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://www.behance.net/bosko_kosic" target="_blank" rel="noopener">Behance <i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://www.instagram.com/boskokosic/" target="_blank" rel="noopener">Instagram <i aria-hidden="true">↗</i></a></li>
+          </ul>
+        </div>
+
+        <div class="qb card" data-brief>
+          <p class="qb__h"><span class="qb__lamp" aria-hidden="true"></span><b>Quick brief</b><span>3 taps · 20 seconds</span></p>
+          <div class="qb__q" role="group" aria-labelledby="qb-need">
+            <p class="qb__n" id="qb-need"><i aria-hidden="true">1</i>What do you need?</p>
+            <div class="qb__chips" data-pick="many">
+              <button class="qb__chip" type="button" aria-pressed="false">Campaign</button>
+              <button class="qb__chip" type="button" aria-pressed="false">Billboards &amp; DOOH</button>
+              <button class="qb__chip" type="button" aria-pressed="false">Key art &amp; posters</button>
+              <button class="qb__chip" type="button" aria-pressed="false">Motion &amp; animation</button>
+              <button class="qb__chip" type="button" aria-pressed="false">Social content</button>
+              <button class="qb__chip" type="button" aria-pressed="false">Brand identity</button>
+              <button class="qb__chip" type="button" aria-pressed="false">A full-time designer</button>
+            </div>
+          </div>
+          <div class="qb__q" role="group" aria-labelledby="qb-when">
+            <p class="qb__n" id="qb-when"><i aria-hidden="true">2</i>When?</p>
+            <div class="qb__chips" data-pick="one">
+              <button class="qb__chip" type="button" aria-pressed="false">As soon as possible</button>
+              <button class="qb__chip" type="button" aria-pressed="false">In 1–3 months</button>
+              <button class="qb__chip" type="button" aria-pressed="false">Just exploring</button>
+            </div>
+          </div>
+          <div class="qb__q">
+            <p class="qb__n"><i aria-hidden="true">3</i>Send it</p>
+            <a class="qb__send" href="mailto:boskokosic187@gmail.com?subject=Project%20brief" data-send>
+              <span class="qb__go">Send the brief <i aria-hidden="true">→</i></span>
+              <span class="qb__subj" data-subject>Opens your email with the brief filled in</span>
+            </a>
+            <p class="qb__or">Prefer to talk? <a href="https://calendly.com/boskokosic187/30min" target="_blank" rel="noopener">Book a 30-min call</a></p>
+          </div>
+          <p class="qb__avail"><i aria-hidden="true"></i>Taking new projects for Q4 2026</p>
+        </div>
+      </div>
+
+      <ol class="ct__next" aria-label="What happens next">
+        <li><b>01</b><span>You send a brief</span><small>A few lines are enough</small></li>
+        <li><b>02</b><span>I reply within a day</span><small>Usually with questions and first ideas</small></li>
+        <li><b>03</b><span>We plan it together</span><small>Scope and timeline, then we make it move</small></li>
+      </ol>
       <footer class="foot">
         <span>Designed, animated &amp; coded by Boško Kosić</span>
         <span>Belgrade · © 2026</span>
