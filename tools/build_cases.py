@@ -10,7 +10,9 @@ Usage:  python -I tools/build_cases.py            # media + pages
 import hashlib
 import html
 import json
+import math
 import os
+import re
 import subprocess
 import sys
 
@@ -26,6 +28,7 @@ PREFIX = {
 }
 IMG_WIDTHS = (800, 1600)
 ONLY_PAGES = "--pages" in sys.argv
+BUILT = {}   # url -> media info from the last build (media/cases/manifest.json)
 
 
 def resolve(src):
@@ -104,14 +107,18 @@ def media_for(item, outdir, rel):
     src = resolve(item["src"])
     key = hashlib.sha1(item["src"].encode("utf-8")).hexdigest()[:8]
     base = os.path.join(outdir, key)
-    if item["type"] == "video":
-        info = {"type": "video"} if ONLY_PAGES else build_video(src, base, item.get("start", 0), item.get("dur"))
-        if ONLY_PAGES:
+    url = rel + key
+    built_only = ONLY_PAGES or not os.path.exists(src)   # archived originals keep their built media
+    if built_only and url in BUILT:   # its size as recorded when it was built
+        info = dict(BUILT[url])
+    elif item["type"] == "video":
+        info = {"type": "video"} if built_only else build_video(src, base, item.get("start", 0), item.get("dur"))
+        if built_only:
             pw, ph = Image.open(base + ".webp").size
             info = {"w": pw, "h": ph}
         info["type"] = "video"
     else:
-        if ONLY_PAGES:
+        if built_only:
             ws = sorted(int(f.rsplit("-", 1)[1][:-5]) for f in os.listdir(outdir)
                         if f.startswith(key + "-") and f.endswith(".webp"))
             w0, h0 = Image.open(f"{base}-{ws[0]}.webp").size
@@ -120,7 +127,7 @@ def media_for(item, outdir, rel):
         else:
             info = build_image(src, base, item.get("matte", False))
         info["type"] = "image"
-    info["url"] = rel + key
+    info["url"] = url
     info["label"] = item.get("label", "")
     info["matte"] = item.get("matte", False)
     return info
@@ -130,7 +137,7 @@ def media_for(item, outdir, rel):
 E = lambda s: html.escape(s, quote=True)
 
 
-def picture(m, sizes, cls="", eager=False):
+def picture(m, sizes, cls="", eager=False, alt=None):
     ws = m["widths"]
     avif = ", ".join(f"{m['url']}-{w}.avif {w}w" for w in ws)
     webp = ", ".join(f"{m['url']}-{w}.webp {w}w" for w in ws)
@@ -138,7 +145,7 @@ def picture(m, sizes, cls="", eager=False):
     load = 'fetchpriority="high"' if eager else 'loading="lazy"'
     return (f'<picture><source type="image/avif" srcset="{avif}" sizes="{sizes}">'
             f'<img class="{cls}" src="{m["url"]}-{ws[0]}.webp" srcset="{webp}" sizes="{sizes}" '
-            f'width="{ws[0]}" height="{h}" alt="{E(m["label"])}" {load} decoding="async"></picture>')
+            f'width="{ws[0]}" height="{h}" alt="{E(m["label"] if alt is None else alt)}" {load} decoding="async"></picture>')
 
 
 def video_tag(m, eager=False):
@@ -168,6 +175,206 @@ def gallery_row(ms):
     figs = "".join(figure(m, f"(min-width: 768px) {max(20, round(100 * (m['w'] / m['h']) / tot))}vw, 100vw")
                    for m in ms)
     return f'<div class="{cls}">{figs}</div>'
+
+
+# ------------------------------------------------------------------- blocks
+# A case can show its work as full-screen blocks instead of rows: one campaign, carousel or
+# series per block, grouped by kind. Each type has its own layout:
+#   board    every format of a campaign at its true aspect ratio, together on one screen
+#   tracks   carousel slides in rows that move sideways while the block is pinned
+#   marquee  a long series in rows that drift on their own
+#   cards    a few projects as cards, each cycling through its own formats
+BOARD_AR = 2.25   # width / height of the space a board fills on a desktop screen
+CARD_CAP = 0.09   # a card's caption, as a share of that height
+
+
+def block_items(b):
+    if b["type"] == "tracks":
+        return [x for t in b["tracks"] for x in t["items"]]
+    if b["type"] == "cards":
+        return [x for c in b["cards"] for x in c["items"]]
+    return b["items"]
+
+
+def all_media(m):
+    return (m["hero"] + [i for r in m["rows"] for i in r] + [x for b in m.get("blocks", ()) for x in block_items(b)]
+            + list(m.get("breakdown", ())))
+
+
+def block_media(b, outdir, rel):
+    m = {k: v for k, v in b.items() if k not in ("items", "tracks", "cards")}
+    if b["type"] == "tracks":
+        m["tracks"] = [{"name": t["name"], "items": [media_for(x, outdir, rel) for x in t["items"]]} for t in b["tracks"]]
+    elif b["type"] == "cards":
+        m["cards"] = [{**c, "items": [media_for(x, outdir, rel) for x in c["items"]]} for c in b["cards"]]
+    else:
+        m["items"] = [media_for(x, outdir, rel) for x in b["items"]]
+    return m
+
+
+def board_columns(ms):
+    """Splits a campaign's formats, kept in order, into columns of 1-4. Items in a column share
+    its width, so every format keeps its aspect ratio; the split whose overall shape is closest
+    to the stage wins, with nudges against mixing very different shapes in one column
+    and against items too small to read.
+    The key visual (the first item) gets a column of its own unless it is a wide banner."""
+    ars = [m["w"] / m["h"] for m in ms]
+    best = [None, None]
+
+    def walk(i, cols):
+        if i == len(ars):
+            S = [sum(1 / ars[j] for j in c) for c in cols]
+            a = sum(1 / x for x in S)
+            mix = sum(max(ars[j] for j in c) / min(ars[j] for j in c) - 1 for c in cols)
+            # sqrt(area) of every item as a share of the board height: nothing too small to read
+            small = sum(max(0, 0.3 - 1 / x / math.sqrt(ars[j])) for c, x in zip(cols, S) for j in c)
+            cost = abs(math.log(a / BOARD_AR)) + 0.12 * mix + 3 * small
+            if best[0] is None or cost < best[0]:
+                best[:] = [cost, [list(c) for c in cols]]
+            return
+        for k in ((1,) if i == 0 and ars[0] < 1.8 else (1, 2, 3, 4)):
+            if i + k <= len(ars):
+                cols.append(range(i, i + k))
+                walk(i + k, cols)
+                cols.pop()
+
+    walk(0, [])
+    return best[1]
+
+
+def tag_of(label):
+    """'Post 1 · feed 1:1' -> 'Feed 1:1': the format part of a label."""
+    t = label.rsplit(" · ", 1)[-1]
+    return t[:1].upper() + t[1:]
+
+
+def media_btn(m, title, sizes, cls="", tag=None, dup=False):
+    """One clickable piece of work. A marquee copy (dup) opens the lightbox at its original."""
+    cap = f"{title} · {m['label']}" if m["label"] else title
+    k = m["url"].rsplit("/", 1)[1]
+    video = m["type"] == "video"
+    inner = video_tag(m) if video else picture(m, sizes, alt="" if dup else None)
+    t = f'<span class="b-tag" aria-hidden="true">{E(tag)}</span>' if tag else ""
+    c = "g-open b-item" + (" is-video" if video else "") + (" g-dup" if dup else "") + (" " + cls if cls else "")
+    st = f'style="--ar:{m["w"] / m["h"]:.4f}"'
+    if dup:
+        return f'<button class="{c}" type="button" tabindex="-1" aria-hidden="true" data-k="{k}" {st}>{inner}{t}</button>'
+    data = f'data-video="{m["url"]}.mp4"' if video else f'data-full="{m["url"]}-{m["widths"][-1]}.webp"'
+    return (f'<button class="{c}" type="button" {data} data-k="{k}" data-cap="{E(cap)}" '
+            f'aria-label="Open — {E(cap)}" {st}>{inner}{t}</button>')
+
+
+def board_html(b):
+    ms = b["items"]
+    if b.get("cols"):   # a split set by hand, where the automatic one is not the best picture
+        it = iter(range(len(ms)))
+        cols = [[next(it) for _ in range(k)] for k in b["cols"]]
+    else:
+        cols = board_columns(ms)
+    S = [sum(ms[j]["h"] / ms[j]["w"] for j in c) for c in cols]   # a column's height per unit of its width
+    A = sum(1 / x for x in S)
+    B = sum((len(c) - 1) / x for c, x in zip(cols, S))
+    out = []
+    for c, x in zip(cols, S):
+        vw = max(12, round(100 / x / A))
+        items = "".join(media_btn(ms[j], b["title"], f"(min-width: 768px) {vw}vw, 70vw", tag=tag_of(ms[j]["label"]))
+                        for j in c)
+        out.append(f'<div class="board__col" style="--S:{x:.4f};--k1:{len(c) - 1}">{items}</div>')
+    return f'<div class="board" style="--A:{A:.4f};--B:{B:.4f};--n1:{len(cols) - 1}">{"".join(out)}</div>'
+
+
+def tracks_html(b):
+    named = b.get("tag") == "label"   # every piece tagged with its label, not a slide number
+    rows = []
+    for n, t in enumerate(b["tracks"]):
+        items = "".join(media_btn(m, b["title"] if named else f'{b["title"]} · {t["name"]}', "(min-width: 768px) 24vw, 60vw",
+                                  tag=m["label"] if named else f"{j + 1:02d}")
+                        for j, m in enumerate(t["items"]))
+        rows.append(f'<div class="track" data-dir="{-1 if n % 2 else 1}">'
+                    f'<p class="track__name">{E(t["name"])}<span>{len(t["items"])} {"pieces" if named else "slides"}</span></p>'
+                    f'<div class="track__view"><div class="track__run">{items}</div></div></div>')
+    return (f'<div class="tracks">{"".join(rows)}'
+            f'<div class="tracks__bar" aria-hidden="true"><i></i></div></div>')
+
+
+def marquee_html(b):
+    n = b.get("rows", 3)
+    out = []
+    for r in range(n):
+        row = b["items"][r::n]
+        one = "".join(media_btn(m, b["title"], "(min-width: 768px) 16vw, 40vw") for m in row)
+        dup = "".join(media_btn(m, b["title"], "(min-width: 768px) 16vw, 40vw", dup=True) for m in row)
+        out.append(f'<div class="mq__row"><div class="mq__run" style="--dur:{len(row) * 7}s">{one}{dup}{dup}</div></div>')
+    return f'<div class="mq">{"".join(out)}</div>'
+
+
+def cards_html(b):
+    ar, n = b.get("ar", 1), len(b["cards"])
+
+    def size(c):   # card width on a stage of BOARD_AR x 1 with c columns
+        r = math.ceil(n / c)
+        return min((BOARD_AR - (c - 1) * 0.02) / c, ((1 - (r - 1) * 0.03) / r - CARD_CAP) * ar)
+
+    cols = max(range(1, n + 1), key=size)
+    out = []
+    for c in b["cards"]:
+        many = len(c["items"]) > 1
+        frames = "".join(media_btn(m, f'{b["title"]} · {c["title"]}', "(min-width: 768px) 26vw, 46vw",
+                                   cls="card__f" + (" is-on" if j == 0 else ""), tag=m["label"] if many else None)
+                         for j, m in enumerate(c["items"]))
+        out.append(f'<figure class="card"><div class="card__frames">{frames}</div>'
+                   f'<figcaption><b>{E(c["title"])}</b><span>{E(c["meta"])}</span></figcaption></figure>')
+    fit = " cards--contain" if b.get("fit") == "contain" else ""
+    return (f'<div class="cards{fit}" style="--cols:{cols};--rows:{math.ceil(n / cols)};--car:{ar}">'
+            f'{"".join(out)}</div>')
+
+
+def count_of(b):
+    if b["type"] == "board":
+        return f'{len(b["items"])} formats'
+    if b["type"] == "tracks":
+        n = sum(len(t["items"]) for t in b["tracks"])
+        if b.get("tag") == "label":
+            return f"{n} pieces"
+        return f'{len(b["tracks"])} carousels · {n} slides' if len(b["tracks"]) > 1 else f"{n} slides"
+    if b["type"] == "marquee":
+        return f'{len(b["items"])} posts'
+    many = any(len(c["items"]) > 1 for c in b["cards"])
+    return f'{len(b["cards"])} {"projects" if many else "posts"}'
+
+
+def blocks_html(blocks):
+    """The blocks, and the bar that jumps between kinds."""
+    ids, out, kinds = set(), [], {}
+    for n, b in enumerate(blocks):
+        bid = "w-" + re.sub(r"[^a-z0-9]+", "-", b["title"].lower()).strip("-")
+        while bid in ids:
+            bid += "-2"
+        ids.add(bid)
+        kinds.setdefault(b["kind"], [bid, 0])[1] += 1
+        body = {"board": board_html, "tracks": tracks_html, "marquee": marquee_html, "cards": cards_html}[b["type"]](b)
+        fmts = ""
+        if b["type"] == "board":
+            tags = list(dict.fromkeys(tag_of(m["label"]) for m in b["items"]))
+            fmts = '<ul class="blk__fmts">' + "".join(f"<li>{E(t)}</li>" for t in tags) + "</ul>"
+        line = f'<p class="blk__line">{E(b["line"])}</p>' if b.get("line") else ""
+        out.append(f"""
+        <section class="blk blk--{b['type']}" id="{bid}" data-kind="{E(b['kind'])}" aria-labelledby="{bid}-t">
+          <div class="blk__in">
+            <header class="blk__head">
+              <p class="blk__kick"><span class="blk__n">{n + 1:02d} / {len(blocks):02d}</span><span>{E(b['kind'])}</span><span>{count_of(b)}</span></p>
+              <h3 class="blk__title" id="{bid}-t">{E(b['title'])}</h3>
+              <div class="blk__about">{line}{fmts}</div>
+            </header>
+            <div class="blk__stage">{body}</div>
+          </div>
+          <span class="blk__shade" aria-hidden="true"></span>
+        </section>""")
+        if b["type"] == "tracks":
+            out.append('\n        <div class="blk-run" aria-hidden="true"></div>')
+    nav = "".join(f'<a href="#{bid}" data-kind="{E(k)}">{E(k)}<i>{c}</i></a>' for k, (bid, c) in kinds.items())
+    return (f'<div class="blocks" data-blocks>{"".join(out)}\n      </div>\n'
+            f'      <nav class="chap" aria-label="The work by kind">{nav}</nav>')
 
 
 TOPBAR = """
@@ -271,7 +478,11 @@ def render_case(c, i, cases, media):
       </div>
     </section>"""
 
-    rows = "\n        ".join(gallery_row(ms) for ms in media["rows"])
+    if media.get("blocks"):
+        work = blocks_html(media["blocks"])
+    else:
+        rows = "\n        ".join(gallery_row(ms) for ms in media["rows"])
+        work = f'<div class="gallery">\n        {rows}\n      </div>'
     hl = "".join(f'<li><span class="hl__a">{E(a)}</span><span class="hl__b">{E(b)}</span></li>'
                  for a, b in c["highlights"])
     note = f'<p class="case-note">{E(c["note"])}</p>' if c.get("note") else ""
@@ -307,11 +518,9 @@ def render_case(c, i, cases, media):
       </div>
     </section>
 {bd}
-    <section class="case-gallery" aria-label="The work">
+    <section class="case-gallery{' case-gallery--blocks' if media.get('blocks') else ''}" aria-label="The work">
       <div class="sec-head"><span class="sec-head__num">03</span><span class="sec-head__label">The work</span></div>
-      <div class="gallery">
-        {rows}
-      </div>
+      {work}
       {note}
     </section>
 
@@ -352,6 +561,11 @@ def render_case(c, i, cases, media):
 def main():
     data = json.load(open(os.path.join(ROOT, "content", "cases.json"), encoding="utf-8"))
     cases = data["cases"]
+    mpath = os.path.join(ROOT, "media", "cases", "manifest.json")
+    if os.path.exists(mpath):
+        for m in json.load(open(mpath, encoding="utf-8")).values():
+            for x in all_media(m):
+                BUILT[x["url"]] = x
     allm = {}
     for c in cases:
         slug = c["slug"]
@@ -359,7 +573,9 @@ def main():
         os.makedirs(outdir, exist_ok=True)
         rel = "../../media/cases/" + slug + "/"
         m = {"hero": [media_for(x, outdir, rel) for x in c["hero"]],
-             "rows": [[media_for(x, outdir, rel) for x in row] for row in c["rows"]]}
+             "rows": [[media_for(x, outdir, rel) for x in row] for row in c.get("rows", [])]}
+        if c.get("blocks"):
+            m["blocks"] = [block_media(b, outdir, rel) for b in c["blocks"]]
         if c.get("breakdown"):
             b = c["breakdown"]
             m["breakdown"] = (media_for({"src": b["before"], "type": "image", "label": b["before_label"]}, outdir, rel),
@@ -367,7 +583,12 @@ def main():
         h0 = m["hero"][0]
         c["_next_img"] = h0["url"] + (".webp" if h0["type"] == "video" else f"-{h0['widths'][0]}.webp")
         allm[slug] = m
-        n_items = sum(len(r) for r in m["rows"])
+        if not ONLY_PAGES:   # drop media of items no longer in the case
+            used = {x["url"].rsplit("/", 1)[1] for x in all_media(m)}
+            for f in os.listdir(outdir):
+                if f.split("-")[0].split(".")[0] not in used:
+                    os.remove(os.path.join(outdir, f))
+        n_items = len(all_media(m)) - len(m["hero"])
         print(f"{slug:22s} hero={len(m['hero'])} items={n_items}")
     for i, c in enumerate(cases):
         d = os.path.join(ROOT, "work", c["slug"])
@@ -375,7 +596,7 @@ def main():
         page = render_case(c, i, cases, allm[c["slug"]])
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(page)
 
-    json.dump(allm, open(os.path.join(ROOT, "media", "cases", "manifest.json"), "w", encoding="utf-8"),
+    json.dump(allm, open(mpath, "w", encoding="utf-8"),
               indent=1, ensure_ascii=False)
 
 

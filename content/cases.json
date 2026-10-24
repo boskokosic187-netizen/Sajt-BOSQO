@@ -21,6 +21,10 @@
       "system": "Each school gets its own colour, type and motion rules, so every new month starts from a system instead of a blank canvas. Every billboard ships with its social, web and email versions.",
       "highlights": [
         [
+          "Pre-enrolment 2027/28 & 2028/29",
+          "FSU · ITS · ITHS · Nov 2026"
+        ],
+        [
           "Pre-enrolment 2026/27 & 2027/28",
           "FSU · ITS · ITHS"
         ],
@@ -50,12 +54,24 @@
       "result": "Plus animated ads and animated academic calendars for both schools — one motion language across every street and screen.",
       "hero": [
         {
-          "src": "D/ITS/Bilbord Jul/Animacija_1.mp4",
+          "src": "PV/Bilbordi Novembar 2k26/FSU/animacija.mp4",
           "type": "video",
-          "label": "ITS × ITHS · Jul 2026 · AI school launch · DOOH 1152×540"
+          "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540"
         }
       ],
       "rows": [
+        [
+          {
+            "src": "PV/Bilbordi Novembar 2k26/ITS/animacija.mp4",
+            "type": "video",
+            "label": "ITS · Nov 2026 · Pre-enrolment 2027/28"
+          },
+          {
+            "src": "PV/Bilbordi Novembar 2k26/ITHS/animacija.mp4",
+            "type": "video",
+            "label": "ITHS · Nov 2026 · Enrolment 2027/28"
+          }
+        ],
         [
           {
             "src": "D/FSU Best/Animacija_1.mp4",
@@ -494,8 +510,9 @@
       "deliverables": [
         "Exhibition identities",
         "Event & enrolment campaigns",
+        "MA programme series",
         "Study-programme presentation",
-        "Signage",
+        "Print flyers & posters",
         "Email & web banners",
         "Social in every format"
       ],
@@ -512,6 +529,14 @@
           "Exhibition identity"
         ],
         [
+          "Costume Design MA — “Your vision. Your design. Your future.”",
+          "30-post course series"
+        ],
+        [
+          "Freshers’ Party & Alumni Club Night",
+          "Event campaign"
+        ],
+        [
           "FSU Doors — “Create it. Move it. What did you open?”",
           "Campaign"
         ],
@@ -520,12 +545,8 @@
           "Enrolment"
         ],
         [
-          "“POV: your scroll just stopped. Not by accident.”",
-          "Creative Communication MA"
-        ],
-        [
-          "Where is the Spirit of Belgrade?",
-          "Photo & video contest with Telegraf"
+          "Enrolment 2027/28 — “Be creative. Be brave. Be yourself.”",
+          "Flyer, social, WhatsApp"
         ],
         [
           "Only One Work",
@@ -537,167 +558,904 @@
       "result": "Across print, social, email, web and gallery walls — each one its own world, all of them clearly FSU.",
       "hero": [
         {
-          "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd01-1920x1080.png",
+          "src": "PV/FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg",
           "type": "image",
-          "label": "Study programmes · presentation · 1920×1080"
+          "label": "Enrolment 2027/28 · flyer"
         }
       ],
-      "rows": [
-        [
-          {
-            "src": "PV/FSU/FSU Tacke susreta/DM.png",
-            "type": "image",
-            "label": "Meeting Points · exhibition"
-          },
-          {
-            "src": "PV/FSU/FSU Master kreativne komunikacije/FSU_Master-kreativne-komunikacije-1080x1080.png",
-            "type": "image",
-            "label": "Creative Communication MA"
-          },
-          {
-            "src": "PV/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post1-1080x1080.png",
-            "type": "image",
-            "label": "Graphic Design programme"
-          }
-        ],
-        [
-          {
-            "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_2_Perspektiva/FSU_Prostor_u_nastajanju_R2-1080x1080.png",
-            "type": "image",
-            "label": "Space in the Making · exhibition"
-          },
-          {
-            "src": "PV/FSU/FSU Pogled iz blizine/DM.png",
-            "type": "image",
-            "label": "A Closer Look · exhibition"
-          },
-          {
-            "src": "PV/FSU/FSU_DuhBeograda/video/Video DM.mp4",
-            "type": "video",
-            "label": "Spirit of Belgrade · motion 1:1"
-          }
-        ],
-        [
-          {
-            "src": "PV/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-1080x1080.png",
-            "type": "image",
-            "label": "FSU Doors · 1/3"
-          },
-          {
-            "src": "PV/FSU/FSU Doors/Post_2_Pokreni/FSU_Doors_Post2-1080x1080.png",
-            "type": "image",
-            "label": "FSU Doors · 2/3"
-          },
-          {
-            "src": "PV/FSU/FSU Doors/Post_3_Otvorio/FSU_Doors_Post3-1080x1080.png",
-            "type": "image",
-            "label": "FSU Doors · 3/3"
-          }
-        ],
-        [
-          {
-            "src": "PV/FSU/FSU Remek-delo/Post_1_Prvi_potez/FSU_Remek-delo_Post1-1080x1920.png",
-            "type": "image",
-            "label": "Masterpiece · story 1/3"
-          },
-          {
-            "src": "PV/FSU/FSU Remek-delo/Post_2_Sutra_ih_stvaras/FSU_Remek-delo_Post2-1080x1920.png",
-            "type": "image",
-            "label": "Masterpiece · story 2/3"
-          },
-          {
-            "src": "PV/FSU/FSU Remek-delo/Post_3_Mermer/FSU_Remek-delo_Post3-1080x1920.png",
-            "type": "image",
-            "label": "Masterpiece · story 3/3"
-          },
-          {
-            "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1920.png",
-            "type": "image",
-            "label": "Enrolment 2027/28 · story"
-          }
-        ],
-        [
-          {
-            "src": "D/galerija koja raste.tif",
-            "type": "image",
-            "label": "Gallery That Grows · poster A3"
-          },
-          {
-            "src": "D/tri gracije poster.tif",
-            "type": "image",
-            "label": "Three Graces · poster A3"
-          },
-          {
-            "src": "D/immersion.tif",
-            "type": "image",
-            "label": "Immersion · poster A3"
-          },
-          {
-            "src": "D/poster.tif",
-            "type": "image",
-            "label": "AI FilmFest Serbia 2026 · poster"
-          }
-        ],
-        [
-          {
-            "src": "D/Poster A3.tif",
-            "type": "image",
-            "label": "Shift · poster A3"
-          },
-          {
-            "src": "PV/FSU/FSU Jutro/FSU_Jutro_DM-1080x1080.png",
-            "type": "image",
-            "label": "Morning · exhibition"
-          }
-        ],
-        [
-          {
-            "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_01_Naslovna-1080x1080.png",
-            "type": "image",
-            "label": "Only One Work · cover"
-          },
-          {
-            "src": "PV/FSU/FSU Istorija i teorija arhitekture i grada/FSU_Istorija-i-teorija-arhitekture-1080x1080.png",
-            "type": "image",
-            "label": "Architecture handbook launch"
-          },
-          {
-            "src": "PV/FSU/FSU Limes plus 2 2026/FSU_Limes-plus-2026-DM-1080x1080.png",
-            "type": "image",
-            "label": "Limes plus journal"
-          }
-        ],
-        [
-          {
-            "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd02-1920x1080.png",
-            "type": "image",
-            "label": "Study programmes · slide"
-          },
-          {
-            "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd03-1920x1080.png",
-            "type": "image",
-            "label": "Study programmes · slide"
-          }
-        ],
-        [
-          {
-            "src": "PV/FSU/FSU Marija Djuric Fluidi/FSU_Marija_Djuric_Fluidi_pregled.jpg",
-            "type": "image",
-            "label": "Fluids · full set"
-          },
-          {
-            "src": "PV/FSU/FSU Natpis Upisni centar/FSU_Natpis_Upisni_centar_pregled.jpg",
-            "type": "image",
-            "label": "Enrolment centre · signage"
-          }
-        ]
+      "blocks": [
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Enrolment 2027/28",
+          "line": "“Be creative. Be brave. Be yourself.”",
+          "items": [
+            {
+              "src": "PV/FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg",
+              "type": "image",
+              "label": "Flyer A5, front"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1920.png",
+              "type": "image",
+              "label": "Story 9:16"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1350.png",
+              "type": "image",
+              "label": "Feed 4:5"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/FSU/FSU_Upis-2027-28-WhatsApp_Meta-1080x1350.png",
+              "type": "image",
+              "label": "WhatsApp 4:5"
+            },
+            {
+              "src": "PV/FSU/FSU Flajeri Upis 2027-28/FSU/zadnja.jpg",
+              "type": "image",
+              "label": "Flyer A5, back"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1200x628.png",
+              "type": "image",
+              "label": "Link ad 1.91:1"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/FSU_Upis-2027-28_Mejl-570x390.png",
+              "type": "image",
+              "label": "Email"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/FSU_Upis-2027-28_Sajt-slajfna-847x300.png",
+              "type": "image",
+              "label": "Web strip"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/FSU_Upis-2027-28_Sajt-FI-480x430.png",
+              "type": "image",
+              "label": "Web card"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Pre-enrolment, November 2026",
+          "line": "“Pre-enrolment is open.” On the street first, then everywhere else.",
+          "items": [
+            {
+              "src": "PV/Bilbordi Novembar 2k26/FSU/animacija.mp4",
+              "type": "video",
+              "label": "DOOH · motion 1152×540"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/FSU/STAMPA/4x3.tif",
+              "type": "image",
+              "label": "Billboard 4×3 m"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/FSU/DM.png",
+              "type": "image",
+              "label": "Feed 1:1"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/FSU/mejl.png",
+              "type": "image",
+              "label": "Email"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/FSU/slajfna.png",
+              "type": "image",
+              "label": "Web strip"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/FSU/fi.png",
+              "type": "image",
+              "label": "Web card"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "FSU Doors",
+          "line": "“Create it. Move it. What did you open?”",
+          "items": [
+            {
+              "src": "PV/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-1080x1080.png",
+              "type": "image",
+              "label": "Post 1 · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_2_Pokreni/FSU_Doors_Post2-1080x1080.png",
+              "type": "image",
+              "label": "Post 2 · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_3_Otvorio/FSU_Doors_Post3-1080x1080.png",
+              "type": "image",
+              "label": "Post 3 · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-847x300.png",
+              "type": "image",
+              "label": "Post 1 · web strip"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_2_Pokreni/FSU_Doors_Post2-847x300.png",
+              "type": "image",
+              "label": "Post 2 · web strip"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_3_Otvorio/FSU_Doors_Post3-847x300.png",
+              "type": "image",
+              "label": "Post 3 · web strip"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-480x430.png",
+              "type": "image",
+              "label": "Post 1 · web card"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_2_Pokreni/FSU_Doors_Post2-480x430.png",
+              "type": "image",
+              "label": "Post 2 · web card"
+            },
+            {
+              "src": "PV/FSU/FSU Doors/Post_3_Otvorio/FSU_Doors_Post3-480x430.png",
+              "type": "image",
+              "label": "Post 3 · web card"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Masterpiece",
+          "line": "“Every masterpiece starts with a first stroke.”",
+          "items": [
+            {
+              "src": "PV/FSU/FSU Remek-delo/Post_1_Prvi_potez/FSU_Remek-delo_Post1-1080x1920.png",
+              "type": "image",
+              "label": "Post 1 · story 9:16"
+            },
+            {
+              "src": "PV/FSU/FSU Remek-delo/Post_2_Sutra_ih_stvaras/FSU_Remek-delo_Post2-1080x1920.png",
+              "type": "image",
+              "label": "Post 2 · story 9:16"
+            },
+            {
+              "src": "PV/FSU/FSU Remek-delo/Post_3_Mermer/FSU_Remek-delo_Post3-1080x1920.png",
+              "type": "image",
+              "label": "Post 3 · story 9:16"
+            },
+            {
+              "src": "PV/FSU/FSU Remek-delo/Post_1_Prvi_potez/FSU_Remek-delo_Post1-1080x1080.png",
+              "type": "image",
+              "label": "Post 1 · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU Remek-delo/Post_2_Sutra_ih_stvaras/FSU_Remek-delo_Post2-1080x1080.png",
+              "type": "image",
+              "label": "Post 2 · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU Remek-delo/Post_3_Mermer/FSU_Remek-delo_Post3-1080x1080.png",
+              "type": "image",
+              "label": "Post 3 · feed 1:1"
+            }
+          ],
+          "cols": [
+            1,
+            1,
+            1,
+            3
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Freshers’ Party & Alumni Club Night",
+          "line": "Two nights, one table: the first big student party and the alumni reunion, in two rounds.",
+          "items": [
+            {
+              "src": "PV/FSU/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/DM.png",
+              "type": "image",
+              "label": "Freshers’ Party · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/Brucosijada i Alumni Club Night 2026/Post_2_Alumni_Club_Night/DM.png",
+              "type": "image",
+              "label": "Alumni Club Night · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/mejl (veca rezolucija).png",
+              "type": "image",
+              "label": "Email"
+            },
+            {
+              "src": "PV/FSU/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/forma.png",
+              "type": "image",
+              "label": "Sign-up form header"
+            },
+            {
+              "src": "PV/FSU/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/sajt - slajfna.png",
+              "type": "image",
+              "label": "Web strip"
+            },
+            {
+              "src": "PV/FSU/FSU Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/DM.png",
+              "type": "image",
+              "label": "Round 2 · Freshers’ Party"
+            },
+            {
+              "src": "PV/FSU/FSU Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_2_Alumni_Club_Night/DM.png",
+              "type": "image",
+              "label": "Round 2 · Alumni Club Night"
+            },
+            {
+              "src": "PV/FSU/FSU Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_2_Alumni_Club_Night/slajfna.png",
+              "type": "image",
+              "label": "Round 2 · web strip"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Where is the Spirit of Belgrade?",
+          "line": "A photo and video contest for high-school students, with Telegraf.",
+          "items": [
+            {
+              "src": "PV/FSU/FSU_DuhBeograda/video/Video DM.mp4",
+              "type": "video",
+              "label": "Motion 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU_DuhBeograda/Post_2_Zavrsen konkurs/DM.png",
+              "type": "image",
+              "label": "Results · feed 1:1"
+            },
+            {
+              "src": "PV/FSU/FSU_DuhBeograda/baneri/FSU_DuhBeograda_570x390@2x.png",
+              "type": "image",
+              "label": "Email"
+            },
+            {
+              "src": "PV/FSU/FSU_DuhBeograda/baneri/FSU_DuhBeograda_847x300@2x.png",
+              "type": "image",
+              "label": "Web strip"
+            },
+            {
+              "src": "PV/FSU/FSU_DuhBeograda/baneri/FSU_DuhBeograda_480x430@2x.png",
+              "type": "image",
+              "label": "Web card"
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "kind": "Programmes",
+          "title": "Study programme ads",
+          "line": "One line, one image, one reason to apply.",
+          "cards": [
+            {
+              "title": "Graphic Design",
+              "meta": "“I made it simple. It took 27 attempts.”",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post1-1080x1080.png",
+                  "type": "image",
+                  "label": "Post 1"
+                },
+                {
+                  "src": "PV/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post2-1080x1080.png",
+                  "type": "image",
+                  "label": "Post 2"
+                },
+                {
+                  "src": "PV/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post3-1080x1080.png",
+                  "type": "image",
+                  "label": "Post 3"
+                }
+              ]
+            },
+            {
+              "title": "Creative Communication MA",
+              "meta": "“POV: your scroll just stopped.”",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Master kreativne komunikacije/FSU_Master-kreativne-komunikacije-1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Creativity & Strategy",
+              "meta": "“AI works. You lead.”",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU AI ne moze da napravi strategiju/DM.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Architecture handbook",
+              "meta": "Launch of a new textbook",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Istorija i teorija arhitekture i grada/FSU_Istorija-i-teorija-arhitekture-1080x1080.png",
+                  "type": "image",
+                  "label": "Announcement"
+                },
+                {
+                  "src": "PV/FSU/FSU Istorija i teorija arhitekture i grada - Predstavljanje/Dm.png",
+                  "type": "image",
+                  "label": "Launch night"
+                }
+              ]
+            }
+          ],
+          "ar": 1,
+          "fit": "cover"
+        },
+        {
+          "type": "marquee",
+          "kind": "Series",
+          "title": "Costume Design MA",
+          "line": "“Your vision. Your design. Your future.” One post for every course of the programme.",
+          "items": [
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_00_Opsti_vizual/DM.png",
+              "type": "image",
+              "label": "Key visual"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_01_Modni_dizajn/DM.png",
+              "type": "image",
+              "label": "Course 01"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_02_Dizajn_scenskog_kostima/DM.png",
+              "type": "image",
+              "label": "Course 02"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_03_Odevne_forme_i_aksesoari_1/DM.png",
+              "type": "image",
+              "label": "Course 03"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_04_Lutkarske_prakse/DM.png",
+              "type": "image",
+              "label": "Course 04"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_05_Tehnike_digitalne_prezentacije/DM.png",
+              "type": "image",
+              "label": "Course 05"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_06_Kostimografija_multimedija/DM.png",
+              "type": "image",
+              "label": "Course 06"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_07_Metodologija_naucno_umetnickog_istrazivackog_rada/DM.png",
+              "type": "image",
+              "label": "Course 07"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_08_Procesi_modifikacije_tekstila_1/DM.png",
+              "type": "image",
+              "label": "Course 08"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_09_Autorska_kolekcija/DM.png",
+              "type": "image",
+              "label": "Course 09"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_10_Dramaturgija_kostimografije/DM.png",
+              "type": "image",
+              "label": "Course 10"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_11_Odevne_forme_i_aksesoari_2/DM.png",
+              "type": "image",
+              "label": "Course 11"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_12_Savremena_produkcija_scenskih_dogadjaja/DM.png",
+              "type": "image",
+              "label": "Course 12"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_13_Fenomenologija_digitalne_mode_i_kostima/DM.png",
+              "type": "image",
+              "label": "Course 13"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_14_Dizajn_scenskog_prostora/DM.png",
+              "type": "image",
+              "label": "Course 14"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_15_Procesi_modifikacije_tekstila_2/DM.png",
+              "type": "image",
+              "label": "Course 15"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_16_Teorija_savremenog_dizajna_1/DM.png",
+              "type": "image",
+              "label": "Course 16"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_17_Savremena_modna_kolekcija_1/DM.png",
+              "type": "image",
+              "label": "Course 17"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_18_Kostimografija_1/DM.png",
+              "type": "image",
+              "label": "Course 18"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_19_Semiotika/DM.png",
+              "type": "image",
+              "label": "Course 19"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_20_Kultura_govora_i_komunikacije/DM.png",
+              "type": "image",
+              "label": "Course 20"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_21_Oblikovanje_forme_1/DM.png",
+              "type": "image",
+              "label": "Course 21"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_22_Odnosi_s_javnoscu/DM.png",
+              "type": "image",
+              "label": "Course 22"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_23_Upravljanje_kulturnim_i_umetnickim_projektima/DM.png",
+              "type": "image",
+              "label": "Course 23"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_24_Oblikovanje_forme_2/DM.png",
+              "type": "image",
+              "label": "Course 24"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_25_Zavrsni_rad_master_teza/DM.png",
+              "type": "image",
+              "label": "Course 25"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_26_Portfolio_za_dizajn_kostima/DM.png",
+              "type": "image",
+              "label": "Course 26"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_27_Nosive_tehnologije/DM.png",
+              "type": "image",
+              "label": "Course 27"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_28_Strucna_praksa/DM.png",
+              "type": "image",
+              "label": "Course 28"
+            },
+            {
+              "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_29_Zavrsni_rad_master_projekat/DM.png",
+              "type": "image",
+              "label": "Course 29"
+            }
+          ],
+          "rows": 3
+        },
+        {
+          "type": "tracks",
+          "kind": "Carousels",
+          "title": "Meet the Artist",
+          "line": "Swipe-through portraits of FSU artists, seven slides each.",
+          "tracks": [
+            {
+              "name": "Dragana Gleđa",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_01.png",
+                  "type": "image",
+                  "label": "Slide 1"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_02.png",
+                  "type": "image",
+                  "label": "Slide 2"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_03.png",
+                  "type": "image",
+                  "label": "Slide 3"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_04.png",
+                  "type": "image",
+                  "label": "Slide 4"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_05.png",
+                  "type": "image",
+                  "label": "Slide 5"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_06.png",
+                  "type": "image",
+                  "label": "Slide 6"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_07.png",
+                  "type": "image",
+                  "label": "Slide 7"
+                }
+              ]
+            },
+            {
+              "name": "Nevena Novaković",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_01.png",
+                  "type": "image",
+                  "label": "Slide 1"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_02.png",
+                  "type": "image",
+                  "label": "Slide 2"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_03.png",
+                  "type": "image",
+                  "label": "Slide 3"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_04.png",
+                  "type": "image",
+                  "label": "Slide 4"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_05.png",
+                  "type": "image",
+                  "label": "Slide 5"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_06.png",
+                  "type": "image",
+                  "label": "Slide 6"
+                },
+                {
+                  "src": "PV/FSU/FSU Upoznaj autora/Nevena-Novakovic/slajd_07.png",
+                  "type": "image",
+                  "label": "Slide 7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tracks",
+          "kind": "Carousels",
+          "title": "Only One Work",
+          "line": "One room, one author, one day: an exhibition system for 13 artists.",
+          "tracks": [
+            {
+              "name": "Exhibition carousel",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_01_Naslovna-1080x1080.png",
+                  "type": "image",
+                  "label": "Cover"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_02_02-10_Petra-Radosavljevic-1080x1080.png",
+                  "type": "image",
+                  "label": "Petra Radosavljevic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_03_03-10_Ana-Kocic-1080x1080.png",
+                  "type": "image",
+                  "label": "Ana Kocic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_04_04-10_Jelena-Bozovic-Djordjevic-1080x1080.png",
+                  "type": "image",
+                  "label": "Jelena Bozovic Djordjevic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_05_05-10_Jezdimir-Milosevic-1080x1080.png",
+                  "type": "image",
+                  "label": "Jezdimir Milosevic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_06_06-10_Konstantin-Evdokimov-1080x1080.png",
+                  "type": "image",
+                  "label": "Konstantin Evdokimov"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_07_07-10_Katia-Shneider-1080x1080.png",
+                  "type": "image",
+                  "label": "Katia Shneider"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_08_08-10_Marija-Tosic-1080x1080.png",
+                  "type": "image",
+                  "label": "Marija Tosic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_09_09-10_Ana-Belosevic-Velican-1080x1080.png",
+                  "type": "image",
+                  "label": "Ana Belosevic Velican"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_10_10-10_Maja-Vranic-1080x1080.png",
+                  "type": "image",
+                  "label": "Maja Vranic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_11_11-10_Ivan-Mitrasinovic-1080x1080.png",
+                  "type": "image",
+                  "label": "Ivan Mitrasinovic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_12_12-10_Nikolina-Nikolic-1080x1080.png",
+                  "type": "image",
+                  "label": "Nikolina Nikolic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad/00_Carousel_1080x1080/FSU_Samo-jedan-rad_Carousel_13_13-10_Lana-Parezanin-1080x1080.png",
+                  "type": "image",
+                  "label": "Lana Parezanin"
+                }
+              ]
+            },
+            {
+              "name": "Meet the author",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/02-10_Petra-Radosavljevic/DM.png",
+                  "type": "image",
+                  "label": "Petra Radosavljevic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/03-10_Ana-Kocic/DM.png",
+                  "type": "image",
+                  "label": "Ana Kocic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/04-10_Jelena-Bozovic-Djordjevic/DM.png",
+                  "type": "image",
+                  "label": "Jelena Bozovic Djordjevic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/05-10_Jezdimir-Milosevic/DM.png",
+                  "type": "image",
+                  "label": "Jezdimir Milosevic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/06-10_Konstantin-Evdokimov/DM.png",
+                  "type": "image",
+                  "label": "Konstantin Evdokimov"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/07-10_Katia-Shneider/DM.png",
+                  "type": "image",
+                  "label": "Katia Shneider"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/08-10_Marija-Tosic/DM.png",
+                  "type": "image",
+                  "label": "Marija Tosic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/09-10_Ana-Belosevic-Velican/DM.png",
+                  "type": "image",
+                  "label": "Ana Belosevic Velican"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/10-10_Maja-Vranic/DM.png",
+                  "type": "image",
+                  "label": "Maja Vranic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/11-10_Ivan-Mitrasinovic/DM.png",
+                  "type": "image",
+                  "label": "Ivan Mitrasinovic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/12-10_Nikolina-Nikolic/DM.png",
+                  "type": "image",
+                  "label": "Nikolina Nikolic"
+                },
+                {
+                  "src": "PV/FSU/FSU Samo jedan rad - Upoznaj autora/13-10_Lana-Parezanin/DM.png",
+                  "type": "image",
+                  "label": "Lana Parezanin"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tracks",
+          "kind": "Presentation",
+          "title": "Study programmes",
+          "line": "The faculty’s programmes as one presentation, 16:9.",
+          "tracks": [
+            {
+              "name": "Slides 1–6",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd01-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 1"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd02-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 2"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd03-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 3"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd04-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 4"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd05-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 5"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd06-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 6"
+                }
+              ]
+            },
+            {
+              "name": "Slides 7–11",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd07-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 7"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd08-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 8"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd09-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 9"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd10-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 10"
+                },
+                {
+                  "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd11-1920x1080.png",
+                  "type": "image",
+                  "label": "Slide 11"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tracks",
+          "kind": "Exhibitions",
+          "title": "Exhibition identities",
+          "line": "Every show gets its own world inside the same frame. A walk through six of them.",
+          "tracks": [
+            {
+              "name": "Meeting Points · Space in the Making · A Closer Look",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Tacke susreta/Poster.tif",
+                  "type": "image",
+                  "label": "Meeting Points · poster A3"
+                },
+                {
+                  "src": "PV/FSU/FSU Tacke susreta/DM.png",
+                  "type": "image",
+                  "label": "Meeting Points · feed 1:1"
+                },
+                {
+                  "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_2_Perspektiva/FSU_Prostor_u_nastajanju_R2-Poster_A3.tif",
+                  "type": "image",
+                  "label": "Space in the Making · poster A3"
+                },
+                {
+                  "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_1_Osnova/FSU_Prostor_u_nastajanju_R1-Poster_A3.tif",
+                  "type": "image",
+                  "label": "Space in the Making · poster A3, alternative"
+                },
+                {
+                  "src": "PV/FSU/FSU Prostor u nastajanju/Izlozba otvorena, vizuali/FSU_Prostor_u_nastajanju_Otvorena-1080x1080.png",
+                  "type": "image",
+                  "label": "Space in the Making · opening"
+                },
+                {
+                  "src": "PV/FSU/FSU Pogled iz blizine/Poster.tif",
+                  "type": "image",
+                  "label": "A Closer Look · poster A3"
+                },
+                {
+                  "src": "PV/FSU/FSU Pogled iz blizine/DM.png",
+                  "type": "image",
+                  "label": "A Closer Look · feed 1:1"
+                }
+              ]
+            },
+            {
+              "name": "Morning · Look Inside · Fluids",
+              "items": [
+                {
+                  "src": "PV/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
+                  "type": "image",
+                  "label": "Morning · poster A3"
+                },
+                {
+                  "src": "PV/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_DM-1080x1080.png",
+                  "type": "image",
+                  "label": "Morning · feed 1:1"
+                },
+                {
+                  "src": "PV/FSU/FSU Jutro/Post_2_Izlozba_otvorena/FSU_Jutro_Otvorena-DM-1080x1080.png",
+                  "type": "image",
+                  "label": "Morning · opening"
+                },
+                {
+                  "src": "PV/FSU/FSU Nina Nedic Zavirite unutra/DM.png",
+                  "type": "image",
+                  "label": "Look Inside · feed 1:1"
+                },
+                {
+                  "src": "PV/FSU/FSU Marija Djuric Fluidi/Post_2_Otvorena/dm.png",
+                  "type": "image",
+                  "label": "Fluids · opening"
+                },
+                {
+                  "src": "PV/FSU/FSU Marija Djuric Fluidi/Post_3_Vodjenje/DM.png",
+                  "type": "image",
+                  "label": "Fluids · guided tour"
+                }
+              ]
+            }
+          ],
+          "tag": "label"
+        }
       ]
     },
     {
       "slug": "series-at-scale",
       "title": "Series at Scale",
       "kicker": "Content systems · ITS · ITHS",
-      "line": "Four series, 270+ assets, one system — careers, study programmes, AI prompts and enrolment.",
+      "line": "Eight series, 330+ assets, one system — careers, programmes, AI prompts, events and enrolment.",
       "client": "ITS — Information Technology School · ITHS — IT High School",
       "years": "2026",
       "role": "Art direction, design system, production",
@@ -705,8 +1463,10 @@
         "“What does a … do?” — 33 career profiles",
         "10 study programmes × 6 formats",
         "ChatGPT Commands — 9 carousels, 117 slides",
+        "Freshers’ Party & Alumni Club Night",
         "Enrolment 2027/28 for three schools",
-        "Student app launch posts"
+        "Student app launch posts",
+        "Children’s Week series"
       ],
       "challenge": "Education marketing runs on volume: dozens of programmes, careers and deadlines, each needing its own post — without the feed turning into a template graveyard.",
       "idea": "Give every series a strong, cinematic signature — portrait, light, type — and let the system carry the repetition, so post 33 looks as considered as post 1.",
@@ -718,139 +1478,881 @@
         ],
         [
           "Study programmes & modules",
-          "10 programmes × 6 formats"
+          "10 programmes · 6 formats"
         ],
         [
           "ChatGPT Commands",
           "9 carousels · 117 slides"
         ],
         [
+          "Freshers’ Party & Alumni Club Night",
+          "ITS · event campaign"
+        ],
+        [
           "Enrolment 2027/28",
-          "ITS · ITHS · FSU"
+          "ITS · ITHS · FSU · social + WhatsApp"
         ],
         [
           "Student app launches",
           "Calories Tracker · NailBook · Budget Manager · Šapa"
+        ],
+        [
+          "Children’s Week",
+          "ITHS · six-post series"
         ]
       ],
-      "result_big": "270+",
+      "result_big": "330+",
       "result_label": "assets in one consistent system",
       "result": "A feed that looks art-directed post after post — and a production speed that keeps up with the academic calendar.",
       "hero": [
         {
-          "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1200x630.png",
+          "src": "PV/ITS/ITS Sta radi zanimanja/12_Sta_radi_poslovni_analiticar/SAJT.png",
           "type": "image",
-          "label": "Study programmes · Software development · 1200×630"
+          "label": "What does a … do? · Business analyst · 1200×630"
         }
       ],
-      "rows": [
-        [
-          {
-            "src": "PV/ITS/ITS Sta radi zanimanja/01_Sta_radi_Build-Release_inzenjer/DM.png",
-            "type": "image",
-            "label": "What does a … do? · 01/33"
-          },
-          {
-            "src": "PV/ITS/ITS Sta radi zanimanja/03_Sta_radi_strucnjak_za_3D_skeniranje_i_modeliranje/DM.png",
-            "type": "image",
-            "label": "What does a … do? · 03/33"
-          },
-          {
-            "src": "PV/ITS/ITS Sta radi zanimanja/19_Sta_radi_product_owner/DM.png",
-            "type": "image",
-            "label": "What does a … do? · 19/33"
-          }
-        ],
-        [
-          {
-            "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
-            "type": "image",
-            "label": "Study programmes · 4:5"
-          },
-          {
-            "src": "PV/ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
-            "type": "image",
-            "label": "Study programmes · 4:5"
-          },
-          {
-            "src": "PV/ITS/ITS Studijski programi i moduli/Post_05_Digital_Business/meta/1080x1350.png",
-            "type": "image",
-            "label": "Study programmes · 4:5"
-          },
-          {
-            "src": "PV/ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
-            "type": "image",
-            "label": "Study programmes · 4:5"
-          }
-        ],
-        [
-          {
-            "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/Naslovna.png",
-            "type": "image",
-            "label": "ChatGPT Commands · cover"
-          },
-          {
-            "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/3.png",
-            "type": "image",
-            "label": "ChatGPT Commands · slide"
-          },
-          {
-            "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/Naslovna.png",
-            "type": "image",
-            "label": "ChatGPT Commands · cover"
-          }
-        ],
-        [
-          {
-            "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/Meta/ITHS_Upis-2027-28_Meta-1080x1920.png",
-            "type": "image",
-            "label": "Enrolment 2027/28 · ITHS · story"
-          },
-          {
-            "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1920.png",
-            "type": "image",
-            "label": "Enrolment 2027/28 · FSU · story"
-          },
-          {
-            "src": "PV/ITS/ITS Sta radi zanimanja/06_Sta_radi_frilens_strucnjak_za_racunarski_softver/DM.png",
-            "type": "image",
-            "label": "What does a … do? · 06/33"
-          }
-        ],
-        [
-          {
-            "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png",
-            "type": "image",
-            "label": "Student app · Calories Tracker"
-          },
-          {
-            "src": "PV/ITHS/ITHS NailBook/ITHS_NailBook_1080x1080.png",
-            "type": "image",
-            "label": "Student app · NailBook"
-          },
-          {
-            "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1080x1080.png",
-            "type": "image",
-            "label": "Student app · Budget Manager"
-          },
-          {
-            "src": "PV/ITHS/ITHS Sapa/ITHS_Sapa_1080x1080.png",
-            "type": "image",
-            "label": "Student app · Šapa"
-          }
-        ],
-        [
-          {
-            "src": "PV/ITS/ITS Studijski programi i moduli/ITS_Programi_pregled.jpg",
-            "type": "image",
-            "label": "System overview · 10 programmes"
-          },
-          {
-            "src": "PV/ITS/ITS Sta radi zanimanja/ITS_Sta_radi_pregled.jpg",
-            "type": "image",
-            "label": "System overview · 33 careers"
-          }
-        ]
+      "blocks": [
+        {
+          "type": "marquee",
+          "kind": "Series",
+          "title": "What does a … do?",
+          "line": "33 careers explained one post at a time: one portrait, one light, one type system.",
+          "items": [
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/01_Sta_radi_Build-Release_inzenjer/DM.png",
+              "type": "image",
+              "label": "Career 01/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/02_Sta_radi_tehnicki_pisac/DM.png",
+              "type": "image",
+              "label": "Career 02/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/03_Sta_radi_strucnjak_za_3D_skeniranje_i_modeliranje/DM.png",
+              "type": "image",
+              "label": "Career 03/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/04_Sta_radi_projektni_analiticar/DM.png",
+              "type": "image",
+              "label": "Career 04/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/05_Sta_radi_menadzer_za_tehnicku_konfiguraciju/DM.png",
+              "type": "image",
+              "label": "Career 05/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/06_Sta_radi_frilens_strucnjak_za_racunarski_softver/DM.png",
+              "type": "image",
+              "label": "Career 06/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/07_Sta_radi_saradnik_u_produkciji/DM.png",
+              "type": "image",
+              "label": "Career 07/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/08_Sta_radi_strucnjak_za_e-upravu/DM.png",
+              "type": "image",
+              "label": "Career 08/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/09_Sta_radi_sluzbenik_za_elektronsko_bankarstvo/DM.png",
+              "type": "image",
+              "label": "Career 09/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/10_Sta_radi_inzenjer_poslovnih_procesa/DM.png",
+              "type": "image",
+              "label": "Career 10/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/11_Sta_radi_menadzer_organizacije_poslovnih_procesa/DM.png",
+              "type": "image",
+              "label": "Career 11/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/12_Sta_radi_poslovni_analiticar/DM.png",
+              "type": "image",
+              "label": "Career 12/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/13_Sta_radi_razvojni_menadzer_projekta/DM.png",
+              "type": "image",
+              "label": "Career 13/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/14_Sta_radi_IT_konsultant/DM.png",
+              "type": "image",
+              "label": "Career 14/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/15_Sta_radi_rukovodilac_prodaje/DM.png",
+              "type": "image",
+              "label": "Career 15/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/16_Sta_radi_inzenjer_prodaje/DM.png",
+              "type": "image",
+              "label": "Career 16/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/17_Sta_radi_IT_menadzer_za_kljucne_kupce/DM.png",
+              "type": "image",
+              "label": "Career 17/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/18_Sta_radi_analiticar_poslovnih_sistema/DM.png",
+              "type": "image",
+              "label": "Career 18/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/19_Sta_radi_product_owner/DM.png",
+              "type": "image",
+              "label": "Career 19/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/20_Sta_radi_solution_menadzer/DM.png",
+              "type": "image",
+              "label": "Career 20/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/21_Sta_radi_specijalista_za_nabavku_IT_resursa/DM.png",
+              "type": "image",
+              "label": "Career 21/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/22_Sta_radi_tehnoloski_menadzer/DM.png",
+              "type": "image",
+              "label": "Career 22/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/23_Sta_radi_konsultant_za_poslovni_softver/DM.png",
+              "type": "image",
+              "label": "Career 23/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/24_Sta_radi_SAP_specijalista/DM.png",
+              "type": "image",
+              "label": "Career 24/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/25_Sta_radi_SAP_konsultant/DM.png",
+              "type": "image",
+              "label": "Career 25/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/26_Sta_radi_ERP_konsultant/DM.png",
+              "type": "image",
+              "label": "Career 26/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/27_Sta_radi_veb_urednik/DM.png",
+              "type": "image",
+              "label": "Career 27/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/28_Sta_radi_konsultant_za_finansijski_softver/DM.png",
+              "type": "image",
+              "label": "Career 28/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/29_Sta_radi_strucnjak_za_poslovnu_strategiju/DM.png",
+              "type": "image",
+              "label": "Career 29/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/30_Sta_radi_analiticar_ciljnih_klijenata/DM.png",
+              "type": "image",
+              "label": "Career 30/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/31_Sta_radi_strucni_saradnik_u_odeljenju_IT_kontrolinga/DM.png",
+              "type": "image",
+              "label": "Career 31/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/32_Sta_radi_inzenjer_za_razvoj_poslovnih_sistema/DM.png",
+              "type": "image",
+              "label": "Career 32/33"
+            },
+            {
+              "src": "PV/ITS/ITS Sta radi zanimanja/33_Sta_radi_IT_menadzer/DM.png",
+              "type": "image",
+              "label": "Career 33/33"
+            }
+          ],
+          "rows": 3
+        },
+        {
+          "type": "board",
+          "kind": "Series",
+          "title": "Study programmes & modules",
+          "line": "Ten programmes, each in six formats. One programme, every format:",
+          "items": [
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1920.png",
+              "type": "image",
+              "label": "Software Development · story 9:16"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
+              "type": "image",
+              "label": "Software Development · feed 4:5"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1080x1080.png",
+              "type": "image",
+              "label": "Software Development · feed 1:1"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1200x630.png",
+              "type": "image",
+              "label": "Software Development · website"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1200x628.png",
+              "type": "image",
+              "label": "Software Development · link ad"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
+              "type": "image",
+              "label": "Data Science & AI · feed 4:5"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_04_Digitalna_multimedija_OSS/meta/1080x1350.png",
+              "type": "image",
+              "label": "Digital Multimedia · feed 4:5"
+            },
+            {
+              "src": "PV/ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
+              "type": "image",
+              "label": "Esports Management · feed 4:5"
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "kind": "Series",
+          "title": "Children’s Week",
+          "line": "Six lessons, one hand-made look: grid paper, tape and marker.",
+          "cards": [
+            {
+              "title": "Love and respect",
+              "meta": "Opening post",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Decija nedelja/ITHS_Decija-nedelja_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Physics and laughter",
+              "meta": "Lesson",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Fizika i smeh/ITHS_Fizika-i-smeh_DM-1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Geometry in puzzles",
+              "meta": "Lesson",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Geometrija kroz puzle/ITHS_Geometrija-kroz-puzle_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Books for children",
+              "meta": "Lesson",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Knjizevnost za decu/ITHS_Knjizevnost-za-decu_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "School of the future",
+              "meta": "Lesson",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Skola iz buducnosti/ITHS_Skola-iz-buducnosti_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Web design III",
+              "meta": "Lesson",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Veb-programiranje dizajn III/ITHS_Veb-programiranje-dizajn-III_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            }
+          ],
+          "ar": 1,
+          "fit": "cover"
+        },
+        {
+          "type": "cards",
+          "kind": "Series",
+          "title": "Student app launches",
+          "line": "Four apps built by students, launched like products.",
+          "cards": [
+            {
+              "title": "Calories Tracker",
+              "meta": "Filip Kričković",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                },
+                {
+                  "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1200x630.png",
+                  "type": "image",
+                  "label": "Website"
+                }
+              ]
+            },
+            {
+              "title": "NailBook",
+              "meta": "Milica Mitrović",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS NailBook/ITHS_NailBook_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                },
+                {
+                  "src": "PV/ITHS/ITHS NailBook/ITHS_NailBook_1200x630.png",
+                  "type": "image",
+                  "label": "Website"
+                }
+              ]
+            },
+            {
+              "title": "Budget Manager",
+              "meta": "Kosta Šemsedinović",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                },
+                {
+                  "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1200x630.png",
+                  "type": "image",
+                  "label": "Website"
+                }
+              ]
+            },
+            {
+              "title": "Šapa",
+              "meta": "Dušan Božović",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Sapa/ITHS_Sapa_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                },
+                {
+                  "src": "PV/ITHS/ITHS Sapa/ITHS_Sapa_1200x630.png",
+                  "type": "image",
+                  "label": "Website"
+                }
+              ]
+            }
+          ],
+          "ar": 1,
+          "fit": "contain"
+        },
+        {
+          "type": "tracks",
+          "kind": "Carousels",
+          "title": "ChatGPT Commands",
+          "line": "Nine carousels, 117 slides: a prompt library that reads like a magazine.",
+          "tracks": [
+            {
+              "name": "Sales & Marketing Strategy",
+              "items": [
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/Naslovna.png",
+                  "type": "image",
+                  "label": "Cover"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/1.png",
+                  "type": "image",
+                  "label": "Command 1"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/2.png",
+                  "type": "image",
+                  "label": "Command 2"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/3.png",
+                  "type": "image",
+                  "label": "Command 3"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/4.png",
+                  "type": "image",
+                  "label": "Command 4"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/5.png",
+                  "type": "image",
+                  "label": "Command 5"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/6.png",
+                  "type": "image",
+                  "label": "Command 6"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/7.png",
+                  "type": "image",
+                  "label": "Command 7"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/8.png",
+                  "type": "image",
+                  "label": "Command 8"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/9.png",
+                  "type": "image",
+                  "label": "Command 9"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/10.png",
+                  "type": "image",
+                  "label": "Command 10"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/11.png",
+                  "type": "image",
+                  "label": "Command 11"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/Zadnji slajd.png",
+                  "type": "image",
+                  "label": "Last slide"
+                }
+              ]
+            },
+            {
+              "name": "Sales Psychology & Objections",
+              "items": [
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/Naslovna.png",
+                  "type": "image",
+                  "label": "Cover"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/1.png",
+                  "type": "image",
+                  "label": "Command 1"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/2.png",
+                  "type": "image",
+                  "label": "Command 2"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/3.png",
+                  "type": "image",
+                  "label": "Command 3"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/4.png",
+                  "type": "image",
+                  "label": "Command 4"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/5.png",
+                  "type": "image",
+                  "label": "Command 5"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/6.png",
+                  "type": "image",
+                  "label": "Command 6"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/7.png",
+                  "type": "image",
+                  "label": "Command 7"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/8.png",
+                  "type": "image",
+                  "label": "Command 8"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/9.png",
+                  "type": "image",
+                  "label": "Command 9"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/10.png",
+                  "type": "image",
+                  "label": "Command 10"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/11.png",
+                  "type": "image",
+                  "label": "Command 11"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/07 Sales Psychology & Objections/Zadnji slajd.png",
+                  "type": "image",
+                  "label": "Last slide"
+                }
+              ]
+            },
+            {
+              "name": "Branding & Positioning",
+              "items": [
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/Naslovna.png",
+                  "type": "image",
+                  "label": "Cover"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/1.png",
+                  "type": "image",
+                  "label": "Command 1"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/2.png",
+                  "type": "image",
+                  "label": "Command 2"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/3.png",
+                  "type": "image",
+                  "label": "Command 3"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/4.png",
+                  "type": "image",
+                  "label": "Command 4"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/5.png",
+                  "type": "image",
+                  "label": "Command 5"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/6.png",
+                  "type": "image",
+                  "label": "Command 6"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/7.png",
+                  "type": "image",
+                  "label": "Command 7"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/8.png",
+                  "type": "image",
+                  "label": "Command 8"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/9.png",
+                  "type": "image",
+                  "label": "Command 9"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/10.png",
+                  "type": "image",
+                  "label": "Command 10"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/11.png",
+                  "type": "image",
+                  "label": "Command 11"
+                },
+                {
+                  "src": "PV/ITS/ChatGPT Commands Karuseli/03 Branding & Positioning/Zadnji slajd.png",
+                  "type": "image",
+                  "label": "Last slide"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Enrolment 2027/28",
+          "line": "Two schools, one launch: the same system in red for ITS and ITHS.",
+          "items": [
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITS/Meta/ITS_Upis-2027-28_Meta-1080x1920.png",
+              "type": "image",
+              "label": "ITS · story 9:16"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITS/Meta/ITS_Upis-2027-28_Meta-1080x1350.png",
+              "type": "image",
+              "label": "ITS · feed 4:5"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/Meta/ITHS_Upis-2027-28_Meta-1080x1350.png",
+              "type": "image",
+              "label": "ITHS · feed 4:5"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/Meta/ITHS_Upis-2027-28_Meta-1080x1920.png",
+              "type": "image",
+              "label": "ITHS · story 9:16"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/ITS/ITS_Upis-2027-28-WhatsApp_Meta-1080x1350.png",
+              "type": "image",
+              "label": "ITS · WhatsApp 4:5"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/ITHS/ITHS_Upis-2027-28-WhatsApp_Meta-1080x1350.png",
+              "type": "image",
+              "label": "ITHS · WhatsApp 4:5"
+            },
+            {
+              "src": "PV/FSU/FSU Flajeri Upis 2027-28/ITS/prednja.jpg",
+              "type": "image",
+              "label": "ITS · flyer A5"
+            },
+            {
+              "src": "PV/FSU/FSU Flajeri Upis 2027-28/ITHS/prednja.jpg",
+              "type": "image",
+              "label": "ITHS · flyer A5"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITS/ITS_Upis-2027-28_Sajt-1200x630.png",
+              "type": "image",
+              "label": "ITS · website"
+            },
+            {
+              "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/ITHS_Upis-2027-28_Sajt-1200x630.png",
+              "type": "image",
+              "label": "ITHS · website"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Pre-enrolment, November 2026",
+          "line": "Billboards first: DOOH motion and print, then social, web and email.",
+          "items": [
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITS/animacija.mp4",
+              "type": "video",
+              "label": "ITS · DOOH motion"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITHS/animacija.mp4",
+              "type": "video",
+              "label": "ITHS · DOOH motion"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITS/STAMPA/8x3.tif",
+              "type": "image",
+              "label": "ITS · billboard 8×3 m"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITHS/STAMPA/8x3.tif",
+              "type": "image",
+              "label": "ITHS · billboard 8×3 m"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITS/DM.png",
+              "type": "image",
+              "label": "ITS · feed 1:1"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITHS/DM.png",
+              "type": "image",
+              "label": "ITHS · feed 1:1"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITS/SAJT.png",
+              "type": "image",
+              "label": "ITS · website"
+            },
+            {
+              "src": "PV/Bilbordi Novembar 2k26/ITHS/SAJT.png",
+              "type": "image",
+              "label": "ITHS · website"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "Freshers’ Party & Alumni Club Night",
+          "line": "ITS’s first big night of the year, before, during and after.",
+          "items": [
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/DM.png",
+              "type": "image",
+              "label": "Freshers’ Party · feed 1:1"
+            },
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026/Post_2_Alumni_Club_Night/DM.png",
+              "type": "image",
+              "label": "Alumni Club Night · feed 1:1"
+            },
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/sajt.png",
+              "type": "image",
+              "label": "Website"
+            },
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/mejl (veca rezolucija).png",
+              "type": "image",
+              "label": "Email"
+            },
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026/Post_1_Brucosijada/forma.png",
+              "type": "image",
+              "label": "Sign-up form header"
+            },
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/DM.png",
+              "type": "image",
+              "label": "Countdown · Freshers’ Party"
+            },
+            {
+              "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_2_Alumni_Club_Night/DM.png",
+              "type": "image",
+              "label": "Countdown · Alumni Club Night"
+            },
+            {
+              "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_1_ITS_Brucosijada/DM.png",
+              "type": "image",
+              "label": "Recap · Freshers’ Party"
+            },
+            {
+              "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_2_ITS_Alumni_Club_Night/DM.png",
+              "type": "image",
+              "label": "Recap · Alumni Club Night"
+            }
+          ]
+        },
+        {
+          "type": "board",
+          "kind": "Campaigns",
+          "title": "AI programme",
+          "line": "“Use AI. Think with AI.” A free programme for first-year ITHS students.",
+          "items": [
+            {
+              "src": "PV/ITHS/ITHS AI program/DM.png",
+              "type": "image",
+              "label": "Launch · feed 1:1"
+            },
+            {
+              "src": "PV/ITHS/ITHS AI program/SAJT.png",
+              "type": "image",
+              "label": "Launch · website"
+            },
+            {
+              "src": "PV/ITHS/ITHS AI program/google-forma.png",
+              "type": "image",
+              "label": "Sign-up form header"
+            },
+            {
+              "src": "PV/ITHS/ITHS Mejl AI Priprema/mejl.png",
+              "type": "image",
+              "label": "Parents’ email"
+            },
+            {
+              "src": "PV/ITHS/ITHS AI program pocetak/DM.png",
+              "type": "image",
+              "label": "Day one"
+            },
+            {
+              "src": "PV/ITHS/ITHS AI program prvi blok/DM.png",
+              "type": "image",
+              "label": "First block done"
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "kind": "Student stories",
+          "title": "Student stories",
+          "line": "News posts that still look designed.",
+          "cards": [
+            {
+              "title": "Silver at nationals",
+              "meta": "Powerlifting",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Powerlifting srebro/ITHS_Powerlifting-srebro_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "Super Maths Mario",
+              "meta": "A game in a maths lesson",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Matematicki Super Mario/ITHS_Matematicki-Super-Mario_DM-1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "At the Bernabéu",
+              "meta": "Erasmus+ in Spain",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Erasmus PeerCo Spanija - Bernabeu/ITHS_Erasmus-PeerCo-Spanija_1080x1080.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            },
+            {
+              "title": "An app for a riding club",
+              "meta": "Student project",
+              "items": [
+                {
+                  "src": "PV/ITHS/ITHS Konjicki klub/DM.png",
+                  "type": "image",
+                  "label": "Feed 1:1"
+                }
+              ]
+            }
+          ],
+          "ar": 1,
+          "fit": "cover"
+        }
       ]
     },
     {

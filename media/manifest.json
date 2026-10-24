@@ -328,54 +328,11 @@
    1600
   ]
  },
- "tri-gracije": {
-  "type": "still",
-  "src": "D:/Desktop/tri gracije poster.tif",
-  "w": 3508,
-  "h": 4961,
-  "widths": [
-   480,
-   960,
-   1600
-  ]
- },
- "shift": {
-  "type": "still",
-  "src": "D:/Desktop/Poster A3.tif",
-  "w": 2480,
-  "h": 1754,
-  "widths": [
-   480,
-   960,
-   1600
-  ]
- },
- "galerija-raste": {
-  "type": "still",
-  "src": "D:/Desktop/galerija koja raste.tif",
-  "w": 3508,
-  "h": 4961,
-  "widths": [
-   480,
-   960,
-   1600
-  ]
- },
  "iths-calories": {
   "type": "still",
   "src": "D:/Desktop/Production Visuals/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png",
   "w": 1080,
   "h": 1080,
-  "widths": [
-   480,
-   960
-  ]
- },
- "ai-filmfest": {
-  "type": "still",
-  "src": "D:/Desktop/poster.tif",
-  "w": 1055,
-  "h": 1491,
   "widths": [
    480,
    960
@@ -556,5 +513,48 @@
    "mp4": 102,
    "webp": 21
   }
+ },
+ "prostor-poster": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Prostor u nastajanju/Resenje_2_Perspektiva/FSU_Prostor_u_nastajanju_R2-Poster_A3.tif",
+  "w": 3578,
+  "h": 5031,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "upis-flajer": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg",
+  "w": 2481,
+  "h": 1749,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "jutro-poster": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
+  "w": 1789,
+  "h": 2516,
+  "widths": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "kostim": {
+  "type": "still",
+  "src": "D:/Desktop/Production Visuals/FSU/FSU Master Dizajn kostima Awareness/Post_00_Opsti_vizual/META_1080x1920.png",
+  "w": 1080,
+  "h": 1920,
+  "widths": [
+   480,
+   960
+  ]
  }
 }

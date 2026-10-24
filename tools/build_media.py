@@ -74,11 +74,11 @@ STILLS = [
     ("ballies-post4", DESK + "Ballies Best/Ball-post-4.png"),
     ("ballies-arena", DESK + "Ballies Best/ballies-arena-AD.png"),
     ("ballies-allstars", DESK + "Ballies Best/all-stars-banner-1920-1080.jpg"),
-    ("tri-gracije", DESK + "tri gracije poster.tif"),
-    ("shift", DESK + "Poster A3.tif"),
-    ("galerija-raste", DESK + "galerija koja raste.tif"),
+    ("prostor-poster", PV + "FSU/FSU Prostor u nastajanju/Resenje_2_Perspektiva/FSU_Prostor_u_nastajanju_R2-Poster_A3.tif"),
+    ("upis-flajer", PV + "FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg"),
+    ("jutro-poster", PV + "FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif"),
     ("iths-calories", PV + "ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png"),
-    ("ai-filmfest", DESK + "poster.tif"),
+    ("kostim", PV + "FSU/FSU Master Dizajn kostima Awareness/Post_00_Opsti_vizual/META_1080x1920.png"),
     ("portrait", ROOT + "/_freepik/about/mojaslika-chatgpt.webp"),   # ChatGPT clean-up of _stari-sajt/assets/mojaslika.webp
     ("sta-radi", PV + "ITS/ITS Sta radi zanimanja/01_Sta_radi_Build-Release_inzenjer/DM.png"),
 ]

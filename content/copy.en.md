@@ -4,7 +4,7 @@
 > 1. „50+ billboards across Belgrade“ (tvoj odgovor) ✔
 > 2. „30+ campaigns, exhibitions and events for FSU in 2026“: brojao sam FSU foldere u Production Visuals (37). Da li je OK?
 > 3. Ballies: „art direction for a 9,999-piece NFT avatar collection“ (iz starog CV-a i sajta). Da li je kolekcija izašla?
-> 4. „Series at Scale: 270+ assets“: 33×2 + 10×6 + 117 + 29 fajlova iz Production Visuals. Da li je sve tvoje?
+> 4. „Series at Scale: 330+ assets“: 66 + 60 + 117 + 34 (upis) + 30 (brucošijada) + 8 (aplikacije) + 13 (Dečija nedelja) + 8 (AI program) fajlova iz Production Visuals. Da li je sve tvoje?
 > 5. Baby Boo: da li su scene sa maskotama (lav, žirafa) tvoje ilustracije? Na sajtu stoje kao „Mascot scene“.
 > 6. Kontakt: „I usually reply within a day“. Da li to stoji?
 > 7. Titula za ITS/ITHS/FSU dizajn: koristim „Campaign & Motion Designer, ITS · ITHS · FSU (2024–now)“. Kako ti glasi zvanično?
@@ -70,7 +70,7 @@ Status pill: **● Available, Q4 2026**
 | 02 | **Ballies** | Three years of seasons, launches and mascots for a sports prediction platform. | Web3 · Campaigns · Motion · 2023–26 |
 | 03 | **Key Art** | Cinematic composites built from generated elements, stock and a lot of light — in 4K and 8K. | Compositing · Personal · 2026 |
 | 04 | **FSU 2026** | An art school, art-directed: 30+ campaigns, exhibitions and events in one year. | Art direction · Print · Social · 2026 |
-| 05 | **Series at Scale** | Four series, 270+ assets, one system — careers, study programmes, AI prompts and enrolment. | ITS · ITHS · Content systems · 2026 |
+| 05 | **Series at Scale** | Eight series, 330+ assets, one system — careers, programmes, AI prompts, events and enrolment. | ITS · ITHS · Content systems · 2026 |
 | 06 | **Baby Boo** | Product films and stills made with AI — honey that pours on cue, vertical-first and in 4K. | AI video · Product · 2026 |
 
 > **(SR) Izmena 14. 10.:** ZTV dresovi su izašli iz glavnih šest. Iz specifikacije u folderu se vidi da je osnove dresova isporučio drugi studio, a tvoj deo je bila priprema za sublimacionu štampu (rasklop, logotipi, slojevi). To je dobar rad za arhivu, ali ne kao „dizajn dresova“. Umesto njega ide **Series at Scale** (ITS/ITHS serije: 33 zanimanja, 10 programa × 6 formata, 117 ChatGPT slajdova, upis 2027/28).
@@ -183,7 +183,10 @@ Every show gets its own concept. The constant is the frame: FSU's typographic sy
 - **Graphic Design:** “I judge books by their cover, because I respect the graphic designer.”
 - **Where is the Spirit of Belgrade?:** photo and video contest with Telegraf
 - **Only One Work:** exhibition system for 30+ authors
-- **Morning**, **Fluids**, **Gallery That Grows**, **Three Graces**, **Immersion**, **Shift**, **AI FilmFest Serbia 2026**
+- **Costume Design MA:** “Your vision. Your design. Your future.”, a 30-post course series
+- **Freshers’ Party & Alumni Club Night:** event campaign
+- **Enrolment 2027/28:** “Be creative. Be brave. Be yourself.”, flyer, social and WhatsApp
+- **Look Inside**, **Fluids**, **Morning**, **Meet the Artist**
 
 **Result**
 30+ identities in one academic year, across print, social, email, web and gallery walls.

@@ -2469,9 +2469,9 @@
     }
     startAutoplay();
 
-    /* lightbox with arrow-key navigation */
+    /* lightbox with arrow-key navigation (a marquee copy opens its original) */
     const dlg = $('[data-lightbox]');
-    const items = $$('.g-open');
+    const items = $$('.g-open:not(.g-dup)');
     if (dlg && items.length) {
       const frame = $('.lightbox__frame', dlg);
       const cap = $('.lightbox__cap', dlg);
@@ -2491,11 +2491,15 @@
           el.decoding = 'async';
         }
         frame.appendChild(el);
-        const fc = b.closest('figure').querySelector('figcaption');
-        cap.textContent = `${cur + 1} / ${items.length} — ${fc ? fc.textContent : ''}`;
+        const fc = b.closest('figure')?.querySelector('figcaption');
+        cap.textContent = `${cur + 1} / ${items.length} — ${b.dataset.cap || (fc ? fc.textContent : '')}`;
         if (el.tagName === 'VIDEO') play(el);
       }
       items.forEach((b, i) => b.addEventListener('click', () => { show(i); openDialog(dlg); }));
+      $$('.g-dup').forEach((d) => d.addEventListener('click', () => {
+        const i = items.findIndex((b) => b.dataset.k === d.dataset.k);
+        if (i >= 0) { show(i); openDialog(dlg); }
+      }));
       $('[data-close]', dlg).addEventListener('click', () => closeDialog(dlg));
       dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target === frame) closeDialog(dlg); });
       dlg.addEventListener('close', () => { $$('video', dlg).forEach((v) => v.pause()); frame.textContent = ''; });
@@ -2527,6 +2531,133 @@
       }, { threshold: 0.5 });
       io.observe(bd);
     });
+  }
+
+  /* ------------------------------------------------------------ work blocks
+     One campaign, carousel or series per screen, grouped by kind (case pages). On a desktop
+     with motion the blocks are sticky: the next one slides up over the current one, which
+     shrinks and darkens. A carousel block stays pinned while the .blk-run after it scrolls
+     by, and its rows move sideways in turns. A block fully covered is hidden and its videos
+     pause. Cards cycle through their formats while their block is on screen. */
+  function setupBlocks() {
+    const wrap = $('[data-blocks]');
+    if (!wrap) return;
+    const blocks = $$('.blk', wrap);
+    const pinned = blocks.filter((b) => b.classList.contains('blk--tracks'));
+    const chap = $('.chap');
+    const links = chap ? $$('a', chap) : [];
+    const motion = () => mqDesktop.matches && !lite;
+    blocks.forEach((b) => {
+      b._in = $('.blk__in', b);
+      b._shade = $('.blk__shade', b);
+      b._bar = $('.tracks__bar i', b);
+    });
+
+    // how far each pinned carousel moves sideways = how long it stays pinned
+    function sizeRuns() {
+      const m = motion();
+      blocks.forEach((b) => {
+        b._h = b.offsetHeight;
+        if (!m) { b._in.style.transform = ''; b._shade.style.opacity = ''; }
+      });
+      pinned.forEach((b) => {
+        b._tracks = $$('.track', b).map((t) => {
+          const view = $('.track__view', t);
+          const r = $('.track__run', view);
+          r.style.transform = '';
+          const pad = parseFloat(getComputedStyle(view).paddingLeft) || 0;
+          return { r, dir: +t.dataset.dir, max: Math.max(0, r.scrollWidth - (view.clientWidth - 2 * pad)) };
+        });
+        const d = Math.max(0, ...b._tracks.map((t) => t.max));
+        b._dist = m && d > 80 ? Math.min(d, innerHeight * 1.4) : 0;   // long rows move a little faster than the page
+        const run = b.nextElementSibling;
+        if (run && run.classList.contains('blk-run')) { b._run = run; run.style.height = b._dist + 'px'; }
+      });
+    }
+
+    let raf = 0;
+    let current = null;
+    function frame() {
+      raf = 0;
+      const vh = innerHeight;
+      const m = motion();
+      // reads first, then writes, so nothing forces a second layout
+      const tops = blocks.map((b) => b.getBoundingClientRect().top);
+      const runs = pinned.map((b) => (b._dist ? b._run.getBoundingClientRect().top : 0));
+      const wr = wrap.getBoundingClientRect();
+      let cur = null;
+      blocks.forEach((b, i) => {
+        const p = i + 1 < blocks.length ? Math.min(1, Math.max(0, 1 - tops[i + 1] / vh)) : 0;
+        if (m) {
+          b._in.style.transform = p > 0 ? `scale(${(1 - p * 0.05).toFixed(4)})` : '';
+          b._shade.style.opacity = p > 0 ? (p * 0.7).toFixed(3) : '';
+        }
+        const under = p >= 1;
+        if (under !== b.classList.contains('is-under')) {
+          b.classList.toggle('is-under', under);
+          $$('video', b).forEach((v) => (under ? v.pause() : !lite && play(v)));
+        }
+        b.classList.toggle('is-live', !under && tops[i] < vh && tops[i] + b._h > 0);
+        if (tops[i] <= vh * 0.5) cur = b;
+      });
+      pinned.forEach((b, j) => {
+        if (!b._dist) return;
+        const q = Math.min(1, Math.max(0, (vh - runs[j]) / b._dist));
+        b._tracks.forEach((t) => {
+          const x = t.dir > 0 ? -q * t.max : -(1 - q) * t.max;
+          t.r.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`;
+        });
+        if (b._bar) b._bar.style.transform = `scaleX(${q.toFixed(4)})`;
+      });
+      if (cur !== current) {
+        current = cur;
+        links.forEach((a) => a.classList.toggle('is-active', !!cur && a.dataset.kind === cur.dataset.kind));
+      }
+      if (chap) chap.classList.toggle('is-on', wr.top < vh * 0.5 && wr.bottom > vh * 0.6);
+    }
+    const req = () => { if (!raf) raf = requestAnimationFrame(frame); };
+    const refit = () => { sizeRuns(); req(); };
+
+    // scroll work only while the blocks are near the screen
+    let near = false;
+    new IntersectionObserver(([en]) => {
+      if (en.isIntersecting === near) return;
+      near = en.isIntersecting;
+      if (near) { addEventListener('scroll', req, { passive: true }); req(); return; }
+      removeEventListener('scroll', req);
+      blocks.forEach((b) => b.classList.remove('is-live'));
+      if (chap) chap.classList.remove('is-on');
+    }, { rootMargin: '50% 0px' }).observe(wrap);
+    addEventListener('resize', refit);
+    mqDesktop.addEventListener('change', refit);
+    onLiteOff.push(refit);
+    sizeRuns();
+    frame();
+
+    // the kind bar: a block's own place in the page (a stuck block reports where it is stuck)
+    links.forEach((a) => a.addEventListener('click', (e) => {
+      const t = document.getElementById(a.getAttribute('href').slice(1));
+      if (!t) return;
+      e.preventDefault();
+      let y = wrap.getBoundingClientRect().top + scrollY;
+      for (const c of wrap.children) { if (c === t) break; y += c.offsetHeight; }
+      scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }));
+
+    // cards: one card at a time shows its next format
+    const decks = $$('.card__frames', wrap).filter((d) => d.children.length > 1);
+    if (decks.length && !reduceMotion) {
+      let tick = 0;
+      setInterval(() => {
+        if (document.hidden) return;
+        const live = decks.filter((d) => d.closest('.blk').classList.contains('is-live'));
+        if (!live.length) return;
+        const fs = Array.from(live[tick++ % live.length].children);
+        const k = fs.findIndex((f) => f.classList.contains('is-on'));
+        fs[k].classList.remove('is-on');
+        fs[(k + 1) % fs.length].classList.add('is-on');
+      }, 1700);
+    }
   }
 
   document.addEventListener('visibilitychange', () => {
@@ -2580,6 +2711,7 @@
   setupHome();
   setupProcess();
   setupCase();
+  setupBlocks();
   setupBurn();
   setupLit();
   setupJumps();

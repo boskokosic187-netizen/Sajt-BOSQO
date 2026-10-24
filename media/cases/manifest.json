@@ -4,13 +4,34 @@
    {
     "w": 960,
     "h": 450,
+    "kb": 325,
     "type": "video",
-    "url": "../../media/cases/live-on-the-streets/1bd639d8",
-    "label": "ITS × ITHS · Jul 2026 · AI school launch · DOOH 1152×540",
+    "url": "../../media/cases/live-on-the-streets/d705c98e",
+    "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540",
     "matte": false
    }
   ],
   "rows": [
+   [
+    {
+     "w": 960,
+     "h": 450,
+     "kb": 358,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/d1bdd9b0",
+     "label": "ITS · Nov 2026 · Pre-enrolment 2027/28",
+     "matte": false
+    },
+    {
+     "w": 960,
+     "h": 450,
+     "kb": 513,
+     "type": "video",
+     "url": "../../media/cases/live-on-the-streets/ea980a78",
+     "label": "ITHS · Nov 2026 · Enrolment 2027/28",
+     "matte": false
+    }
+   ],
    [
     {
      "w": 960,
@@ -59,6 +80,7 @@
     {
      "w": 960,
      "h": 540,
+     "kb": 245,
      "type": "video",
      "url": "../../media/cases/live-on-the-streets/070b7343",
      "label": "ITS · Animated academic calendar 2026/27",
@@ -499,8 +521,8 @@
  "key-art": {
   "hero": [
    {
-    "w": 1600,
-    "h": 900,
+    "w": 3840,
+    "h": 2160,
     "widths": [
      800,
      1600
@@ -514,8 +536,8 @@
   "rows": [
    [
     {
-     "w": 1600,
-     "h": 1872,
+     "w": 1880,
+     "h": 2199,
      "widths": [
       800,
       1600
@@ -526,8 +548,8 @@
      "matte": false
     },
     {
-     "w": 1600,
-     "h": 848,
+     "w": 1880,
+     "h": 996,
      "widths": [
       800,
       1600
@@ -540,8 +562,8 @@
    ],
    [
     {
-     "w": 1600,
-     "h": 2400,
+     "w": 1792,
+     "h": 2688,
      "widths": [
       800,
       1600
@@ -552,8 +574,8 @@
      "matte": true
     },
     {
-     "w": 1600,
-     "h": 896,
+     "w": 2912,
+     "h": 1632,
      "widths": [
       800,
       1600
@@ -576,8 +598,8 @@
      "matte": true
     },
     {
-     "w": 1600,
-     "h": 652,
+     "w": 5334,
+     "h": 2175,
      "widths": [
       800,
       1600
@@ -590,8 +612,8 @@
    ],
    [
     {
-     "w": 1600,
-     "h": 900,
+     "w": 3840,
+     "h": 2160,
      "widths": [
       800,
       1600
@@ -619,8 +641,8 @@
   ],
   "breakdown": [
    {
-    "w": 1600,
-    "h": 900,
+    "w": 1920,
+    "h": 1080,
     "widths": [
      800,
      1600
@@ -631,8 +653,8 @@
     "matte": false
    },
    {
-    "w": 1600,
-    "h": 900,
+    "w": 1920,
+    "h": 1080,
     "widths": [
      800,
      1600
@@ -647,345 +669,1893 @@
  "fsu-2026": {
   "hero": [
    {
-    "w": 1600,
-    "h": 900,
+    "w": 2481,
+    "h": 1749,
     "widths": [
      800,
      1600
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/1b4fc720",
-    "label": "Study programmes · presentation · 1920×1080",
+    "url": "../../media/cases/fsu-2026/247104fc",
+    "label": "Enrolment 2027/28 · flyer",
     "matte": false
    }
   ],
-  "rows": [
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/f34cb23c",
-     "label": "Meeting Points · exhibition",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/56e500ef",
-     "label": "Creative Communication MA",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/078d4260",
-     "label": "Graphic Design programme",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/cd31cc64",
-     "label": "Space in the Making · exhibition",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/9da7701c",
-     "label": "A Closer Look · exhibition",
-     "matte": false
-    },
-    {
-     "w": 720,
-     "h": 720,
-     "type": "video",
-     "url": "../../media/cases/fsu-2026/63ec44e7",
-     "label": "Spirit of Belgrade · motion 1:1",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/624d7a1d",
-     "label": "FSU Doors · 1/3",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/06f1efd8",
-     "label": "FSU Doors · 2/3",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/1daa3146",
-     "label": "FSU Doors · 3/3",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/76bf8394",
-     "label": "Masterpiece · story 1/3",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/86b9355c",
-     "label": "Masterpiece · story 2/3",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/5432bd54",
-     "label": "Masterpiece · story 3/3",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/7aff43d7",
-     "label": "Enrolment 2027/28 · story",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 2262,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/3fe12cec",
-     "label": "Gallery That Grows · poster A3",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 2262,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/9854fd8e",
-     "label": "Three Graces · poster A3",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 2262,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/5db30c59",
-     "label": "Immersion · poster A3",
-     "matte": false
-    },
-    {
-     "w": 1055,
-     "h": 1492,
-     "widths": [
-      800,
-      1055
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/803b0f58",
-     "label": "AI FilmFest Serbia 2026 · poster",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 1132,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/eb902927",
-     "label": "Shift · poster A3",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/7def26ad",
-     "label": "Morning · exhibition",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/de98b2e5",
-     "label": "Only One Work · cover",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/67f72d1c",
-     "label": "Architecture handbook launch",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 1600,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/0dca6970",
-     "label": "Limes plus journal",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 900,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/a3ce3b10",
-     "label": "Study programmes · slide",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 900,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/cdaf79f2",
-     "label": "Study programmes · slide",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 950,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/17ed2732",
-     "label": "Fluids · full set",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 814,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/fsu-2026/362b4449",
-     "label": "Enrolment centre · signage",
-     "matte": false
-    }
-   ]
+  "rows": [],
+  "blocks": [
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Enrolment 2027/28",
+    "line": "“Be creative. Be brave. Be yourself.”",
+    "items": [
+     {
+      "w": 2481,
+      "h": 1749,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/247104fc",
+      "label": "Flyer A5, front",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/7aff43d7",
+      "label": "Story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/17aeca81",
+      "label": "Feed 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/44d3d188",
+      "label": "WhatsApp 4:5",
+      "matte": false
+     },
+     {
+      "w": 2481,
+      "h": 1749,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/acaa69e7",
+      "label": "Flyer A5, back",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 628,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/87c0ab0b",
+      "label": "Link ad 1.91:1",
+      "matte": false
+     },
+     {
+      "w": 570,
+      "h": 390,
+      "widths": [
+       570
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/a07dcee8",
+      "label": "Email",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/2752dd91",
+      "label": "Web strip",
+      "matte": false
+     },
+     {
+      "w": 480,
+      "h": 430,
+      "widths": [
+       480
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/dcc2ede4",
+      "label": "Web card",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Pre-enrolment, November 2026",
+    "line": "“Pre-enrolment is open.” On the street first, then everywhere else.",
+    "items": [
+     {
+      "w": 960,
+      "h": 450,
+      "kb": 325,
+      "type": "video",
+      "url": "../../media/cases/fsu-2026/d705c98e",
+      "label": "DOOH · motion 1152×540",
+      "matte": false
+     },
+     {
+      "w": 1600,
+      "h": 1200,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/0aab169e",
+      "label": "Billboard 4×3 m",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/b464c504",
+      "label": "Feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 570,
+      "h": 390,
+      "widths": [
+       570
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/da8bb5f3",
+      "label": "Email",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/1810a16f",
+      "label": "Web strip",
+      "matte": false
+     },
+     {
+      "w": 480,
+      "h": 430,
+      "widths": [
+       480
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/441721ed",
+      "label": "Web card",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "FSU Doors",
+    "line": "“Create it. Move it. What did you open?”",
+    "items": [
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/624d7a1d",
+      "label": "Post 1 · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/06f1efd8",
+      "label": "Post 2 · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/1daa3146",
+      "label": "Post 3 · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/6d3bdbc8",
+      "label": "Post 1 · web strip",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/14b6d107",
+      "label": "Post 2 · web strip",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/c0d5f69e",
+      "label": "Post 3 · web strip",
+      "matte": false
+     },
+     {
+      "w": 480,
+      "h": 430,
+      "widths": [
+       480
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/06b348b3",
+      "label": "Post 1 · web card",
+      "matte": false
+     },
+     {
+      "w": 480,
+      "h": 430,
+      "widths": [
+       480
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/7e2b7077",
+      "label": "Post 2 · web card",
+      "matte": false
+     },
+     {
+      "w": 480,
+      "h": 430,
+      "widths": [
+       480
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/474a56ff",
+      "label": "Post 3 · web card",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Masterpiece",
+    "line": "“Every masterpiece starts with a first stroke.”",
+    "cols": [
+     1,
+     1,
+     1,
+     3
+    ],
+    "items": [
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/76bf8394",
+      "label": "Post 1 · story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/86b9355c",
+      "label": "Post 2 · story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/5432bd54",
+      "label": "Post 3 · story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/acd9af54",
+      "label": "Post 1 · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/6f4e9c74",
+      "label": "Post 2 · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/0c8f6a2c",
+      "label": "Post 3 · feed 1:1",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Freshers’ Party & Alumni Club Night",
+    "line": "Two nights, one table: the first big student party and the alumni reunion, in two rounds.",
+    "items": [
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/ee3a1da8",
+      "label": "Freshers’ Party · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/458eb2b1",
+      "label": "Alumni Club Night · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1140,
+      "h": 780,
+      "widths": [
+       800,
+       1140
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/64dc9af6",
+      "label": "Email",
+      "matte": false
+     },
+     {
+      "w": 1600,
+      "h": 400,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/95c4bafc",
+      "label": "Sign-up form header",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/eda08b66",
+      "label": "Web strip",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/8e1e0157",
+      "label": "Round 2 · Freshers’ Party",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/62060c91",
+      "label": "Round 2 · Alumni Club Night",
+      "matte": false
+     },
+     {
+      "w": 847,
+      "h": 300,
+      "widths": [
+       800,
+       847
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/5c7d6883",
+      "label": "Round 2 · web strip",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Where is the Spirit of Belgrade?",
+    "line": "A photo and video contest for high-school students, with Telegraf.",
+    "items": [
+     {
+      "w": 720,
+      "h": 720,
+      "kb": 716,
+      "type": "video",
+      "url": "../../media/cases/fsu-2026/63ec44e7",
+      "label": "Motion 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/eaf4f500",
+      "label": "Results · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1140,
+      "h": 780,
+      "widths": [
+       800,
+       1140
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/bfb7d45f",
+      "label": "Email",
+      "matte": false
+     },
+     {
+      "w": 1694,
+      "h": 600,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/f70b7231",
+      "label": "Web strip",
+      "matte": false
+     },
+     {
+      "w": 960,
+      "h": 860,
+      "widths": [
+       800,
+       960
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/9a5a7392",
+      "label": "Web card",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "cards",
+    "kind": "Programmes",
+    "title": "Study programme ads",
+    "line": "One line, one image, one reason to apply.",
+    "ar": 1,
+    "fit": "cover",
+    "cards": [
+     {
+      "title": "Graphic Design",
+      "meta": "“I made it simple. It took 27 attempts.”",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/078d4260",
+        "label": "Post 1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/d16afdce",
+        "label": "Post 2",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/cf3827ce",
+        "label": "Post 3",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Creative Communication MA",
+      "meta": "“POV: your scroll just stopped.”",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/56e500ef",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Creativity & Strategy",
+      "meta": "“AI works. You lead.”",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/2f6b9f5f",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Architecture handbook",
+      "meta": "Launch of a new textbook",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/67f72d1c",
+        "label": "Announcement",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/b0410683",
+        "label": "Launch night",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "marquee",
+    "kind": "Series",
+    "title": "Costume Design MA",
+    "line": "“Your vision. Your design. Your future.” One post for every course of the programme.",
+    "rows": 3,
+    "items": [
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/0ead1907",
+      "label": "Key visual",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/37ef5512",
+      "label": "Course 01",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/0bb361fb",
+      "label": "Course 02",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/6e220164",
+      "label": "Course 03",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/8ebcdf50",
+      "label": "Course 04",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/8983004e",
+      "label": "Course 05",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/38abfc29",
+      "label": "Course 06",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/532795ca",
+      "label": "Course 07",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/16ed0909",
+      "label": "Course 08",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/b244578b",
+      "label": "Course 09",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/8916b399",
+      "label": "Course 10",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/8d68255e",
+      "label": "Course 11",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/c69a7f7d",
+      "label": "Course 12",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/344e9559",
+      "label": "Course 13",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/17711aec",
+      "label": "Course 14",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/d407d8f1",
+      "label": "Course 15",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/e97ae643",
+      "label": "Course 16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/a659b468",
+      "label": "Course 17",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/a0139190",
+      "label": "Course 18",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/c7fd20ec",
+      "label": "Course 19",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/d076b808",
+      "label": "Course 20",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/0146df8b",
+      "label": "Course 21",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/86dd7fe3",
+      "label": "Course 22",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/a32eb817",
+      "label": "Course 23",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/db9eb824",
+      "label": "Course 24",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/befeb969",
+      "label": "Course 25",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/4891da54",
+      "label": "Course 26",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/e34a1799",
+      "label": "Course 27",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/8facf268",
+      "label": "Course 28",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/fsu-2026/7295641c",
+      "label": "Course 29",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "tracks",
+    "kind": "Carousels",
+    "title": "Meet the Artist",
+    "line": "Swipe-through portraits of FSU artists, seven slides each.",
+    "tracks": [
+     {
+      "name": "Dragana Gleđa",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/c624d267",
+        "label": "Slide 1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/aae49ddd",
+        "label": "Slide 2",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/3d880aee",
+        "label": "Slide 3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/c27b1225",
+        "label": "Slide 4",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/6e5189c6",
+        "label": "Slide 5",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/67463dc2",
+        "label": "Slide 6",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/b18a0b8f",
+        "label": "Slide 7",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "name": "Nevena Novaković",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/d694b8f9",
+        "label": "Slide 1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/d101a423",
+        "label": "Slide 2",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/3fbc1c38",
+        "label": "Slide 3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/3304cae0",
+        "label": "Slide 4",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/edde1e87",
+        "label": "Slide 5",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/5043a873",
+        "label": "Slide 6",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/fdc7dcbf",
+        "label": "Slide 7",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "tracks",
+    "kind": "Carousels",
+    "title": "Only One Work",
+    "line": "One room, one author, one day: an exhibition system for 13 artists.",
+    "tracks": [
+     {
+      "name": "Exhibition carousel",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/de98b2e5",
+        "label": "Cover",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/e4a329a5",
+        "label": "Petra Radosavljevic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/66eae8f0",
+        "label": "Ana Kocic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/006dde26",
+        "label": "Jelena Bozovic Djordjevic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/22e954a9",
+        "label": "Jezdimir Milosevic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/3b3272ff",
+        "label": "Konstantin Evdokimov",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/1ecd46b9",
+        "label": "Katia Shneider",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/281fd9c4",
+        "label": "Marija Tosic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/24f3ad3e",
+        "label": "Ana Belosevic Velican",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/067a3afa",
+        "label": "Maja Vranic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/1a7f415f",
+        "label": "Ivan Mitrasinovic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/7d6a8a59",
+        "label": "Nikolina Nikolic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/667a17c6",
+        "label": "Lana Parezanin",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "name": "Meet the author",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/17bb3822",
+        "label": "Petra Radosavljevic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/6644c82d",
+        "label": "Ana Kocic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/82575c06",
+        "label": "Jelena Bozovic Djordjevic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/9e888272",
+        "label": "Jezdimir Milosevic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/cc68c778",
+        "label": "Konstantin Evdokimov",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/f5ca405d",
+        "label": "Katia Shneider",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/f880ecac",
+        "label": "Marija Tosic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/4ad4363d",
+        "label": "Ana Belosevic Velican",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/fbb66252",
+        "label": "Maja Vranic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/903ce9a2",
+        "label": "Ivan Mitrasinovic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/d531438e",
+        "label": "Nikolina Nikolic",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/3a59f704",
+        "label": "Lana Parezanin",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "tracks",
+    "kind": "Presentation",
+    "title": "Study programmes",
+    "line": "The faculty’s programmes as one presentation, 16:9.",
+    "tracks": [
+     {
+      "name": "Slides 1–6",
+      "items": [
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/1b4fc720",
+        "label": "Slide 1",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/a3ce3b10",
+        "label": "Slide 2",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/cdaf79f2",
+        "label": "Slide 3",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/e02c5f78",
+        "label": "Slide 4",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/37179012",
+        "label": "Slide 5",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/c5a43140",
+        "label": "Slide 6",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "name": "Slides 7–11",
+      "items": [
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/22a64d6c",
+        "label": "Slide 7",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/ce755fe4",
+        "label": "Slide 8",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/5c2be1da",
+        "label": "Slide 9",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/c069fba6",
+        "label": "Slide 10",
+        "matte": false
+       },
+       {
+        "w": 1920,
+        "h": 1080,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/1f16849b",
+        "label": "Slide 11",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "tracks",
+    "kind": "Exhibitions",
+    "title": "Exhibition identities",
+    "line": "Every show gets its own world inside the same frame. A walk through six of them.",
+    "tag": "label",
+    "tracks": [
+     {
+      "name": "Meeting Points · Space in the Making · A Closer Look",
+      "items": [
+       {
+        "w": 1789,
+        "h": 2516,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/aa100770",
+        "label": "Meeting Points · poster A3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/f34cb23c",
+        "label": "Meeting Points · feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 3578,
+        "h": 5031,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/05af5e73",
+        "label": "Space in the Making · poster A3",
+        "matte": false
+       },
+       {
+        "w": 3578,
+        "h": 5031,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/f34541dc",
+        "label": "Space in the Making · poster A3, alternative",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/d2b3d4d0",
+        "label": "Space in the Making · opening",
+        "matte": false
+       },
+       {
+        "w": 3579,
+        "h": 5031,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/bc600825",
+        "label": "A Closer Look · poster A3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/9da7701c",
+        "label": "A Closer Look · feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "name": "Morning · Look Inside · Fluids",
+      "items": [
+       {
+        "w": 1789,
+        "h": 2516,
+        "widths": [
+         800,
+         1600
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/06d01655",
+        "label": "Morning · poster A3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/095e8385",
+        "label": "Morning · feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/7d4d9328",
+        "label": "Morning · opening",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/2ac161c2",
+        "label": "Look Inside · feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/e324804d",
+        "label": "Fluids · opening",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/fsu-2026/0b1c44c9",
+        "label": "Fluids · guided tour",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   }
   ]
  },
  "series-at-scale": {
@@ -998,252 +2568,1764 @@
      1200
     ],
     "type": "image",
-    "url": "../../media/cases/series-at-scale/c5453286",
-    "label": "Study programmes · Software development · 1200×630",
+    "url": "../../media/cases/series-at-scale/2e8b9508",
+    "label": "What does a … do? · Business analyst · 1200×630",
     "matte": false
    }
   ],
-  "rows": [
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/92f2c3ba",
-     "label": "What does a … do? · 01/33",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/afaa9994",
-     "label": "What does a … do? · 03/33",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/e79c1838",
-     "label": "What does a … do? · 19/33",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/4f4d0beb",
-     "label": "Study programmes · 4:5",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/a9017513",
-     "label": "Study programmes · 4:5",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/569444b9",
-     "label": "Study programmes · 4:5",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/8fb14acc",
-     "label": "Study programmes · 4:5",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/90057a3f",
-     "label": "ChatGPT Commands · cover",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/dc92a0a7",
-     "label": "ChatGPT Commands · slide",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1350,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/c0cf8cdd",
-     "label": "ChatGPT Commands · cover",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/933e8c26",
-     "label": "Enrolment 2027/28 · ITHS · story",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/7aff43d7",
-     "label": "Enrolment 2027/28 · FSU · story",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/34c6afdb",
-     "label": "What does a … do? · 06/33",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/de91087a",
-     "label": "Student app · Calories Tracker",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/ad8458e9",
-     "label": "Student app · NailBook",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/d3c6f383",
-     "label": "Student app · Budget Manager",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/92154291",
-     "label": "Student app · Šapa",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 1942,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/126c8288",
-     "label": "System overview · 10 programmes",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 5198,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/series-at-scale/6061d767",
-     "label": "System overview · 33 careers",
-     "matte": false
-    }
-   ]
+  "rows": [],
+  "blocks": [
+   {
+    "type": "marquee",
+    "kind": "Series",
+    "title": "What does a … do?",
+    "line": "33 careers explained one post at a time: one portrait, one light, one type system.",
+    "rows": 3,
+    "items": [
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/92f2c3ba",
+      "label": "Career 01/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/5351a4f1",
+      "label": "Career 02/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/afaa9994",
+      "label": "Career 03/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/957c77ae",
+      "label": "Career 04/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/770ebfb5",
+      "label": "Career 05/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/34c6afdb",
+      "label": "Career 06/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/f20b7d20",
+      "label": "Career 07/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/07d235dc",
+      "label": "Career 08/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/33f41e14",
+      "label": "Career 09/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/f27d7551",
+      "label": "Career 10/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/7b2ce29c",
+      "label": "Career 11/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/a98e624b",
+      "label": "Career 12/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/9ce9fbc4",
+      "label": "Career 13/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/098f5a95",
+      "label": "Career 14/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/3cbb165a",
+      "label": "Career 15/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/3ef6f297",
+      "label": "Career 16/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/3ee8cf69",
+      "label": "Career 17/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/e5378af0",
+      "label": "Career 18/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/e79c1838",
+      "label": "Career 19/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/71564bf6",
+      "label": "Career 20/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/4d7b08fc",
+      "label": "Career 21/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/7ec98a00",
+      "label": "Career 22/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/1f92ed66",
+      "label": "Career 23/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/564827ae",
+      "label": "Career 24/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/2197ebd1",
+      "label": "Career 25/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/ea165f3c",
+      "label": "Career 26/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/d409848e",
+      "label": "Career 27/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/0c26982b",
+      "label": "Career 28/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/f85d2c5a",
+      "label": "Career 29/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/55b599fc",
+      "label": "Career 30/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/24ad7e44",
+      "label": "Career 31/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/056cb9d6",
+      "label": "Career 32/33",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/4841e9fd",
+      "label": "Career 33/33",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Series",
+    "title": "Study programmes & modules",
+    "line": "Ten programmes, each in six formats. One programme, every format:",
+    "items": [
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/b643ac48",
+      "label": "Software Development · story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/4f4d0beb",
+      "label": "Software Development · feed 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/ce99325a",
+      "label": "Software Development · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/c5453286",
+      "label": "Software Development · website",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 628,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/5899841b",
+      "label": "Software Development · link ad",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/a9017513",
+      "label": "Data Science & AI · feed 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/9a131277",
+      "label": "Digital Multimedia · feed 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/8fb14acc",
+      "label": "Esports Management · feed 4:5",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "cards",
+    "kind": "Series",
+    "title": "Children’s Week",
+    "line": "Six lessons, one hand-made look: grid paper, tape and marker.",
+    "ar": 1,
+    "fit": "cover",
+    "cards": [
+     {
+      "title": "Love and respect",
+      "meta": "Opening post",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/50467d93",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Physics and laughter",
+      "meta": "Lesson",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/e903f7e9",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Geometry in puzzles",
+      "meta": "Lesson",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/1b8a1693",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Books for children",
+      "meta": "Lesson",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/077d63d6",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "School of the future",
+      "meta": "Lesson",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/22233976",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Web design III",
+      "meta": "Lesson",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/7c024329",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "cards",
+    "kind": "Series",
+    "title": "Student app launches",
+    "line": "Four apps built by students, launched like products.",
+    "ar": 1,
+    "fit": "contain",
+    "cards": [
+     {
+      "title": "Calories Tracker",
+      "meta": "Filip Kričković",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/de91087a",
+        "label": "Feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 1200,
+        "h": 630,
+        "widths": [
+         800,
+         1200
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/b5bdfe04",
+        "label": "Website",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "NailBook",
+      "meta": "Milica Mitrović",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/ad8458e9",
+        "label": "Feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 1200,
+        "h": 630,
+        "widths": [
+         800,
+         1200
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/7902197a",
+        "label": "Website",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Budget Manager",
+      "meta": "Kosta Šemsedinović",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/d3c6f383",
+        "label": "Feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 1200,
+        "h": 630,
+        "widths": [
+         800,
+         1200
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/fdf0680f",
+        "label": "Website",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Šapa",
+      "meta": "Dušan Božović",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/92154291",
+        "label": "Feed 1:1",
+        "matte": false
+       },
+       {
+        "w": 1200,
+        "h": 630,
+        "widths": [
+         800,
+         1200
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/1f0fac39",
+        "label": "Website",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "tracks",
+    "kind": "Carousels",
+    "title": "ChatGPT Commands",
+    "line": "Nine carousels, 117 slides: a prompt library that reads like a magazine.",
+    "tracks": [
+     {
+      "name": "Sales & Marketing Strategy",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/90057a3f",
+        "label": "Cover",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/2b306ec3",
+        "label": "Command 1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/f2c19543",
+        "label": "Command 2",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/dc92a0a7",
+        "label": "Command 3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/dd850ef6",
+        "label": "Command 4",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/47347d8c",
+        "label": "Command 5",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/ec84a859",
+        "label": "Command 6",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/5ddd2284",
+        "label": "Command 7",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/6b9ef27c",
+        "label": "Command 8",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/f240432c",
+        "label": "Command 9",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/5b6a9a7f",
+        "label": "Command 10",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/c4fc1aed",
+        "label": "Command 11",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/a69e652f",
+        "label": "Last slide",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "name": "Sales Psychology & Objections",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/fc649bda",
+        "label": "Cover",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/4f0dd57e",
+        "label": "Command 1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/7f732ae4",
+        "label": "Command 2",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/47b40429",
+        "label": "Command 3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/382cae8f",
+        "label": "Command 4",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/389cb5c6",
+        "label": "Command 5",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/3b0477e6",
+        "label": "Command 6",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/0f927dee",
+        "label": "Command 7",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/5c32612c",
+        "label": "Command 8",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/a0983a29",
+        "label": "Command 9",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/e66ecba5",
+        "label": "Command 10",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/0bcde7a9",
+        "label": "Command 11",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/5ee4d3c0",
+        "label": "Last slide",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "name": "Branding & Positioning",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/c0cf8cdd",
+        "label": "Cover",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/99a0de3e",
+        "label": "Command 1",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/d0dde3df",
+        "label": "Command 2",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/5174e63b",
+        "label": "Command 3",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/abf3ee1f",
+        "label": "Command 4",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/27f706f4",
+        "label": "Command 5",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/6190f056",
+        "label": "Command 6",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/c87ec2e2",
+        "label": "Command 7",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/177f783f",
+        "label": "Command 8",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/c1652aca",
+        "label": "Command 9",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/1be45a85",
+        "label": "Command 10",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/bc96353f",
+        "label": "Command 11",
+        "matte": false
+       },
+       {
+        "w": 1080,
+        "h": 1350,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/b265ef0f",
+        "label": "Last slide",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Enrolment 2027/28",
+    "line": "Two schools, one launch: the same system in red for ITS and ITHS.",
+    "items": [
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/97ae477f",
+      "label": "ITS · story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/b2d71f10",
+      "label": "ITS · feed 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/3b03c35b",
+      "label": "ITHS · feed 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1920,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/933e8c26",
+      "label": "ITHS · story 9:16",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/ce5fd7ce",
+      "label": "ITS · WhatsApp 4:5",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1350,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/1601fde0",
+      "label": "ITHS · WhatsApp 4:5",
+      "matte": false
+     },
+     {
+      "w": 2481,
+      "h": 1749,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/0f87ca65",
+      "label": "ITS · flyer A5",
+      "matte": false
+     },
+     {
+      "w": 2481,
+      "h": 1749,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/bb86d093",
+      "label": "ITHS · flyer A5",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/392bf7d8",
+      "label": "ITS · website",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/675ea50b",
+      "label": "ITHS · website",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Pre-enrolment, November 2026",
+    "line": "Billboards first: DOOH motion and print, then social, web and email.",
+    "items": [
+     {
+      "w": 960,
+      "h": 450,
+      "kb": 358,
+      "type": "video",
+      "url": "../../media/cases/series-at-scale/d1bdd9b0",
+      "label": "ITS · DOOH motion",
+      "matte": false
+     },
+     {
+      "w": 960,
+      "h": 450,
+      "kb": 513,
+      "type": "video",
+      "url": "../../media/cases/series-at-scale/ea980a78",
+      "label": "ITHS · DOOH motion",
+      "matte": false
+     },
+     {
+      "w": 2400,
+      "h": 900,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/57a4b6b7",
+      "label": "ITS · billboard 8×3 m",
+      "matte": false
+     },
+     {
+      "w": 2400,
+      "h": 900,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/128914d9",
+      "label": "ITHS · billboard 8×3 m",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/277af6de",
+      "label": "ITS · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/11a640de",
+      "label": "ITHS · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/eeaa997f",
+      "label": "ITS · website",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/8612bb74",
+      "label": "ITHS · website",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "Freshers’ Party & Alumni Club Night",
+    "line": "ITS’s first big night of the year, before, during and after.",
+    "items": [
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/cd84dd77",
+      "label": "Freshers’ Party · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/ad432bdc",
+      "label": "Alumni Club Night · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/de910109",
+      "label": "Website",
+      "matte": false
+     },
+     {
+      "w": 1140,
+      "h": 780,
+      "widths": [
+       800,
+       1140
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/61109ed1",
+      "label": "Email",
+      "matte": false
+     },
+     {
+      "w": 1600,
+      "h": 400,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/645e5dba",
+      "label": "Sign-up form header",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/79fa9e8e",
+      "label": "Countdown · Freshers’ Party",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/808fc51f",
+      "label": "Countdown · Alumni Club Night",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/8a77c979",
+      "label": "Recap · Freshers’ Party",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/8e76f9c8",
+      "label": "Recap · Alumni Club Night",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "board",
+    "kind": "Campaigns",
+    "title": "AI programme",
+    "line": "“Use AI. Think with AI.” A free programme for first-year ITHS students.",
+    "items": [
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/d5659131",
+      "label": "Launch · feed 1:1",
+      "matte": false
+     },
+     {
+      "w": 1200,
+      "h": 630,
+      "widths": [
+       800,
+       1200
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/7b02f4a5",
+      "label": "Launch · website",
+      "matte": false
+     },
+     {
+      "w": 1600,
+      "h": 400,
+      "widths": [
+       800,
+       1600
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/7d604e3e",
+      "label": "Sign-up form header",
+      "matte": false
+     },
+     {
+      "w": 570,
+      "h": 390,
+      "widths": [
+       570
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/3be4db99",
+      "label": "Parents’ email",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/3443c7a9",
+      "label": "Day one",
+      "matte": false
+     },
+     {
+      "w": 1080,
+      "h": 1080,
+      "widths": [
+       800,
+       1080
+      ],
+      "type": "image",
+      "url": "../../media/cases/series-at-scale/e39713fd",
+      "label": "First block done",
+      "matte": false
+     }
+    ]
+   },
+   {
+    "type": "cards",
+    "kind": "Student stories",
+    "title": "Student stories",
+    "line": "News posts that still look designed.",
+    "ar": 1,
+    "fit": "cover",
+    "cards": [
+     {
+      "title": "Silver at nationals",
+      "meta": "Powerlifting",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/f2000eb0",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "Super Maths Mario",
+      "meta": "A game in a maths lesson",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/1f7339c9",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "At the Bernabéu",
+      "meta": "Erasmus+ in Spain",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/4ceba570",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     },
+     {
+      "title": "An app for a riding club",
+      "meta": "Student project",
+      "items": [
+       {
+        "w": 1080,
+        "h": 1080,
+        "widths": [
+         800,
+         1080
+        ],
+        "type": "image",
+        "url": "../../media/cases/series-at-scale/7d44d112",
+        "label": "Feed 1:1",
+        "matte": false
+       }
+      ]
+     }
+    ]
+   }
   ]
  },
  "baby-boo": {
@@ -1251,6 +4333,7 @@
    {
     "w": 540,
     "h": 960,
+    "kb": 339,
     "type": "video",
     "url": "../../media/cases/baby-boo/ed696b69",
     "label": "Manuka Honey · pilot film",
