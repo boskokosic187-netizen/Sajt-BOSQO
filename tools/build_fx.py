@@ -1,7 +1,6 @@
 """Builds the light-weight overlay effects from the Freepik originals in _freepik/.
 
 The originals (1080p video, 2000 px JPG, EPS) never ship. This makes, in media/fx/:
-  burn.mp4    red film burn, one shot, for page changes (screen blend)
   static.mp4  short static/line glitch played on a wall tile when the director cuts
   leak.*      red light leak that breathes behind the name
   chrome*.*   liquid chrome that fills the big name in the hero (desktop + a small one for phones)
@@ -45,10 +44,6 @@ LIFT = "lutyuv=y='clip((val-16)*{k}+16,16,235)':u=128:v=128"
 def build_videos():
     video("0_Static_Noise_1920x1080.mp4", "static.mp4", 0, 1,
           "scale=640:360:flags=area," + LIFT.format(k=3), crf=30)
-    # rise (1.6 s) -> peak (2.6 s) -> fall; soft blobs, so 960 px is plenty
-    video("4657664_Red_Overlay_1920x1080.mp4", "burn.mp4", 1.6, 2.2,
-          "scale=960:540:flags=area,eq=contrast=1.12:saturation=1.3:gamma=1.1,"
-          "fade=t=in:st=0:d=0.2,fade=t=out:st=1.75:d=0.45", crf=28)
 
 
 def save(im, name, q_webp, q_avif=None):

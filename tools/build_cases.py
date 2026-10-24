@@ -410,7 +410,10 @@ HEAD = """<!doctype html>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
   <link rel="stylesheet" href="{R}css/site.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>
+    // js flag; a page reached through the cut opens under a plain cover (js/site.js: setupCut)
+    (function (d) {{ d.classList.add('js'); try {{ if (sessionStorage.getItem('bk-cut')) d.classList.add('is-cut'); }} catch (e) {{}} }})(document.documentElement);
+  </script>
   <script src="{R}js/site.js" defer></script>
 </head>"""
 

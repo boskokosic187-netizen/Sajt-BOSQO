@@ -55,64 +55,102 @@
     del: (k) => { try { sessionStorage.removeItem(k); } catch { /* private mode */ } },
   };
 
-  /* ------------------------------------------------ film burn (desktop only)
-     One 84 KB shot of red film burn, screen-blended over the page: on the first
-     visit, and as a cut between pages (rises on the old page, fades on the new). */
-  const burnOK = () => mqDesktop.matches && !lite && !reduceMotion;
-  let burnV = null;
-  function getBurn() {
-    if (!burnV) {
-      burnV = makeVideo(FX + 'burn.mp4');
-      burnV.loop = false;
-      burnV.className = 'fx-burn';
-      burnV.setAttribute('aria-hidden', 'true');
-      burnV.addEventListener('ended', () => burnV.classList.remove('is-on'));
-      document.body.appendChild(burnV);
+  /* ------------------------------------------------ the cut between pages
+     Six shutters drop over the page, the first where you clicked, the others spreading
+     out from there, each with a red tally line on its leading edge. The next page opens
+     under the same shutters (its <head> puts up a plain cover from the first paint:
+     html.is-cut), shows its title card, and the shutters carry on down out of frame.
+     The top bar stays on air above it all. Transform only; in lite mode a link is just
+     a link (css: THE CUT) */
+  const cutOK = () => !lite && 'animate' in Element.prototype;
+  const CUT_EASE = 'cubic-bezier(0.75, 0, 0.15, 1)';
+  const SHUTTERS = 6;
+  let leaving = false;
+  function shutters() {
+    const box = document.createElement('div');
+    box.className = 'cut';
+    box.setAttribute('aria-hidden', 'true');
+    for (let i = 0; i < SHUTTERS; i++) box.appendChild(document.createElement('i'));
+    document.body.appendChild(box);
+    return box;
+  }
+  // when each shutter moves: one step later per column away from where the cut started
+  const wave = (col, step) => (i) => Math.abs(i - col) * step;
+  const colAt = (x) => Math.max(0, Math.min(SHUTTERS - 1, Math.floor((x / innerWidth) * SHUTTERS)));
+  function go(href, x = innerWidth / 2) {
+    if (!cutOK()) { location.href = href; return; }
+    if (leaving) return;
+    leaving = true;
+    const col = colAt(x);
+    const box = shutters();
+    const at = wave(col, 45);
+    let end = 0;
+    $$('i', box).forEach((s, i) => {
+      end = Math.max(end, at(i) + 420);
+      s.animate([{ transform: 'translateY(-101%)' }, { transform: 'none' }], { duration: 420, delay: at(i), easing: CUT_EASE, fill: 'both' });
+    });
+    store.set('bk-cut', String(col));
+    // the next page starts loading while the shutters close
+    const pre = document.createElement('link');
+    pre.rel = 'prefetch';
+    pre.href = href;
+    document.head.appendChild(pre);
+    setTimeout(() => { location.href = href; }, end);
+  }
+  // the page that opens says what it is for a moment, then the shutters go
+  function titleCard() {
+    const t = $('.case-title');
+    if (t) return [($('.case-hero__top span') || t).textContent, t.textContent];
+    return ['Portfolio', location.hash === '#work' ? 'Selected work' : 'Boško Kosić'];
+  }
+  function openCut(col, card) {
+    const box = shutters();
+    root.classList.remove('is-cut'); // the shutters stand in for the plain cover
+    let hold = 0;
+    if (card) {
+      const [k, t] = titleCard();
+      const c = document.createElement('div');
+      c.className = 'cut__card';
+      c.innerHTML = '<span class="cut__k"></span><span class="cut__t"><span></span></span>';
+      $('.cut__k', c).textContent = k;
+      $('.cut__t > span', c).textContent = t;
+      box.appendChild(c);
+      $('.cut__k', c).animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'backwards' });
+      $('.cut__t > span', c).animate([{ transform: 'translateY(105%)' }, { transform: 'none' }], { duration: 420, delay: 40, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'backwards' });
+      c.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-14px)' }], { duration: 260, delay: 560, easing: 'ease-in', fill: 'forwards' });
+      hold = 520;
     }
-    return burnV;
+    const at = wave(col, 45);
+    let end = 0;
+    $$('i', box).forEach((s, i) => {
+      end = Math.max(end, hold + at(i) + 560);
+      s.animate([{ transform: 'none' }, { transform: 'translateY(101%)' }], { duration: 560, delay: hold + at(i), easing: CUT_EASE, fill: 'both' });
+    });
+    setTimeout(() => box.remove(), end + 50);
   }
-  // plays from `from` seconds; gives up if the clip is not ready within `wait` ms
-  function playBurn(from, rate, wait) {
-    const v = getBurn();
-    const t = performance.now();
-    const go = () => {
-      if (performance.now() - t > wait) return;
-      v.currentTime = from;
-      v.playbackRate = rate;
-      v.classList.add('is-on');
-      play(v);
-      // slow devices can stall the clip; never leave the red wash on screen
-      clearTimeout(v._off);
-      v._off = setTimeout(() => { v.pause(); v.classList.remove('is-on'); }, ((2.2 - from) / rate) * 1000 + 500);
-    };
-    if (v.readyState >= 3) go(); else v.addEventListener('canplay', go, { once: true });
-  }
-  function go(href) {
-    if (!burnOK() || !burnV || burnV.readyState < 3) { location.href = href; return; }
-    store.set('bk-burn', '1');
-    playBurn(0, 2, 0);
-    setTimeout(() => { location.href = href; }, 430); // leave near the peak of the burn
-  }
-  function setupBurn() {
-    if (store.get('bk-burn')) {
-      store.del('bk-burn');
-      if (burnOK()) playBurn(0.85, 1, 700); // the tail of the burn reveals the new page
+  function setupCut() {
+    const col = store.get('bk-cut');
+    store.del('bk-cut');
+    if (root.classList.contains('is-cut')) {
+      if (cutOK()) openCut(+col || 0, true); else root.classList.remove('is-cut');
     }
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href]');
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       if (a.target || a.hasAttribute('download')) return;
       const u = new URL(a.href, location.href);
-      if (u.origin !== location.origin || u.pathname === location.pathname) return;
-      if (!burnOK() || !burnV || burnV.readyState < 3) return;
+      if (u.origin !== location.origin || u.pathname === location.pathname || !cutOK()) return;
       e.preventDefault();
-      go(u.href);
+      go(u.href, e.clientX);
     });
-    // preload the clip once the page has settled
-    addEventListener('load', () => setTimeout(() => { if (burnOK()) getBurn(); }, 1500));
-    // back/forward cache: never come back to a page frozen mid-burn
+    // back/forward cache: a page left under its shutters opens them again
     addEventListener('pageshow', (e) => {
-      if (e.persisted && burnV) { burnV.pause(); burnV.classList.remove('is-on'); }
+      if (!e.persisted || !leaving) return;
+      leaving = false;
+      const shut = $('.cut');
+      if (shut) shut.remove();
+      store.del('bk-cut');
+      openCut(colAt(innerWidth / 2), false);
     });
   }
 
@@ -749,7 +787,8 @@
         if ((!own && !slug) || hero.classList.contains('is-take') || proj) return;
         t.classList.add('is-take');
         hero.classList.add('is-take');
-        setTimeout(() => (own ? openProject(own, t) : go('work/' + slug + '/')), reduceMotion ? 0 : 160);
+        const r = t.getBoundingClientRect();
+        setTimeout(() => (own ? openProject(own, t) : go('work/' + slug + '/', r.left + r.width / 2)), reduceMotion ? 0 : 160);
       });
     });
 
@@ -2849,7 +2888,7 @@
   setupProcess();
   setupCase();
   setupBlocks();
-  setupBurn();
+  setupCut();
   setupLit();
   setupCues();
   setupJumps();

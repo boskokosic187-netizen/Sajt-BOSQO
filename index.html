@@ -16,24 +16,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=2b6b5b6a">
+  <link rel="stylesheet" href="css/site.css?v=92c3b656">
   <script>
-    // js flag + the avatar intro decision, before first paint so the page never flashes under the intro
+    // js flag + the avatar intro decision, before first paint so the page never flashes under the intro;
+    // a page reached through the cut opens under a plain cover instead (js/site.js: setupCut)
     // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per session)
     (function (d) {
       d.classList.add('js');
       try {
+        if (sessionStorage.getItem('bk-cut')) d.classList.add('is-cut');
         var c = navigator.connection || {};
         var low = c.saveData || /(^|-)2g$/.test(c.effectiveType || '') ||
           (navigator.deviceMemory && navigator.deviceMemory < 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4);
-        if (!low && !sessionStorage.getItem('bk-intro') && !sessionStorage.getItem('bk-burn') &&
+        if (!low && !sessionStorage.getItem('bk-intro') && !sessionStorage.getItem('bk-cut') &&
             matchMedia('(min-width: 768px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           d.classList.add('is-intro');
         }
       } catch (e) { /* storage blocked: no intro */ }
     })(document.documentElement);
   </script>
-  <script src="js/site.js?v=66665d75" defer></script>
+  <script src="js/site.js?v=9a5d94c5" defer></script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
