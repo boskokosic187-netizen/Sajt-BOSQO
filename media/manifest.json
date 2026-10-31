@@ -556,5 +556,29 @@
    960,
    1600
   ]
+ },
+ "deadair": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_16x9.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 960,
+  "h": 540,
+  "kb": {
+   "mp4": 430,
+   "webp": 23
+  }
+ },
+ "deadair-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 360,
+  "h": 640,
+  "kb": {
+   "mp4": 239,
+   "webp": 9
+  }
  }
 }

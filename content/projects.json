@@ -2,6 +2,159 @@
   "_readme": "Projects that open in place from the home wall (a tile with data-project=<slug>). Source of truth for tools/build_projects.py, which builds media/projects/<slug>/ and writes one <template data-proj> per project into index.html. Monitor 1 is on program when the project opens; type loop = the wall's own loop (media/loops). Paths: PV/ = Desktop/Production Visuals, S/ = this repo.",
   "projects": [
     {
+      "slug": "deadair",
+      "format": "cartoon",
+      "title": "DEAD AIR",
+      "kicker": "AI film · Self-initiated · 2026",
+      "accent": "#FF3D2E",
+      "line": "A trailer for a film that doesn’t exist: eleven years without a signal, one operator on the last mast, and the night someone answers.",
+      "idea": "The world has been off the air for eleven years. Every night one operator climbs the last radio mast on a frozen sea and talks to no one, until a voice answers, then a continent of lights. AI does what no budget could here: the ice, the aurora, the planet. The title is the site’s own signal: on the end card DEAD flickers out and ON strikes red.",
+      "role": "Concept, script and direction, AI image and video, edit and grade, sound design and mix, typography and drawn wordmark, creative code",
+      "facts": [
+        [
+          "19 frames",
+          "Every Midjourney frame approved at 100 % before a single video credit"
+        ],
+        [
+          "12 clips",
+          "Kling 3.0 on Higgsfield, one take each, ~148 credits"
+        ],
+        [
+          "1 second",
+          "Of true silence before the light: every layer of the mix at zero"
+        ],
+        [
+          "1 timeline",
+          "One file drives the grade, grain, titles, subtitles and mix of both formats"
+        ]
+      ],
+      "cta": [
+        {
+          "label": "Find the signal",
+          "cut": 2
+        },
+        {
+          "label": "Watch the trailer",
+          "meta": "0:32 · sound",
+          "cut": 3
+        }
+      ],
+      "note": "AI film. Images: Midjourney. Motion: Higgsfield (Kling 3.0). Sound: synthesised in code for now (wind, static, sea ice, tube hum, hits, a drone and one piano note); the narrator’s lines are on screen until the ElevenLabs voices are recorded. Phone mockup: Freepik (licensed). Fonts: Sentient and Synonym by Indian Type Foundry (Fontshare, ITF Free Font License). Fictional film, no real cast or studio.",
+      "copy": [
+        [
+          "PV/BOSQO/DEAD_AIR/06_Web/deadair-live",
+          "projects/deadair/live"
+        ]
+      ],
+      "monitors": [
+        {
+          "type": "loop",
+          "loop": "deadair",
+          "umd": "Loop",
+          "label": "Loop · the last mast under the aurora, its light still blinking"
+        },
+        {
+          "type": "live",
+          "href": "projects/deadair/live/",
+          "thumb": "PV/BOSQO/DEAD_AIR/06_Web/deadair-live/media/poster-wide.webp",
+          "umd": "Live · Signal",
+          "label": "Live · turn the dial through the static until the mast lights up"
+        },
+        {
+          "type": "film",
+          "src": "PV/BOSQO/DEAD_AIR/01_Film/DEAD_AIR_film_16x9.mp4",
+          "w": 1280,
+          "dur": 32,
+          "poster_at": 6.0,
+          "crf": 27,
+          "umd": "Film · sound",
+          "label": "The trailer · 32 s in 2.39:1, one second of true silence before the light"
+        },
+        {
+          "type": "set",
+          "cols": 3,
+          "umd": "Social 9:16",
+          "label": "The vertical trailer with its lines on screen, and on the phone",
+          "items": [
+            {
+              "type": "video",
+              "src": "PV/BOSQO/DEAD_AIR/01_Film/DEAD_AIR_film_9x16.mp4",
+              "w": 540,
+              "dur": 32,
+              "poster_at": 3.5,
+              "crf": 28
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/04_Mockupi/phone_social.jpg"
+            },
+            {
+              "type": "video",
+              "src": "PV/BOSQO/DEAD_AIR/04_Mockupi/phone_social.mp4",
+              "w": 640,
+              "dur": 8,
+              "poster_at": 4.0,
+              "crf": 23
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "cols": 2,
+          "umd": "Key art ×2",
+          "label": "Two posters, 50×70, and their type at 100 %",
+          "items": [
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/02_Posteri/DEAD_AIR_poster_01_mast.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/02_Posteri/DEAD_AIR_poster_02_answer.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/02_Posteri/DEAD_AIR_poster_01_mast_detail_01.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/02_Posteri/DEAD_AIR_poster_02_answer_detail_01.jpg"
+            }
+          ]
+        },
+        {
+          "type": "set",
+          "cols": 2,
+          "umd": "Process",
+          "label": "Still to shot, the cut, the sound in six layers, and every Midjourney frame",
+          "items": [
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_01_mj-to-film.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_02_shot-list.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_03_sound.jpg"
+            },
+            {
+              "type": "image",
+              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_04_behind.jpg"
+            }
+          ]
+        }
+      ],
+      "wall": {
+        "loop": "PV/BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_16x9.mp4",
+        "loop_v": "PV/BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_9x16.mp4",
+        "label": "DEAD AIR · AI trailer",
+        "label_v": "DEAD AIR · AI trailer 9:16"
+      }
+    },
+    {
       "slug": "halfcourt",
       "format": "identity",
       "title": "HALFCOURT",
