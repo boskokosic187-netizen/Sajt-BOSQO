@@ -16,8 +16,8 @@
           "Every Midjourney frame approved at 100 % before a single video credit"
         ],
         [
-          "12 clips",
-          "Kling 3.0 on Higgsfield, one take each, ~148 credits"
+          "17 clips",
+          "Kling 3.0 on Higgsfield: 12 shots and 5 bridges between them, one take each, ~218 credits"
         ],
         [
           "1 second",
@@ -35,7 +35,7 @@
         },
         {
           "label": "Watch the trailer",
-          "meta": "0:32 · sound",
+          "meta": "0:48 · sound",
           "cut": 3
         }
       ],
@@ -64,11 +64,11 @@
           "type": "film",
           "src": "PV/BOSQO/DEAD_AIR/01_Film/DEAD_AIR_film_16x9.mp4",
           "w": 1280,
-          "dur": 32,
-          "poster_at": 6.0,
+          "dur": 48,
+          "poster_at": 9.0,
           "crf": 27,
           "umd": "Film · sound",
-          "label": "The trailer · 32 s in 2.39:1, one second of true silence before the light"
+          "label": "The trailer · 48 s in 2.39:1: five Kling bridges morph shot into shot, one second of true silence before the light"
         },
         {
           "type": "set",
@@ -80,7 +80,7 @@
               "type": "video",
               "src": "PV/BOSQO/DEAD_AIR/01_Film/DEAD_AIR_film_9x16.mp4",
               "w": 540,
-              "dur": 32,
+              "dur": 48,
               "poster_at": 3.5,
               "crf": 28
             },
