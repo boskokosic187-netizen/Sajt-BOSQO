@@ -16,8 +16,8 @@
           "Every Midjourney frame approved at 100 % before a single video credit"
         ],
         [
-          "17 clips",
-          "Kling 3.0 on Higgsfield: 12 shots and 5 bridges between them, one take each, ~218 credits"
+          "16 clips",
+          "Kling 3.0 on Higgsfield: 9 shots and 7 bridges between them, 23 takes, ~300 credits"
         ],
         [
           "1 second",
@@ -39,7 +39,7 @@
           "cut": 3
         }
       ],
-      "note": "AI film. Images: Midjourney. Motion: Higgsfield (Kling 3.0). Sound: synthesised in code for now (wind, static, sea ice, tube hum, hits, a drone and one piano note); the narrator’s lines are on screen until the ElevenLabs voices are recorded. Phone mockup: Freepik (licensed). Fonts: Sentient and Synonym by Indian Type Foundry (Fontshare, ITF Free Font License). Fictional film, no real cast or studio.",
+      "note": "AI film. Images: Midjourney. Motion: Higgsfield (Kling 3.0). Voices and music: ElevenLabs (paid plan, commercial licence); the sound effects are synthesised in code. Phone mockup: Freepik (licensed). Fonts: Sentient and Synonym by Indian Type Foundry (Fontshare, ITF Free Font License). Fictional film, no real cast or studio.",
       "copy": [
         [
           "PV/BOSQO/DEAD_AIR/06_Web/deadair-live",
@@ -65,10 +65,10 @@
           "src": "PV/BOSQO/DEAD_AIR/01_Film/DEAD_AIR_film_16x9.mp4",
           "w": 1280,
           "dur": 48,
-          "poster_at": 9.0,
+          "poster_at": 8.3,
           "crf": 27,
           "umd": "Film · sound",
-          "label": "The trailer · 48 s in 2.39:1: five Kling bridges morph shot into shot, one second of true silence before the light"
+          "label": "The trailer · 48 s in 2.39:1: the first half is one camera move, Kling bridges and a gust of snow carry it from shot to shot, then one second of true silence before the light"
         },
         {
           "type": "set",
