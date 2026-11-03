@@ -980,6 +980,7 @@
       if (!document.startViewTransition || lite || reduceMotion) { update(false); return Promise.resolve(); }
       root.classList.add(cls);
       const vt = document.startViewTransition(() => update(true));
+      vt.ready.catch(() => {});   // a transition cut short by the next one rejects `ready` too
       return vt.finished.catch(() => {}).finally(() => root.classList.remove(cls));
     }
     const tileFor = (slug) => $(`.tile[data-project="${slug}"][data-hold]`) || $(`.tile[data-project="${slug}"]`);
