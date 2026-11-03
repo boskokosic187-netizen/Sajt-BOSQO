@@ -12,20 +12,20 @@
       "role": "Concept, script and direction, AI image and video, edit and grade, sound design and mix, typography and drawn wordmark, creative code",
       "facts": [
         [
-          "19 frames",
-          "Every Midjourney frame approved at 100 % before a single video credit"
+          "0:48",
+          "A trailer for a film that doesn’t exist, cut for the cinema at 2.39:1 and for the phone at 9:16"
         ],
         [
-          "15 clips",
-          "Kling 3.0 on Higgsfield: 8 shots and 7 bridges between them, 23 takes, ~300 credits"
+          "1 camera move",
+          "The whole first act: from the frozen sea, through the city, up the last mast to her eye"
         ],
         [
           "1 second",
           "Of true silence before the light: every layer of the mix at zero"
         ],
         [
-          "1 timeline",
-          "One file drives the grade, grain, titles, subtitles and mix of both formats"
+          "6 languages",
+          "The world answers the signal in six languages at once"
         ]
       ],
       "cta": [
@@ -39,7 +39,7 @@
           "cut": 3
         }
       ],
-      "note": "AI film. Images: Midjourney. Motion: Higgsfield (Kling 3.0). Voices and music: ElevenLabs (paid plan, commercial licence); the sound effects are synthesised in code. Phone mockup: Freepik (licensed). Fonts: Sentient and Synonym by Indian Type Foundry (Fontshare, ITF Free Font License). Fictional film, no real cast or studio.",
+      "note": "AI film, made with licensed generative tools (paid plans, commercial use). Phone mockup: Freepik (licensed). Fonts: Sentient and Synonym by Indian Type Foundry (Fontshare, ITF Free Font License). Fictional film, no real cast or studio.",
       "copy": [
         [
           "PV/BOSQO/DEAD_AIR/06_Web/deadair-live",
@@ -68,7 +68,7 @@
           "poster_at": 8.3,
           "crf": 27,
           "umd": "Film · sound",
-          "label": "The trailer · 48 s in 2.39:1: the first half is one camera move, Kling bridges and a gust of snow carry it from shot to shot, then one second of true silence before the light"
+          "label": "The trailer · 48 s in 2.39:1: the first act is one unbroken camera move, then one second of true silence before the light"
         },
         {
           "type": "set",
@@ -126,23 +126,15 @@
           "type": "set",
           "cols": 2,
           "umd": "Process",
-          "label": "Still to shot, the cut, the sound in six layers, and every Midjourney frame",
+          "label": "The story frame by frame, and the sound in six layers",
           "items": [
             {
               "type": "image",
-              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_01_mj-to-film.jpg"
+              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_01_story.jpg"
             },
             {
               "type": "image",
-              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_02_shot-list.jpg"
-            },
-            {
-              "type": "image",
-              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_03_sound.jpg"
-            },
-            {
-              "type": "image",
-              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_04_behind.jpg"
+              "src": "PV/BOSQO/DEAD_AIR/05_Sistem/DEAD_AIR_board_02_sound.jpg"
             }
           ]
         }
