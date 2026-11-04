@@ -50,7 +50,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 
 /* ---------- shared bits ---------- */
 .mono, .eyebrow, .sec-head, .bar, .status, .row__tags, .row__year, .row__num,
-.reel__note, .mail__hint, .foot, .dock, .tile::before {
+.mail__hint, .foot, .dock, .tile::before {
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600;
   font-size: 12.5px;
   letter-spacing: 0.07em;
@@ -471,35 +471,66 @@ html:not(.is-lite) .tile { will-change: filter; }
    ========================================================================== */
 .reel, .work, .contact { padding: clamp(80px, 12vh, 140px) var(--pad); content-visibility: auto; contain-intrinsic-size: auto 900px; }
 
-/* ---- reel ---- */
+/* ---- reel: a program monitor. The reel runs muted on the screen; under it the monitor's
+   own display (tally, chapter, timecode, the mix's levels) and the chapter strip. The
+   picture stays clean: nothing is laid over the work but the play button (js: reel monitor) */
+.reel { padding-block: clamp(64px, 9vh, 120px); }
+.sec-head__end { margin-left: auto; }
 .reel__grid {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 48px;
-  margin-top: 40px; align-items: start;
+  display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 28px clamp(32px, 4vw, 72px);
+  margin-top: clamp(22px, 3.6vh, 40px); align-items: end;
 }
-.reel__title, .work__title, .contact__title {
-  font-weight: 800; font-stretch: 112%;
-  font-size: clamp(48px, 6.4vw, 116px); line-height: 0.92; letter-spacing: -0.03em;
+.reel__copy { display: grid; gap: clamp(16px, 2.6vh, 26px); }
+.reel__title { font-size: clamp(44px, 4.7vw, 90px); }
+.reel__sub { max-width: 40ch; color: var(--muted); font-size: 17px; }
+
+.reel__chapters { border-top: 1px solid var(--line); }
+.ch {
+  position: relative; display: grid; grid-template-columns: 50px auto minmax(0, 1fr) 14px; align-items: baseline; column-gap: 14px;
+  width: 100%; padding: 10px 0; border-bottom: 1px solid var(--line); text-align: left;
+  transition: color 0.3s;
 }
-.reel__title em, .work__title em, .contact__title em { font-size: 1.06em; letter-spacing: -0.01em; }
-.reel__sub { grid-column: 1; max-width: 38ch; color: var(--muted); font-size: 18px; }
-.reel__player {
-  grid-column: 2; grid-row: 1 / span 2;
+.ch__tc, .reel__umd, .reel__len {
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.07em;
+  text-transform: uppercase; font-variant-numeric: tabular-nums;
+}
+.ch__tc { color: var(--muted); transition: color 0.3s; }
+.ch__name { font-weight: 600; font-size: 16px; letter-spacing: -0.005em; }
+.ch__note { color: var(--muted); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch__go {
+  align-self: center; width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 8px; border-color: transparent transparent transparent var(--rec);
+  opacity: 0; transform: translateX(-6px); transition: opacity 0.3s, transform 0.4s var(--out);
+}
+.ch::before { /* the chapter on the monitor now: a red rule draws under it */
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--rec);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.6s var(--cut);
+}
+.ch.is-on::before { transform: scaleX(1); }
+.ch.is-on .ch__tc { color: var(--rec); }
+.ch:hover .ch__go, .ch:focus-visible .ch__go { opacity: 1; transform: none; }
+.reel__chapters:hover .ch:not(:hover) { color: var(--muted); }
+@media (max-width: 1279px) { .ch { grid-template-columns: 50px minmax(0, 1fr) 14px; } .ch__note { display: none; } }
+
+.reel__monitor { min-width: 0; }
+.reel__screen {
   position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 16 / 9; width: 100%;
-  background: var(--bg-2);
+  background: #000; cursor: pointer; isolation: isolate;
 }
-.reel__player img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--out), filter 0.6s; filter: brightness(0.72); }
-.reel__player:hover img { transform: scale(1.04); filter: brightness(0.9); }
+.reel__screen picture, .reel__screen img, .reel__screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.reel__screen video { opacity: 0; transition: opacity 0.6s; }
+.reel__screen video.is-on { opacity: 1; }
 .reel__play {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  position: absolute; left: 22px; bottom: 22px; z-index: 2;
   display: inline-flex; align-items: center; gap: 12px;
-  height: 64px; padding: 0 28px; border-radius: 999px;
-  background: var(--text); color: var(--bg); font-weight: 700;
-  transition: background-color 0.3s, transform 0.4s var(--out);
+  height: 56px; padding: 0 24px 0 20px; border-radius: 999px;
+  background: var(--text); color: var(--bg); font-weight: 700; font-size: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.3s, color 0.3s, transform 0.4s var(--out);
 }
-.reel__player:hover .reel__play { background: var(--rec); color: #000; transform: translate(-50%, -50%) scale(1.06); }
-.reel__note { position: absolute; left: 16px; bottom: 14px; color: var(--text); opacity: 0.8; }
+.reel__len { color: inherit; opacity: 0.6; }
+.reel__screen:hover .reel__play, .reel__play:focus-visible { background: var(--rec); color: #000; transform: scale(1.04); }
 .reel__corners {
-  position: absolute; inset: 14px; pointer-events: none; --c: rgba(242, 239, 234, 0.7);
+  position: absolute; inset: 14px; pointer-events: none; z-index: 1; --c: rgba(242, 239, 234, 0.7);
   background:
     linear-gradient(var(--c), var(--c)) 0 0 / 22px 1px, linear-gradient(var(--c), var(--c)) 0 0 / 1px 22px,
     linear-gradient(var(--c), var(--c)) 100% 0 / 22px 1px, linear-gradient(var(--c), var(--c)) 100% 0 / 1px 22px,
@@ -507,6 +538,28 @@ html:not(.is-lite) .tile { will-change: filter; }
     linear-gradient(var(--c), var(--c)) 100% 100% / 22px 1px, linear-gradient(var(--c), var(--c)) 100% 100% / 1px 22px;
   background-repeat: no-repeat;
 }
+
+/* the monitor's display: tally · chapter · timecode · levels */
+.reel__umd {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 18px;
+  margin-top: 12px; color: var(--muted);
+}
+.reel__tally { display: inline-flex; align-items: center; gap: 8px; color: var(--text); }
+.reel__tally i { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); transition: background-color 0.3s, box-shadow 0.3s; }
+.reel.is-live .reel__tally i { background: var(--rec); box-shadow: 0 0 10px rgba(255, 77, 31, 0.6); }
+.reel__chap { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.reel__tc { color: var(--text); }
+.reel__vu { display: grid; gap: 3px; width: 92px; }
+.reel__vu i {
+  position: relative; display: block; height: 3px; overflow: hidden; border-radius: 2px;
+  background: linear-gradient(90deg, rgba(242, 239, 234, 0.85) 0 68%, #ffb21f 68% 86%, var(--rec) 86%);
+}
+.reel__vu b { position: absolute; inset: 0; background: #2a2a2d; transform-origin: 100% 50%; } /* covers what the level doesn't reach */
+
+.reel__strip { display: flex; gap: 4px; margin-top: 10px; }
+.reel__seg { flex: var(--w) 1 0; position: relative; height: 2px; overflow: hidden; background: var(--line-2); }
+.reel__seg b { position: absolute; inset: 0; background: var(--text); transform: scaleX(0); transform-origin: 0 50%; }
+.reel__seg.is-on b { background: var(--rec); }
 
 /* ---- selected work: six colour-coded cards, like sources on a multiviewer. Each project
    has its own signal colour (--c): the bar on top, the number, the glow on hover. One card
@@ -708,7 +761,7 @@ html:not(.is-lite) .tile { will-change: filter; }
 }
 .player::backdrop { background: rgba(0, 0, 0, 0.6); }
 .player[open] { display: grid; place-items: center; }
-.player__frame video { max-height: 86vh; max-width: 92vw; border-radius: 8px; background: #000; }
+.player__frame video { width: min(92vw, 86vh * 16 / 9); height: auto; aspect-ratio: 16 / 9; border-radius: 8px; background: #000; transform-origin: 0 0; }
 .player__close {
   position: absolute; top: 18px; right: 22px; padding: 10px 16px; border: 1px solid var(--line-2); border-radius: 999px;
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -779,10 +832,19 @@ html:not(.is-lite) .tile { will-change: filter; }
   .bar { display: none; }
 
   .reel, .work, .contact { padding: 72px var(--pad); }
-  .reel__grid { grid-template-columns: 1fr; margin-top: 28px; }
-  .reel__player { grid-column: 1; grid-row: auto; }
-  .reel__sub { font-size: 16px; }
-  .reel__play { height: 52px; padding: 0 20px; }
+  .reel__grid { grid-template-columns: 1fr; margin-top: 28px; gap: 22px; }
+  .reel__copy { display: contents; }
+  .reel__title { order: 1; }
+  .reel__sub { order: 2; font-size: 16px; }
+  .reel__monitor { order: 3; }
+  .reel__chapters { order: 4; display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  .ch { grid-template-columns: 42px minmax(0, 1fr); padding: 12px 0; }
+  .ch__note, .ch__go { display: none; }
+  .ch__name { font-size: 15px; }
+  .reel__play { left: 14px; bottom: 14px; height: 48px; padding: 0 18px 0 16px; font-size: 14px; }
+  .reel__corners { inset: 10px; }
+  .reel__umd { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .reel__vu { display: none; }
 
   .work__head { grid-template-columns: 1fr; gap: 16px; margin: 28px 0 28px; }
   .work__intro { font-size: 16px; }
@@ -2691,8 +2753,8 @@ html.cues [data-cue="screen"]:not(.is-cued) { clip-path: inset(50% 50% 50% 50%);
 html.cues [data-cue="screen"].is-cued { animation: cueScreen 1.1s linear calc(var(--q, 0) * 0.09s) backwards; }
 html.cues [data-cue="screen"].is-cued img { animation: cueSettle 1.8s var(--out) calc(var(--q, 0) * 0.09s) backwards; }
 html.cues .row[data-cue].is-cued .row__link > * { animation: cueRise 0.7s var(--out) calc(var(--q, 0) * 0.09s + 0.45s) backwards; }
-html.cues .reel__player.is-cued .reel__corners { animation: cueFrame 0.9s var(--out) calc(var(--q, 0) * 0.09s + 0.55s) backwards; }
-html.cues .reel__player.is-cued .reel__play { animation: cuePlay 0.7s var(--out) calc(var(--q, 0) * 0.09s + 0.7s) backwards; }
+html.cues .reel__screen.is-cued .reel__corners { animation: cueFrame 0.9s var(--out) calc(var(--q, 0) * 0.09s + 0.55s) backwards; }
+html.cues .reel__screen.is-cued .reel__play { animation: cueRise 0.7s var(--out) calc(var(--q, 0) * 0.09s + 0.7s) backwards; }
 
 /* text and blocks rise; a group's parts follow one after another; a panel rises, then fills */
 html.cues :is(.reel__sub, .work__intro, .result__label) { --d: 0.2s; }

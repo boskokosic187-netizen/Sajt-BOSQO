@@ -358,9 +358,9 @@
     const CUES = {
       rule: 'main > section:not(.hero) > .sec-head',
       lines: '.case-title, .reel__title, .work__title, .process__title, .about__title, .contact__title',
-      screen: '.reel__player, .row, .cover__item, .case-next',
+      screen: '.reel__screen, .row, .cover__item, .case-next',
       rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
-      stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head',
+      stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head, .reel__chapters',
       panel: '.qb',
     };
     // what the cut brings in from the page before (the case's title and key visual) is already there
@@ -907,22 +907,134 @@
       });
     }
 
-    /* reel player */
+    /* reel monitor (css: reel). Once the monitor is in view (desktop, not lite) the reel runs
+       on it muted, from the drop on, with its timecode, the chapter it is in and the mix's
+       levels (one pair per frame, measured from the mix: media/reel/reel-2026-vu.json).
+       Play, the hero's button or a chapter opens the player with sound from that point;
+       from the monitor, the screen itself grows into the player. Text changes at most ten
+       times a second and only when it changes; the meters and the strip move by transform */
     const dlg = $('[data-player]');
+    const reel = $('#reel');
+    const mon = $('[data-reel-monitor]');
+    const scr = mon && $('.reel__screen', mon);
+    const REEL = 'media/reel/reel-2026-';
+    const RV = '?v=f5897957'; // content hash of the reel's files (stamp_reel.py)
+    const CH = [0, 7.68, 15.36, 32.64, 48, 63.36], DUR = 75;
+    const NAMES = ['Stand by', 'Statement', 'Films', 'Every format', 'Key art', 'Sign-off'];
+    const chapterAt = (t) => { let i = 0; while (i < CH.length - 1 && t >= CH[i + 1] - 0.02) i++; return i; };
+    let pv = null; // the monitor's muted reel
+    let monOn = false;
+
+    function openReel(at, from) {
+      const frame = $('.player__frame', dlg);
+      frame.textContent = '';
+      const v = document.createElement('video');
+      const big = innerWidth * Math.min(devicePixelRatio || 1, 2) >= 1300 && !conn.saveData;
+      v.controls = true;
+      v.playsInline = true;
+      v.preload = 'auto';
+      v.setAttribute('playsinline', '');
+      v.src = REEL + (big ? '1080' : '720') + '.mp4' + RV + (at ? '#t=' + at : '');
+      if (at) v.addEventListener('loadedmetadata', () => { if (Math.abs(v.currentTime - at) > 0.3) v.currentTime = at; }, { once: true });
+      frame.appendChild(v);
+      if (pv) pv.pause();
+      openDialog(dlg);
+      play(v);
+      // the monitor grows into the player: the frame starts where the screen is
+      if (from && !lite && v.animate && inView(from)) {
+        const a = from.getBoundingClientRect(), b = v.getBoundingClientRect();
+        if (a.width && b.width) {
+          const ease = 'cubic-bezier(0.75, 0, 0.15, 1)';
+          v.animate([
+            { transform: `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${a.width / b.width}, ${a.height / b.height})`, borderRadius: '6px' },
+            { transform: 'none', borderRadius: '8px' },
+          ], { duration: 700, easing: ease });
+          dlg.animate([{ backgroundColor: 'rgba(5, 5, 6, 0)' }, { backgroundColor: 'rgba(5, 5, 6, 0.96)' }], { duration: 560, easing: 'ease-out' });
+          $('.player__close', dlg).animate([{ opacity: 0 }, { opacity: 0, offset: 0.6 }, { opacity: 1 }], { duration: 900 });
+        }
+      }
+      if (window.gtag) window.gtag('event', 'reel_play', { chapter: NAMES[chapterAt(at || 0)] });
+    }
+
     if (dlg) {
       $$('[data-reel], [data-reel-link]').forEach((b) => b.addEventListener('click', (e) => {
         e.preventDefault();
-        const frame = $('.player__frame', dlg);
-        frame.textContent = '';
-        const v = makeVideo('media/reel/mobile-reel.mp4');
-        v.controls = true;
-        frame.appendChild(v);
-        openDialog(dlg);
-        play(v);
+        e.stopPropagation(); // the button sits on the screen: one open, not two
+        openReel(0, b.closest('.reel__screen'));
       }));
+      if (scr) scr.addEventListener('click', () => openReel(0, scr));
+      $$('.ch[data-at]').forEach((b) => b.addEventListener('click', () => openReel(+b.dataset.at, scr)));
       $('[data-close]', dlg).addEventListener('click', () => closeDialog(dlg));
       dlg.addEventListener('click', (e) => { if (e.target === dlg) closeDialog(dlg); });
-      dlg.addEventListener('close', () => { $$('video', dlg).forEach((v) => v.pause()); });
+      dlg.addEventListener('close', () => {
+        $$('video', dlg).forEach((v) => { v.pause(); v.removeAttribute('src'); v.load(); }); // stop the download too
+        if (pv && monOn && !document.hidden) play(pv);
+      });
+    }
+
+    if (mon && reel && scr) {
+      const tcEl = $('[data-reel-tc]', mon), chEl = $('[data-reel-chap]', mon), stEl = $('[data-reel-state]', mon);
+      const fills = $$('.reel__seg b', mon), segs = $$('.reel__seg', mon), chs = $$('.ch', reel), vu = $$('.reel__vu b', mon);
+      const pad = (n) => String(n).padStart(2, '0');
+      const tc = (t) => { const f = Math.floor(t * 25 + 1e-4); return `00:${pad(Math.floor(f / 1500))}:${pad(Math.floor(f / 25) % 60)}:${pad(f % 25)}`; };
+      let levels = null, raf = 0, lastTxt = -1e9, lastCh = -1, lastF = -1;
+      const lvl = [0, 0];
+      const showChapter = (i) => {
+        chEl.textContent = NAMES[i];
+        chs.forEach((c, k) => c.classList.toggle('is-on', k === i));
+        segs.forEach((g, k) => g.classList.toggle('is-on', k === i));
+        fills.forEach((b, k) => { if (k !== i) b.style.transform = `scaleX(${k < i ? 1 : 0})`; });
+      };
+      function tick(now) {
+        raf = 0;
+        if (!pv || pv.paused) return;
+        const t = pv.currentTime;
+        const f = Math.floor(t * 25);
+        if (levels && f !== lastF) {
+          // fast attack, slow release, like a peak meter
+          const g = Math.min(levels.l.length - 1, f);
+          [levels.l[g], levels.r[g]].forEach((x, k) => {
+            const v = x / 99;
+            lvl[k] = v > lvl[k] ? v : lvl[k] * 0.82 + v * 0.18;
+            vu[k].style.transform = `scaleX(${(1 - lvl[k]).toFixed(3)})`;
+          });
+        }
+        lastF = f;
+        if (now - lastTxt >= 100) {
+          lastTxt = now;
+          const s = tc(t);
+          if (tcEl.textContent !== s) tcEl.textContent = s;
+          const i = chapterAt(t);
+          if (i !== lastCh) { lastCh = i; showChapter(i); }
+          fills[i].style.transform = `scaleX(${Math.min(1, (t - CH[i]) / ((CH[i + 1] || DUR) - CH[i])).toFixed(3)})`;
+        }
+        raf = requestAnimationFrame(tick);
+      }
+      const live = (on) => {
+        reel.classList.toggle('is-live', on);
+        stEl.textContent = on ? 'On air' : 'Standby';
+        if (on && !raf) raf = requestAnimationFrame(tick);
+      };
+      const start = () => {
+        if (!pv) {
+          pv = makeVideo(REEL + 'preview.mp4' + RV);
+          pv.setAttribute('aria-hidden', 'true');
+          pv.tabIndex = -1;
+          pv.addEventListener('loadedmetadata', () => { pv.currentTime = CH[2]; }, { once: true }); // the poster is this frame
+          pv.addEventListener('playing', () => { pv.classList.add('is-on'); live(true); });
+          pv.addEventListener('pause', () => live(false));
+          $('picture', scr).after(pv);
+          fetch(REEL + 'vu.json' + RV).then((r) => r.json()).then((j) => { levels = j; }).catch(() => {});
+        }
+        if (!(dlg && dlg.open) && !document.hidden) play(pv);
+      };
+      const watch = () => {
+        if (lite || !mqDesktop.matches || !('IntersectionObserver' in window)) return;
+        new IntersectionObserver(([e]) => { monOn = e.isIntersecting; if (monOn) start(); else if (pv) pv.pause(); }, { threshold: 0.3 }).observe(scr);
+        document.addEventListener('visibilitychange', () => { if (!pv) return; if (document.hidden) pv.pause(); else if (monOn && !(dlg && dlg.open)) play(pv); });
+      };
+      watch();
+      if (lite) onLiteOff.push(watch);
     }
 
     /* the playhead steps one device pixel at a time across the track (css: .bar__head) */

@@ -189,7 +189,7 @@
           </ul>
         </div>
         <div class="cta">
-          <button class="btn btn--rec" type="button" data-reel><span class="btn__play" aria-hidden="true"></span>Play reel <span class="btn__meta">1:00</span></button>
+          <button class="btn btn--rec" type="button" data-reel><span class="btn__play" aria-hidden="true"></span>Play reel <span class="btn__meta">1:15</span></button>
           <a class="btn btn--ghost" href="#work"><span>See <span class="hide-m">selected </span>work</span><span aria-hidden="true">↓</span></a>
         </div>
         <h1 class="name" data-fit><span class="name__a"><span class="name__t" data-t="Boško">Boško</span></span> <span class="name__b"><span class="name__t" data-t="Kosić">Kosić</span></span></h1>
@@ -416,24 +416,46 @@
       </div>
     </section>
 
-    <!-- ============ REEL ============ -->
+    <!-- ============ REEL ============
+         A program monitor: the reel plays on it muted, with its own timecode, the mix's real
+         levels and the chapter it is in. Play (or a chapter) sends the monitor full screen
+         with sound, from that point (js: reel monitor) -->
     <section class="reel" id="reel" aria-labelledby="reel-title">
       <div class="sec-head">
         <span class="sec-head__num">01</span>
-        <span class="sec-head__label">Showreel 2026 · 01:00</span>
+        <span class="sec-head__label">Showreel 2026 · 01:15</span>
+        <span class="sec-head__end hide-m">1920 × 1080 · 25 fps · stereo</span>
       </div>
       <div class="reel__grid">
-        <h2 class="reel__title" id="reel-title">One minute.<br><em>Every format.</em></h2>
-        <p class="reel__sub">Billboards, campaigns, key art and product films — cut from three years of shipped work.</p>
-        <button class="reel__player" type="button" data-reel aria-label="Play showreel">
-          <picture>
-            <source type="image/avif" srcset="media/stills/kolubara-1600.avif">
-            <img src="media/stills/kolubara-1600.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
-          </picture>
-          <span class="reel__play"><span class="btn__play"></span>Play reel</span>
-          <span class="reel__note">Teaser cut · full reel in production</span>
-          <span class="reel__corners" aria-hidden="true"></span>
-        </button>
+        <div class="reel__copy">
+          <h2 class="reel__title" id="reel-title">One reel.<br><em>Every format.</em></h2>
+          <p class="reel__sub">Seventy-five seconds of campaigns, key art, product films and AI film. The edit is a motion piece of its own: every title, transition and sound was made for this cut.</p>
+          <ol class="reel__chapters" aria-label="Chapters, each plays the reel with sound from there">
+            <li><button class="ch" type="button" data-at="0" style="--k:0"><span class="ch__tc">00:00</span><span class="ch__name">Stand by</span><span class="ch__note">Dead air, then a signal</span><span class="ch__go" aria-hidden="true"></span></button></li>
+            <li><button class="ch" type="button" data-at="7.68" style="--k:1"><span class="ch__tc">00:07</span><span class="ch__name">Statement</span><span class="ch__note">Type with the work inside it</span><span class="ch__go" aria-hidden="true"></span></button></li>
+            <li><button class="ch" type="button" data-at="15.36" style="--k:2"><span class="ch__tc">00:15</span><span class="ch__name">Films</span><span class="ch__note">Eight projects, cut on the beat</span><span class="ch__go" aria-hidden="true"></span></button></li>
+            <li><button class="ch" type="button" data-at="32.64" style="--k:3"><span class="ch__tc">00:32</span><span class="ch__name">Every format</span><span class="ch__note">Five formats, 50+ billboards</span><span class="ch__go" aria-hidden="true"></span></button></li>
+            <li><button class="ch" type="button" data-at="48" style="--k:4"><span class="ch__tc">00:48</span><span class="ch__name">Key art</span><span class="ch__note">Up to 8K, then the rush</span><span class="ch__go" aria-hidden="true"></span></button></li>
+            <li><button class="ch" type="button" data-at="63.36" style="--k:5"><span class="ch__tc">01:03</span><span class="ch__name">Sign-off</span><span class="ch__note">Name, services, availability</span><span class="ch__go" aria-hidden="true"></span></button></li>
+          </ol>
+        </div>
+        <div class="reel__monitor" data-reel-monitor>
+          <div class="reel__screen">
+            <picture>
+              <source type="image/avif" srcset="media/reel/reel-2026-poster.avif?v=f5897957">
+              <img src="media/reel/reel-2026-poster.webp?v=f5897957" alt="" width="1600" height="900" loading="lazy" decoding="async">
+            </picture>
+            <button class="reel__play" type="button" data-reel aria-label="Play the showreel with sound, 1 minute 15 seconds"><span class="btn__play" aria-hidden="true"></span>Play with sound <span class="reel__len">1:15</span></button>
+            <span class="reel__corners" aria-hidden="true"></span>
+          </div>
+          <div class="reel__umd" aria-hidden="true">
+            <span class="reel__tally"><i></i><span data-reel-state>Standby</span></span>
+            <span class="reel__chap" data-reel-chap>Showreel 2026</span>
+            <span class="reel__tc" data-reel-tc>00:00:00:00</span>
+            <span class="reel__vu"><i><b></b></i><i><b></b></i></span>
+          </div>
+          <div class="reel__strip" aria-hidden="true"><span class="reel__seg" style="--w:7.68"><b></b></span><span class="reel__seg" style="--w:7.68"><b></b></span><span class="reel__seg" style="--w:17.28"><b></b></span><span class="reel__seg" style="--w:15.36"><b></b></span><span class="reel__seg" style="--w:15.36"><b></b></span><span class="reel__seg" style="--w:11.64"><b></b></span></div>
+        </div>
       </div>
     </section>
 
