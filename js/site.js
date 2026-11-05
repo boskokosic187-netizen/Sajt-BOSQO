@@ -918,12 +918,14 @@
     const mon = $('[data-reel-monitor]');
     const scr = mon && $('.reel__screen', mon);
     const REEL = 'media/reel/reel-2026-';
-    const RV = '?v=f5897957'; // content hash of the reel's files (stamp_reel.py)
+    const RV = '?v=b3bb03f9'; // content hash of the reel's files (stamp_reel.py)
     const CH = [0, 7.68, 15.36, 32.64, 48, 63.36], DUR = 75;
     const NAMES = ['Stand by', 'Statement', 'Films', 'Every format', 'Key art', 'Sign-off'];
     const chapterAt = (t) => { let i = 0; while (i < CH.length - 1 && t >= CH[i + 1] - 0.02) i++; return i; };
     let pv = null; // the monitor's muted reel
     let monOn = false;
+    // the director's commentary (below) takes the monitor over while he talks
+    let talking = false, talkVu = null, talkSeek = null, talkStop = null, talkIntro = false;
 
     function openReel(at, from) {
       const frame = $('.player__frame', dlg);
@@ -937,6 +939,7 @@
       v.src = REEL + (big ? '1080' : '720') + '.mp4' + RV + (at ? '#t=' + at : '');
       if (at) v.addEventListener('loadedmetadata', () => { if (Math.abs(v.currentTime - at) > 0.3) v.currentTime = at; }, { once: true });
       frame.appendChild(v);
+      if (talkStop) talkStop();
       if (pv) pv.pause();
       openDialog(dlg);
       play(v);
@@ -963,12 +966,13 @@
         openReel(0, b.closest('.reel__screen'));
       }));
       if (scr) scr.addEventListener('click', () => openReel(0, scr));
-      $$('.ch[data-at]').forEach((b) => b.addEventListener('click', () => openReel(+b.dataset.at, scr)));
+      // while he talks, a chapter moves his commentary there instead
+      $$('.ch[data-at]').forEach((b) => b.addEventListener('click', () => { if (!(talkSeek && talkSeek(+b.dataset.at))) openReel(+b.dataset.at, scr); }));
       $('[data-close]', dlg).addEventListener('click', () => closeDialog(dlg));
       dlg.addEventListener('click', (e) => { if (e.target === dlg) closeDialog(dlg); });
       dlg.addEventListener('close', () => {
         $$('video', dlg).forEach((v) => { v.pause(); v.removeAttribute('src'); v.load(); }); // stop the download too
-        if (pv && monOn && !document.hidden) play(pv);
+        if (pv && monOn && !talking && !document.hidden) play(pv);
       });
     }
 
@@ -987,14 +991,15 @@
       };
       function tick(now) {
         raf = 0;
-        if (!pv || pv.paused) return;
-        const t = pv.currentTime;
+        // during his hello the reel stands by on frame 0, but the meters follow his voice
+        if (!pv || (pv.paused && !talkIntro)) return;
+        const t = talkIntro ? 0 : pv.currentTime;
         const f = Math.floor(t * 25);
-        if (levels && f !== lastF) {
+        const g = levels && Math.min(levels.l.length - 1, f);
+        const lv = talkVu ? talkVu() : levels && [levels.l[g] / 99, levels.r[g] / 99];
+        if (lv && f !== lastF) {
           // fast attack, slow release, like a peak meter
-          const g = Math.min(levels.l.length - 1, f);
-          [levels.l[g], levels.r[g]].forEach((x, k) => {
-            const v = x / 99;
+          lv.forEach((v, k) => {
             lvl[k] = v > lvl[k] ? v : lvl[k] * 0.82 + v * 0.18;
             vu[k].style.transform = `scaleX(${(1 - lvl[k]).toFixed(3)})`;
           });
@@ -1015,26 +1020,265 @@
         stEl.textContent = on ? 'On air' : 'Standby';
         if (on && !raf) raf = requestAnimationFrame(tick);
       };
+      const makePreview = () => {
+        if (pv) return;
+        pv = makeVideo(REEL + 'preview.mp4' + RV);
+        pv.setAttribute('aria-hidden', 'true');
+        pv.tabIndex = -1;
+        pv.addEventListener('loadedmetadata', () => { if (!talking) pv.currentTime = CH[2]; }, { once: true }); // the poster is this frame
+        pv.addEventListener('playing', () => { pv.classList.add('is-on'); live(true); });
+        pv.addEventListener('pause', () => live(false));
+        $('picture', scr).after(pv);
+        fetch(REEL + 'vu.json' + RV).then((r) => r.json()).then((j) => { levels = j; }).catch(() => {});
+      };
       const start = () => {
-        if (!pv) {
-          pv = makeVideo(REEL + 'preview.mp4' + RV);
-          pv.setAttribute('aria-hidden', 'true');
-          pv.tabIndex = -1;
-          pv.addEventListener('loadedmetadata', () => { pv.currentTime = CH[2]; }, { once: true }); // the poster is this frame
-          pv.addEventListener('playing', () => { pv.classList.add('is-on'); live(true); });
-          pv.addEventListener('pause', () => live(false));
-          $('picture', scr).after(pv);
-          fetch(REEL + 'vu.json' + RV).then((r) => r.json()).then((j) => { levels = j; }).catch(() => {});
-        }
-        if (!(dlg && dlg.open) && !document.hidden) play(pv);
+        makePreview();
+        if (!talking && !(dlg && dlg.open) && !document.hidden) play(pv);
       };
       const watch = () => {
         if (lite || !mqDesktop.matches || !('IntersectionObserver' in window)) return;
-        new IntersectionObserver(([e]) => { monOn = e.isIntersecting; if (monOn) start(); else if (pv) pv.pause(); }, { threshold: 0.3 }).observe(scr);
-        document.addEventListener('visibilitychange', () => { if (!pv) return; if (document.hidden) pv.pause(); else if (monOn && !(dlg && dlg.open)) play(pv); });
+        new IntersectionObserver(([e]) => {
+          monOn = e.isIntersecting;
+          if (talking) return; // the commentary drives the monitor
+          if (monOn) start(); else if (pv) pv.pause();
+        }, { threshold: 0.3 }).observe(scr);
+        document.addEventListener('visibilitychange', () => { if (!pv || talking) return; if (document.hidden) pv.pause(); else if (monOn && !(dlg && dlg.open)) play(pv); });
       };
       watch();
       if (lite) onLiteOff.push(watch);
+
+      /* director's commentary (css: talk). The avatar from the logo sits under the monitor and
+         talks the visitor through the reel. His voice over the reel's own mix is one file
+         (media/reel/reel-2026-talk.webm; .m4a where Opus doesn't play), starting with a short
+         hello before the reel rolls; the reel on the monitor follows the voice (nudged by its
+         playback rate, seeked only when far off). From -talk.json: the line he is saying, his
+         mouth (one shape per frame, held at least two frames), where he looks (at you, or up at
+         the screen), his voice's level (his head moves with it, the ring around him breathes)
+         and the mix's level for the monitor's meters. Before he talks he blinks, leans toward
+         the pointer and winks once when you arrive. The data loads when the section comes in,
+         the sound on the first click; he pauses when you scroll away or leave the tab */
+      const talkEl = $('[data-talk]', reel);
+      const avSrc = $('.mark__av svg');
+      if (talkEl && avSrc) {
+        const TK = REEL + 'talk';
+        const avBox = $('[data-talk-av]', talkEl), ring = $('.talk__ring', talkEl);
+        const lineEl = $('[data-talk-line]', talkEl), stateEl = $('[data-talk-state]', talkEl);
+        const labelEl = $('[data-talk-label]', talkEl), lenEl = $('[data-talk-len]', talkEl), goBtn = $('[data-talk-go]', talkEl);
+        const av = avSrc.cloneNode(true);
+        $('clipPath', av).id = 'av-clip-talk';
+        $('[clip-path]', av).setAttribute('clip-path', 'url(#av-clip-talk)');
+        avBox.prepend(av);
+        const head = $('.av-head', av);
+        const NAME = 'Director’s commentary';
+        talkEl.classList.add('is-ready');
+
+        let data = null, fetching = null, audio = null, mouth = null, mk = 0, shape = 'S';
+        const shapes = {};
+        let state = 'idle'; // idle · on · paused · done
+        let sub = -1, rolled = false, raf2 = 0, seen = false, vis = false, wk = 0, lastLook = 'viewer', voice = 0;
+        const hd = { r: 0, x: 0, y: 0 }, aim = { r: 0, x: 0, y: 0 }; // his head: where it is, where it goes
+        const LOOK = { viewer: { r: 0, x: 0, y: 0 }, screen: { r: 7, x: 2.5, y: -2.5 } };
+        const flash = (cls, ms) => { av.classList.add(cls); setTimeout(() => av.classList.remove(cls), ms); };
+
+        const fetchData = () => fetching || (fetching = fetch(TK + '.json' + RV).then((r) => r.json()).then((j) => {
+          data = j;
+          j.subs.forEach((s) => { s.text = s.text.replace(/'/g, '’'); }); // typographic apostrophes, like the rest of the page
+          const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          g.innerHTML = j.svg;
+          mouth = g.firstElementChild;
+          $('.av-lid', head).before(mouth);
+          $$('.avm', mouth).forEach((el) => { shapes[el.classList[1].slice(5)] = el; });
+          const m = Math.round(j.dur);
+          lenEl.textContent = `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+        }).catch(() => { fetching = null; }));
+
+        const setShape = (v) => {
+          if (v === shape || !mouth) return;
+          if (shapes[shape]) shapes[shape].classList.remove('is-on');
+          shape = v;
+          mouth.classList.toggle('is-on', v !== 'S');
+          if (shapes[v]) shapes[v].classList.add('is-on');
+        };
+        const shapeAt = (f) => { // the keys are in frame order: walk on from the last one
+          const k = data.mouth;
+          if (mk >= k.length || k[mk][0] > f) mk = 0;
+          while (mk + 1 < k.length && k[mk + 1][0] <= f) mk++;
+          return k[mk][1];
+        };
+        const vuNow = () => {
+          if (!data || !audio) return [0, 0];
+          const g = Math.floor(audio.currentTime * 25);
+          return [parseInt(data.vu[0][g] || '0', 36) / 35, parseInt(data.vu[1][g] || '0', 36) / 35];
+        };
+        const quiet = () => { setShape('S'); voice = 0; ring.style.opacity = 0; };
+
+        // everything that follows his voice, once per frame
+        const follow = (t) => {
+          if (!data) return;
+          const f = Math.floor(t * data.fps);
+          setShape(shapeAt(f));
+          voice = voice * 0.6 + (+(data.lvl[f] || 0) / 9) * 0.4;
+          ring.style.opacity = (voice * 0.9).toFixed(2);
+          let lk = 'viewer';
+          for (const [at, w] of data.look) if (t >= at) lk = w;
+          if (lk !== lastLook && !reduceMotion) { lastLook = lk; Object.assign(aim, LOOK[lk]); }
+          while (wk < data.wink.length && t >= data.wink[wk]) { if (t < data.wink[wk] + 0.3) flash('is-wink', 520); wk++; }
+          let i = -1;
+          data.subs.forEach((s, k) => { if (t >= s.t[0]) i = k; });
+          if (i !== sub) {
+            sub = i;
+            if (i >= 0) {
+              lineEl.textContent = data.subs[i].text;
+              if (!reduceMotion) lineEl.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' });
+            }
+          }
+          lineEl.classList.toggle('is-past', i >= 0 && t > data.subs[i].t[1]);
+          // the reel on the monitor keeps step with the voice
+          const rt = t - data.pre;
+          talkIntro = rt < 0;
+          if (talkIntro && !raf) raf = requestAnimationFrame(tick);
+          if (rt >= 0 && rt < DUR - 0.05) {
+            if (!rolled) { rolled = true; pv.currentTime = rt; pv.playbackRate = 1; play(pv); }
+            else if (pv.paused) play(pv);
+            else {
+              const d = pv.currentTime - rt;
+              if (Math.abs(d) > 0.4) pv.currentTime = rt;
+              else pv.playbackRate = Math.abs(d) < 0.03 ? 1 : 1 - Math.max(-0.1, Math.min(0.1, d * 1.5));
+            }
+          } else if (!pv.paused) pv.pause();
+        };
+
+        const frame = (now) => {
+          raf2 = 0;
+          if (state === 'on' && audio) follow(audio.currentTime);
+          const k = reduceMotion ? 1 : 0.14;
+          hd.r += (aim.r - hd.r) * k; hd.x += (aim.x - hd.x) * k; hd.y += (aim.y - hd.y) * k;
+          const nod = reduceMotion ? 0 : voice;
+          const r = hd.r + nod * 1.2 * Math.sin(now / 170), y = hd.y - nod * 1.8;
+          head.style.transform = `translate(${hd.x.toFixed(2)}px, ${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+          const still = Math.abs(aim.r - hd.r) + Math.abs(aim.x - hd.x) + Math.abs(aim.y - hd.y) < 0.02;
+          if (state === 'on' || !still) raf2 = requestAnimationFrame(frame);
+        };
+        const wake = () => { if (!raf2) raf2 = requestAnimationFrame(frame); };
+
+        const pause = () => {
+          if (state !== 'on') return;
+          state = 'paused';
+          talkIntro = false;
+          audio.pause();
+          pv.pause();
+          pv.playbackRate = 1;
+          talkEl.classList.remove('is-on');
+          labelEl.textContent = 'Resume';
+          stateEl.textContent = NAME + ' · paused';
+          goBtn.setAttribute('aria-pressed', 'false');
+          quiet();
+          wake();
+        };
+        const finish = () => {
+          state = 'done';
+          talking = false;
+          talkIntro = false;
+          talkVu = null;
+          talkEl.classList.remove('is-on');
+          quiet();
+          Object.assign(aim, LOOK.viewer);
+          lastLook = 'viewer';
+          flash('is-wink', 520);
+          sub = -1;
+          lineEl.classList.remove('is-past');
+          lineEl.innerHTML = 'Got a brief? <a href="#contact">Let’s make it move&nbsp;→</a>';
+          labelEl.textContent = 'Play again';
+          stateEl.textContent = NAME;
+          goBtn.setAttribute('aria-pressed', 'false');
+          pv.playbackRate = 1;
+          if (monOn && !document.hidden) { pv.currentTime = CH[2]; play(pv); } else pv.pause();
+          wake();
+          if (window.gtag) window.gtag('event', 'reel_commentary', { state: 'complete' });
+        };
+        const begin = (from) => {
+          fetchData();
+          if (!audio) {
+            audio = new Audio();
+            audio.preload = 'auto';
+            audio.src = TK + (audio.canPlayType('audio/webm; codecs="opus"') ? '.webm' : '.m4a') + RV;
+            audio.addEventListener('ended', finish);
+            audio.addEventListener('pause', () => { if (state === 'on' && !audio.ended) pause(); }); // a headset button, the system
+          }
+          if (dlg && dlg.open) closeDialog(dlg);
+          makePreview();
+          if (from != null) { audio.currentTime = from; sub = -1; mk = 0; wk = 0; }
+          if (data) while (wk < data.wink.length && audio.currentTime > data.wink[wk]) wk++;
+          talking = true;
+          talkVu = vuNow;
+          rolled = false;
+          pv.pause();
+          if (!data || audio.currentTime < data.pre) { // stand by: the poster while he says hello, the UMD bar at zero;
+            pv.classList.remove('is-on'); //  on "Roll it." the reel fades in from its first frame
+            pv.currentTime = 0;
+            tcEl.textContent = tc(0);
+            lastCh = 0;
+            showChapter(0);
+            fills[0].style.transform = 'scaleX(0)';
+          }
+          state = 'on';
+          talkEl.classList.add('is-on');
+          stateEl.textContent = NAME + ' · live';
+          labelEl.textContent = 'Pause';
+          goBtn.setAttribute('aria-pressed', 'true');
+          play(audio);
+          wake();
+          if (window.gtag) window.gtag('event', 'reel_commentary', { state: from === 0 ? 'start' : 'resume' });
+        };
+
+        goBtn.setAttribute('aria-pressed', 'false');
+        goBtn.addEventListener('click', () => {
+          if (state === 'on') pause();
+          else if (state === 'paused') begin(null);
+          else begin(0);
+        });
+        avBox.addEventListener('click', () => { if (state === 'on') flash('is-wink', 420); else goBtn.click(); });
+        talkSeek = (at) => {
+          if (state !== 'on' && state !== 'paused') return false;
+          if (data) {
+            audio.currentTime = data.pre + at;
+            rolled = false; sub = -1; mk = 0; wk = 0;
+            while (wk < data.wink.length && audio.currentTime > data.wink[wk]) wk++;
+          }
+          if (state === 'paused') begin(null);
+          return true;
+        };
+        talkStop = pause;
+        document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(([e]) => {
+            vis = e.isIntersecting;
+            if (e.isIntersecting) {
+              if (!lite) fetchData();
+              if (!seen && !reduceMotion) { seen = true; setTimeout(() => flash('is-wink', 520), 600); }
+            } else pause();
+          }).observe(talkEl);
+        }
+        // he leans toward the pointer (and so toward what you point at)
+        if (mqHover.matches && !reduceMotion) {
+          reel.addEventListener('pointermove', (e) => {
+            if (state === 'on') return;
+            const b = avBox.getBoundingClientRect();
+            const dx = Math.max(-1, Math.min(1, (e.clientX - b.left - b.width / 2) / 700));
+            const dy = Math.max(-1, Math.min(1, (e.clientY - b.top - b.height / 2) / 500));
+            aim.r = dx * 6; aim.x = dx * 2.5; aim.y = dy * 2;
+            wake();
+          }, { passive: true });
+          reel.addEventListener('pointerleave', () => { if (state !== 'on') { Object.assign(aim, LOOK.viewer); wake(); } });
+        }
+        if (!reduceMotion) {
+          const blink = () => {
+            if (vis && !document.hidden) flash('is-blink', 140); // only while you can see him
+            setTimeout(blink, 2400 + Math.random() * 3600);
+          };
+          setTimeout(blink, 2200);
+        }
+      }
     }
 
     /* the playhead steps one device pixel at a time across the track (css: .bar__head) */

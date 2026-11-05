@@ -442,8 +442,8 @@
         <div class="reel__monitor" data-reel-monitor>
           <div class="reel__screen">
             <picture>
-              <source type="image/avif" srcset="media/reel/reel-2026-poster.avif?v=f5897957">
-              <img src="media/reel/reel-2026-poster.webp?v=f5897957" alt="" width="1600" height="900" loading="lazy" decoding="async">
+              <source type="image/avif" srcset="media/reel/reel-2026-poster.avif?v=b3bb03f9">
+              <img src="media/reel/reel-2026-poster.webp?v=b3bb03f9" alt="" width="1600" height="900" loading="lazy" decoding="async">
             </picture>
             <button class="reel__play" type="button" data-reel aria-label="Play the showreel with sound, 1 minute 15 seconds"><span class="btn__play" aria-hidden="true"></span>Play with sound <span class="reel__len">1:15</span></button>
             <span class="reel__corners" aria-hidden="true"></span>
@@ -455,6 +455,16 @@
             <span class="reel__vu"><i><b></b></i><i><b></b></i></span>
           </div>
           <div class="reel__strip" aria-hidden="true"><span class="reel__seg" style="--w:7.68"><b></b></span><span class="reel__seg" style="--w:7.68"><b></b></span><span class="reel__seg" style="--w:17.28"><b></b></span><span class="reel__seg" style="--w:15.36"><b></b></span><span class="reel__seg" style="--w:15.36"><b></b></span><span class="reel__seg" style="--w:11.64"><b></b></span></div>
+          <!-- director's commentary: the avatar from the logo talks the visitor through the reel,
+               on the monitor above, in his voice over the reel's own mix (js: talk) -->
+          <div class="talk" data-talk>
+            <span class="talk__av" data-talk-av><span class="talk__ring" aria-hidden="true"></span></span>
+            <div class="talk__body">
+              <span class="talk__k"><i aria-hidden="true"></i><span data-talk-state>Director’s commentary</span></span>
+              <p class="talk__line" data-talk-line aria-live="polite">Hi, I’m Boško. Want me to walk you through it?</p>
+            </div>
+            <button class="talk__go" type="button" data-talk-go aria-label="Play the reel with Boško’s commentary, 1 minute 22 seconds"><span class="talk__icon" aria-hidden="true"></span><span data-talk-label>With my commentary</span> <span class="reel__len" data-talk-len>1:22</span></button>
+          </div>
         </div>
       </div>
     </section>
