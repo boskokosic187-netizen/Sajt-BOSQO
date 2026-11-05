@@ -918,7 +918,7 @@
     const mon = $('[data-reel-monitor]');
     const scr = mon && $('.reel__screen', mon);
     const REEL = 'media/reel/reel-2026-';
-    const RV = '?v=b3bb03f9'; // content hash of the reel's files (stamp_reel.py)
+    const RV = '?v=b9d03c79'; // content hash of the reel's files (stamp_reel.py)
     const CH = [0, 7.68, 15.36, 32.64, 48, 63.36], DUR = 75;
     const NAMES = ['Stand by', 'Statement', 'Films', 'Every format', 'Key art', 'Sign-off'];
     const chapterAt = (t) => { let i = 0; while (i < CH.length - 1 && t >= CH[i + 1] - 0.02) i++; return i; };
@@ -1077,7 +1077,8 @@
         let state = 'idle'; // idle · on · paused · done
         let sub = -1, rolled = false, raf2 = 0, seen = false, vis = false, wk = 0, lastLook = 'viewer', voice = 0;
         const hd = { r: 0, x: 0, y: 0 }, aim = { r: 0, x: 0, y: 0 }; // his head: where it is, where it goes
-        const LOOK = { viewer: { r: 0, x: 0, y: 0 }, screen: { r: 7, x: 2.5, y: -2.5 } };
+        // toward the screen he lifts his head a little and stays upright (a turn reads as a tilt: he has no pupils)
+        const LOOK = { viewer: { r: 0, x: 0, y: 0 }, screen: { r: 0, x: 0, y: -2 } };
         const flash = (cls, ms) => { av.classList.add(cls); setTimeout(() => av.classList.remove(cls), ms); };
 
         const fetchData = () => fetching || (fetching = fetch(TK + '.json' + RV).then((r) => r.json()).then((j) => {
@@ -1154,7 +1155,7 @@
           const k = reduceMotion ? 1 : 0.14;
           hd.r += (aim.r - hd.r) * k; hd.x += (aim.x - hd.x) * k; hd.y += (aim.y - hd.y) * k;
           const nod = reduceMotion ? 0 : voice;
-          const r = hd.r + nod * 1.2 * Math.sin(now / 170), y = hd.y - nod * 1.8;
+          const r = hd.r + nod * 0.6 * Math.sin(now / 170), y = hd.y - nod * 1.8;
           head.style.transform = `translate(${hd.x.toFixed(2)}px, ${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
           const still = Math.abs(aim.r - hd.r) + Math.abs(aim.x - hd.x) + Math.abs(aim.y - hd.y) < 0.02;
           if (state === 'on' || !still) raf2 = requestAnimationFrame(frame);
@@ -1266,7 +1267,7 @@
             const b = avBox.getBoundingClientRect();
             const dx = Math.max(-1, Math.min(1, (e.clientX - b.left - b.width / 2) / 700));
             const dy = Math.max(-1, Math.min(1, (e.clientY - b.top - b.height / 2) / 500));
-            aim.r = dx * 6; aim.x = dx * 2.5; aim.y = dy * 2;
+            aim.r = dx * 3; aim.x = dx * 2.5; aim.y = dy * 2;
             wake();
           }, { passive: true });
           reel.addEventListener('pointerleave', () => { if (state !== 'on') { Object.assign(aim, LOOK.viewer); wake(); } });
