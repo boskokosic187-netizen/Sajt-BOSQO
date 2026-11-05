@@ -11,6 +11,10 @@
   --text: #f2efea;
   --muted: #8f8c86;
   --rec: #ff4d1f;
+  /* the signal: the cool counterpart of the REC orange. Orange is on air (act, live, record);
+     the signal is state and measurement (ready, available, timecode, levels, focus) and the cool
+     fill light opposite the warm key in the ambience. Never laid over the work */
+  --sig: #66eed8; /* = rgb(102, 238, 216); aurora: the cool light already in the work (DEAD AIR's sky over the red sea) */
 
   --f-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-serif: "Instrument Serif", Georgia, serif;
@@ -40,7 +44,7 @@ ol, ul { list-style: none; margin: 0; padding: 0; }
 h1, h2, h3, p, figure { margin: 0; }
 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-spacing: 0; font-stretch: 100%; }
 ::selection { background: var(--rec); color: #000; }
-:focus-visible { outline: 2px solid var(--rec); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--sig); outline-offset: 3px; } /* the signal: it shows on the orange buttons too */
 
 .skip {
   position: fixed; left: 12px; top: -60px; z-index: 100;
@@ -139,7 +143,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   font-size: 13px; transition: border-color 0.3s;
 }
 .status:hover { border-color: var(--text); }
-.status__dot { width: 7px; height: 7px; border-radius: 50%; background: #39d353; box-shadow: 0 0 0 4px rgba(57, 211, 83, 0.15); }
+.status__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sig); box-shadow: 0 0 0 4px rgba(102, 238, 216, 0.16); }
 .topbar__tc { display: none; }
 
 @keyframes blink { 50% { opacity: 0.15; } }
@@ -303,14 +307,14 @@ html:not(.is-lite) .tile { will-change: filter; }
 .name > span { position: relative; display: inline-block; }
 
 /* face: liquid chrome (Freepik, tools/build_fx.py) over a chrome gradient that shows while it loads,
-   warmed at the bottom by the red glow, with LED scanlines and a light sweep (.is-sheen) */
+   lit like real chrome: the cool signal light on the top faces, warmed at the bottom by the red glow, with LED scanlines and a light sweep (.is-sheen) */
 .name__t {
   position: relative; display: inline-block;
   padding: 0.18em 0.05em 0.08em; margin: -0.18em -0.05em -0.08em; /* room for the Š/Ć accents inside the clip */
   color: transparent; -webkit-text-fill-color: transparent;
   background-image:
     repeating-linear-gradient(to bottom, transparent 0 3px, rgba(10, 10, 11, 0.16) 3px 4px),
-    linear-gradient(to bottom, #fff 0%, #fff 50%, #ffae96 100%),
+    linear-gradient(to bottom, #e3f9f5 0%, #b9f2e9 19%, #ecfbf8 34%, #fff 44%, #fff 50%, #ffae96 100%), /* 0-17%: the accents, then the cap tops */
     var(--chrome),
     linear-gradient(to bottom, #fff 0%, #e9e5df 40%, #8d8780 52%, #f2efea 62%, #bdb6ae 100%);
   background-size: auto, auto, cover, auto;
@@ -421,7 +425,7 @@ html:not(.is-lite) .tile { will-change: filter; }
 }
 .bar__rec { display: inline-flex; align-items: center; gap: 8px; color: var(--text); }
 .bar__rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); animation: blink 1.2s steps(2, jump-none) infinite; }
-.bar__tc { color: var(--text); font-variant-numeric: tabular-nums; min-width: 11ch; }
+.bar__tc { color: var(--sig); font-variant-numeric: tabular-nums; min-width: 11ch; }
 /* timecode frames: a strip of 00–24, one step a frame, on the compositor (js builds it) */
 .tc__ff { display: inline-block; height: 1lh; overflow: hidden; vertical-align: top; }
 .tc__ff > span { display: block; animation: tcFrames 1s steps(25) infinite; }
@@ -458,7 +462,7 @@ html:not(.is-lite) .tile { will-change: filter; }
   border: 4.5px solid transparent; border-top: 6px solid var(--rec);
 }
 .bar__head::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--rec); }
-.bar__clock b { color: var(--text); font-weight: 500; }
+.bar__clock b { color: var(--sig); font-weight: 500; }
 .bar__scroll { color: var(--text); }
 .bar__scroll::after { content: " ↓"; }
 .lite-chip {
@@ -548,11 +552,11 @@ html:not(.is-lite) .tile { will-change: filter; }
 .reel__tally i { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); transition: background-color 0.3s, box-shadow 0.3s; }
 .reel.is-live .reel__tally i { background: var(--rec); box-shadow: 0 0 10px rgba(255, 77, 31, 0.6); }
 .reel__chap { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.reel__tc { color: var(--text); }
+.reel__tc { color: var(--sig); }
 .reel__vu { display: grid; gap: 3px; width: 92px; }
 .reel__vu i {
   position: relative; display: block; height: 3px; overflow: hidden; border-radius: 2px;
-  background: linear-gradient(90deg, rgba(242, 239, 234, 0.85) 0 68%, #ffb21f 68% 86%, var(--rec) 86%);
+  background: linear-gradient(90deg, var(--sig) 0 68%, #ffb21f 68% 86%, var(--rec) 86%); /* like a real meter: safe · near · over */
 }
 .reel__vu b { position: absolute; inset: 0; background: #2a2a2d; transform-origin: 100% 50%; } /* covers what the level doesn't reach */
 
@@ -715,7 +719,7 @@ html:not(.is-lite) .tile { will-change: filter; }
 .ct__av svg { display: block; width: 100%; height: 100%; }
 .ct__av:hover .av-lid--1 { opacity: 1; }
 .ct__av:hover .av-head { transform: rotate(-8deg) translateY(-2px); }
-.ct__dot { position: absolute; z-index: 1; right: 0; bottom: 1px; width: 15px; height: 15px; border: 3px solid var(--bg); border-radius: 50%; background: #39d353; }
+.ct__dot { position: absolute; z-index: 1; right: 0; bottom: 1px; width: 15px; height: 15px; border: 3px solid var(--bg); border-radius: 50%; background: var(--sig); }
 .ct__av.is-away .ct__dot { background: #f2b33d; }
 .ct__me p { display: grid; gap: 2px; line-height: 1.3; }
 .ct__me b { font-weight: 700; font-size: 16px; }
@@ -787,7 +791,7 @@ html:not(.is-lite) .tile { will-change: filter; }
   display: flex; align-items: center; gap: 9px; margin-top: clamp(14px, 2vh, 20px); padding-top: 14px; border-top: 1px solid var(--line);
   color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
 }
-.qb__avail i { width: 7px; height: 7px; border-radius: 50%; background: #39d353; box-shadow: 0 0 0 4px rgba(57, 211, 83, 0.15); }
+.qb__avail i { width: 7px; height: 7px; border-radius: 50%; background: var(--sig); box-shadow: 0 0 0 4px rgba(102, 238, 216, 0.16); }
 
 /* what happens next */
 .ct__next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: clamp(32px, 5.5vh, 64px); padding-top: 18px; border-top: 1px solid var(--line); }
@@ -800,6 +804,7 @@ html:not(.is-lite) .tile { will-change: filter; }
   margin-top: clamp(36px, 6vh, 72px); padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted);
 }
 .foot b { color: var(--text); font-weight: 500; }
+.foot [data-clock] { color: var(--sig); }
 
 /* ---- reel player dialog ---- */
 .player {
@@ -2164,7 +2169,7 @@ html:not(.is-lite) .pr[data-step="5"]:not(.is-paused) .pr__live b { animation: r
   color: rgba(242, 239, 234, 0.6); font-family: var(--f-label); font-stretch: 80%; font-style: normal; font-weight: 600; font-size: 0.64em;
   letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
 }
-.edu .is-now em { border-color: rgba(255, 77, 31, 0.45); background: rgba(255, 77, 31, 0.08); color: var(--rec); }
+.edu .is-now em { border-color: rgba(102, 238, 216, 0.45); background: rgba(102, 238, 216, 0.08); color: var(--sig); } /* a state, not on air */
 .edu .is-now em::before { content: ""; width: 0.55em; height: 0.55em; border-radius: 50%; background: currentColor; }
 
 /* clients: big names rolling through on an orange band, edge to edge, while About is on screen */
@@ -2260,7 +2265,12 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
    CASE STUDY PAGES
    ========================================================================== */
 .page-case main { padding-top: 80px; }
-.case-hero { padding: clamp(32px, 7vh, 88px) var(--pad) clamp(36px, 6vh, 64px); }
+.case-hero { position: relative; isolation: isolate; padding: clamp(32px, 7vh, 88px) var(--pad) clamp(36px, 6vh, 64px); }
+.case-hero::before { /* the same two lights as the home page's sections, still: warm key behind the title, cool fill */
+  content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
+  background: radial-gradient(min(50vw, 780px) 46% at 82% 38%, rgba(255, 77, 31, 0.1), transparent 70%),
+    radial-gradient(min(42vw, 660px) 40% at 6% 22%, rgba(102, 238, 216, 0.09), transparent 70%);
+}
 .case-hero__top {
   display: flex; justify-content: space-between; margin-bottom: clamp(32px, 6vh, 64px);
   color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -2682,7 +2692,7 @@ body { position: relative; }
   will-change: transform;
   transition: color 0.25s, scale 0.35s var(--cut);
 }
-.hero.is-aim .hud__focus { color: var(--rec); scale: 0.78; }
+.hero.is-aim .hud__focus { color: var(--sig); scale: 0.78; } /* focus locked, like a camera's AF box */
 /* the reticle names the screen it has locked on (js: .hud__tag follows the cursor) */
 .hud__tag {
   position: absolute; left: 0; top: 0; z-index: 1; margin: 46px 0 0 -58px; pointer-events: none;
@@ -2692,7 +2702,7 @@ body { position: relative; }
   translate: 70vw 40vh; will-change: transform;
   opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.3s var(--out);
 }
-.hud__tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--rec); }
+.hud__tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--sig); }
 .hud__tag::after { content: "View \2197"; color: var(--rec); }
 .hero.is-aim .hud__tag { opacity: 1; transform: none; }
 @media (hover: none) { .hud__tag { display: none; } }
@@ -2756,13 +2766,16 @@ html.js:not(.is-lite) .hero.is-on .wall__plane { animation: focusPull 1.1s var(-
 [data-lit]::before {
   content: ""; position: absolute; z-index: -1; inset: 0 0 auto; height: min(1000px, 120vh);
   pointer-events: none; opacity: 0; transition: opacity 1.6s var(--out);
-  background: radial-gradient(min(48vw, 760px) 40% at 80% 42%, rgba(255, 77, 31, 0.11), transparent 70%);
+  background: radial-gradient(min(48vw, 760px) 40% at 80% 42%, rgba(255, 77, 31, 0.11), transparent 70%),
+    radial-gradient(min(40vw, 640px) 34% at 12% 30%, rgba(102, 238, 216, 0.09), transparent 70%); /* warm key, cool fill */
 }
 .process[data-lit]::before, .about[data-lit]::before {
-  background: radial-gradient(min(48vw, 760px) 40% at 14% 42%, rgba(255, 77, 31, 0.11), transparent 70%);
+  background: radial-gradient(min(48vw, 760px) 40% at 14% 42%, rgba(255, 77, 31, 0.11), transparent 70%),
+    radial-gradient(min(40vw, 640px) 34% at 88% 30%, rgba(102, 238, 216, 0.09), transparent 70%);
 }
 .work[data-lit]::before {
-  background: radial-gradient(min(52vw, 820px) 40% at 86% 42%, rgba(255, 77, 31, 0.1), transparent 70%);
+  background: radial-gradient(min(52vw, 820px) 40% at 86% 42%, rgba(255, 77, 31, 0.1), transparent 70%),
+    radial-gradient(min(40vw, 640px) 34% at 10% 30%, rgba(102, 238, 216, 0.09), transparent 70%);
 }
 [data-lit].is-lit::before { opacity: 1; }
 /* once lit, the glow breathes slowly (desktop only; the delay lets the fade-in finish). It breathes

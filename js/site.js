@@ -191,6 +191,7 @@
     if (!field || lite || reduceMotion || !('animate' in Element.prototype)) return;
     const RED = '#ff4d1f';
     const WHITE = '#f2efea';
+    const SIG = getComputedStyle(document.documentElement).getPropertyValue('--sig').trim() || '#3ee6d2'; // the signal colour
     const R = (a, b) => a + Math.random() * (b - a);
     const RI = (a, b) => Math.floor(R(a, b + 1));
 
@@ -262,7 +263,7 @@
       const p = document.createElement('i');
       const c = Math.random() < 0.15 ? RI(5, 6) : RI(2, 4);
       p.className = 'cy';
-      p.style.cssText = `width:${c}px;height:${c}px;color:${Math.random() < 0.3 ? WHITE : RED}`;
+      p.style.cssText = `width:${c}px;height:${c}px;color:${(() => { const r = Math.random(); return r < 0.22 ? WHITE : r < 0.4 ? SIG : RED; })()}`;
       field.appendChild(p);
       pool.push(p);
       return p;
