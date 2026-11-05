@@ -191,6 +191,7 @@
     if (!field || lite || reduceMotion || !('animate' in Element.prototype)) return;
     const RED = '#ff4d1f';
     const WHITE = '#f2efea';
+    const SIG = getComputedStyle(document.documentElement).getPropertyValue('--sig').trim() || '#3ee6d2'; // the signal colour
     const R = (a, b) => a + Math.random() * (b - a);
     const RI = (a, b) => Math.floor(R(a, b + 1));
 
@@ -262,7 +263,7 @@
       const p = document.createElement('i');
       const c = Math.random() < 0.15 ? RI(5, 6) : RI(2, 4);
       p.className = 'cy';
-      p.style.cssText = `width:${c}px;height:${c}px;color:${Math.random() < 0.3 ? WHITE : RED}`;
+      p.style.cssText = `width:${c}px;height:${c}px;color:${(() => { const r = Math.random(); return r < 0.22 ? WHITE : r < 0.4 ? SIG : RED; })()}`;
       field.appendChild(p);
       pool.push(p);
       return p;
@@ -696,7 +697,7 @@
     tag.setAttribute('aria-hidden', 'true');
     hero.appendChild(tag);
     tiles.forEach((t) => {
-      t.addEventListener('mouseenter', () => { tag.textContent = t.dataset.label; hero.classList.add('is-aim'); });
+      t.addEventListener('mouseenter', () => { tag.textContent = t.dataset.label; tag.dataset.kind = t.hasAttribute('data-take') ? 'proj' : 'case'; hero.classList.add('is-aim'); });
       t.addEventListener('mouseleave', () => hero.classList.remove('is-aim'));
     });
 
@@ -1576,6 +1577,92 @@
       else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') showOn(proj, (proj.cur + (e.key === 'ArrowRight' ? 1 : n - 1)) % n);
     });
 
+    /* ---------------------------------------------------------------- the channel guide
+       The eight projects on the wall are the best work and also the easiest to miss: they
+       look like the rest of the wall, and a phone has no wall at all. "8 live projects"
+       (hero, and Live in the phone's dock) lists them as channels; a pick opens the project
+       right here, as a click on its screen would. Pointing at the button on a desktop dims
+       the older work so the eight screens stand out. Built the first time it opens. */
+    const takes = tiles.filter((t) => t.hasAttribute('data-take') && projTpl[t.dataset.project]);
+    let guide = null;
+    function buildGuide() {
+      const d = document.createElement('dialog');
+      d.className = 'guide';
+      d.setAttribute('aria-labelledby', 'guide-t');
+      d.innerHTML = '<div class="guide__in"><header class="guide__head"><p class="guide__k"><i class="chan__dot" aria-hidden="true"></i>Live projects · 0' + takes.length +
+        '</p><h2 class="guide__t" id="guide-t">Eight you can <em>play with.</em></h2><p class="guide__sub">Self-initiated work. Each one opens right here, with a live piece you drive yourself: a dial, a drag, a key.</p>' +
+        '<button class="guide__close" type="button" data-close>Close<span aria-hidden="true">✕</span></button></header><ol class="guide__list"></ol></div>';
+      const list = $('.guide__list', d);
+      takes.forEach((t, i) => {
+        const slug = t.dataset.project, el = projTpl[slug].content;
+        const mons = JSON.parse($('script[data-mons]', el).textContent);
+        const live = mons.findIndex((m) => m.kind === 'live') + 1;
+        const verb = live && $(`.proj__cta [data-cut="${live}"]`, el);
+        const li = document.createElement('li');
+        li.innerHTML = `<button class="ch-card" type="button" data-open="${slug}"><span class="ch-card__shot"><img src="${mons[0].poster}" alt="" width="480" height="270" loading="lazy" decoding="async"><kbd>${i + 1}</kbd></span>` +
+          '<span class="ch-card__txt"><b></b><small></small><span class="ch-card__go"><i class="chan__dot" aria-hidden="true"></i><span></span></span></span></button>';
+        $('b', li).textContent = $('.proj__title', el).textContent;
+        $('small', li).textContent = $('.proj__kick span:last-child', el).textContent.replace(/ · \d{4}$/, '').replace(/ · Self-initiated$/, '');
+        $('.ch-card__go span', li).textContent = verb ? verb.textContent.trim() : 'Open';
+        list.appendChild(li);
+      });
+      d.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-open]');
+        if (b) pick(b.dataset.open);
+        else if (e.target === d || e.target.closest('[data-close]')) closeDialog(d);
+      });
+      d.addEventListener('keydown', (e) => {
+        const k = +e.key;
+        if (k >= 1 && k <= takes.length && !e.metaKey && !e.ctrlKey && !e.altKey) pick(takes[k - 1].dataset.project);
+      });
+      document.body.appendChild(d);
+      return d;
+    }
+    function pick(slug) {
+      closeDialog(guide);
+      const open = () => openProject(slug, mqDesktop.matches ? tileFor(slug) : null);
+      if (!proj) return open();
+      if (proj.slug === slug) return;
+      back();
+      setTimeout(open, 450);
+    }
+    $$('[data-guide]').forEach((b) => {
+      b.addEventListener('click', () => {
+        hero.classList.remove('is-scan');
+        guide = guide || buildGuide();
+        openDialog(guide);
+        store.set('seenGuide', '1');
+        root.classList.add('seen-guide');
+      });
+      if (b.closest('.hero')) {
+        b.addEventListener('mouseenter', () => { if (mqHover.matches && !proj) hero.classList.add('is-scan'); });
+        b.addEventListener('mouseleave', () => hero.classList.remove('is-scan'));
+      }
+    });
+    if (store.get('seenGuide')) root.classList.add('seen-guide');
+
+    /* first visit, desktop: if the cursor hasn't found the wall a few seconds in, the
+       reticle shows how it works, once: it glides to the screen on air and names it */
+    let pointed0 = false;
+    hero.addEventListener('pointermove', () => (pointed0 = true), { once: true });
+    function demoAim() {
+      if (pointed0 || proj || !heroVisible || !mqHover.matches || reduceMotion || store.get('aimShown')) return;
+      const t = $('.tile[data-take].is-tally') || tileFor('deadair');
+      if (!t || !inView(t)) return;
+      store.set('aimShown', '1');
+      const r = t.getBoundingClientRect();
+      mx = r.left + r.width * 0.5;
+      my = r.top + r.height * 0.55;
+      if (!raf) raf = requestAnimationFrame(loop);
+      tag.textContent = t.dataset.label;
+      tag.dataset.kind = 'proj';
+      hero.classList.add('is-aim', 'is-demo');
+      setTimeout(() => {
+        hero.classList.remove('is-demo');
+        if (!$('.tile:hover', hero)) hero.classList.remove('is-aim');
+      }, 3600);
+    }
+
     /* observers + boot */
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(([en]) => {
@@ -1609,6 +1696,7 @@
     Promise.race([fontsReady, new Promise((r) => setTimeout(r, 700))]).then(() => introReveal).then(() => {
       fitName();
       requestAnimationFrame(() => hero.classList.add('is-on'));
+      setTimeout(demoAim, 3200);
       const linked = decodeURIComponent(location.hash.slice(1));
       if (projTpl[linked]) openProject(linked, null, 'link');
     });
@@ -2801,7 +2889,7 @@
         b.setAttribute('aria-pressed', String(i === n - 1));
       });
       const b = btns[n - 1];
-      caption(`Step ${$('.pr__n', b).textContent} / 05`, $('.pr__t', b).textContent, caps[n - 1] || '');
+      caption(`Project ${ORDER.indexOf(pj) + 1} / ${ORDER.length} · Step ${$('.pr__n', b).textContent} / 05`, $('.pr__t', b).textContent, caps[n - 1] || '');
       // the active button fills up while its step plays
       const fl = $('.pr__fill', b), fo = { duration: P.dur[n], easing: 'linear', fill: 'forwards' };
       anim(fl, [{ transform: 'translateX(-100%)' }, { transform: 'none' }], fo);

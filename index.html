@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=83890941">
+  <link rel="stylesheet" href="css/site.css?v=910cfa53">
   <script>
     // js flag + the avatar intro decision, before first paint so the page never flashes under the intro
     // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per
@@ -45,7 +45,7 @@
     })(document.documentElement);
   </script>
   <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
-  <script src="js/site.js?v=453a867f" defer></script>
+  <script src="js/site.js?v=3b74f91a" defer></script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
@@ -191,6 +191,7 @@
         <div class="cta">
           <button class="btn btn--rec" type="button" data-reel><span class="btn__play" aria-hidden="true"></span>Play reel <span class="btn__meta">1:15</span></button>
           <a class="btn btn--ghost" href="#work"><span>See <span class="hide-m">selected </span>work</span><span aria-hidden="true">↓</span></a>
+          <button class="chan" type="button" data-guide aria-haspopup="dialog"><i class="chan__dot" aria-hidden="true"></i><span class="chan__t"><b>8 live projects</b><small>Or click a screen behind me</small></span></button>
         </div>
         <h1 class="name" data-fit><span class="name__a"><span class="name__t" data-t="Boško">Boško</span></span> <span class="name__b"><span class="name__t" data-t="Kosić">Kosić</span></span></h1>
       </div>
@@ -540,7 +541,7 @@
           <div class="row__art" aria-hidden="true"><span class="row__shot row__shot--face"><picture><source type="image/avif" srcset="media/stills/kostim-960.avif"><img src="media/stills/kostim-960.webp" alt="" width="960" height="1707" loading="lazy" decoding="async"></picture></span></div>
           <div class="row__media" aria-hidden="true"><img src="media/loops/fsu-duh-v.webp" alt="" width="360" height="640" loading="lazy" decoding="async" data-vsrc="fsu-duh-v"></div>
         </li>
-        <li class="row" id="p-series-at-scale" data-preview-still="sta-radi" style="--c:#2ee6c9;--span:3">
+        <li class="row" id="p-series-at-scale" data-preview-still="sta-radi" style="--c:#b28cff;--span:3">
           <a class="row__link" href="work/series-at-scale/">
             <span class="row__num">05</span>
             <span class="row__title">Series at Scale</span>
@@ -988,6 +989,7 @@
   <nav class="dock" aria-label="Quick">
     <a href="#work">Work</a>
     <a href="#reel" data-reel-link>Reel</a>
+    <button class="dock__live" type="button" data-guide aria-haspopup="dialog"><i class="chan__dot" aria-hidden="true"></i>Live <span>8</span></button>
     <a href="#contact">Contact</a>
   </nav>
 
