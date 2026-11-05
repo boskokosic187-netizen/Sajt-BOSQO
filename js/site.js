@@ -360,7 +360,7 @@
       lines: '.case-title, .reel__title, .work__title, .process__title, .about__title, .contact__title',
       screen: '.reel__screen, .row, .cover__item, .case-next',
       rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
-      stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head, .reel__chapters',
+      stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head, .reel__chapters, .talk',
       panel: '.qb',
     };
     // what the cut brings in from the page before (the case's title and key visual) is already there
@@ -912,7 +912,7 @@
        levels (one pair per frame, measured from the mix: media/reel/reel-2026-vu.json).
        Play, the hero's button or a chapter opens the player with sound from that point;
        from the monitor, the screen itself grows into the player. Text changes at most ten
-       times a second and only when it changes; the meters and the strip move by transform */
+       times a second and only when it changes; the meters and the bars move by transform */
     const dlg = $('[data-player]');
     const reel = $('#reel');
     const mon = $('[data-reel-monitor]');
@@ -920,6 +920,18 @@
     const REEL = 'media/reel/reel-2026-';
     const RV = '?v=b9d03c79'; // content hash of the reel's files (stamp_reel.py)
     const CH = [0, 7.68, 15.36, 32.64, 48, 63.36], DUR = 75;
+    // the reel's data (the mix's levels, the director's track) come as small scripts, made from
+    // their .json by stamp_reel.py: a page opened straight from disk may not fetch, but loads these
+    const reelData = (k) => new Promise((ok, no) => {
+      const got = () => (window.REEL_DATA || {})[k];
+      if (got()) return ok(got());
+      const sc = document.createElement('script');
+      sc.src = REEL + k + '.js' + RV;
+      sc.async = true;
+      sc.onload = () => { sc.remove(); if (got()) ok(got()); else no(); };
+      sc.onerror = () => { sc.remove(); no(); };
+      document.head.appendChild(sc);
+    });
     const NAMES = ['Stand by', 'Statement', 'Films', 'Every format', 'Key art', 'Sign-off'];
     const chapterAt = (t) => { let i = 0; while (i < CH.length - 1 && t >= CH[i + 1] - 0.02) i++; return i; };
     let pv = null; // the monitor's muted reel
@@ -967,7 +979,7 @@
       }));
       if (scr) scr.addEventListener('click', () => openReel(0, scr));
       // while he talks, a chapter moves his commentary there instead
-      $$('.ch[data-at]').forEach((b) => b.addEventListener('click', () => { if (!(talkSeek && talkSeek(+b.dataset.at))) openReel(+b.dataset.at, scr); }));
+      $$('.ch[data-at]').forEach((b) => b.addEventListener('click', () => { const at = +b.dataset.at; if (!(talkSeek && talkSeek(at))) openReel(at, scr); }));
       $('[data-close]', dlg).addEventListener('click', () => closeDialog(dlg));
       dlg.addEventListener('click', (e) => { if (e.target === dlg) closeDialog(dlg); });
       dlg.addEventListener('close', () => {
@@ -978,22 +990,52 @@
 
     if (mon && reel && scr) {
       const tcEl = $('[data-reel-tc]', mon), chEl = $('[data-reel-chap]', mon), stEl = $('[data-reel-state]', mon);
-      const fills = $$('.reel__seg b', mon), segs = $$('.reel__seg', mon), chs = $$('.ch', reel), vu = $$('.reel__vu b', mon);
+      const fills = $$('.reel__seg b', reel), segs = $$('.reel__seg', reel), chs = $$('.ch', reel), vu = $$('.reel__vu b', mon);
       const pad = (n) => String(n).padStart(2, '0');
       const tc = (t) => { const f = Math.floor(t * 25 + 1e-4); return `00:${pad(Math.floor(f / 1500))}:${pad(Math.floor(f / 25) % 60)}:${pad(f % 25)}`; };
-      let levels = null, raf = 0, lastTxt = -1e9, lastCh = -1, lastF = -1;
+      let levels = null, levelsP = null, raf = 0, lastTxt = -1e9, lastCh = -1, lastF = -1;
       const lvl = [0, 0];
+
+      /* the timeline (css: reel__tl): a bar per chapter, as long as the chapter lasts; the one
+         playing fills orange (tick), a knob rides along at the playhead. Where the chapters
+         scroll as a strip (phones), the one playing slides into view */
+      const tl = $('[data-tl]', reel);
+      const headEl = tl && $('.tl__head', tl), strip = tl && $('.reel__chapters', tl);
+      let segX = [], lastT = 0;
+      const loadLevels = () => levelsP || (levelsP = reelData('vu').then((j) => { levels = j; }).catch(() => { levelsP = null; }));
+      const place = (t) => {
+        lastT = t;
+        const i = chapterAt(t), g = segX[i];
+        if (!headEl || !g) return;
+        const p = Math.max(0, Math.min(1, (t - CH[i]) / ((CH[i + 1] || DUR) - CH[i])));
+        headEl.style.transform = `translateX(${(g[0] + p * g[1]).toFixed(1)}px)`;
+      };
+      const layoutTl = () => {
+        if (!tl || !tl.getClientRects().length) return;
+        const x0 = tl.getBoundingClientRect().left;
+        segX = segs.map((g) => { const r = g.getBoundingClientRect(); return [r.left - x0, r.width]; });
+        place(lastT);
+      };
+      if (tl) {
+        if ('ResizeObserver' in window) new ResizeObserver(layoutTl).observe(tl); else addEventListener('resize', layoutTl);
+        if (strip) strip.addEventListener('scroll', layoutTl, { passive: true });
+      }
       const showChapter = (i) => {
         chEl.textContent = NAMES[i];
         chs.forEach((c, k) => c.classList.toggle('is-on', k === i));
         segs.forEach((g, k) => g.classList.toggle('is-on', k === i));
         fills.forEach((b, k) => { if (k !== i) b.style.transform = `scaleX(${k < i ? 1 : 0})`; });
+        if (talking && strip && chs[i] && strip.scrollWidth > strip.clientWidth + 1) { // a scrolling strip follows him to the chapter he is in
+          const li = chs[i].parentElement;
+          strip.scrollTo({ left: Math.max(0, li.offsetLeft - (parseFloat(getComputedStyle(strip).paddingLeft) || 0)), behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
       };
       function tick(now) {
         raf = 0;
         // during his hello the reel stands by on frame 0, but the meters follow his voice
         if (!pv || (pv.paused && !talkIntro)) return;
         const t = talkIntro ? 0 : pv.currentTime;
+        if (tl) { place(t); tl.classList.add('is-on'); }
         const f = Math.floor(t * 25);
         const g = levels && Math.min(levels.l.length - 1, f);
         const lv = talkVu ? talkVu() : levels && [levels.l[g] / 99, levels.r[g] / 99];
@@ -1011,7 +1053,7 @@
           if (tcEl.textContent !== s) tcEl.textContent = s;
           const i = chapterAt(t);
           if (i !== lastCh) { lastCh = i; showChapter(i); }
-          fills[i].style.transform = `scaleX(${Math.min(1, (t - CH[i]) / ((CH[i + 1] || DUR) - CH[i])).toFixed(3)})`;
+          if (fills[i]) fills[i].style.transform = `scaleX(${Math.min(1, (t - CH[i]) / ((CH[i + 1] || DUR) - CH[i])).toFixed(3)})`;
         }
         raf = requestAnimationFrame(tick);
       }
@@ -1029,7 +1071,7 @@
         pv.addEventListener('playing', () => { pv.classList.add('is-on'); live(true); });
         pv.addEventListener('pause', () => live(false));
         $('picture', scr).after(pv);
-        fetch(REEL + 'vu.json' + RV).then((r) => r.json()).then((j) => { levels = j; }).catch(() => {});
+        loadLevels();
       };
       const start = () => {
         makePreview();
@@ -1046,8 +1088,11 @@
       };
       watch();
       if (lite) onLiteOff.push(watch);
+      // the ticker at the foot of the stage runs only while it is in view (css: .reel__ticker)
+      const ticker = $('.reel__ticker', reel);
+      if (ticker && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => ticker.classList.toggle('is-run', e.isIntersecting)).observe(ticker);
 
-      /* director's commentary (css: talk). The avatar from the logo sits under the monitor and
+      /* director's commentary (css: talk). The avatar from the logo sits beside the monitor and
          talks the visitor through the reel. His voice over the reel's own mix is one file
          (media/reel/reel-2026-talk.webm; .m4a where Opus doesn't play), starting with a short
          hello before the reel rolls; the reel on the monitor follows the voice (nudged by its
@@ -1081,7 +1126,7 @@
         const LOOK = { viewer: { r: 0, x: 0, y: 0 }, screen: { r: 0, x: 0, y: -2 } };
         const flash = (cls, ms) => { av.classList.add(cls); setTimeout(() => av.classList.remove(cls), ms); };
 
-        const fetchData = () => fetching || (fetching = fetch(TK + '.json' + RV).then((r) => r.json()).then((j) => {
+        const fetchData = () => fetching || (fetching = reelData('talk').then((j) => {
           data = j;
           j.subs.forEach((s) => { s.text = s.text.replace(/'/g, '’'); }); // typographic apostrophes, like the rest of the page
           const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -1220,7 +1265,8 @@
             tcEl.textContent = tc(0);
             lastCh = 0;
             showChapter(0);
-            fills[0].style.transform = 'scaleX(0)';
+            if (fills[0]) fills[0].style.transform = 'scaleX(0)';
+            if (tl) place(0);
           }
           state = 'on';
           talkEl.classList.add('is-on');

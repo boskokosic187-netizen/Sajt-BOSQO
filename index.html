@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=d0e2f372">
+  <link rel="stylesheet" href="css/site.css?v=83890941">
   <script>
     // js flag + the avatar intro decision, before first paint so the page never flashes under the intro
     // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per
@@ -45,7 +45,7 @@
     })(document.documentElement);
   </script>
   <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
-  <script src="js/site.js?v=7741ed93" defer></script>
+  <script src="js/site.js?v=453a867f" defer></script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
@@ -417,29 +417,38 @@
     </section>
 
     <!-- ============ REEL ============
-         A program monitor: the reel plays on it muted, with its own timecode, the mix's real
-         levels and the chapter it is in. Play (or a chapter) sends the monitor full screen
-         with sound, from that point (js: reel monitor) -->
+         An orange stage. A program monitor: the reel plays on it muted, with its own timecode,
+         the mix's real levels and the chapter it is in; beside it the director (the avatar from
+         the logo), who talks the visitor through it; under both the chapters, as a timeline.
+         Play (or a chapter) sends the monitor full screen with sound, from that point
+         (js: reel monitor, talk) -->
     <section class="reel" id="reel" aria-labelledby="reel-title">
       <div class="sec-head">
         <span class="sec-head__num">01</span>
         <span class="sec-head__label">Showreel 2026 · 01:15</span>
         <span class="sec-head__end hide-m">1920 × 1080 · 25 fps · stereo</span>
       </div>
-      <div class="reel__grid">
-        <div class="reel__copy">
-          <h2 class="reel__title" id="reel-title">One reel.<br><em>Every format.</em></h2>
-          <p class="reel__sub">Seventy-five seconds of campaigns, key art, product films and AI film. The edit is a motion piece of its own: every title, transition and sound was made for this cut.</p>
-          <ol class="reel__chapters" aria-label="Chapters, each plays the reel with sound from there">
-            <li><button class="ch" type="button" data-at="0" style="--k:0"><span class="ch__tc">00:00</span><span class="ch__name">Stand by</span><span class="ch__note">Dead air, then a signal</span><span class="ch__go" aria-hidden="true"></span></button></li>
-            <li><button class="ch" type="button" data-at="7.68" style="--k:1"><span class="ch__tc">00:07</span><span class="ch__name">Statement</span><span class="ch__note">Type with the work inside it</span><span class="ch__go" aria-hidden="true"></span></button></li>
-            <li><button class="ch" type="button" data-at="15.36" style="--k:2"><span class="ch__tc">00:15</span><span class="ch__name">Films</span><span class="ch__note">Eight projects, cut on the beat</span><span class="ch__go" aria-hidden="true"></span></button></li>
-            <li><button class="ch" type="button" data-at="32.64" style="--k:3"><span class="ch__tc">00:32</span><span class="ch__name">Every format</span><span class="ch__note">Five formats, 50+ billboards</span><span class="ch__go" aria-hidden="true"></span></button></li>
-            <li><button class="ch" type="button" data-at="48" style="--k:4"><span class="ch__tc">00:48</span><span class="ch__name">Key art</span><span class="ch__note">Up to 8K, then the rush</span><span class="ch__go" aria-hidden="true"></span></button></li>
-            <li><button class="ch" type="button" data-at="63.36" style="--k:5"><span class="ch__tc">01:03</span><span class="ch__name">Sign-off</span><span class="ch__note">Name, services, availability</span><span class="ch__go" aria-hidden="true"></span></button></li>
-          </ol>
+      <div class="reel__stage">
+        <!-- beside the monitor: the title, then the director (on narrow screens the monitor
+             sits between them) -->
+        <div class="reel__side">
+          <div class="reel__head">
+            <h2 class="reel__title" id="reel-title">One reel. <br><em>Every format.</em></h2>
+            <p class="reel__sub">Seventy-five seconds of campaigns, key art, product films and AI film. The edit is a motion piece of its own: every title, transition and sound was made for this cut.</p>
+          </div>
+          <!-- director's commentary: the avatar from the logo talks the visitor through the reel,
+               on the monitor beside him, in his voice over the reel's own mix (js: talk) -->
+          <div class="talk" data-talk>
+            <span class="talk__av" data-talk-av><span class="talk__ring" aria-hidden="true"></span></span>
+            <div class="talk__bubble">
+              <span class="talk__k"><i aria-hidden="true"></i><span data-talk-state>Director’s commentary</span></span>
+              <p class="talk__line" data-talk-line aria-live="polite">Hi, I’m Boško. Want me to walk you through it?</p>
+            </div>
+            <button class="talk__go" type="button" data-talk-go aria-label="Play the reel with Boško’s commentary, 1 minute 22 seconds"><span class="talk__icon" aria-hidden="true"></span><span data-talk-label>With my commentary</span> <span class="reel__len" data-talk-len>1:22</span></button>
+          </div>
         </div>
         <div class="reel__monitor" data-reel-monitor>
+          <span class="reel__tally" aria-hidden="true"><i></i><span data-reel-state>Standby</span></span>
           <div class="reel__screen">
             <picture>
               <source type="image/avif" srcset="media/reel/reel-2026-poster.avif?v=b9d03c79">
@@ -449,24 +458,26 @@
             <span class="reel__corners" aria-hidden="true"></span>
           </div>
           <div class="reel__umd" aria-hidden="true">
-            <span class="reel__tally"><i></i><span data-reel-state>Standby</span></span>
             <span class="reel__chap" data-reel-chap>Showreel 2026</span>
             <span class="reel__tc" data-reel-tc>00:00:00:00</span>
             <span class="reel__vu"><i><b></b></i><i><b></b></i></span>
           </div>
-          <div class="reel__strip" aria-hidden="true"><span class="reel__seg" style="--w:7.68"><b></b></span><span class="reel__seg" style="--w:7.68"><b></b></span><span class="reel__seg" style="--w:17.28"><b></b></span><span class="reel__seg" style="--w:15.36"><b></b></span><span class="reel__seg" style="--w:15.36"><b></b></span><span class="reel__seg" style="--w:11.64"><b></b></span></div>
-          <!-- director's commentary: the avatar from the logo talks the visitor through the reel,
-               on the monitor above, in his voice over the reel's own mix (js: talk) -->
-          <div class="talk" data-talk>
-            <span class="talk__av" data-talk-av><span class="talk__ring" aria-hidden="true"></span></span>
-            <div class="talk__body">
-              <span class="talk__k"><i aria-hidden="true"></i><span data-talk-state>Director’s commentary</span></span>
-              <p class="talk__line" data-talk-line aria-live="polite">Hi, I’m Boško. Want me to walk you through it?</p>
-            </div>
-            <button class="talk__go" type="button" data-talk-go aria-label="Play the reel with Boško’s commentary, 1 minute 22 seconds"><span class="talk__icon" aria-hidden="true"></span><span data-talk-label>With my commentary</span> <span class="reel__len" data-talk-len>1:22</span></button>
-          </div>
         </div>
       </div>
+      <!-- the chapters as a timeline: one bar each, as long as the chapter lasts, filling while
+           it plays; a chapter plays the reel with sound from its start (js: reel monitor) -->
+      <div class="reel__tl" data-tl>
+        <ol class="reel__chapters" aria-label="Chapters, each plays the reel with sound from there">
+          <li style="--w:7.68"><button class="ch" type="button" data-at="0" style="--k:0"><span class="reel__seg" aria-hidden="true"><b></b></span><span class="ch__tc">00:00<span class="ch__go" aria-hidden="true"></span></span><span class="ch__name">Stand by</span></button></li>
+          <li style="--w:7.68"><button class="ch" type="button" data-at="7.68" style="--k:1"><span class="reel__seg" aria-hidden="true"><b></b></span><span class="ch__tc">00:07<span class="ch__go" aria-hidden="true"></span></span><span class="ch__name">Statement</span></button></li>
+          <li style="--w:17.28"><button class="ch" type="button" data-at="15.36" style="--k:2"><span class="reel__seg" aria-hidden="true"><b></b></span><span class="ch__tc">00:15<span class="ch__go" aria-hidden="true"></span></span><span class="ch__name">Films</span></button></li>
+          <li style="--w:15.36"><button class="ch" type="button" data-at="32.64" style="--k:3"><span class="reel__seg" aria-hidden="true"><b></b></span><span class="ch__tc">00:32<span class="ch__go" aria-hidden="true"></span></span><span class="ch__name">Every format</span></button></li>
+          <li style="--w:15.36"><button class="ch" type="button" data-at="48" style="--k:4"><span class="reel__seg" aria-hidden="true"><b></b></span><span class="ch__tc">00:48<span class="ch__go" aria-hidden="true"></span></span><span class="ch__name">Key art</span></button></li>
+          <li style="--w:11.64"><button class="ch" type="button" data-at="63.36" style="--k:5"><span class="reel__seg" aria-hidden="true"><b></b></span><span class="ch__tc">01:03<span class="ch__go" aria-hidden="true"></span></span><span class="ch__name">Sign-off</span></button></li>
+        </ol>
+        <i class="tl__head" aria-hidden="true"></i>
+      </div>
+      <div class="reel__ticker" aria-hidden="true"><div class="reel__run"><div><span>Campaigns</span><em>key art</em><span>Product films</span><em>AI film</em><span>50+ billboards</span><em>up to 8K</em><span>Cut on the beat</span><em>every format</em></div><div><span>Campaigns</span><em>key art</em><span>Product films</span><em>AI film</em><span>50+ billboards</span><em>up to 8K</em><span>Cut on the beat</span><em>every format</em></div></div></div>
     </section>
 
     <!-- ============ SELECTED WORK ============ -->
