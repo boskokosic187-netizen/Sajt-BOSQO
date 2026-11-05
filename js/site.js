@@ -1395,6 +1395,66 @@
     };
 
     // what a monitor puts on program
+    /* the live pages: how to play them. A live page on program gets a coach over it: a hand
+       doing the gesture and what it does, in big type. It lets every pointer through, and
+       goes the moment the visitor touches the page (once per visit and project). The page's
+       own main buttons get filled in and a ring that breathes until they are used (each
+       live page is its own site, so this is a small stylesheet put into it from here). */
+    const LIVE = {
+      interstellar: { g: 'drag', t: 'Drag the black hole', m: 'Bring it close to the astronaut' },
+      deadair: { g: 'drag', t: 'Drag the dial', m: 'Tune through the static. Wheel and ← → work too',
+        css: '.snd{font-size:13px;color:#F2EDE4;border-color:#F2EDE4AA;background:#0B0F1699}.again,.run{font-size:14px}' },
+      accord: { g: 'drag', t: 'Drag to turn the bottle', m: 'The light on the glass tunes the chord',
+        css: '#snd{font-size:14px;padding:.9em 1.6em;animation:siteRing 2.2s infinite}#snd[aria-pressed="true"]{animation:none}' },
+      struja: { g: 'move', t: 'Move your cursor', tt: 'Drag across the river', m: 'The current follows you. Then play the track',
+        css: 'button[data-play]{background:var(--sodium,#ff7a1a);border-color:var(--sodium,#ff7a1a);color:#120c06;font-weight:700;--ring:255,122,26;animation:siteRing 2.2s infinite}' +
+          'button[data-play][aria-pressed="true"]{animation:none;background:rgba(255,122,26,.18);color:inherit}button[data-mic]{border-color:rgba(237,230,218,.75)}' },
+      umbra: { g: 'drag', t: 'Drag to orbit the plaza', m: 'Scroll to zoom. Find 18:47',
+        css: 'button{border-width:2px;font-weight:700}#key{background:var(--ink,#16130f);color:var(--paper,#f1eee7);--ring:22,19,15;animation:siteRing 2.2s infinite}' },
+      jurassic: { g: 'drag', t: 'Drag across the poster', m: 'More predator, or more island' },
+      bigger: { g: 'tap', t: 'Make it bigger', m: 'Click the pink button, or press Space' },
+      halfcourt: { g: 'keys', t: 'Press 1 – 6', tt: 'Tap the graphics', m: 'You run the broadcast' },
+    };
+    const RING = '@keyframes siteRing{0%{box-shadow:0 0 0 0 rgba(var(--ring,255,255,255),.55)}70%,100%{box-shadow:0 0 0 16px rgba(var(--ring,255,255,255),0)}}';
+    const touchOnly = () => !mqHover.matches;
+    function coach(p, f) {
+      const c = LIVE[p.slug];
+      if (!c || store.get('coach:' + p.slug)) return null;
+      const el = document.createElement('div');
+      el.className = 'coach coach--' + c.g;
+      el.setAttribute('aria-hidden', 'true');
+      el.innerHTML = '<span class="coach__g"><i class="coach__dot"></i><svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-.5V4a1.5 1.5 0 0 1 3 0v6m0-1a1.5 1.5 0 0 1 3 0v4.5c0 4-2.6 7-6.4 7-2.6 0-4-1.2-5.4-3.4L4.3 14a1.6 1.6 0 0 1 2.6-1.8L9 14.5V11"/></svg>' +
+        (c.g === 'keys' ? '<kbd>1</kbd>' : '') + '</span><span class="coach__t"><b></b><small></small></span>';
+      $('b', el).textContent = (touchOnly() && c.tt) || c.t;
+      $('small', el).textContent = c.m;
+      const done = () => {
+        store.set('coach:' + p.slug, '1');
+        el.classList.add('is-done');
+        setTimeout(() => el.remove(), 500);
+      };
+      f.addEventListener('load', () => {
+        let w;
+        try { w = f.contentWindow; w.document.documentElement; } catch { return; }
+        let x0 = null, y0 = 0;
+        const opt = { capture: true, passive: true };
+        ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => w.addEventListener(t, done, opt));
+        if (c.g === 'move') w.addEventListener('pointermove', (e) => {
+          if (x0 === null) { x0 = e.clientX; y0 = e.clientY; } else if (Math.hypot(e.clientX - x0, e.clientY - y0) > 140) done();
+        }, opt);
+      });
+      return el;
+    }
+    function boost(f, slug) {
+      f.addEventListener('load', () => {
+        try {
+          const d = f.contentDocument;
+          const st = d.createElement('style');
+          st.dataset.site = 'boost';
+          st.textContent = RING + ((LIVE[slug] && LIVE[slug].css) || '');
+          d.head.appendChild(st);
+        } catch { /* not ours to style */ }
+      });
+    }
     function piece(m, p) {
       if (m.kind === 'live') {
         const frame = () => {
@@ -1403,6 +1463,7 @@
           f.title = m.label;
           f.allow = 'autoplay; microphone';
           f.referrerPolicy = 'no-referrer';
+          boost(f, p.slug);
           return f;
         };
         const fromDisk = location.protocol === 'file:';
@@ -1425,7 +1486,7 @@
         go.type = 'button';
         go.className = 'btn btn--live';
         go.innerHTML = '<span class="btn__play" aria-hidden="true"></span>Run it live';
-        go.addEventListener('click', () => box.replaceWith(frame()));
+        go.addEventListener('click', () => { const fr = frame(); box.replaceWith(fr); const c = coach(p, fr); if (c) fr.after(c); });
         box.append(im, go);
         return box;
       }
@@ -1484,6 +1545,7 @@
       const el = m.kind === 'loop' && p.tv ? p.tv : piece(m, p);
       if (el === p.tv) play(el);
       p.screen.replaceChildren(el);
+      if (el.tagName === 'IFRAME') { const c = coach(p, el); if (c) p.screen.appendChild(c); }
       p.screen.className = 'mv__screen is-' + m.fit;
       p.pgm.classList.toggle('is-live', m.kind === 'live');
       p.umd.textContent = m.label;

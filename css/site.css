@@ -3196,7 +3196,7 @@ html.is-proj { overflow: hidden; }
 .mv__name b { flex: none; display: grid; place-items: center; min-width: 17px; height: 17px; border-radius: 3px; background: rgba(242, 239, 234, 0.16); font-size: 10px; }
 .mv__mon[aria-pressed="true"] .mv__name b { background: var(--rec); color: #0a0a0b; }
 .mv__live {
-  position: absolute; right: 6px; top: 6px; padding: 3px 6px; border-radius: 3px; background: var(--rec); color: #0a0a0b; font-style: normal;
+  position: absolute; right: 6px; top: 6px; padding: 3px 6px; border-radius: 3px; background: var(--sig); color: #0a0a0b; font-style: normal;
   font-family: var(--f-label); font-stretch: 80%; font-weight: 800; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
 }
 
@@ -3365,4 +3365,57 @@ html:is(.vt-open, .vt-close)::view-transition-old(take), html:is(.vt-open, .vt-c
   .ch-card__txt small { font-size: 12.5px; }
   .ch-card__go { margin-top: 2px; font-size: 11px; }
   .ch-card kbd { display: none; }
+}
+
+/* ================================================== HOW TO PLAY A LIVE PAGE
+   Over a live page on program: a hand doing the gesture, and what it does. Every pointer
+   goes through to the page; the first touch sends it away (js: coach) */
+.coach {
+  position: absolute; left: 50%; top: 50%; z-index: 3; pointer-events: none;
+  display: flex; align-items: center; gap: 16px; padding: 14px 24px 14px 14px; border-radius: 999px;
+  background: rgba(10, 10, 11, 0.78); box-shadow: 0 0 0 1px rgba(102, 238, 216, 0.45), 0 18px 50px -12px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: var(--text); white-space: nowrap;
+  translate: -50% -50%; animation: coachIn 0.6s var(--out) 0.7s backwards;
+  transition: opacity 0.4s, scale 0.4s var(--out);
+}
+.coach.is-done { opacity: 0; scale: 0.92; }
+@keyframes coachIn { from { opacity: 0; scale: 0.9; } }
+.coach__g { position: relative; flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(102, 238, 216, 0.14); }
+.coach__g svg { width: 30px; height: 30px; fill: none; stroke: var(--sig); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.coach__dot { position: absolute; left: 50%; top: 12px; width: 8px; height: 8px; margin-left: -1px; border-radius: 50%; background: var(--sig); opacity: 0; }
+.coach__t { display: grid; gap: 4px; }
+.coach__t b { font-weight: 800; font-stretch: 108%; font-size: 22px; line-height: 1.05; letter-spacing: -0.01em; }
+.coach__t small { color: var(--sig); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; }
+/* the gestures */
+.coach--drag svg, .coach--move svg { animation: coachDrag 1.8s var(--out) infinite; }
+.coach--drag .coach__dot { animation: coachTrail 1.8s var(--out) infinite; }
+@keyframes coachDrag { 0%, 10% { translate: -9px 0; scale: 1; } 18% { scale: 0.86; } 70% { translate: 9px 0; scale: 0.86; } 80%, 100% { translate: 9px 0; scale: 1; } }
+@keyframes coachTrail { 0%, 14% { opacity: 0; translate: -9px 0; } 20% { opacity: 1; } 70% { opacity: 1; translate: 9px 0; } 80%, 100% { opacity: 0; translate: 9px 0; } }
+.coach--move svg { animation-name: coachMove; animation-duration: 2.4s; animation-timing-function: ease-in-out; }
+@keyframes coachMove { 0%, 100% { translate: -8px 3px; } 25% { translate: 0 -5px; } 50% { translate: 8px 3px; } 75% { translate: 0 6px; } }
+.coach--tap svg { animation: coachTap 1.4s var(--out) infinite; }
+.coach--tap .coach__g::after, .coach--keys .coach__g::after {
+  content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 2px solid var(--sig); opacity: 0;
+  animation: coachRipple 1.4s var(--out) infinite;
+}
+@keyframes coachTap { 0%, 100% { scale: 1; } 30% { scale: 0.82; } 45% { scale: 1; } }
+@keyframes coachRipple { 0%, 25% { opacity: 0; scale: 0.5; } 32% { opacity: 1; } 100% { opacity: 0; scale: 1.25; } }
+.coach--keys svg { display: none; }
+.coach--keys kbd {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--sig); color: #0a0a0b;
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 800; font-size: 17px; box-shadow: 0 4px 0 #2a8f80;
+  animation: coachKey 1.4s var(--out) infinite;
+}
+@keyframes coachKey { 0%, 100% { translate: 0 0; box-shadow: 0 4px 0 #2a8f80; } 30% { translate: 0 3px; box-shadow: 0 1px 0 #2a8f80; } 45% { translate: 0 0; box-shadow: 0 4px 0 #2a8f80; } }
+@media (prefers-reduced-motion: reduce) { .coach *, .coach *::after { animation: none !important; } }
+/* small monitors (a phone): the same, smaller */
+@container (max-width: 560px) {
+  .coach { gap: 10px; padding: 8px 16px 8px 8px; }
+  .coach__g { width: 38px; height: 38px; }
+  .coach__g svg { width: 21px; height: 21px; }
+  .coach__dot { top: 7px; width: 6px; height: 6px; }
+  .coach__t b { font-size: 15px; }
+  .coach__t small { font-size: 9.5px; }
+  .coach--keys kbd { width: 26px; height: 26px; font-size: 13px; }
 }
