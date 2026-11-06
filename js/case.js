@@ -23,166 +23,255 @@
   }
 
   /* ------------------------------------------------------------ Mix a Ballie
-     Every Ballie is drawn on one rig, so the picture splits into reels (head, kit, shorts)
-     that line up with any other Ballie. Each reel is a strip of all the cast, three times
-     over, cut to its slice; a spin rolls the strip two rounds on and lands on a new one
-     (it moves by transform only). Click a part to step it, lock what you want to keep. */
+     The collection's own trait layers (background, jersey, number, skin, eyes, head, extra,
+     ball, mouth, arm), stacked in that order on one card: any trait fits any other because
+     all of them were drawn on one rig. A spin swaps every unlocked layer, one after another
+     from the bottom up; a click on a part of the character (or on its row in the layers
+     panel) steps that layer; Explode pulls the stack apart in 3D. Only the layers on the card
+     are loaded, plus the next spin, quietly, once the visitor is playing. */
   function mixer(el) {
-    const N = +el.dataset.n;
-    const traits = JSON.parse(el.dataset.traits);
-    const fig = $('.mx__fig', el);
-    const small = () => fig.getBoundingClientRect().height * (devicePixelRatio || 1) < 760;
-    const base = el.dataset.base + (small() ? 's/' : '');
-    const url = (k) => `${base}${String(k + 1).padStart(2, '0')}.webp`;
-    const REP = 3;
-    const start = +el.dataset.start || 0;
-    const rows = $$('.mx__row', el);
+    const rig = JSON.parse($('[data-rig]', el).textContent);
+    const L = rig.layers, NL = L.length, W = rig.w, H = rig.h;
+    const base = el.dataset.base;
+    const card = $('.mx__card', el), art = $('.mx__art', el), stage = $('.mx__stage', el), tip = $('.mx__tip', el);
+    const slots = $$('.mx__layer', el);
+    const rows = $$('.mx__row', el).sort((a, b) => a.dataset.l - b.dataset.l);
     const idEl = $('[data-id]', el), idK = $('[data-id-k]', el), idBox = $('.mx__id', el);
+    const first = rig.originals.find((o) => o[0] === +el.dataset.start) || rig.originals[0];
+    const cur = first[1].slice();
+    const locked = new Array(NL).fill(false);
+    const hover = matchMedia('(hover: hover)').matches;
 
-    const reels = $$('.mx__reel', el).map((r, i) => ({
-      el: r, i, strip: $('.mx__strip', r), cur: start, locked: false, busy: null,
-      row: rows[i], v: $('[data-v]', rows[i]), from: $('[data-from]', rows[i]), lock: $('[data-lock]', rows[i]),
-    }));
-    // preload once, then every reel shares the decoded pictures
-    const ready = Promise.all(Array.from({ length: N }, (_, k) => {
-      const im = new Image();
-      im.src = url(k);
-      return im.decode().catch(() => {});
-    }));
-    reels.forEach((s) => {
-      const frag = document.createDocumentFragment();
-      for (let rep = 0; rep < REP; rep++) {
-        for (let k = 0; k < N; k++) {
-          const c = document.createElement('span');
-          c.className = 'mx__cell';
-          const im = document.createElement('img');
-          im.src = url(k); im.alt = ''; im.decoding = 'async'; im.draggable = false;
-          c.appendChild(im);
-          frag.appendChild(c);
-        }
+    const url = (l, k) => `${base}${L[l].k}-${String(k).padStart(2, '0')}.webp`;
+    const cache = new Map();
+    function load(l, k) {
+      const u = url(l, k);
+      if (!cache.has(u)) {
+        const im = new Image();
+        im.decoding = 'async';
+        im.src = u;
+        cache.set(u, im.decode().catch(() => {}));
       }
-      s.strip.appendChild(frag);
-      s.strip.style.setProperty('--n', N * REP);
-      set(s, N + s.cur);
-    });
+      return cache.get(u);
+    }
+    function place(im, l, k) {
+      const b = L[l].items[k][1];
+      im.width = b[2];
+      im.height = b[3];
+      im.style.left = (b[0] / W) * 100 + '%';
+      im.style.top = (b[1] / H) * 100 + '%';
+      im.style.width = (b[2] / W) * 100 + '%';
+    }
+    const top = (l) => { const a = $$('img', slots[l]); return a[a.length - 1]; };
 
-    function set(s, idx) { s.strip.style.transform = `translateY(${(-idx / (N * REP)) * 100}%)`; }
-    function show() {
-      reels.forEach((s) => {
-        s.v.textContent = traits[s.cur][s.i];
-        s.from.textContent = '#' + String(s.cur + 1).padStart(2, '0');
-      });
-      const same = reels.every((s) => s.cur === reels[0].cur);
-      idBox.classList.toggle('is-orig', same);
-      if (same) {
+    function readout(l) {
+      const r = rows[l], it = L[l].items[cur[l]];
+      $('[data-v]', r).textContent = it[0];
+      $('[data-n]', r).textContent = `${cur[l] + 1}/${L[l].items.length}`;
+      $('.mx__th img', r).src = url(l, cur[l]);
+      $('[data-pick]', r).setAttribute('aria-label', `${L[l].label}: ${it[0]}. Next ${L[l].label.toLowerCase()}`);
+      r.classList.remove('is-new');
+      void r.offsetWidth;
+      r.classList.add('is-new');
+    }
+    function ident() {
+      const o = rig.originals.find((x) => x[1].every((k, i) => k === cur[i]));
+      idBox.classList.toggle('is-orig', !!o);
+      if (o) {
         idK.textContent = 'Original';
-        idEl.textContent = '#' + String(reels[0].cur + 1).padStart(2, '0');
+        idEl.textContent = '#' + o[0];
       } else {
-        const n = reels.reduce((a, s) => a * N + s.cur, 0) + 1;
+        const n = cur.reduce((a, k, i) => a * L[i].items.length + k, 0) + 1;
         idK.textContent = 'Mix';
         idEl.textContent = '#' + n.toLocaleString('en-US');
       }
     }
-    function roll(s, to, rounds, dur, delay = 0) {
-      // from the first copy to the third: the strip rolls `rounds` times, never past its end
-      if (s.busy) s.busy.cancel();
-      const from = s.cur;
-      const a = rounds === 0 ? N + from : from;
-      const b = rounds === 0 ? N + to + (to < from ? N : 0) : rounds * N + to;
-      s.row.classList.add('is-hot');
-      if (reduce) {
-        s.cur = to; set(s, N + to); s.row.classList.remove('is-hot');
-        return Promise.resolve();
-      }
-      const kf = [{ transform: `translateY(${(-a / (N * REP)) * 100}%)` }, { transform: `translateY(${(-b / (N * REP)) * 100}%)` }];
-      const anim = s.strip.animate(kf, { duration: dur, delay, easing: rounds ? 'cubic-bezier(0.18, 0.72, 0.22, 1.04)' : 'cubic-bezier(0.3, 0.7, 0.2, 1.08)', fill: 'both' });
-      s.busy = anim;
-      s.cur = to;
-      return anim.finished.then(() => {
-        set(s, N + to);
-        anim.cancel();
-        s.busy = null;
-        s.row.classList.remove('is-hot');
-      }, () => {});
-    }
-    const pick = (not) => { let k; do { k = Math.floor(Math.random() * N); } while (k === not && N > 1); return k; };
 
+    // one layer to a new trait: the new one drops onto the stack, the old one goes
+    function swap(l, k, delay = 0) {
+      cur[l] = k;
+      return load(l, k).then(() => {
+        if (cur[l] !== k) return;   // a later click won
+        const slot = slots[l];
+        const imgs = $$('img', slot);
+        imgs.slice(0, -1).forEach((o) => o.remove());
+        const old = imgs[imgs.length - 1];
+        const im = document.createElement('img');
+        im.alt = '';
+        im.draggable = false;
+        place(im, l, k);
+        im.src = url(l, k);
+        slot.insertBefore(im, $('.mx__lt', slot));
+        if (reduce) { if (old) old.remove(); readout(l); return; }
+        setTimeout(() => readout(l), delay + 140);
+        const kf = l === 0 ? [{ opacity: 0 }, { opacity: 1 }]
+          : [{ opacity: 0, transform: 'translateY(-7%) scale(1.04)' }, { opacity: 1, transform: 'none' }];
+        const a = im.animate(kf, { duration: l === 0 ? 460 : 520, delay, easing: 'cubic-bezier(0.2, 0.9, 0.25, 1.12)', fill: 'backwards' });
+        if (old && l) old.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, delay, fill: 'forwards' });
+        return a.finished.then(() => { if (old) old.remove(); }, () => {});
+      });
+    }
+    const rnd = (l, not) => {
+      const n = L[l].items.length;
+      let k;
+      do { k = Math.floor(Math.random() * n); } while (k === not && n > 1);
+      return k;
+    };
+    // the next spin, picked ahead and loaded while the visitor looks at this one
+    let next = null;
+    function plan() {
+      next = cur.map((k, l) => rnd(l, k));
+      next.forEach((k, l) => load(l, k));
+    }
+    function run(to) {
+      let j = 0;
+      const ps = to.map((k, l) => (k === cur[l] ? null : swap(l, k, (j++) * 75)));
+      return Promise.all(ps).then(ident);
+    }
     function spin() {
-      const free = reels.filter((s) => !s.locked);
-      if (!free.length) { reels.forEach((s) => toggleLock(s, false)); return spin(); }
-      let tos = free.map((s) => pick(s.cur));
-      // a spin that lands on an original (all three the same) is rare; leave it to chance
-      Promise.all(free.map((s, j) => roll(s, tos[j], 2, 1100 + j * 260, j * 70))).then(show);
-      // the readout follows each reel as it lands
-      free.forEach((s, j) => setTimeout(() => { s.v.textContent = traits[tos[j]][s.i]; s.from.textContent = '#' + String(tos[j] + 1).padStart(2, '0'); }, reduce ? 0 : 1100 + j * 330));
+      if (locked.every(Boolean)) locked.forEach((_, l) => setLock(l, false));
+      const to = cur.map((k, l) => (locked[l] ? k : next && next[l] !== k ? next[l] : rnd(l, k)));
+      next = null;
+      run(to).then(plan);
     }
     function original() {
-      const k = pick(reels[0].cur);
-      reels.forEach((s) => toggleLock(s, false));
-      Promise.all(reels.map((s, j) => roll(s, k, 1, 800 + j * 200, j * 60))).then(show);
+      const pool = rig.originals.filter((o) => !o[1].every((k, i) => k === cur[i]));
+      const o = pool[Math.floor(Math.random() * pool.length)];
+      locked.forEach((_, l) => setLock(l, false));
+      run(o[1]);
     }
-    function step(s, d) {
-      if (s.locked) toggleLock(s, false);
-      const to = (s.cur + d + N) % N;
-      if (d < 0) {
-        // stepping back: jump to the same picture one copy down, then roll up one
-        if (s.busy) s.busy.cancel();
-        set(s, 2 * N + s.cur);
-        const a = 2 * N + s.cur, b = 2 * N + s.cur - 1;
-        s.row.classList.add('is-hot');
-        s.cur = to;
-        if (reduce) { set(s, N + to); s.row.classList.remove('is-hot'); show(); return; }
-        const anim = s.strip.animate([{ transform: `translateY(${(-a / (N * REP)) * 100}%)` }, { transform: `translateY(${(-b / (N * REP)) * 100}%)` }],
-          { duration: 360, easing: 'cubic-bezier(0.3, 0.7, 0.2, 1.08)', fill: 'both' });
-        s.busy = anim;
-        anim.finished.then(() => { set(s, N + to); anim.cancel(); s.busy = null; s.row.classList.remove('is-hot'); }, () => {});
-        show();
-        return;
-      }
-      roll(s, to, 0, 380);
-      show();
+    function step(l, d = 1) {
+      if (locked[l]) setLock(l, false);
+      const n = L[l].items.length;
+      swap(l, (cur[l] + d + n) % n).then(ident);
+      load(l, (cur[l] + d + n) % n);   // and the one after it
     }
-    function toggleLock(s, on = !s.locked) {
-      s.locked = on;
-      s.lock.setAttribute('aria-pressed', String(on));
-      s.el.classList.toggle('is-locked', on);
+    function setLock(l, on) {
+      locked[l] = on;
+      $('[data-lock]', rows[l]).setAttribute('aria-pressed', String(on));
+      rows[l].classList.toggle('is-locked', on);
+      slots[l].classList.toggle('is-locked', on);
     }
 
+    // a part under the pointer: the top layer whose pixel there is not transparent
+    const probe = document.createElement('canvas');
+    probe.width = probe.height = 1;
+    const pc = probe.getContext('2d', { willReadFrequently: true });
+    function hit(x, y) {
+      if (card.classList.contains('is-exploded')) return -1;
+      const r = art.getBoundingClientRect();
+      const fx = ((x - r.left) / r.width) * W, fy = ((y - r.top) / r.height) * H;
+      if (fx < 0 || fy < 0 || fx > W || fy > H) return -1;
+      for (let l = NL - 1; l > 0; l--) {
+        const im = top(l), b = L[l].items[cur[l]][1];
+        if (!im || !im.complete || !im.naturalWidth) continue;
+        const px = fx - b[0], py = fy - b[1];
+        if (px < 0 || py < 0 || px >= b[2] || py >= b[3]) continue;
+        pc.clearRect(0, 0, 1, 1);
+        pc.drawImage(im, px * (im.naturalWidth / b[2]), py * (im.naturalHeight / b[3]), 1, 1, 0, 0, 1, 1);
+        if (pc.getImageData(0, 0, 1, 1).data[3] > 60) return l;
+      }
+      return 0;
+    }
+    function focus(l) {
+      const on = l > 0;
+      art.classList.toggle('is-focus', on);
+      slots.forEach((s, i) => s.classList.toggle('is-hot', on && i === l));
+      rows.forEach((r, i) => r.classList.toggle('is-hot', l >= 0 && i === l));
+    }
+
+    // the panel
+    rows.forEach((r, l) => {
+      const pick = $('[data-pick]', r);
+      pick.addEventListener('click', () => step(l, 1));
+      pick.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); step(l, 1); }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); step(l, -1); }
+      });
+      r.addEventListener('pointerenter', () => focus(l));
+      r.addEventListener('pointerleave', () => focus(-1));
+      pick.addEventListener('focus', () => focus(l));
+      pick.addEventListener('blur', () => focus(-1));
+      $('[data-lock]', r).addEventListener('click', () => setLock(l, !locked[l]));
+    });
     $('[data-spin]', el).addEventListener('click', spin);
     $('[data-orig]', el).addEventListener('click', original);
-    reels.forEach((s) => {
-      const hit = $('.mx__hit', s.el);
-      hit.addEventListener('click', () => step(s, 1));
-      hit.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowUp') { e.preventDefault(); step(s, -1); }
-        if (e.key === 'ArrowDown') { e.preventDefault(); step(s, 1); }
-      });
-      // a swipe up or down on a part steps it (phones)
-      let y0 = null;
-      hit.addEventListener('pointerdown', (e) => { y0 = e.clientY; });
-      hit.addEventListener('pointerup', (e) => {
-        if (y0 === null) return;
-        const dy = e.clientY - y0; y0 = null;
-        if (Math.abs(dy) > 28) { e.preventDefault(); step(s, dy < 0 ? 1 : -1); s.swiped = true; }
-      });
-      hit.addEventListener('click', (e) => { if (s.swiped) { s.swiped = false; e.stopImmediatePropagation(); } }, true);
-      s.lock.addEventListener('click', () => toggleLock(s));
+    const xb = $('[data-explode]', el);
+    xb.addEventListener('click', () => {
+      const on = !card.classList.contains('is-exploded');
+      card.classList.toggle('is-exploded', on);
+      xb.setAttribute('aria-pressed', String(on));
+      $('span', xb).textContent = on ? 'Stack' : 'Explode';
+      focus(-1);
+      tilt(null);
     });
+
+    // the card: tap a part to change it; with a mouse it leans toward the pointer
+    art.addEventListener('click', (e) => { const l = hit(e.clientX, e.clientY); if (l >= 0) step(l, 1); });
+    function tilt(e) {
+      if (!e || reduce || card.classList.contains('is-exploded')) {
+        card.style.removeProperty('--tx');
+        card.style.removeProperty('--ty');
+        return;
+      }
+      const r = card.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty('--tx', (nx * 7).toFixed(2) + 'deg');
+      card.style.setProperty('--ty', (-ny * 6).toFixed(2) + 'deg');
+    }
+    if (hover) {
+      let raf = 0, ev = null;
+      art.addEventListener('pointermove', (e) => {
+        ev = e;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const l = hit(ev.clientX, ev.clientY);
+          focus(l);
+          tilt(ev);
+          if (l >= 0) {
+            const s = stage.getBoundingClientRect();
+            tip.textContent = `${L[l].label} · ${L[l].items[cur[l]][0]}  ↻`;
+            tip.style.transform = `translate(${ev.clientX - s.left + 16}px, ${ev.clientY - s.top + 14}px)`;
+            tip.classList.add('is-on');
+          } else tip.classList.remove('is-on');
+        });
+      });
+      art.addEventListener('pointerleave', () => { focus(-1); tilt(null); tip.classList.remove('is-on'); });
+    }
+
     // Space spins while the lab is on screen and nothing else has the keyboard
     let onScreen = false;
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }, { threshold: 0.5 }).observe(fig);
+      new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }, { threshold: 0.5 }).observe(card);
     }
     addEventListener('keydown', (e) => {
       if (e.code !== 'Space' || !onScreen || e.repeat) return;
       const t = e.target;
-      if (t && t !== document.body && t.closest('input, textarea, select, [contenteditable], a, button:not([data-spin]):not(.mx__hit)')) return;
+      if (t && t !== document.body && t.closest('input, textarea, select, [contenteditable], a, button:not([data-spin])')) return;
       e.preventDefault();
       spin();
     });
-    show();
-    // first look: one spin by itself, so it is clear the parts move
-    if (!reduce) onceSeen(fig, () => ready.then(() => setTimeout(spin, 450)), 0.6);
+
+    // first look: the stack comes apart, the ten layers land on it one by one, bottom up,
+    // and it closes into the character, so it is clear what the card is made of
+    if (!reduce && 'IntersectionObserver' in window) {
+      art.classList.add('is-pre');
+      const ready = Promise.all(cur.map((k, l) => load(l, k)));
+      whenNear(el, () => slots.forEach((s) => $$('img', s).forEach((im) => { im.loading = 'eager'; })));
+      onceSeen(card, () => ready.then(() => {
+        card.classList.add('is-exploded', 'is-intro');
+        art.classList.remove('is-pre');
+        const anims = slots.map((s, l) => s.animate(
+          [{ opacity: 0, translate: '0 0 160px' }, { opacity: 1, translate: '0 0 0' }],
+          { duration: 520, delay: 380 + l * 120, easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)', fill: 'backwards' }));
+        anims[NL - 1].finished.then(() => setTimeout(() => {
+          if (xb.getAttribute('aria-pressed') !== 'true') card.classList.remove('is-exploded');
+          card.classList.remove('is-intro');
+          setTimeout(plan, 1200);
+        }, 700), () => {});
+      }), 0.55);
+    } else plan();
   }
 
   /* ----------------------------------------------------------- Drive past it

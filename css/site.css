@@ -2943,7 +2943,7 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .g-row.is-small .g-item { flex: 1 1 calc(50% - var(--gap)); }
   .hl li { flex-direction: column; gap: 4px; }
   .hl__b { max-width: none; text-align: left; }
-  .result__big { font-size: 34vw; }
+  .result__big { font-size: 26vw; } /* "9,999" is the widest: it has to fit a 360 px phone */
   .case-next { padding: 72px var(--pad); }
   .case-next__title { font-size: 15vw; }
   .bd__line::after { width: 40px; height: 40px; }

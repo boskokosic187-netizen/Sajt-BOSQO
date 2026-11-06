@@ -645,39 +645,63 @@ def rich(t):
 
 
 def lab_mixer(c, lab, R, media):
-    reels = lab["reels"]
-    cuts = lab["cuts"]
-    k0 = lab.get("start", 0)
+    """Mix a Ballie: the real trait layers of the collection (media/labs/ballies, rig.json),
+    stacked in their order on one card, with a layers panel beside it (top layer first, as in
+    an editor). js/case.js swaps layers, spins, explodes the stack; this renders the start
+    character so the card is whole before any script runs."""
+    rig = json.load(open(os.path.join(ROOT, lab["rig"]), encoding="utf-8"))
+    L, W, H = rig["layers"], rig["w"], rig["h"]
+    base = R + lab["base"]
+    o = next((x for x in rig["originals"] if x[0] == lab.get("start")), rig["originals"][0])
+    cur = o[1]
+    url = lambda l, k: f'{base}{L[l]["k"]}-{k:02d}.webp'
+
+    def img(l, k, cls=""):
+        x, y, w, h = L[l]["items"][k][1]
+        return (f'<img{cls} src="{url(l, k)}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async" draggable="false"'
+                f' style="left:{x / W * 100:.3f}%;top:{y / H * 100:.3f}%;width:{w / W * 100:.3f}%">')
+
+    layers = "".join(
+        f'<div class="mx__layer" data-l="{l}" style="--i:{l}">{img(l, cur[l])}'
+        f'<span class="mx__lt" aria-hidden="true"><b>{l + 1:02d}</b>{E(L[l]["label"])}</span></div>'
+        for l in range(len(L)))
+    lock = ('<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/>'
+            '<path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>')
     rows = "".join(
-        f'<li class="mx__row" data-r="{r}"><span class="mx__k">{E(name)}</span>'
-        f'<span class="mx__v" data-v>{E(lab["traits"][k0][r])}</span>'
-        f'<span class="mx__from" data-from>#{k0 + 1:02d}</span>'
-        f'<button class="mx__lock" type="button" aria-pressed="false" aria-label="Keep this {E(name.lower())}" title="Keep this {E(name.lower())}" data-lock>'
-        f'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button></li>'
-        for r, name in enumerate(reels))
-    figs = "".join(
-        f'<div class="mx__reel" data-reel="{r}" style="--t:{cuts[r]};--h:{cuts[r + 1] - cuts[r]:.4f}">'
-        f'<div class="mx__strip"></div>'
-        f'<button class="mx__hit" type="button" aria-label="Change the {E(name.lower())}">'
-        f'<i aria-hidden="true">{E(name)} ↻</i></button></div>'
-        for r, name in enumerate(reels))
-    total = lab["n"] ** len(reels)
-    data = E(json.dumps(lab["traits"], ensure_ascii=False, separators=(",", ":")))
+        f'<li class="mx__row" data-l="{l}">'
+        f'<button class="mx__pick" type="button" data-pick aria-label="{E(L[l]["label"])}: {E(L[l]["items"][cur[l]][0])}. Next {E(L[l]["label"].lower())}">'
+        f'<span class="mx__th"><img src="{url(l, cur[l])}" alt="" loading="lazy" decoding="async" draggable="false"></span>'
+        f'<span class="mx__k">{E(L[l]["label"])}</span>'
+        f'<span class="mx__v" data-v>{E(L[l]["items"][cur[l]][0])}</span>'
+        f'<span class="mx__n" data-n>{cur[l] + 1}/{len(L[l]["items"])}</span></button>'
+        f'<button class="mx__lock" type="button" aria-pressed="false" aria-label="Keep this {E(L[l]["label"].lower())}" title="Keep this {E(L[l]["label"].lower())}" data-lock>{lock}</button></li>'
+        for l in reversed(range(len(L))))
+    n_traits = sum(len(x["items"]) for x in L)
+    total = math.prod(len(x["items"]) for x in L)
+    data = json.dumps(rig, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     return f"""
-      <div class="mx" data-lab="mixer" data-base="{R}{lab['base']}" data-n="{lab['n']}" data-start="{k0}" data-traits="{data}">
+      <div class="mx" data-lab="mixer" data-base="{base}" data-start="{o[0]}">
+        <script type="application/json" data-rig>{data}</script>
         <div class="mx__copy">
           <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
           <p class="lab__line">{E(lab['line'])}</p>
-          <ol class="mx__rows" aria-live="polite">{rows}</ol>
+          <div class="mx__panel">
+            <p class="mx__ph"><span class="mx__pt">Layers</span><span class="mx__pc">{len(L)} layers · {n_traits} traits</span><button class="mx__x" type="button" aria-pressed="false" data-explode><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5" opacity=".5"/></svg><span>Explode</span></button></p>
+            <ol class="mx__rows" aria-label="Traits, top layer first">{rows}</ol>
+          </div>
           <div class="mx__act">
             <button class="mx__spin" type="button" data-spin><span>Spin the reels</span><kbd aria-hidden="true">Space</kbd></button>
             <button class="mx__orig" type="button" data-orig>Show an original</button>
           </div>
-          <p class="mx__id"><span data-id-k>Original</span> <b data-id>#{k0 + 1:02d}</b><span class="mx__of">{lab['n']} originals · {total:,} mixes</span></p>
+          <p class="mx__of">{total:,} possible Ballies · {len(rig['originals'])} originals</p>
         </div>
         <div class="mx__stage">
-          <div class="mx__fig" style="--ar:{lab['ar']}">{figs}</div>
+          <figure class="mx__card">
+            <div class="mx__art" style="--ar:{W}/{H}">{layers}</div>
+            <figcaption class="mx__cap"><span class="mx__brand"><i aria-hidden="true"></i>Ballies Rookies</span><span class="mx__id is-orig" aria-live="polite"><span data-id-k>Original</span> <b data-id>#{o[0]}</b></span></figcaption>
+          </figure>
           <span class="mx__floor" aria-hidden="true"></span>
+          <span class="mx__tip" aria-hidden="true"></span>
         </div>
       </div>"""
 
