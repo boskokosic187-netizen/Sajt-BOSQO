@@ -185,7 +185,157 @@
     if (!reduce) onceSeen(fig, () => ready.then(() => setTimeout(spin, 450)), 0.6);
   }
 
-  const LABS = { mixer };
+  /* ----------------------------------------------------------- Drive past it
+     A night road in CSS 3D seen from the driving seat. The billboard is the real LED
+     animation on a 3D plane that comes from the horizon and passes the camera; lamps and
+     lane marks set the speed. A clock counts the time the board is big enough to read,
+     then the read: the board flat, with numbered pins in the order it was built to be read,
+     and what each part says in English. Everything moves by transform. */
+  function driveby(el) {
+    const boards = JSON.parse(el.dataset.boards);
+    const stage = $('.db__stage', el), world = $('.db__world', el);
+    const bb = $('.db__bb', el), face = $('.db__face', el), vid = $('video', face);
+    const lamps = $$('.db__lamp', el), lines = $('.db__lines', el);
+    const read = $('.db__read', el), rvid = $('video', read), pins = $('.db__pins', read), list = $('.db__list', read);
+    const tOut = $('[data-t]', el), kOut = $('[data-kmh-out]', el), had = $('[data-had]', el);
+    const PASS = { 50: 5600, 90: 3500, 130: 2500 }; // ms from the horizon to past the camera
+    const Z0 = -5200, Z1 = 640, LZ0 = -6000, LZ1 = 700;
+    let kmh = 90, cur = 0, anims = [], raf = 0, driving = false, bx = 520;
+
+    function fit() {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      if (!w || !h) return;
+      const s = h / 675, ww = w / s;
+      bx = Math.round(Math.min(520, ww * 0.35));
+      world.style.setProperty('--s', s.toFixed(4));
+      world.style.setProperty('--ww', ww.toFixed(1));
+      world.style.setProperty('--bx', bx);
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage); else addEventListener('resize', fit);
+    fit();
+
+    function load(j) {
+      const b = boards[j];
+      cur = j;
+      vid.poster = b.poster;
+      if (vid.dataset.src !== b.mp4) { vid.dataset.src = b.mp4; vid.src = b.mp4; vid.preload = 'auto'; }
+      $$('[data-board]', el).forEach((x) => x.setAttribute('aria-pressed', String(+x.dataset.board === j)));
+    }
+    function setSpeed(k) {
+      kmh = k;
+      kOut.textContent = k;
+      $$('[data-kmh]', el).forEach((x) => x.setAttribute('aria-pressed', String(+x.dataset.kmh === k)));
+    }
+    const play = (v) => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    function stopAll() {
+      anims.forEach((a) => a.cancel());
+      anims = [];
+      cancelAnimationFrame(raf);
+      driving = false;
+      stage.classList.remove('is-driving');
+    }
+    function showRead(secs) {
+      const b = boards[cur];
+      had.textContent = secs.toFixed(1);
+      pins.textContent = '';
+      list.textContent = '';
+      b.pins.forEach(([x, y, orig, en], i) => {
+        const p = document.createElement('li');
+        p.style.cssText = `--x:${x};--y:${y};--i:${i}`;
+        p.textContent = i + 1;
+        pins.appendChild(p);
+        const li = document.createElement('li');
+        li.style.setProperty('--i', i);
+        li.innerHTML = `<i>${i + 1}</i><b></b><span></span>`;
+        li.querySelector('b').textContent = en;
+        li.querySelector('span').textContent = '“' + orig + '”';
+        list.appendChild(li);
+      });
+      rvid.poster = b.poster;
+      if (rvid.dataset.src !== b.mp4) { rvid.dataset.src = b.mp4; rvid.src = b.mp4; }
+      try { rvid.currentTime = b.at || 0; } catch (e) { /* not loaded yet */ }
+      play(rvid);
+      read.hidden = false;
+      read.classList.remove('is-on');
+      requestAnimationFrame(() => requestAnimationFrame(() => read.classList.add('is-on')));
+    }
+    function hideRead() { read.hidden = true; read.classList.remove('is-on'); rvid.pause(); }
+
+    function drive() {
+      if (driving) return;
+      stopAll();
+      hideRead();
+      stage.classList.add('has-driven', 'is-driving');
+      driving = true;
+      const b = boards[cur];
+      try { vid.currentTime = b.at || 0; } catch (e) { /* not loaded yet */ }
+      play(vid);
+      const T = PASS[kmh];
+      if (reduce) { // no flight: straight to the read, with the time a driver would have had
+        stopAll();
+        showRead(T * 0.55 / 1000);
+        return;
+      }
+      const tr = (z) => `translate3d(${bx}px, 170px, ${z}px)`;
+      anims.push(bb.animate([{ transform: tr(Z0) }, { transform: tr(Z1) }], { duration: T, easing: 'linear', fill: 'forwards' }));
+      anims.push(bb.animate([{ filter: 'blur(0px)', offset: 0 }, { filter: 'blur(0px)', offset: 0.88 }, { filter: 'blur(6px)', offset: 1 }], { duration: T, fill: 'forwards' }));
+      // the road: lane marks and lamps at the same speed
+      const v = (Z1 - Z0) / T; // units per ms
+      anims.push(lines.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-240px)' }], { duration: 240 / v, iterations: Infinity }));
+      const L = (LZ1 - LZ0) / v;
+      lamps.forEach((l) => {
+        const side = +getComputedStyle(l).getPropertyValue('--side') || 1;
+        const k = +getComputedStyle(l).getPropertyValue('--k') || 0;
+        const z = -1500 * k - 400;
+        const at = (z - LZ0) / (LZ1 - LZ0);
+        const x = side * 430;
+        anims.push(l.animate([{ transform: `translate3d(${x}px, 170px, ${LZ0}px)` }, { transform: `translate3d(${x}px, 170px, ${LZ1}px)` }],
+          { duration: L, iterations: Infinity, delay: -at * L }));
+      });
+      // the clock: time the board is big enough to read (a tenth of the screen wide or more)
+      let seen = 0, last = performance.now(), shown = -1;
+      const tick = (now) => {
+        const dt = now - last; last = now;
+        const r = face.getBoundingClientRect(), s = stage.getBoundingClientRect();
+        if (r.width > s.width * 0.1 && r.left < s.right - r.width * 0.25) seen += dt;
+        const t = Math.floor(seen / 100);
+        if (t !== shown) { shown = t; tOut.textContent = (t / 10).toFixed(1); }
+        if (driving) raf = requestAnimationFrame(tick);
+      };
+      tOut.textContent = '0.0';
+      raf = requestAnimationFrame(tick);
+      anims[0].finished.then(() => {
+        const secs = seen / 1000;
+        stopAll();
+        vid.pause();
+        showRead(secs);
+        bb.style.transform = '';
+      }, () => {});
+    }
+
+    load(0);
+    setSpeed(90);
+    $$('[data-go]', el).forEach((x) => x.addEventListener('click', drive));
+    $$('[data-kmh]', el).forEach((x) => x.addEventListener('click', () => { if (driving) return; setSpeed(+x.dataset.kmh); drive(); }));
+    $$('[data-board]', el).forEach((x) => x.addEventListener('click', () => { if (driving) return; load(+x.dataset.board); drive(); }));
+    let onScreen = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => {
+        onScreen = e.isIntersecting;
+        if (!onScreen) { vid.pause(); rvid.pause(); } else if (!read.hidden) play(rvid);
+      }, { threshold: 0.4 }).observe(stage);
+    }
+    addEventListener('keydown', (e) => {
+      if (e.code !== 'Space' || !onScreen || e.repeat) return;
+      const t = e.target;
+      if (t && t !== document.body && t.closest('input, textarea, select, [contenteditable], a, button:not([data-go])')) return;
+      e.preventDefault();
+      drive();
+    });
+    if (!reduce) onceSeen(stage, () => setTimeout(drive, 500), 0.65);
+  }
+
+  const LABS = { mixer, driveby };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];
     if (f) whenNear(el, () => f(el));

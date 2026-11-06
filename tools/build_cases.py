@@ -201,7 +201,8 @@ def block_items(b):
 
 def all_media(m):
     return (m["hero"] + [i for r in m["rows"] for i in r] + [x for b in m.get("blocks", ()) for x in block_items(b)]
-            + list(m.get("breakdown", ())) + [x for k in m.get("craft", ()) for r in k["rows"] for x in r])
+            + list(m.get("breakdown", ())) + [x for k in m.get("craft", ()) for r in k["rows"] for x in r]
+            + list(m.get("lab", ())))
 
 
 def block_media(b, outdir, rel):
@@ -643,7 +644,7 @@ def rich(t):
     return re.sub(r"\*(.+?)\*", r"<em>\1</em>", E(t))
 
 
-def lab_mixer(c, lab, R):
+def lab_mixer(c, lab, R, media):
     reels = lab["reels"]
     cuts = lab["cuts"]
     k0 = lab.get("start", 0)
@@ -681,7 +682,75 @@ def lab_mixer(c, lab, R):
       </div>"""
 
 
-LABS = {"mixer": lab_mixer}
+def skyline(seed=7, w=2400, h=120):
+    """A city on the horizon: blocks of dark buildings with a few warm windows (inline SVG)."""
+    import random
+    rnd = random.Random(seed)
+    x, rects, wins = 0, [], []
+    while x < w:
+        bw = rnd.randint(28, 90)
+        bh = rnd.randint(18, h - 8) if rnd.random() < 0.85 else rnd.randint(60, h)
+        rects.append(f'<rect x="{x}" y="{h - bh}" width="{bw}" height="{bh}"/>')
+        for _ in range(rnd.randint(0, 5)):
+            wx, wy = x + rnd.randint(3, max(4, bw - 6)), h - bh + rnd.randint(4, max(5, bh - 6))
+            wins.append(f'<rect x="{wx}" y="{wy}" width="3" height="2"/>')
+        x += bw + rnd.randint(0, 6)
+    return (f'<svg class="db__city" viewBox="0 0 {w} {h}" preserveAspectRatio="none" aria-hidden="true">'
+            f'<g fill="#07080c">{"".join(rects)}</g><g fill="#ffb36b" opacity="0.55">{"".join(wins)}</g></svg>')
+
+
+def lab_driveby(c, lab, R, media):
+    boards = []
+    for b, m in zip(lab["boards"], media["lab"]):
+        boards.append({"name": b["name"], "mp4": m["url"] + ".mp4", "poster": m["url"] + ".webp", "at": b.get("at", 0),
+                       "pins": b["pins"]})
+    data = E(json.dumps(boards, ensure_ascii=False, separators=(",", ":")))
+    b0 = boards[0]
+    speeds = "".join(f'<button type="button" class="db__opt" data-kmh="{k}" aria-pressed="{str(k == 90).lower()}">{k}<small>km/h</small></button>'
+                     for k in (50, 90, 130))
+    names = "".join(f'<button type="button" class="db__opt" data-board="{j}" aria-pressed="{str(j == 0).lower()}">{E(b["name"])}</button>'
+                    for j, b in enumerate(boards))
+    lamps = "".join(f'<span class="db__lamp" style="--side:{side};--k:{k}"><i></i></span>' for side in (-1, 1) for k in range(4))
+    return f"""
+      <div class="db" data-lab="driveby" data-boards="{data}">
+        <div class="db__head">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+        </div>
+        <div class="db__stage">
+          <div class="db__world" aria-hidden="true">
+            <div class="db__sky">{skyline()}</div>
+            <div class="db__3d">
+              <div class="db__road"><i class="db__lines"></i></div>
+              {lamps}
+              <div class="db__bb"><div class="db__face"><video muted playsinline loop preload="none" poster="{b0['poster']}"></video></div><i class="db__legs"></i></div>
+            </div>
+            <span class="db__dash"></span>
+          </div>
+          <div class="db__hud" aria-hidden="true">
+            <span class="db__rec"><i></i>Drive-by</span>
+            <span class="db__speedo"><b data-kmh-out>90</b> km/h</span>
+            <span class="db__clock">On screen <b data-t>0.0</b> s</span>
+          </div>
+          <div class="db__read" hidden>
+            <div class="db__card"><video muted playsinline loop preload="none"></video><ol class="db__pins" aria-hidden="true"></ol></div>
+            <div class="db__legend">
+              <p class="db__had">You had <b data-had>0.0</b> seconds.</p>
+              <p class="db__order">It was built to be read in this order:</p>
+              <ol class="db__list"></ol>
+            </div>
+          </div>
+          <button class="db__start" type="button" data-go><span class="db__play" aria-hidden="true"></span>Drive by</button>
+        </div>
+        <div class="db__ctrl">
+          <div class="db__seg" role="group" aria-label="Speed">{speeds}</div>
+          <div class="db__seg" role="group" aria-label="Billboard">{names}</div>
+          <button class="mx__spin db__go" type="button" data-go><span>Drive by</span><kbd aria-hidden="true">Space</kbd></button>
+        </div>
+      </div>"""
+
+
+LABS = {"mixer": lab_mixer, "driveby": lab_driveby}
 
 
 def render_story(c, i, cases, media):
@@ -699,7 +768,7 @@ def render_story(c, i, cases, media):
             f'<div><dt>Role</dt><dd>{E(c["role"])}</dd></div>')
     skills = "".join(f"<li>{E(x)}</li>" for x in c["skills"])
     lab = c["lab"]
-    lab_html = LABS[lab["type"]](c, lab, R)
+    lab_html = LABS[lab["type"]](c, lab, R, media)
     craft = []
     for j, k in enumerate(media["craft"]):
         rows = "".join(gallery_row(r) for r in k["rows"])
@@ -803,6 +872,8 @@ def main():
              "rows": [[media_for(x, outdir, rel) for x in row] for row in c.get("rows", [])]}
         if c.get("blocks"):
             m["blocks"] = [block_media(b, outdir, rel) for b in c["blocks"]]
+        if c.get("lab", {}).get("media"):   # pictures and films a lab plays with
+            m["lab"] = [media_for(x, outdir, rel) for x in c["lab"]["media"]]
         if c.get("craft"):
             m["craft"] = [{**k, "rows": [[media_for(x, outdir, rel) for x in r] for r in k["rows"]]} for k in c["craft"]]
         if c.get("breakdown"):
