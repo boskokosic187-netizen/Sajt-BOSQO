@@ -432,7 +432,122 @@
     }
   }
 
-  const LABS = { mixer, driveby, loupe };
+  /* --------------------------------------------------------- Pour it yourself
+     A product film drawn frame by frame on a canvas, so it can be scrubbed both ways with no
+     seeking. Drag across the jar (or the bar, or the arrow keys) to pour; let go mid-drag and
+     it coasts a little. Frames load coarse to fine: every 8th first, then the rest. */
+  function scrub(el) {
+    const N = +el.dataset.n, fps = +el.dataset.fps || 12, base = el.dataset.base;
+    const frame = $('.sc__frame', el), cv = $('canvas', frame), ctx = cv.getContext('2d');
+    const poster = $('.sc__poster', frame), tc = $('[data-sctc]', el), bar = $('[data-bar]', el), range = $('[data-range]', el);
+    const imgs = new Array(N);
+    let cur = 0, shown = -1, playing = 0, coast = 0;
+    const order = [];
+    [8, 4, 2, 1].forEach((st) => { for (let i = 0; i < N; i += st) if (!order.includes(i)) order.push(i); });
+    if (!order.includes(N - 1)) order.splice(1, 0, N - 1);
+    (function loadNext(q) {
+      if (!q.length) return;
+      const batch = q.splice(0, 6);
+      Promise.all(batch.map((i) => new Promise((ok) => {
+        const im = new Image();
+        im.onload = () => { imgs[i] = im; if (shown < 0 || Math.abs(i - cur) < Math.abs(nearest(cur) - cur) + 1) draw(); ok(); };
+        im.onerror = ok;
+        im.src = `${base}${String(i).padStart(3, '0')}.webp`;
+      }))).then(() => loadNext(q));
+    })(order.slice());
+    function nearest(i) {
+      if (imgs[i]) return i;
+      for (let d = 1; d < N; d++) {
+        if (imgs[i - d]) return i - d;
+        if (imgs[i + d]) return i + d;
+      }
+      return -1;
+    }
+    function draw() {
+      const i = nearest(cur);
+      if (i < 0) return;
+      if (i !== shown) {
+        ctx.drawImage(imgs[i], 0, 0, cv.width, cv.height);
+        shown = i;
+        poster.style.visibility = 'hidden';
+      }
+      const t = cur * (24 / fps) ; // source frames at 24 fps, every second one kept
+      const s = Math.floor(t / 24), f = Math.floor(t % 24);
+      tc.textContent = `00:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`;
+      bar.style.transform = `scaleX(${(cur / (N - 1)).toFixed(4)})`;
+      range.value = cur;
+    }
+    function set(i) {
+      const v = Math.max(0, Math.min(N - 1, Math.round(i)));
+      if (v === cur && shown >= 0) return;
+      cur = v;
+      draw();
+    }
+    function stop() { cancelAnimationFrame(playing); playing = 0; cancelAnimationFrame(coast); coast = 0; }
+    function play() {
+      stop();
+      if (cur >= N - 1) set(0);
+      let last = performance.now(), acc = 0;
+      const step = (now) => {
+        acc += (now - last) * fps / 1000; last = now;
+        if (acc >= 1) { set(cur + Math.floor(acc)); acc %= 1; }
+        if (cur < N - 1) playing = requestAnimationFrame(step); else playing = 0;
+      };
+      playing = requestAnimationFrame(step);
+    }
+    // drag: a full sweep across the frame pours the whole film
+    let x0 = null, i0 = 0, vx = 0, lastX = 0, lastT = 0;
+    frame.addEventListener('pointerdown', (e) => {
+      stop();
+      el.classList.add('is-used');
+      x0 = e.clientX; i0 = cur; lastX = e.clientX; lastT = performance.now(); vx = 0;
+      frame.classList.add('is-dragging');
+      if (e.pointerType !== 'touch') frame.setPointerCapture(e.pointerId);
+    });
+    frame.addEventListener('pointermove', (e) => {
+      if (x0 === null) return;
+      const w = frame.clientWidth * 1.15;
+      set(i0 + ((e.clientX - x0) / w) * (N - 1));
+      const now = performance.now();
+      vx = (e.clientX - lastX) / Math.max(1, now - lastT);
+      lastX = e.clientX; lastT = now;
+    });
+    const end = () => {
+      if (x0 === null) return;
+      x0 = null;
+      frame.classList.remove('is-dragging');
+      if (reduce) return;
+      // coast: the honey keeps going a moment after you let go
+      let v = vx * (N - 1) / (frame.clientWidth * 1.15) * 16; // frames per 16 ms
+      let pos = cur;
+      const glide = () => {
+        v *= 0.92; pos += v;
+        set(pos);
+        if (Math.abs(v) > 0.05 && pos > 0 && pos < N - 1) coast = requestAnimationFrame(glide); else coast = 0;
+      };
+      if (Math.abs(v) > 0.2) coast = requestAnimationFrame(glide);
+    };
+    frame.addEventListener('pointerup', end);
+    frame.addEventListener('pointercancel', end);
+    range.addEventListener('input', () => { stop(); el.classList.add('is-used'); set(+range.value); });
+    $('[data-pour]', el).addEventListener('click', play);
+    $('[data-back]', el).addEventListener('click', () => { stop(); set(0); });
+    let onScreen = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (!onScreen) stop(); }, { threshold: 0.5 }).observe(frame);
+    }
+    addEventListener('keydown', (e) => {
+      if (e.code !== 'Space' || !onScreen || e.repeat) return;
+      const t = e.target;
+      if (t && t !== document.body && t.closest('input:not([data-range]), textarea, select, [contenteditable], a, button:not([data-pour])')) return;
+      e.preventDefault();
+      if (playing) stop(); else play();
+    });
+    draw();
+    if (!reduce) onceSeen(frame, () => setTimeout(() => { if (!el.classList.contains('is-used')) play(); }, 400), 0.6);
+  }
+
+  const LABS = { mixer, driveby, loupe, scrub };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];
     if (f) whenNear(el, () => f(el));

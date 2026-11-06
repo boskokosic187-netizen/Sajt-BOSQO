@@ -2491,42 +2491,111 @@
     },
     {
       "slug": "baby-boo",
+      "format": "story",
       "title": "Baby Boo",
-      "kicker": "AI product campaign · natural cosmetics",
-      "line": "Product films and stills made with AI — honey that pours on cue, glass you break in case of a sudden voyage.",
-      "client": "Baby Boo — natural cosmetics “made by moms”",
+      "kicker": "AI product campaign · Natural cosmetics",
+      "line": "Product films and stills without a studio: honey that pours on cue, glass you break in case of a sudden voyage.",
+      "client": "Baby Boo · natural cosmetics, made by moms",
       "years": "2026",
-      "role": "Concept, AI generation, editing, finishing",
-      "deliverables": [
-        "Manuka Honey pilot film · 9:16 + 4K master",
-        "AI product film series",
-        "Conceptual product stills",
-        "Mascot animation"
+      "role": "Concept, art direction, generation, edit, finishing",
+      "skills": [
+        "Art direction",
+        "AI production",
+        "Product film",
+        "Edit & grade",
+        "Concept stills"
       ],
-      "challenge": "Premium product imagery and video for a small brand — without a studio, a crew or a shoot day.",
-      "idea": "Direct AI like a camera crew: packaging true to the real product, honey that pours on cue, bees in shallow focus — and a bold concept in every still. Then edit and grade it like a real commercial.",
-      "system": "A product-true reference set keeps labels, mascots and proportions consistent across every generation; films are cut, timed and graded in Premiere and After Effects.",
-      "highlights": [
-        [
-          "Manuka Honey pilot",
-          "Film · 9:16 + 4K"
-        ],
-        [
-          "Break glass in case of a sudden voyage",
-          "Concept still"
-        ],
-        [
-          "Claw machine, carousel, string bag",
-          "Concept stills"
-        ],
-        [
-          "Montenegro",
-          "Mascot animation · After Effects"
-        ]
+      "brief": "Premium films and stills for a small natural-cosmetics brand. No studio, no crew, no shoot day, and the jar has to look exactly like the one on the shelf.",
+      "idea": "Direct it like a commercial shoot: the label stays true to the real product, the honey pours on cue, the bees sit in shallow focus. Every still gets one bold idea, every film is cut and graded like a real spot.",
+      "lab": {
+        "type": "scrub",
+        "kicker": "motion on cue",
+        "title": "Pour it *yourself*",
+        "line": "In a product film nothing moves by accident. Drag across the jar to pour the honey, drag back to undo it.",
+        "why": "Clients do not buy footage, they buy control: the product exactly right, the moment exactly when the cut needs it.",
+        "base": "media/labs/honey/",
+        "n": 110,
+        "fps": 12,
+        "ar": 0.5625,
+        "alt": "Manuka Honey face cream: honey pours over a stack of jars"
+      },
+      "craft": [
+        {
+          "skill": "Art direction",
+          "title": "Product-true, *frame by frame*",
+          "text": "Label, mascot, cap and proportions stay true to the real jar in every frame, so the stills can sell the product, not just a mood.",
+          "rows": [
+            [
+              {
+                "src": "D/Ai Baby Boo/Gotove/Manuka.png",
+                "type": "image",
+                "label": "Manuka Honey · hero still"
+              },
+              {
+                "src": "D/Ai Baby Boo/Gotove/Elephant.png",
+                "type": "image",
+                "label": "Cottonseed wash · hero still"
+              },
+              {
+                "src": "D/Ai Baby Boo/macadamia.png",
+                "type": "image",
+                "label": "Macadamia · hero still"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Concept stills",
+          "title": "One bold idea *per still*",
+          "text": "Break the glass in case of a sudden voyage. A claw machine full of jars. A carousel of giraffes. Each launch got one idea strong enough to post on its own.",
+          "rows": [
+            [
+              {
+                "src": "D/Ai Baby Boo/Break-glass.png",
+                "type": "image",
+                "label": "Break glass in case of a sudden voyage"
+              },
+              {
+                "src": "D/Ai Baby Boo/Masina.png",
+                "type": "image",
+                "label": "Claw machine"
+              },
+              {
+                "src": "D/Ai Baby Boo/zirafe.png",
+                "type": "image",
+                "label": "Carousel"
+              },
+              {
+                "src": "D/Ai Baby Boo/Zec-i-zirafa.png",
+                "type": "image",
+                "label": "Spring"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Product film",
+          "title": "Cut like a *commercial*",
+          "text": "Vertical first, timed to the beat, graded as one spot: the pilot runs as a 9:16 for Reels and TikTok with a 4K master for the web.",
+          "rows": [
+            [
+              {
+                "src": "D/Ai Baby Boo/Gotove/med 4.mp4",
+                "type": "video",
+                "label": "Manuka Honey · the pour, 9:16"
+              },
+              {
+                "src": "D/BabyBoo/Montenegro/Montenegro.mp4",
+                "type": "video",
+                "label": "Montenegro · mascot animation"
+              }
+            ]
+          ]
+        }
       ],
       "result_big": "0",
       "result_label": "studio days",
-      "result": "Vertical-first product films ready for Reels and TikTok, a 4K master for the web, and a library of concept stills for every launch.",
+      "result": "Vertical-first product films for Reels and TikTok, a 4K master for the web and a library of concept stills for every launch.",
       "hero": [
         {
           "src": "PV/Baby Boo/Manuka Honey Pilot/BabyBoo_ManukaHoney_Pilot-1080x1920.mp4",
@@ -2543,88 +2612,6 @@
           "type": "video",
           "label": "Elephant · product film"
         }
-      ],
-      "rows": [
-        [
-          {
-            "src": "D/Ai Baby Boo/Gotove/Manuka.png",
-            "type": "image",
-            "label": "Manuka Honey · still"
-          },
-          {
-            "src": "D/Ai Baby Boo/Break-glass.png",
-            "type": "image",
-            "label": "Break glass · still"
-          },
-          {
-            "src": "D/Ai Baby Boo/Masina.png",
-            "type": "image",
-            "label": "Claw machine · still"
-          }
-        ],
-        [
-          {
-            "src": "D/Ai Baby Boo/Gotove/med 4.mp4",
-            "type": "video",
-            "label": "Honey · film"
-          },
-          {
-            "src": "D/Ai Baby Boo/Gotove/med 3.mp4",
-            "type": "video",
-            "label": "Honey · film"
-          },
-          {
-            "src": "D/BabyBoo/Montenegro/Montenegro.mp4",
-            "type": "video",
-            "label": "Montenegro · mascot animation"
-          }
-        ],
-        [
-          {
-            "src": "D/Ai Baby Boo/Gotove/Elephant.png",
-            "type": "image",
-            "label": "Cottonseed wash · still"
-          },
-          {
-            "src": "D/Ai Baby Boo/Zec-i-zirafa.png",
-            "type": "image",
-            "label": "Spring · still"
-          },
-          {
-            "src": "D/Ai Baby Boo/zirafe.png",
-            "type": "image",
-            "label": "Carousel · still"
-          }
-        ],
-        [
-          {
-            "src": "D/Ai Baby Boo/macadamia.png",
-            "type": "image",
-            "label": "Macadamia · still"
-          },
-          {
-            "src": "D/Ai Baby Boo/roll-on-girl.png",
-            "type": "image",
-            "label": "Roll-on · still"
-          },
-          {
-            "src": "D/Ai Baby Boo/boys-roll-on.png",
-            "type": "image",
-            "label": "Roll-on · still"
-          }
-        ],
-        [
-          {
-            "src": "D/BabyBoo/LAV.png",
-            "type": "image",
-            "label": "Mascot scene · lion"
-          },
-          {
-            "src": "D/BabyBoo/ZIRAFA.png",
-            "type": "image",
-            "label": "Mascot scene · giraffe"
-          }
-        ]
       ]
     }
   ]

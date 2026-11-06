@@ -4218,173 +4218,135 @@
     "matte": false
    }
   ],
-  "rows": [
-   [
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/ec7cd41b",
-     "label": "Manuka Honey · still",
-     "matte": false
-    },
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/662f78ef",
-     "label": "Break glass · still",
-     "matte": false
-    },
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/d2b2570e",
-     "label": "Claw machine · still",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 540,
-     "h": 960,
-     "type": "video",
-     "url": "../../media/cases/baby-boo/2ed6683a",
-     "label": "Honey · film",
-     "matte": false
-    },
-    {
-     "w": 540,
-     "h": 960,
-     "type": "video",
-     "url": "../../media/cases/baby-boo/1271252f",
-     "label": "Honey · film",
-     "matte": false
-    },
-    {
-     "w": 540,
-     "h": 960,
-     "type": "video",
-     "url": "../../media/cases/baby-boo/fcc10112",
-     "label": "Montenegro · mascot animation",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1152,
-     "h": 2048,
-     "widths": [
-      800,
-      1152
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/beef3cd5",
-     "label": "Cottonseed wash · still",
-     "matte": false
-    },
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/f064f492",
-     "label": "Spring · still",
-     "matte": false
-    },
-    {
-     "w": 893,
-     "h": 1600,
-     "widths": [
-      800,
-      893
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/d6feabfa",
-     "label": "Carousel · still",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/b11c9114",
-     "label": "Macadamia · still",
-     "matte": false
-    },
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/ce6853b7",
-     "label": "Roll-on · still",
-     "matte": false
-    },
-    {
-     "w": 900,
-     "h": 1600,
-     "widths": [
-      800,
-      900
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/ba79c40c",
-     "label": "Roll-on · still",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 900,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/d374f222",
-     "label": "Mascot scene · lion",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 900,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/baby-boo/7f6fe790",
-     "label": "Mascot scene · giraffe",
-     "matte": false
-    }
-   ]
+  "rows": [],
+  "craft": [
+   {
+    "skill": "Art direction",
+    "title": "Product-true, *frame by frame*",
+    "text": "Label, mascot, cap and proportions stay true to the real jar in every frame, so the stills can sell the product, not just a mood.",
+    "rows": [
+     [
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/ec7cd41b",
+       "label": "Manuka Honey · hero still",
+       "matte": false
+      },
+      {
+       "w": 1152,
+       "h": 2048,
+       "widths": [
+        800,
+        1152
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/beef3cd5",
+       "label": "Cottonseed wash · hero still",
+       "matte": false
+      },
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/b11c9114",
+       "label": "Macadamia · hero still",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Concept stills",
+    "title": "One bold idea *per still*",
+    "text": "Break the glass in case of a sudden voyage. A claw machine full of jars. A carousel of giraffes. Each launch got one idea strong enough to post on its own.",
+    "rows": [
+     [
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/662f78ef",
+       "label": "Break glass in case of a sudden voyage",
+       "matte": false
+      },
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/d2b2570e",
+       "label": "Claw machine",
+       "matte": false
+      },
+      {
+       "w": 893,
+       "h": 1600,
+       "widths": [
+        800,
+        893
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/d6feabfa",
+       "label": "Carousel",
+       "matte": false
+      },
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/f064f492",
+       "label": "Spring",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Product film",
+    "title": "Cut like a *commercial*",
+    "text": "Vertical first, timed to the beat, graded as one spot: the pilot runs as a 9:16 for Reels and TikTok with a 4K master for the web.",
+    "rows": [
+     [
+      {
+       "w": 540,
+       "h": 960,
+       "type": "video",
+       "url": "../../media/cases/baby-boo/2ed6683a",
+       "label": "Manuka Honey · the pour, 9:16",
+       "matte": false
+      },
+      {
+       "w": 540,
+       "h": 960,
+       "type": "video",
+       "url": "../../media/cases/baby-boo/fcc10112",
+       "label": "Montenegro · mascot animation",
+       "matte": false
+      }
+     ]
+    ]
+   }
   ]
  }
 }

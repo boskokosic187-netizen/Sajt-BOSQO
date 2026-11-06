@@ -778,7 +778,34 @@ def lab_loupe(c, lab, R, media):
       </div>"""
 
 
-LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe}
+def lab_scrub(c, lab, R, media):
+    n = lab["n"]
+    return f"""
+      <div class="sc" data-lab="scrub" data-base="{R}{lab['base']}" data-n="{n}" data-fps="{lab['fps']}">
+        <div class="sc__copy">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+          <div class="sc__meter">
+            <p class="sc__tc"><span>Frame</span><b data-sctc>00:00:00</b></p>
+            <div class="sc__track" aria-hidden="true"><i data-bar></i></div>
+            <input class="sc__range" type="range" min="0" max="{n - 1}" value="0" step="1" aria-label="Pour the honey, frame by frame" data-range>
+          </div>
+          <div class="mx__act">
+            <button class="mx__spin" type="button" data-pour><span>Let it pour</span><kbd aria-hidden="true">Space</kbd></button>
+            <button class="mx__orig" type="button" data-back>Back to the first drop</button>
+          </div>
+        </div>
+        <div class="sc__stage">
+          <div class="sc__frame" style="--ar:{lab['ar']}">
+            <img class="sc__poster" src="{R}{lab['base']}000.webp" alt="{E(lab['alt'])}" width="432" height="768" decoding="async">
+            <canvas width="432" height="768" aria-hidden="true"></canvas>
+            <span class="sc__hint" aria-hidden="true"><i>⟷</i>Drag across the jar</span>
+          </div>
+        </div>
+      </div>"""
+
+
+LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub}
 
 
 def render_story(c, i, cases, media):
@@ -786,10 +813,14 @@ def render_story(c, i, cases, media):
     n = len(cases)
     nxt = cases[(i + 1) % n]
     num = f"{i + 1:02d}"
-    h0 = media["hero"][0]
-    cover = (f'<figure class="cover__item" style="--ar:{h0["w"] / h0["h"]:.4f}">'
-             + (video_tag(h0, eager=True) if h0["type"] == "video" else picture(h0, "100vw", eager=True))
-             + (f'<figcaption>{E(h0["label"])}</figcaption>' if h0["label"] else "") + '</figure>')
+    hero = media["hero"]
+    h0 = hero[0]
+    trio = len(hero) > 1
+    cover = "".join(
+        f'<figure class="cover__item" style="--ar:{m["w"] / m["h"]:.4f}">'
+        + (video_tag(m, eager=True) if m["type"] == "video" else picture(m, "33vw" if trio else "100vw", eager=True))
+        + (f'<figcaption>{E(m["label"])}</figcaption>' if m["label"] else "") + '</figure>'
+        for m in hero)
     og = h0["url"] + (".webp" if h0["type"] == "video" else f"-{h0['widths'][-1]}.webp")
     meta = (f'<div><dt>Client</dt><dd>{E(c["client"])}</dd></div>'
             f'<div><dt>Year</dt><dd>{E(c["years"])}</dd></div>'
@@ -831,7 +862,7 @@ def render_story(c, i, cases, media):
       <dl class="case-meta cs-meta">{meta}</dl>
     </section>
 
-    <section class="cover" id="cover" aria-label="Key visual">
+    <section class="cover{' is-trio' if trio else ''}" id="cover" aria-label="Key visual">
       {cover}
     </section>
 
