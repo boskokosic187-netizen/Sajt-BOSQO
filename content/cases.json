@@ -162,71 +162,62 @@
           ]
         },
         {
-          "skill": "Event campaigns",
-          "title": "The night before, the *morning after*",
-          "text": "Freshers’ Night and Alumni Club Night share one evening: red for the new students, gold for the graduates. Before the party the date is the headline and a table is one tap away. The morning after, the confetti is. ITS and FSU run on the same grid, each in its own colour.",
+          "skill": "Campaign systems",
+          "title": "One enrolment, *three schools*",
+          "text": "Enrolment 2027/28 opened for ITS, ITHS and FSU on the same day: one message, three identities — black for the college, red for the high school, gold for the art faculty. A second wave turned the questions parents ask most into a WhatsApp chat, one tap from an answer.",
           "rows": [
             [
               {
-                "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/DM.png",
+                "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITS/Meta/ITS_Upis-2027-28_Meta-1080x1350.png",
                 "type": "image",
-                "label": "ITS · Freshers’ Night · the date is the headline"
+                "label": "ITS · black for the college"
               },
               {
-                "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_2_Alumni_Club_Night/DM.png",
+                "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/Meta/ITHS_Upis-2027-28_Meta-1080x1350.png",
                 "type": "image",
-                "label": "ITS · Alumni Club Night · same grid, gold for the graduates"
+                "label": "ITHS · red for the high school"
+              },
+              {
+                "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/FSU/Meta/FSU_Upis-2027-28_Meta-1080x1350.png",
+                "type": "image",
+                "label": "FSU · gold for the art faculty"
               }
             ],
             [
               {
-                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_1_ITS_Brucosijada/DM.png",
+                "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/ITS/ITS_Upis-2027-28-WhatsApp_Meta-1080x1920.png",
                 "type": "image",
-                "label": "After · ITS · Freshers’ Night"
-              },
-              {
-                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_2_ITS_Alumni_Club_Night/DM.png",
-                "type": "image",
-                "label": "After · ITS · Alumni Club Night"
-              },
-              {
-                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_3_FSU_Brucosijada/DM.png",
-                "type": "image",
-                "label": "After · FSU · Freshers’ Night"
-              },
-              {
-                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_4_FSU_Alumni_Club_Night/DM.png",
-                "type": "image",
-                "label": "After · FSU · Alumni Club Night"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "Tone of voice",
-          "title": "Talk to *teenagers*, not at them",
-          "text": "ITHS is a high school, so the voice gets younger: enrolment questions as a WhatsApp chat, Halloween as a glitching pumpkin, a free AI course sold with one crossed-out word. The A4 posters take the same voice into school hallways, with a QR code to apply.",
-          "rows": [
-            [
-              {
-                "src": "PV/Plakati A3 Promo 2k26/ITS/plakat_A4_pregled.jpg",
-                "type": "image",
-                "label": "ITS · A4 poster · “Your future starts with technology”"
-              },
-              {
-                "src": "PV/Plakati A3 Promo 2k26/ITHS/plakat_A4_pregled.jpg",
-                "type": "image",
-                "label": "ITHS · A4 poster · “Meet the school of the future”"
+                "label": "ITS · WhatsApp wave"
               },
               {
                 "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/ITHS/ITHS_Upis-2027-28-WhatsApp_Meta-1080x1920.png",
                 "type": "image",
-                "label": "ITHS · enrolment as a WhatsApp chat · story 9:16"
+                "label": "ITHS · WhatsApp wave"
               },
               {
-                "src": "PV/Halloween 2026/ITS-ITHS/story.png",
+                "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/FSU/FSU_Upis-2027-28-WhatsApp_Meta-1080x1920.png",
                 "type": "image",
-                "label": "ITS × ITHS · Halloween story 9:16"
+                "label": "FSU · WhatsApp wave"
+              }
+            ]
+          ],
+          "one_row": true
+        },
+        {
+          "skill": "Concept & copy",
+          "title": "One idea, *one headline*",
+          "text": "A high school sells itself one idea at a time. The school day ends at 14:30, so the post is a clock. A free AI course crosses out “use AI” and writes “think with AI”. A silver medal gets chrome letters, the volleyball champions get the school red.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITHS/ITHS Skola se zavrsava u 14.30/SAJT.png",
+                "type": "image",
+                "label": "ITHS · “School ends at 14:30. That’s it. Really.”"
+              },
+              {
+                "src": "PV/ITHS/ITHS Powerlifting srebro/ITHS_Powerlifting-srebro_1080x1080.png",
+                "type": "image",
+                "label": "ITHS · “Silver” · a national powerlifting medal"
               }
             ],
             [
@@ -236,9 +227,9 @@
                 "label": "ITHS · free AI course · “use AI” crossed out: “think with AI”"
               },
               {
-                "src": "PV/ITS/ITS Halloween Say BOO/DM.png",
+                "src": "PV/ITHS/ITHS Odbojka prvaci opstine Zemun/DM.png",
                 "type": "image",
-                "label": "ITS · a Halloween photo frame, live in the hallway"
+                "label": "ITHS · “Champions” · Zemun volleyball title"
               }
             ]
           ]
@@ -246,7 +237,7 @@
       ],
       "result_big": "50+",
       "result_label": "billboards live across Belgrade in two years",
-      "result": "And the campaigns around them for all three schools — an anniversary offer, enrolment, events — in one visual language from the street to the phone.",
+      "result": "And the campaigns around them for all three schools — an anniversary offer, enrolment, school news — in one visual language from the street to the phone.",
       "hero": [
         {
           "src": "PV/Bilbordi Novembar 2k26/FSU/animacija.mp4",
@@ -858,7 +849,7 @@
       "format": "story",
       "title": "Series at Scale",
       "kicker": "Content systems · ITS · ITHS",
-      "line": "Eight series, 330+ assets, one system: careers, programmes, AI prompts, events and enrolment.",
+      "line": "Eight series, 330+ assets, one system: careers, programmes, AI prompts, student apps and events.",
       "client": "ITS · Information Technology School · ITHS · IT High School",
       "years": "2026",
       "role": "Art direction, design system, production",
@@ -988,37 +979,32 @@
           ]
         },
         {
-          "skill": "Campaigns",
-          "title": "Three schools, *one week*",
-          "text": "Enrolment 2027/28 shipped for ITS, ITHS and FSU at once: one message, three identities, every format each channel needs.",
+          "skill": "Series templates",
+          "title": "One template, *every student*",
+          "text": "When an ITHS student ships an app, the school posts it that week: the student’s name, the app on a phone and a colour of its own, on one template that never needs a redesign.",
           "rows": [
             [
               {
-                "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITS/Meta/ITS_Upis-2027-28_Meta-1080x1920.png",
+                "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1200x630.png",
                 "type": "image",
-                "label": "ITS · story 9:16"
-              },
-              {
-                "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITS/Meta/ITS_Upis-2027-28_Meta-1080x1350.png",
-                "type": "image",
-                "label": "ITS · feed 4:5"
-              },
-              {
-                "src": "PV/ITHS/Upis 2027-28 ITS ITHS FSU/ITHS/Meta/ITHS_Upis-2027-28_Meta-1080x1350.png",
-                "type": "image",
-                "label": "ITHS · feed 4:5"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1080x1080.png",
-                "type": "image",
-                "label": "Feed 1:1"
+                "label": "ITHS · student app · Calories Tracker"
               },
               {
                 "src": "PV/ITHS/ITHS NailBook/ITHS_NailBook_1080x1080.png",
                 "type": "image",
-                "label": "Feed 1:1"
+                "label": "ITHS · student app · NailBook"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Sapa/ITHS_Sapa_1080x1080.png",
+                "type": "image",
+                "label": "ITHS · student app · Sapa"
+              },
+              {
+                "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1200x630.png",
+                "type": "image",
+                "label": "ITHS · student app · Household Budget Manager"
               }
             ]
           ]

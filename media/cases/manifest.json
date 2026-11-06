@@ -90,116 +90,59 @@
     ]
    },
    {
-    "skill": "Event campaigns",
-    "title": "The night before, the *morning after*",
-    "text": "Freshers’ Night and Alumni Club Night share one evening: red for the new students, gold for the graduates. Before the party the date is the headline and a table is one tap away. The morning after, the confetti is. ITS and FSU run on the same grid, each in its own colour.",
+    "skill": "Campaign systems",
+    "title": "One enrolment, *three schools*",
+    "text": "Enrolment 2027/28 opened for ITS, ITHS and FSU on the same day: one message, three identities — black for the college, red for the high school, gold for the art faculty. A second wave turned the questions parents ask most into a WhatsApp chat, one tap from an answer.",
     "rows": [
      [
       {
        "w": 1080,
-       "h": 1080,
+       "h": 1350,
        "widths": [
         800,
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/live-on-the-streets/79fa9e8e",
-       "label": "ITS · Freshers’ Night · the date is the headline",
+       "url": "../../media/cases/live-on-the-streets/b2d71f10",
+       "label": "ITS · black for the college",
        "matte": false
       },
       {
        "w": 1080,
-       "h": 1080,
+       "h": 1350,
        "widths": [
         800,
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/live-on-the-streets/808fc51f",
-       "label": "ITS · Alumni Club Night · same grid, gold for the graduates",
+       "url": "../../media/cases/live-on-the-streets/3b03c35b",
+       "label": "ITHS · red for the high school",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/17aeca81",
+       "label": "FSU · gold for the art faculty",
        "matte": false
       }
      ],
      [
       {
        "w": 1080,
-       "h": 1080,
+       "h": 1920,
        "widths": [
         800,
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/live-on-the-streets/8a77c979",
-       "label": "After · ITS · Freshers’ Night",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/live-on-the-streets/8e76f9c8",
-       "label": "After · ITS · Alumni Club Night",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/live-on-the-streets/561d63d7",
-       "label": "After · FSU · Freshers’ Night",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/live-on-the-streets/35a75d18",
-       "label": "After · FSU · Alumni Club Night",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "Tone of voice",
-    "title": "Talk to *teenagers*, not at them",
-    "text": "ITHS is a high school, so the voice gets younger: enrolment questions as a WhatsApp chat, Halloween as a glitching pumpkin, a free AI course sold with one crossed-out word. The A4 posters take the same voice into school hallways, with a QR code to apply.",
-    "rows": [
-     [
-      {
-       "w": 1240,
-       "h": 1754,
-       "widths": [
-        800,
-        1240
-       ],
-       "type": "image",
-       "url": "../../media/cases/live-on-the-streets/ecbd63f9",
-       "label": "ITS · A4 poster · “Your future starts with technology”",
-       "matte": false
-      },
-      {
-       "w": 1240,
-       "h": 1754,
-       "widths": [
-        800,
-        1240
-       ],
-       "type": "image",
-       "url": "../../media/cases/live-on-the-streets/4df52be1",
-       "label": "ITHS · A4 poster · “Meet the school of the future”",
+       "url": "../../media/cases/live-on-the-streets/2e3788eb",
+       "label": "ITS · WhatsApp wave",
        "matte": false
       },
       {
@@ -211,7 +154,7 @@
        ],
        "type": "image",
        "url": "../../media/cases/live-on-the-streets/c5d87705",
-       "label": "ITHS · enrolment as a WhatsApp chat · story 9:16",
+       "label": "ITHS · WhatsApp wave",
        "matte": false
       },
       {
@@ -222,8 +165,42 @@
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/live-on-the-streets/2afe1bfc",
-       "label": "ITS × ITHS · Halloween story 9:16",
+       "url": "../../media/cases/live-on-the-streets/b8af0222",
+       "label": "FSU · WhatsApp wave",
+       "matte": false
+      }
+     ]
+    ],
+    "one_row": true
+   },
+   {
+    "skill": "Concept & copy",
+    "title": "One idea, *one headline*",
+    "text": "A high school sells itself one idea at a time. The school day ends at 14:30, so the post is a clock. A free AI course crosses out “use AI” and writes “think with AI”. A silver medal gets chrome letters, the volleyball champions get the school red.",
+    "rows": [
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/1b1709e1",
+       "label": "ITHS · “School ends at 14:30. That’s it. Really.”",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/f2000eb0",
+       "label": "ITHS · “Silver” · a national powerlifting medal",
        "matte": false
       }
      ],
@@ -248,8 +225,8 @@
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/live-on-the-streets/be09fd34",
-       "label": "ITS · a Halloween photo frame, live in the hallway",
+       "url": "../../media/cases/live-on-the-streets/dfa54727",
+       "label": "ITHS · “Champions” · Zemun volleyball title",
        "matte": false
       }
      ]
@@ -1015,45 +992,33 @@
     ]
    },
    {
-    "skill": "Campaigns",
-    "title": "Three schools, *one week*",
-    "text": "Enrolment 2027/28 shipped for ITS, ITHS and FSU at once: one message, three identities, every format each channel needs.",
+    "skill": "Series templates",
+    "title": "One template, *every student*",
+    "text": "When an ITHS student ships an app, the school posts it that week: the student’s name, the app on a phone and a colour of its own, on one template that never needs a redesign.",
     "rows": [
      [
       {
-       "w": 1080,
-       "h": 1920,
+       "w": 1200,
+       "h": 630,
        "widths": [
         800,
-        1080
+        1200
        ],
        "type": "image",
-       "url": "../../media/cases/series-at-scale/97ae477f",
-       "label": "ITS · story 9:16",
+       "url": "../../media/cases/series-at-scale/b5bdfe04",
+       "label": "ITHS · student app · Calories Tracker",
        "matte": false
       },
       {
        "w": 1080,
-       "h": 1350,
+       "h": 1080,
        "widths": [
         800,
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/series-at-scale/b2d71f10",
-       "label": "ITS · feed 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/3b03c35b",
-       "label": "ITHS · feed 4:5",
+       "url": "../../media/cases/series-at-scale/ad8458e9",
+       "label": "ITHS · student app · NailBook",
        "matte": false
       }
      ],
@@ -1066,20 +1031,20 @@
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/series-at-scale/de91087a",
-       "label": "Feed 1:1",
+       "url": "../../media/cases/series-at-scale/92154291",
+       "label": "ITHS · student app · Sapa",
        "matte": false
       },
       {
-       "w": 1080,
-       "h": 1080,
+       "w": 1200,
+       "h": 630,
        "widths": [
         800,
-        1080
+        1200
        ],
        "type": "image",
-       "url": "../../media/cases/series-at-scale/ad8458e9",
-       "label": "Feed 1:1",
+       "url": "../../media/cases/series-at-scale/fdf0680f",
+       "label": "ITHS · student app · Household Budget Manager",
        "matte": false
       }
      ]

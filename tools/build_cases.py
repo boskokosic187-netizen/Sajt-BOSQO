@@ -171,10 +171,10 @@ def figure(m, sizes, eager=False):
             f'<figcaption>{E(m["label"])}</figcaption></figure>')
 
 
-def gallery_row(ms):
+def gallery_row(ms, extra=""):
     tot = sum(m["w"] / m["h"] for m in ms)
     small = all(m["w"] / m["h"] <= 1.25 for m in ms)
-    cls = "g-row" + (" is-small" if small and len(ms) > 1 else "")
+    cls = "g-row" + (" is-small" if small and len(ms) > 1 else "") + extra
     figs = "".join(figure(m, f"(min-width: 768px) {max(20, round(100 * (m['w'] / m['h']) / tot))}vw, 100vw")
                    for m in ms)
     return f'<div class="{cls}">{figs}</div>'
@@ -901,7 +901,8 @@ def render_story(c, i, cases, media):
     lab_html = LABS[lab["type"]](c, lab, R, media)
     craft = []
     for j, k in enumerate(media["craft"]):
-        rows = "".join(gallery_row(r) for r in k["rows"])
+        # "one_row": a set (one format per school) stays a single row on phones too
+        rows = "".join(gallery_row(r, " is-one-row" if k.get("one_row") else "") for r in k["rows"])
         craft.append(f"""
       <article class="cr">
         <header class="cr__head">
