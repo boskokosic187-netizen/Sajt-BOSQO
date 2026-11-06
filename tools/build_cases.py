@@ -750,7 +750,35 @@ def lab_driveby(c, lab, R, media):
       </div>"""
 
 
-LABS = {"mixer": lab_mixer, "driveby": lab_driveby}
+def lab_loupe(c, lab, R, media):
+    m = media["lab"][0]
+    t = lab["tiles"]
+    tiles = E(json.dumps({**t, "base": R + t["base"]}, separators=(",", ":")))
+    spots = E(json.dumps(lab["spots"], ensure_ascii=False, separators=(",", ":")))
+    dots = "".join(f'<button class="lp__dot" type="button" data-spot="{j}" style="--x:{x};--y:{y}" aria-label="{E(n)}"><span>{j + 1}</span></button>'
+                   for j, (x, y, n, _) in enumerate(lab["spots"]))
+    items = "".join(f'<li><button type="button" class="lp__spot" data-spot="{j}" aria-pressed="{str(j == 0).lower()}"><span>{j + 1:02d}</span>{E(n)}</button></li>'
+                    for j, (x, y, n, _) in enumerate(lab["spots"]))
+    return f"""
+      <div class="lp" data-lab="loupe" data-tiles="{tiles}" data-spots="{spots}">
+        <div class="db__head">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+        </div>
+        <div class="lp__frame" style="--ar:{m['w'] / m['h']:.4f}">
+          {picture(m, "(min-width: 1024px) 94vw, 100vw", "lp__img")}
+          {dots}
+          <div class="lp__lens" aria-hidden="true"><div class="lp__plane"></div><span class="lp__read"><b>100%</b><span data-xy></span></span></div>
+          <span class="lp__hint" aria-hidden="true">Move over the picture</span>
+        </div>
+        <div class="lp__foot">
+          <ol class="lp__list" aria-label="Details">{items}</ol>
+          <p class="lp__cap" data-cap aria-live="polite">{E(lab['spots'][0][3])}</p>
+        </div>
+      </div>"""
+
+
+LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe}
 
 
 def render_story(c, i, cases, media):

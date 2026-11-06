@@ -335,7 +335,104 @@
     if (!reduce) onceSeen(stage, () => setTimeout(drive, 500), 0.65);
   }
 
-  const LABS = { mixer, driveby };
+  /* ------------------------------------------------------------- Look closer
+     A loupe over the 8K master at 100% (one picture pixel per screen pixel). The master is
+     cut into tiles and only those under the loupe load. It tours the details by itself
+     until the visitor takes over: the mouse moves it, a tap places it, a detail sends it. */
+  function loupe(el) {
+    const T = JSON.parse(el.dataset.tiles), spots = JSON.parse(el.dataset.spots);
+    const frame = $('.lp__frame', el), lens = $('.lp__lens', el), plane = $('.lp__plane', el);
+    const xy = $('[data-xy]', el), cap = $('[data-cap]', el);
+    const cols = T.w / T.tw, rows = T.h / T.th;
+    const tiles = [];
+    plane.style.width = T.w + 'px';
+    plane.style.height = T.h + 'px';
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const im = document.createElement('img');
+        im.alt = ''; im.decoding = 'async'; im.draggable = false;
+        im.style.cssText = `left:${c * T.tw}px;top:${r * T.th}px;width:${T.tw}px;height:${T.th}px`;
+        plane.appendChild(im);
+        tiles.push(im);
+      }
+    }
+    // until its tiles arrive, the loupe shows the picture already on the page, blown up
+    const base = $('.lp__img', el);
+    const under = () => { if (base.currentSrc) plane.style.backgroundImage = `url("${base.currentSrc}")`; };
+    if (base.complete) under(); else base.addEventListener('load', under, { once: true });
+    let x = spots[0][0], y = spots[0][1], active = 0, tour = 0, touched = false;
+    const k = () => 1 / Math.min(devicePixelRatio || 1, 2);
+    function place() {
+      const fw = frame.clientWidth, fh = frame.clientHeight, R = lens.offsetWidth / 2, z = k();
+      lens.style.left = (x * fw).toFixed(1) + 'px';
+      lens.style.top = (y * fh).toFixed(1) + 'px';
+      plane.style.transform = `translate(${(R - x * T.w * z).toFixed(1)}px, ${(R - y * T.h * z).toFixed(1)}px) scale(${z})`;
+      const rx = R / z + T.tw * 0.4, ry = R / z + T.th * 0.4;
+      const c0 = Math.max(0, Math.floor((x * T.w - rx) / T.tw)), c1 = Math.min(cols - 1, Math.floor((x * T.w + rx) / T.tw));
+      const r0 = Math.max(0, Math.floor((y * T.h - ry) / T.th)), r1 = Math.min(rows - 1, Math.floor((y * T.h + ry) / T.th));
+      for (let r = r0; r <= r1; r++) {
+        for (let c = c0; c <= c1; c++) {
+          const im = tiles[r * cols + c];
+          if (!im.src) im.src = `${T.base}${r}${c}.webp`;
+        }
+      }
+      xy.textContent = `x ${Math.round(x * T.w)} · y ${Math.round(y * T.h)}`;
+    }
+    function go(j, glide = true) {
+      active = j;
+      [x, y] = spots[j];
+      el.classList.toggle('is-glide', glide && !reduce);
+      place();
+      cap.textContent = spots[j][3];
+      $$('[data-spot]', el).forEach((b) => {
+        const on = +b.dataset.spot === j;
+        if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', String(on));
+        b.classList.toggle('is-on', on);
+      });
+    }
+    function stopTour() { clearInterval(tour); tour = 0; touched = true; }
+    const at = (e) => {
+      const r = frame.getBoundingClientRect();
+      x = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      y = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+    };
+    frame.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch' && !frame.hasPointerCapture(e.pointerId)) return;
+      if (e.target.closest('.lp__dot')) return;
+      stopTour();
+      el.classList.remove('is-glide');
+      el.classList.add('is-used');
+      at(e);
+      place();
+    });
+    frame.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') go(active); });
+    frame.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch' || e.target.closest('.lp__dot')) return;
+      stopTour();
+      el.classList.add('is-used', 'is-glide');
+      at(e);
+      place();
+      // a drag that starts on the loupe moves it; anywhere else the page scrolls as usual
+      const lr = lens.getBoundingClientRect();
+      if (Math.hypot(e.clientX - (lr.left + lr.width / 2), e.clientY - (lr.top + lr.height / 2)) < lr.width / 2) frame.setPointerCapture(e.pointerId);
+    });
+    $$('[data-spot]', el).forEach((b) => b.addEventListener('click', () => { stopTour(); go(+b.dataset.spot); }));
+    if ('ResizeObserver' in window) new ResizeObserver(() => { el.classList.remove('is-glide'); place(); }).observe(frame);
+    go(0, false);
+    // a short tour of the details, until the visitor takes the loupe; their tiles come first
+    if (!reduce) {
+      onceSeen(frame, () => {
+        const save = [x, y];
+        spots.forEach(([sx, sy]) => { x = sx; y = sy; place(); });
+        [x, y] = save;
+        place();
+        if (touched) return;
+        tour = setInterval(() => { if (!touched) go((active + 1) % spots.length); }, 3400);
+      }, 0.5);
+    }
+  }
+
+  const LABS = { mixer, driveby, loupe };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];
     if (f) whenNear(el, () => f(el));
