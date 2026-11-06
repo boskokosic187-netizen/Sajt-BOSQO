@@ -164,358 +164,205 @@
  "ballies": {
   "hero": [
    {
-    "w": 960,
-    "h": 540,
-    "type": "video",
-    "url": "../../media/cases/ballies/4ec9a9d2",
-    "label": "Mascot fight · 16:9",
+    "w": 2400,
+    "h": 1100,
+    "widths": [
+     800,
+     1600
+    ],
+    "type": "image",
+    "url": "../../media/cases/ballies/ca683319",
+    "label": "",
     "matte": false
    }
   ],
-  "rows": [
-   [
-    {
-     "w": 1600,
-     "h": 1600,
-     "widths": [
-      800,
-      1600
+  "rows": [],
+  "craft": [
+   {
+    "skill": "Character design",
+    "title": "One rig, a roster of *personalities*",
+    "text": "Pose, proportions and line weight never change, so every trait swaps cleanly and the set reads as one team. Personality lives in the details: a wink, a jester hat, a robot arm, a planet for a ball.",
+    "rows": [
+     [
+      {
+       "w": 1423,
+       "h": 1679,
+       "widths": [
+        800,
+        1423
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/1501ba48",
+       "label": "#13 · jester hat, pixel tears",
+       "matte": false
+      },
+      {
+       "w": 1423,
+       "h": 1679,
+       "widths": [
+        800,
+        1423
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/c03c5db5",
+       "label": "#10 · eyepatch, gold arm",
+       "matte": false
+      },
+      {
+       "w": 1423,
+       "h": 1679,
+       "widths": [
+        800,
+        1423
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/a05bd664",
+       "label": "#20 · wink, Planet Earth",
+       "matte": false
+      },
+      {
+       "w": 1423,
+       "h": 1679,
+       "widths": [
+        800,
+        1423
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/9bfca2cc",
+       "label": "#8 · curls, watermelon",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Campaign illustration",
+    "title": "The cast goes *to work*",
+    "text": "The characters front everything: holiday drops, tournaments, AI features, the roadmap. A cast people recognise turned a daily posting schedule into one ongoing story.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/eedaf3b2",
+       "label": "Merry Ballmas · the cast as a holiday card",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/ccd72ab5",
+       "label": "AI Ambassadors · a squad for a feature launch",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/909bd414",
+       "label": "King of the Meta-Court · tournament key art",
+       "matte": false
+      }
      ],
-     "type": "image",
-     "url": "../../media/cases/ballies/1dc7b1c4",
-     "label": "$BALL airdrop · 1:1",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/d3277e53",
-     "label": "AI launch · 1:1",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/a86ad300",
-     "label": "Explainer · 1:1",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 720,
-     "h": 720,
-     "type": "video",
-     "url": "../../media/cases/ballies/64bb1569",
-     "label": "Mascot fight · 1:1",
-     "matte": false
-    },
-    {
-     "w": 720,
-     "h": 720,
-     "type": "video",
-     "url": "../../media/cases/ballies/34d05afb",
-     "label": "Odds bar · game-day motion · 1:1",
-     "matte": false
-    },
-    {
-     "w": 540,
-     "h": 960,
-     "type": "video",
-     "url": "../../media/cases/ballies/0e34538a",
-     "label": "AI tools · story 9:16",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 900,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/04396846",
-     "label": "March Madness · 16:9",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/634dc979",
-     "label": "You vs AI",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1500,
-     "h": 1500,
-     "widths": [
-      800,
-      1500
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/3f89cd9a",
-     "label": "Season 11 pass",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/9bcf6610",
-     "label": "Season 12 pass",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 1866,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/00937c82",
-     "label": "Halloween badge drop",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/d4491ae4",
-     "label": "Ballies Arena · ad",
-     "matte": false
-    },
-    {
-     "w": 1084,
-     "h": 1087,
-     "widths": [
-      800,
-      1084
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/08416feb",
-     "label": "Ballies Arena · teaser",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/283083fd",
-     "label": "Product explainer",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1600,
-     "h": 900,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/67d72846",
-     "label": "All-Stars · 1920×1080",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1920,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/03a61436",
-     "label": "Cricket launch · story",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1500,
-     "h": 1500,
-     "widths": [
-      800,
-      1500
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/1c1c849a",
-     "label": "Partnership template · Gangverse",
-     "matte": false
-    },
-    {
-     "w": 1500,
-     "h": 1500,
-     "widths": [
-      800,
-      1500
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/f8934f26",
-     "label": "Partnership template · Loaded Lions",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/19b73ffa",
-     "label": "BeClutch $CLX launch",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/2a746d05",
-     "label": "Leaderboard · 1:1",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/da352573",
-     "label": "Positioning · 1:1",
-     "matte": false
-    },
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/7122c549",
-     "label": "Positioning · 1:1",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1080,
-     "h": 1080,
-     "widths": [
-      800,
-      1080
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/5480406f",
-     "label": "Game day · 1:1",
-     "matte": false
-    },
-    {
-     "w": 1082,
-     "h": 1086,
-     "widths": [
-      800,
-      1082
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/ac8323bd",
-     "label": "Game day · 1:1",
-     "matte": false
-    },
-    {
-     "w": 700,
-     "h": 800,
-     "widths": [
-      700
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/37338eee",
-     "label": "Character drop",
-     "matte": false
-    }
-   ],
-   [
-    {
-     "w": 1392,
-     "h": 2024,
-     "widths": [
-      800,
-      1392
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/5b56ca24",
-     "label": "Badge pack",
-     "matte": false
-    },
-    {
-     "w": 1600,
-     "h": 1600,
-     "widths": [
-      800,
-      1600
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/1a3e04f9",
-     "label": "Badge drop · #CROFAM edition",
-     "matte": false
-    },
-    {
-     "w": 967,
-     "h": 1386,
-     "widths": [
-      800,
-      967
-     ],
-     "type": "image",
-     "url": "../../media/cases/ballies/b7eed3e5",
-     "label": "Drop card",
-     "matte": false
-    }
-   ]
+     [
+      {
+       "w": 2000,
+       "h": 2000,
+       "widths": [
+        800,
+        1600
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/29674679",
+       "label": "Hustler League · the anniversary podium",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/3fbc819d",
+       "label": "Roadmap · the whole universe in one scene",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/e75dd26f",
+       "label": "AI Game Predictor · the cast explains the product",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Key art",
+    "title": "Sport, shot like *cinema*",
+    "text": "For legends and match days: athletes mid-air, stadium light and one bold line of type. Built to stop the thumb in a feed full of odds.",
+    "rows": [
+     [
+      {
+       "w": 1082,
+       "h": 1325,
+       "widths": [
+        800,
+        1082
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/7e8bc68d",
+       "label": "Kobe vs Limits · legends series",
+       "matte": false
+      },
+      {
+       "w": 1088,
+       "h": 1080,
+       "widths": [
+        800,
+        1088
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/8d9d492a",
+       "label": "Edelman vs Gravity · match-day key art",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1252,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/76a1b5c9",
+       "label": "Defy gravity · Vince Carter, 2000",
+       "matte": false
+      }
+     ]
+    ]
+   }
   ]
  },
  "personal-art": {

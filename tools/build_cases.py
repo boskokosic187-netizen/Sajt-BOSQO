@@ -24,6 +24,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PREFIX = {
     "PV/": "D:/Desktop/Production Visuals/",
     "D/": "D:/Desktop/",
+    "A/": "D:/Arhiva/Desktop 2026-10/Projekti/",
     "S/": ROOT.replace("\\", "/") + "/",
 }
 IMG_WIDTHS = (800, 1600)
@@ -200,7 +201,7 @@ def block_items(b):
 
 def all_media(m):
     return (m["hero"] + [i for r in m["rows"] for i in r] + [x for b in m.get("blocks", ()) for x in block_items(b)]
-            + list(m.get("breakdown", ())))
+            + list(m.get("breakdown", ())) + [x for k in m.get("craft", ()) for r in k["rows"] for x in r])
 
 
 def block_media(b, outdir, rel):
@@ -432,7 +433,7 @@ HEAD = """<!doctype html>
     }})(document.documentElement);
   </script>
   <script type="speculationrules">{{"prefetch": [{{"where": {{"href_matches": "/work/*"}}, "eagerness": "moderate"}}]}}</script>
-  <script src="{R}js/site.js" defer></script>
+  <script src="{R}js/site.js" defer></script>{extra}
 </head>"""
 
 CONTACT = """
@@ -561,7 +562,7 @@ def render_case(c, i, cases, media):
     note = f'<p class="case-note">{E(c["note"])}</p>' if c.get("note") else ""
     next_bg = f'<img src="{nxt["_next_img"]}" alt="" loading="lazy" decoding="async">'
 
-    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R) + f"""
+    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R, extra="") + f"""
 <body class="page-case">
   <a class="skip" href="#case-main">Skip to content</a>
   <div class="field" aria-hidden="true"></div>
@@ -631,6 +632,159 @@ def render_case(c, i, cases, media):
 """)
 
 
+# ------------------------------------------------------------- story pages
+# A case in the "story" format says less and shows more: the brief and the idea in two
+# sentences, then the lab (one interactive piece that does what the project is about, so the
+# visitor tries the skill instead of reading about it), then the craft: a few skills, each
+# with a few pieces as proof, then the result. js/case.js runs the labs, css/case.css styles
+# the page on top of site.css.
+def rich(t):
+    """Escapes text and turns *word* into the serif italic."""
+    return re.sub(r"\*(.+?)\*", r"<em>\1</em>", E(t))
+
+
+def lab_mixer(c, lab, R):
+    reels = lab["reels"]
+    cuts = lab["cuts"]
+    k0 = lab.get("start", 0)
+    rows = "".join(
+        f'<li class="mx__row" data-r="{r}"><span class="mx__k">{E(name)}</span>'
+        f'<span class="mx__v" data-v>{E(lab["traits"][k0][r])}</span>'
+        f'<span class="mx__from" data-from>#{k0 + 1:02d}</span>'
+        f'<button class="mx__lock" type="button" aria-pressed="false" aria-label="Keep this {E(name.lower())}" title="Keep this {E(name.lower())}" data-lock>'
+        f'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button></li>'
+        for r, name in enumerate(reels))
+    figs = "".join(
+        f'<div class="mx__reel" data-reel="{r}" style="--t:{cuts[r]};--h:{cuts[r + 1] - cuts[r]:.4f}">'
+        f'<div class="mx__strip"></div>'
+        f'<button class="mx__hit" type="button" aria-label="Change the {E(name.lower())}">'
+        f'<i aria-hidden="true">{E(name)} ↻</i></button></div>'
+        for r, name in enumerate(reels))
+    total = lab["n"] ** len(reels)
+    data = E(json.dumps(lab["traits"], ensure_ascii=False, separators=(",", ":")))
+    return f"""
+      <div class="mx" data-lab="mixer" data-base="{R}{lab['base']}" data-n="{lab['n']}" data-start="{k0}" data-traits="{data}">
+        <div class="mx__copy">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+          <ol class="mx__rows" aria-live="polite">{rows}</ol>
+          <div class="mx__act">
+            <button class="mx__spin" type="button" data-spin><span>Spin the reels</span><kbd aria-hidden="true">Space</kbd></button>
+            <button class="mx__orig" type="button" data-orig>Show an original</button>
+          </div>
+          <p class="mx__id"><span data-id-k>Original</span> <b data-id>#{k0 + 1:02d}</b><span class="mx__of">{lab['n']} originals · {total:,} mixes</span></p>
+        </div>
+        <div class="mx__stage">
+          <div class="mx__fig" style="--ar:{lab['ar']}">{figs}</div>
+          <span class="mx__floor" aria-hidden="true"></span>
+        </div>
+      </div>"""
+
+
+LABS = {"mixer": lab_mixer}
+
+
+def render_story(c, i, cases, media):
+    R = "../../"
+    n = len(cases)
+    nxt = cases[(i + 1) % n]
+    num = f"{i + 1:02d}"
+    h0 = media["hero"][0]
+    cover = (f'<figure class="cover__item" style="--ar:{h0["w"] / h0["h"]:.4f}">'
+             + (video_tag(h0, eager=True) if h0["type"] == "video" else picture(h0, "100vw", eager=True))
+             + (f'<figcaption>{E(h0["label"])}</figcaption>' if h0["label"] else "") + '</figure>')
+    og = h0["url"] + (".webp" if h0["type"] == "video" else f"-{h0['widths'][-1]}.webp")
+    meta = (f'<div><dt>Client</dt><dd>{E(c["client"])}</dd></div>'
+            f'<div><dt>Year</dt><dd>{E(c["years"])}</dd></div>'
+            f'<div><dt>Role</dt><dd>{E(c["role"])}</dd></div>')
+    skills = "".join(f"<li>{E(x)}</li>" for x in c["skills"])
+    lab = c["lab"]
+    lab_html = LABS[lab["type"]](c, lab, R)
+    craft = []
+    for j, k in enumerate(media["craft"]):
+        rows = "".join(gallery_row(r) for r in k["rows"])
+        craft.append(f"""
+      <article class="cr">
+        <header class="cr__head">
+          <p class="cr__skill"><span>{j + 1:02d}</span>{E(k['skill'])}</p>
+          <h3 class="cr__title">{rich(k['title'])}</h3>
+          <p class="cr__text">{E(k['text'])}</p>
+        </header>
+        <div class="cr__media gallery">{rows}</div>
+      </article>""")
+    note = f'<p class="case-note">{E(c["note"])}</p>' if c.get("note") else ""
+    next_bg = f'<img src="{nxt["_next_img"]}" alt="" loading="lazy" decoding="async">'
+    extra = f'\n  <link rel="stylesheet" href="{R}css/case.css">\n  <script src="{R}js/case.js" defer></script>'
+
+    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R, extra=extra) + f"""
+<body class="page-case page-story">
+  <a class="skip" href="#case-main">Skip to content</a>
+  <div class="field" aria-hidden="true"></div>
+{TOPBAR.replace("{MARK}", MARK).replace("{R}", R)}
+
+  <main id="case-main">
+    <section class="case-hero cs-hero">
+      <div class="case-hero__top"><a class="back" href="{R}#work">← All work</a><span>Case {num} / {n:02d}</span></div>
+      <p class="eyebrow">{E(c['kicker'])}</p>
+      <h1 class="case-title">{E(c['title'])}</h1>
+      <div class="cs-hero__sub">
+        <p class="case-line">{E(c['line'])}</p>
+        <ul class="cs-skills" aria-label="Skills in this project">{skills}</ul>
+      </div>
+      <dl class="case-meta cs-meta">{meta}</dl>
+    </section>
+
+    <section class="cover" id="cover" aria-label="Key visual">
+      {cover}
+    </section>
+
+    <section class="case-story cs-story">
+      <div class="story">
+        <h2 class="story__label"><span>01</span> The brief</h2>
+        <p class="story__text">{E(c['brief'])}</p>
+      </div>
+      <div class="story">
+        <h2 class="story__label"><span>02</span> The idea</h2>
+        <p class="story__text">{E(c['idea'])}</p>
+      </div>
+    </section>
+
+    <section class="cs-lab cs-lab--{lab['type']}" id="lab" aria-labelledby="lab-t">
+      <div class="sec-head"><span class="sec-head__num">03</span><span class="sec-head__label">Try it · {E(lab['kicker'])}</span></div>{lab_html}
+      <p class="lab__why"><b>Why it matters</b>{E(lab['why'])}</p>
+    </section>
+
+    <section class="cs-craft" aria-labelledby="craft-t">
+      <div class="sec-head"><span class="sec-head__num">04</span><span class="sec-head__label" id="craft-t">The craft · {len(craft)} skills, shown</span></div>{"".join(craft)}
+      {note}
+    </section>
+
+    <section class="case-result">
+      <div class="sec-head"><span class="sec-head__num">05</span><span class="sec-head__label">Result</span></div>
+      <p class="result__big">{E(c['result_big'])}</p>
+      <p class="result__label">{E(c['result_label'])}</p>
+      <p class="result__text">{E(c['result'])}</p>
+    </section>
+
+    <a class="case-next" href="../{nxt['slug']}/">
+      <span class="case-next__bg" aria-hidden="true">{next_bg}</span>
+      <span class="case-next__label">Next case · {(i + 2 - 1) % n + 1:02d}</span>
+      <span class="case-next__title">{E(nxt['title'])}</span>
+      <span class="case-next__line">{E(nxt['line'])}</span>
+    </a>
+{CONTACT}
+  </main>
+
+  <dialog class="lightbox" data-lightbox aria-label="Enlarged view">
+    <button class="player__close" type="button" data-close aria-label="Close">Close ✕</button>
+    <div class="lightbox__frame"></div>
+    <p class="lightbox__cap"></p>
+  </dialog>
+</body>
+</html>
+""")
+
+
 def main():
     data = json.load(open(os.path.join(ROOT, "content", "cases.json"), encoding="utf-8"))
     cases = data["cases"]
@@ -649,6 +803,8 @@ def main():
              "rows": [[media_for(x, outdir, rel) for x in row] for row in c.get("rows", [])]}
         if c.get("blocks"):
             m["blocks"] = [block_media(b, outdir, rel) for b in c["blocks"]]
+        if c.get("craft"):
+            m["craft"] = [{**k, "rows": [[media_for(x, outdir, rel) for x in r] for r in k["rows"]]} for k in c["craft"]]
         if c.get("breakdown"):
             b = c["breakdown"]
             m["breakdown"] = (media_for({"src": b["before"], "type": "image", "label": b["before_label"]}, outdir, rel),
@@ -666,7 +822,7 @@ def main():
     for i, c in enumerate(cases):
         d = os.path.join(ROOT, "work", c["slug"])
         os.makedirs(d, exist_ok=True)
-        page = render_case(c, i, cases, allm[c["slug"]])
+        page = (render_story if c.get("format") == "story" else render_case)(c, i, cases, allm[c["slug"]])
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(page)
 
     json.dump(allm, open(mpath, "w", encoding="utf-8"),

@@ -164,232 +164,251 @@
     },
     {
       "slug": "ballies",
+      "format": "story",
       "title": "Ballies",
-      "kicker": "Brand universe · Web3 sports platform",
-      "line": "Three years of seasons, launches and mascots for a sports prediction platform.",
-      "client": "Ballies",
-      "years": "Jan 2023 – Jan 2026",
-      "role": "Digital Artist — campaigns, motion, characters, NFT art direction",
-      "deliverables": [
-        "Social campaigns 1:1 · 4:5 · 9:16 · 16:9",
-        "Season passes",
-        "$BALL token & airdrop launch",
-        "AI feature launch",
-        "Badge & drop system",
-        "Partnership templates",
-        "Mascot & logo animation",
-        "NFT collection art direction"
+      "kicker": "Character design · NFT collection · Brand universe",
+      "line": "A team of characters built to be collected, then cast in three years of launches, seasons and key art.",
+      "client": "Ballies · Web3 sports platform",
+      "years": "2023–2026",
+      "role": "Digital artist · characters, NFT art direction, campaigns, motion",
+      "skills": [
+        "Character design",
+        "Illustration",
+        "NFT art direction",
+        "Campaign design",
+        "Key art"
       ],
-      "challenge": "Explain a new kind of sports product — peer-to-peer predictions, tokens, AI picks — to sports fans every single day, without losing the hype.",
-      "idea": "Make it feel like sport, not finance: stadium light, neon green, mascots that fight, athletes mid-air. The product does the explaining. The visuals do the shouting.",
-      "system": "One visual language across every season — Ballies green, the hexagon badge and bold condensed type — plus a partnership template that kept collaborations (Gangverse, Loaded Lions, Pudgy Penguins) on-brand at any pace.",
-      "highlights": [
-        [
-          "$BALL airdrop series",
-          "Token launch"
+      "brief": "A sports prediction app needed a face. Not one mascot, a whole roster: characters fans could own, trade and play with, strong enough to front every launch for years.",
+      "idea": "Draw one player, perfectly. Lock the pose, proportions and line on a single rig, and let personality live in traits: headwear, eyes, arms, balls and kits. One body, 9,999 characters.",
+      "lab": {
+        "type": "mixer",
+        "kicker": "the character system",
+        "title": "Mix a *Ballie*",
+        "line": "Every Ballie is drawn on the same rig, so any head fits any kit. Spin the reels, tap a part to swap it, lock the ones you like.",
+        "why": "A character system buys variety that never breaks the brand: thousands of collectible faces that still read as one team.",
+        "base": "media/labs/ballies/",
+        "n": 20,
+        "ar": 0.8473,
+        "cuts": [
+          0,
+          0.402,
+          0.836,
+          1
         ],
-        [
-          "Season 10–12 passes",
-          "Seasonal campaigns"
+        "reels": [
+          "Head",
+          "Kit",
+          "Shorts"
         ],
-        [
-          "“You vs AI”",
-          "AI feature launch"
-        ],
-        [
-          "Ballies Arena",
-          "Product launch"
-        ],
-        [
-          "Mascot fights",
-          "3D-style motion"
-        ],
-        [
-          "BeClutch $CLX on Base",
-          "Sub-brand launch"
-        ],
-        [
-          "9,999-piece NFT avatar collection",
-          "Art direction"
+        "start": 12,
+        "traits": [
+          [
+            "Sweatband · Hypno eyes",
+            "Cream #1 · 8-ball · Flag bow tie",
+            "Cream"
+          ],
+          [
+            "Jester hat · Tears & tongue",
+            "Navy #34 · Ice ball · Gold chain",
+            "Navy"
+          ],
+          [
+            "Wrap · Big smile",
+            "Royal #4 · Beach ball · Cape",
+            "Royal, checked"
+          ],
+          [
+            "Headphones · Taped mouth",
+            "Navy #2 · Aqua ball · Scales",
+            "Navy"
+          ],
+          [
+            "Jester hat · Pixel shades",
+            "Sky #00 · Beach ball · Bandages",
+            "Sky"
+          ],
+          [
+            "Sweatband · Grin",
+            "Cream #11 · Bomb · Gold chain",
+            "Cream"
+          ],
+          [
+            "Wrap · Hex specs",
+            "Sky #5 · Watermelon · Robot arm",
+            "Sky"
+          ],
+          [
+            "Curls · Tongue out",
+            "Red #77 · Watermelon · Cape",
+            "Red"
+          ],
+          [
+            "Neon cap · Tears & gum",
+            "Cream #5 · 8-ball · Cape",
+            "Cream"
+          ],
+          [
+            "Cap · Eyepatch & gum",
+            "Navy #15 · Aqua ball · Gold arm",
+            "Navy"
+          ],
+          [
+            "Wrap · Nervous",
+            "Cream #7 · Aqua ball · Bandages",
+            "Cream"
+          ],
+          [
+            "Headphones · Neon skin",
+            "Red #23 · Aqua ball · Gold chain",
+            "Red"
+          ],
+          [
+            "Jester hat · Pixel tears",
+            "Cream #24 · Aqua ball · Rings",
+            "Cream"
+          ],
+          [
+            "Fresh fade · Pixel shades",
+            "Cream #8 · 8-ball · Scales",
+            "Cream"
+          ],
+          [
+            "Diamond band · Pixel shades",
+            "Cream #24 · Ice ball · Rings",
+            "Cream"
+          ],
+          [
+            "Cap · Easy smile",
+            "Gold #0 · Watermelon · Cape",
+            "Gold"
+          ],
+          [
+            "Cap · Wink",
+            "Blue #0 · Bomb · Robot arm",
+            "Blue"
+          ],
+          [
+            "Sweatband · Patch & specs",
+            "Red #11 · Aqua ball · Scales",
+            "Red"
+          ],
+          [
+            "Wrap · Braces grin",
+            "Sky #4 · Beach ball · Rings",
+            "Sky"
+          ],
+          [
+            "Blond fringe · Wink & gum",
+            "Forest #77 · Planet Earth · Cape",
+            "Forest"
+          ]
         ]
-      ],
-      "result_big": "3 yrs",
-      "result_label": "of seasons, launches and mascots",
-      "result": "Hundreds of assets across feeds, stories, banners and video — all in one recognisable universe.",
-      "hero": [
+      },
+      "craft": [
         {
-          "src": "D/Ballies/13 Oct Week/Roary vs Captain Fear.mp4",
-          "type": "video",
-          "start": 6,
-          "dur": 10,
-          "label": "Mascot fight · 16:9"
+          "skill": "Character design",
+          "title": "One rig, a roster of *personalities*",
+          "text": "Pose, proportions and line weight never change, so every trait swaps cleanly and the set reads as one team. Personality lives in the details: a wink, a jester hat, a robot arm, a planet for a ball.",
+          "rows": [
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/1/13.webp",
+                "type": "image",
+                "label": "#13 · jester hat, pixel tears"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/1/10.webp",
+                "type": "image",
+                "label": "#10 · eyepatch, gold arm"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/1/20.webp",
+                "type": "image",
+                "label": "#20 · wink, Planet Earth"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/1/8.webp",
+                "type": "image",
+                "label": "#8 · curls, watermelon"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Campaign illustration",
+          "title": "The cast goes *to work*",
+          "text": "The characters front everything: holiday drops, tournaments, AI features, the roadmap. A cast people recognise turned a daily posting schedule into one ongoing story.",
+          "rows": [
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Christmas-post (1).webp",
+                "type": "image",
+                "label": "Merry Ballmas · the cast as a holiday card"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Ai-ambassadors-assemble.webp",
+                "type": "image",
+                "label": "AI Ambassadors · a squad for a feature launch"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/King-of-the-metacourt.webp",
+                "type": "image",
+                "label": "King of the Meta-Court · tournament key art"
+              }
+            ],
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Hustler-League-post.webp",
+                "type": "image",
+                "label": "Hustler League · the anniversary podium"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Roadmap.webp",
+                "type": "image",
+                "label": "Roadmap · the whole universe in one scene"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Ai-game-predictor.webp",
+                "type": "image",
+                "label": "AI Game Predictor · the cast explains the product"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Key art",
+          "title": "Sport, shot like *cinema*",
+          "text": "For legends and match days: athletes mid-air, stadium light and one bold line of type. Built to stop the thumb in a feed full of odds.",
+          "rows": [
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/4/kobe.webp",
+                "type": "image",
+                "label": "Kobe vs Limits · legends series"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/4/edelman-vs-gravity.webp",
+                "type": "image",
+                "label": "Edelman vs Gravity · match-day key art"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/4/2000_vince_carter.webp",
+                "type": "image",
+                "label": "Defy gravity · Vince Carter, 2000"
+              }
+            ]
+          ]
         }
       ],
-      "rows": [
-        [
-          {
-            "src": "D/Ballies Best/Ball-post-4.png",
-            "type": "image",
-            "label": "$BALL airdrop · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/Ai-ballies-promo-2.png",
-            "type": "image",
-            "label": "AI launch · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/What-is-ballies.png",
-            "type": "image",
-            "label": "Explainer · 1:1"
-          }
-        ],
-        [
-          {
-            "src": "D/Ballies Best/strike 1.mp4",
-            "type": "video",
-            "start": 5,
-            "dur": 10,
-            "label": "Mascot fight · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/Washington Commanders vs Kansas City 2.mp4",
-            "type": "video",
-            "start": 4,
-            "dur": 10,
-            "label": "Odds bar · game-day motion · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/9-16.mp4",
-            "type": "video",
-            "label": "AI tools · story 9:16"
-          }
-        ],
-        [
-          {
-            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/march-madness_16x9.png",
-            "type": "image",
-            "label": "March Madness · 16:9"
-          },
-          {
-            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/You-vs-Ai.png",
-            "type": "image",
-            "label": "You vs AI"
-          }
-        ],
-        [
-          {
-            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/Season-11.png",
-            "type": "image",
-            "label": "Season 11 pass"
-          },
-          {
-            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/Season-12.png",
-            "type": "image",
-            "label": "Season 12 pass"
-          },
-          {
-            "src": "S/_izvori/drive-gmail/01_ballies-kampanja/Halloween-badge.png",
-            "type": "image",
-            "label": "Halloween badge drop"
-          }
-        ],
-        [
-          {
-            "src": "D/Ballies Best/ballies-arena-AD.png",
-            "type": "image",
-            "label": "Ballies Arena · ad"
-          },
-          {
-            "src": "D/Ballies Best/Ballies-arena-starts-soon.png",
-            "type": "image",
-            "label": "Ballies Arena · teaser"
-          },
-          {
-            "src": "D/Ballies Best/Break-even.png",
-            "type": "image",
-            "label": "Product explainer"
-          }
-        ],
-        [
-          {
-            "src": "D/Ballies Best/all-stars-banner-1920-1080.jpg",
-            "type": "image",
-            "label": "All-Stars · 1920×1080"
-          },
-          {
-            "src": "D/Ballies Best/Story 2.png",
-            "type": "image",
-            "label": "Cricket launch · story"
-          }
-        ],
-        [
-          {
-            "src": "S/_izvori/drive-gmail/02_ballies-partnerstva/GANGVERSE.png",
-            "type": "image",
-            "label": "Partnership template · Gangverse"
-          },
-          {
-            "src": "S/_izvori/drive-gmail/02_ballies-partnerstva/LOADED_LIONS.png",
-            "type": "image",
-            "label": "Partnership template · Loaded Lions"
-          },
-          {
-            "src": "S/_izvori/drive-gmail/03_beclutch-clx/CLX-Launch.png",
-            "type": "image",
-            "label": "BeClutch $CLX launch"
-          }
-        ],
-        [
-          {
-            "src": "D/Ballies Best/Top-scorer.png",
-            "type": "image",
-            "label": "Leaderboard · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/Ballies-Is-Not-a-Bookmaker.png",
-            "type": "image",
-            "label": "Positioning · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/stop-donating-to-the-house.png",
-            "type": "image",
-            "label": "Positioning · 1:1"
-          }
-        ],
-        [
-          {
-            "src": "D/Ballies Best/forward-no-matter-what.png",
-            "type": "image",
-            "label": "Game day · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/299-pounds.jpg",
-            "type": "image",
-            "label": "Game day · 1:1"
-          },
-          {
-            "src": "D/Ballies Best/drop-image.png",
-            "type": "image",
-            "label": "Character drop"
-          }
-        ],
-        [
-          {
-            "src": "D/Ballies Best/badge-pack.png",
-            "type": "image",
-            "label": "Badge pack"
-          },
-          {
-            "src": "D/Ballies Best/1 (1).png",
-            "type": "image",
-            "label": "Badge drop · #CROFAM edition"
-          },
-          {
-            "src": "D/Ballies Best/Drop-card.png",
-            "type": "image",
-            "label": "Drop card"
-          }
-        ]
+      "result_big": "9,999",
+      "result_label": "characters from one rig",
+      "result": "Then three years of seasons, launches and key art starring them: hundreds of assets in one recognisable universe.",
+      "hero": [
+        {
+          "src": "S/_izvori/ballies/lineup.png",
+          "type": "image",
+          "label": ""
+        }
       ]
     },
     {

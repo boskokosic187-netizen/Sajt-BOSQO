@@ -68,8 +68,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+class Server(http.server.ThreadingHTTPServer):
+    # socketserver listens with a queue of 5; Chrome opens a dozen connections at once and
+    # Windows answers the overflow with a reset (a page loads without its CSS or images)
+    request_queue_size = 128
+    daemon_threads = True
+
+
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 5173
-    srv = http.server.ThreadingHTTPServer(("127.0.0.1", port), functools.partial(Handler, directory=ROOT))
+    srv = Server(("127.0.0.1", port), functools.partial(Handler, directory=ROOT))
     print(f"http://127.0.0.1:{port}/  (Ctrl+C stops it)")
     srv.serve_forever()
