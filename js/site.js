@@ -361,7 +361,7 @@
       lines: '.case-title, .reel__title, .work__title, .process__title, .about__title, .contact__title',
       screen: '.reel__screen, .row, .cover__item, .case-next',
       rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
-      stack: '.case-meta, .ct__main, .ct__next, .story, .hl, .blk__head, .reel__chapters, .talk',
+      stack: '.case-meta, .ct__main, .story, .hl, .blk__head, .reel__chapters, .talk',
       panel: '.qb',
     };
     // what the cut brings in from the page before (the case's title and key visual) is already there
@@ -422,19 +422,43 @@
 
   /* ------------------------------------ in-page links land on the section's top */
   // Sections that skip their rendering until they come near (content-visibility) only have a
-  // guessed height at the click, which throws the jump off by hundreds of pixels; they are
-  // laid out for real before the browser works out where to scroll, then go back to skipping
-  // (their real size stays remembered, so nothing moves)
+  // guessed height at the click, which throws the jump off by hundreds of pixels (on a phone the
+  // dock's Contact stopped a third of a screen short). So a link to a section scrolls here: the
+  // sections are laid out for real first and stay so for the ride, the target is measured, and
+  // once the page stops they go back to skipping (their real size stays remembered, so nothing
+  // moves); if anything still grew on the way, one more short glide lands it. Links with a job
+  // of their own (the reel, a case's kind bar) handle the click first and are left alone.
   function setupJumps() {
     const lazy = $$('main > section').filter((s) => getComputedStyle(s).contentVisibility === 'auto');
     if (!lazy.length) return;
+    let ride = 0;
     document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = e.target.closest && e.target.closest('a[href^="#"]');
       const id = a && a.getAttribute('href').slice(1);
-      if (!id || !document.getElementById(id)) return;
+      const el = id && document.getElementById(id);
+      if (!el || !el.matches('main > section')) return;
+      e.preventDefault();
+      const me = ++ride;
       lazy.forEach((s) => (s.style.contentVisibility = 'visible'));
-      requestAnimationFrame(() => requestAnimationFrame(() => lazy.forEach((s) => (s.style.contentVisibility = ''))));
-    }, true);
+      const go = () => scrollTo({ top: Math.round(el.getBoundingClientRect().top + scrollY), behavior: reduceMotion ? 'auto' : 'smooth' });
+      go();
+      if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+      let left = 2, timer = 0;
+      const end = () => {
+        if (me !== ride) return;
+        removeEventListener('scrollend', end);
+        clearTimeout(timer);
+        const off = Math.abs(el.getBoundingClientRect().top) > 2 && Math.ceil(scrollY) < document.documentElement.scrollHeight - innerHeight;
+        if (off && left--) { go(); wait(); return; }
+        lazy.forEach((s) => (s.style.contentVisibility = ''));
+      };
+      const wait = () => {
+        if ('onscrollend' in window) addEventListener('scrollend', end);
+        timer = setTimeout(end, 1800); // a jump of zero never ends a scroll
+      };
+      wait();
+    });
   }
 
   /* ------------------------------------------------ about: the portrait, the intro, the cards
@@ -517,25 +541,29 @@
   setInterval(clock, 20000);
 
   /* ---------------------------------------------------------- copy email */
-  $$('[data-copy]').forEach((b) =>
+  $$('[data-copy]').forEach((b) => {
+    const hint = $('[data-copy-hint]', b);
+    const idle = hint.textContent;
+    let t = 0;
     b.addEventListener('click', async () => {
-      const hint = $('[data-copy-hint]', b);
       try {
         await navigator.clipboard.writeText(b.dataset.copy);
         b.classList.add('is-copied');
-        hint.textContent = 'Copied. Talk soon.';
-        setTimeout(() => { b.classList.remove('is-copied'); hint.textContent = 'Click to copy'; }, 2400);
+        hint.textContent = 'Copied';
+        clearTimeout(t);
+        t = setTimeout(() => { b.classList.remove('is-copied'); hint.textContent = idle; }, 2400);
       } catch {
         location.href = 'mailto:' + b.dataset.copy;
       }
-    })
-  );
+    });
+  });
 
   /* ------------------------------------------------- contact: quick brief
      Three taps build an email: what, when, send. The send link is a plain mailto that works
-     on its own; the taps only fill in its subject and body, so nothing leaves the page.
-     Beside it: the avatar from the top bar (cloned before setupAvatar, so it blinks too) and
-     an honest reply time, by the hour in Belgrade. */
+     on its own; the taps only fill in its subject and body, so nothing leaves the page. The
+     brief reads as that email: addressed to the avatar from the top bar (cloned before
+     setupAvatar, so it blinks too) with an honest reply time by the hour in Belgrade, and its
+     subject types itself out as the chips are picked. */
   function setupContact() {
     const slot = $('[data-av-slot]');
     const av = $('.mark__av svg');
@@ -565,6 +593,24 @@
     const subj = $('[data-subject]', qb);
     const to = send.getAttribute('href').split('?')[0];
     const groups = $$('.qb__chips', qb);
+    // the subject line types: back to what the old and new subjects share, then on to the new one
+    const hold = subj.textContent, line = subj.parentElement.parentElement;
+    let shown = '', tick = 0;
+    function typeTo(next) {
+      clearTimeout(tick);
+      if (!next) { shown = ''; subj.textContent = hold; subj.classList.add('is-empty'); line.classList.remove('is-typing'); return; }
+      if (subj.classList.contains('is-empty')) { subj.classList.remove('is-empty'); subj.textContent = ''; }
+      if (reduceMotion) { subj.textContent = shown = next; return; }
+      line.classList.add('is-typing');
+      (function step() {
+        const back = !next.startsWith(shown);
+        if (back) shown = shown.slice(0, -1);
+        else if (shown.length < next.length) shown = next.slice(0, shown.length + 1);
+        else { line.classList.remove('is-typing'); return; }
+        subj.textContent = shown;
+        tick = setTimeout(step, back ? 9 : 18);
+      })();
+    }
     function update() {
       const picked = groups.map((g) => $$('[aria-pressed="true"]', g).map((b) => b.textContent.trim()));
       const [need, when] = picked;
@@ -581,7 +627,7 @@
         'Thanks,', '',
       ].join('\r\n');
       send.href = `${to}?subject=${encodeURIComponent(s)}&body=${encodeURIComponent(body)}`;
-      subj.textContent = need.length ? `Subject: ${s}` : 'Opens your email with the brief filled in';
+      typeTo(need.length ? s : '');
     }
     groups.forEach((g) => g.addEventListener('click', (e) => {
       const b = e.target.closest('.qb__chip');

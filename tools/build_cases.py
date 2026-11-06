@@ -442,26 +442,31 @@ CONTACT = """
         <div class="ct__main">
           <h2 class="contact__title" id="contact-title">Got a brief?<br><em>Let’s make it move.</em></h2>
           <p class="contact__sub">Open to full-time roles, remote contracts and freelance projects worldwide.</p>
-          <div class="ct__me">
-            <span class="ct__av" data-av-slot aria-hidden="true"><i class="ct__dot"></i></span>
-            <p><b>Boško Kosić</b><span data-presence>Usually replies within a day</span></p>
+          <div class="ct__direct">
+            <p class="ct__k">Or reach me directly</p>
+            <ul class="ct__lines">
+              <li><button class="ct__line" type="button" data-copy="boskokosic187@gmail.com"><span class="ct__lk">Email</span><span class="ct__lv">boskokosic187@gmail.com</span><span class="ct__do"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/></svg><span data-copy-hint>Copy</span></span></button></li>
+              <li><a class="ct__line" href="https://calendly.com/boskokosic187/30min" target="_blank" rel="noopener"><span class="ct__lk">Call</span><span class="ct__lv">Book a 30-min call</span><span class="ct__do">Pick a time <i aria-hidden="true">↗</i></span></a></li>
+              <li><div class="ct__line ct__line--soc"><span class="ct__lk">Elsewhere</span><span class="ct__lv"><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" rel="noopener">LinkedIn <i aria-hidden="true">↗</i></a><a href="https://www.behance.net/bosko_kosic" target="_blank" rel="noopener">Behance <i aria-hidden="true">↗</i></a><a href="https://www.instagram.com/boskokosic/" target="_blank" rel="noopener">Instagram <i aria-hidden="true">↗</i></a></span></div></li>
+            </ul>
           </div>
-          <button class="mail" type="button" data-copy="boskokosic187@gmail.com">
-            <span class="mail__k">Email me directly</span>
-            <span class="mail__addr">boskokosic187@gmail.com</span>
-            <span class="mail__hint" data-copy-hint>Click to copy</span>
-          </button>
-          <ul class="ct__links">
-            <li><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" rel="noopener">LinkedIn <i aria-hidden="true">↗</i></a></li>
-            <li><a href="https://www.behance.net/bosko_kosic" target="_blank" rel="noopener">Behance <i aria-hidden="true">↗</i></a></li>
-            <li><a href="https://www.instagram.com/boskokosic/" target="_blank" rel="noopener">Instagram <i aria-hidden="true">↗</i></a></li>
-          </ul>
         </div>
 
         <div class="qb card" data-brief>
           <p class="qb__h"><span class="qb__lamp" aria-hidden="true"></span><b>Quick brief</b><span>3 taps · 20 seconds</span></p>
+          <dl class="qb__mail">
+            <div class="qb__to">
+              <dt>To</dt>
+              <dd><span class="ct__av" data-av-slot aria-hidden="true"><i class="ct__dot"></i></span><span class="qb__who"><b>Boško Kosić</b><span data-presence>Usually replies within a day</span></span></dd>
+            </div>
+            <div class="qb__re">
+              <dt>Subject</dt>
+              <dd><span class="qb__subj is-empty" data-subject>Pick what you need below</span><i class="qb__caret" aria-hidden="true"></i></dd>
+            </div>
+          </dl>
+          <p class="qb__hi">Hi Boško,</p>
           <div class="qb__q" role="group" aria-labelledby="qb-need">
-            <p class="qb__n" id="qb-need"><i aria-hidden="true">1</i>What do you need?</p>
+            <p class="qb__n" id="qb-need"><i aria-hidden="true">1</i>I need</p>
             <div class="qb__chips" data-pick="many">
               <button class="qb__chip" type="button" aria-pressed="false">Campaign</button>
               <button class="qb__chip" type="button" aria-pressed="false">Billboards &amp; DOOH</button>
@@ -473,34 +478,28 @@ CONTACT = """
             </div>
           </div>
           <div class="qb__q" role="group" aria-labelledby="qb-when">
-            <p class="qb__n" id="qb-when"><i aria-hidden="true">2</i>When?</p>
+            <p class="qb__n" id="qb-when"><i aria-hidden="true">2</i>Timing</p>
             <div class="qb__chips" data-pick="one">
               <button class="qb__chip" type="button" aria-pressed="false">As soon as possible</button>
               <button class="qb__chip" type="button" aria-pressed="false">In 1–3 months</button>
               <button class="qb__chip" type="button" aria-pressed="false">Just exploring</button>
             </div>
           </div>
-          <div class="qb__q">
-            <p class="qb__n"><i aria-hidden="true">3</i>Send it</p>
+          <div class="qb__end">
             <a class="qb__send" href="mailto:boskokosic187@gmail.com?subject=Project%20brief" data-send>
-              <span class="qb__go">Send the brief <i aria-hidden="true">→</i></span>
-              <span class="qb__subj" data-subject>Opens your email with the brief filled in</span>
+              <span class="qb__go"><i aria-hidden="true">3</i>Send the brief</span>
+              <span class="qb__note">Opens your email, ready to send</span>
+              <span class="qb__arr" aria-hidden="true">→</span>
             </a>
-            <p class="qb__or">Prefer to talk? <a href="https://calendly.com/boskokosic187/30min" target="_blank" rel="noopener">Book a 30-min call</a></p>
+            <p class="qb__after"><i aria-hidden="true"></i>Then I reply within a day, with questions and first ideas.</p>
           </div>
-          <p class="qb__avail"><i aria-hidden="true"></i>Taking new projects for Q4 2026</p>
         </div>
       </div>
 
-      <ol class="ct__next" aria-label="What happens next">
-        <li><b>01</b><span>You send a brief</span><small>A few lines are enough</small></li>
-        <li><b>02</b><span>I reply within a day</span><small>Usually with questions and first ideas</small></li>
-        <li><b>03</b><span>We plan it together</span><small>Scope and timeline, then we make it move</small></li>
-      </ol>
       <footer class="foot">
         <span>Designed, animated &amp; coded by Boško Kosić</span>
         <span>Belgrade · © 2026</span>
-        <span>Local time <b data-clock>--:--</b> CET</span>
+        <a class="foot__top" href="#">Back to top <i aria-hidden="true">↑</i></a>
       </footer>
     </section>"""
 
