@@ -5,7 +5,7 @@
       "slug": "live-on-the-streets",
       "format": "story",
       "title": "Live on the Streets",
-      "kicker": "Animated billboards · DOOH · ITS · ITHS · FSU",
+      "kicker": "Billboards · DOOH · Campaigns · ITS · ITHS · FSU",
       "line": "50+ billboards across Belgrade, designed for the three seconds a driver gives them.",
       "client": "ITS · ITHS · FSU",
       "years": "2024–2026",
@@ -136,99 +136,109 @@
       },
       "craft": [
         {
-          "skill": "Motion design",
-          "title": "One message, one image, *one move*",
-          "text": "The text never moves, so it can be read at any frame. Everything around it does: a scanner beat, a glitch on one word, a squeegee of colour. Fifteen seconds that loop clean on an LED screen.",
+          "skill": "Art direction",
+          "title": "Twenty years, *twenty* prizes",
+          "text": "ITS turned twenty, so the enrolment offer became twenty jubilee packages: the lowest fees of the year plus tech or sports gear. A giant 20 carries the headphones, the sneakers and the price, and the gift box comes back as a printed voucher with a satin ribbon. One key visual, every format in the same week.",
           "rows": [
             [
               {
-                "src": "PV/Bilbordi Novembar 2k26/ITS/animacija.mp4",
-                "type": "video",
-                "label": "ITS · Nov 2026 · a scanner beat carries the type"
+                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Glavni_vizual/glavni_vizual.png",
+                "type": "image",
+                "label": "ITS · 20 years · key visual — “20 jubilee packages for 20 years of ITS”"
               },
               {
-                "src": "PV/Bilbordi Novembar 2k26/ITHS/animacija.mp4",
-                "type": "video",
-                "label": "ITHS · Nov 2026 · four glitches, calm behind"
+                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Mreze_Meta/Meta_1080x1920.png",
+                "type": "image",
+                "label": "ITS · 20 years · story 9:16"
               }
             ],
             [
               {
-                "src": "D/FSU Best/Animacija_1.mp4",
-                "type": "video",
-                "label": "FSU · Dec 2025 · Pre-enrolment 2026/27"
-              },
-              {
-                "src": "D/ITS/Bilbordi Oktobar/Animacija ITS.mp4",
-                "type": "video",
-                "label": "ITS · Oct 2025 · Enrolment"
+                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Vaucer/2_Aktivni_vaucer/prednja.png",
+                "type": "image",
+                "label": "The prize · a 300 EUR gear voucher, printed as a DL gift card"
               }
             ]
           ]
         },
         {
-          "skill": "Campaign systems",
-          "title": "Every board ships *as a set*",
-          "text": "Logo, headline, intakes and contacts recomposed for every channel the same week: feed, email, website card and strip. One idea, every size, no weak link.",
+          "skill": "Event campaigns",
+          "title": "The night before, the *morning after*",
+          "text": "Freshers’ Night and Alumni Club Night share one evening: red for the new students, gold for the graduates. Before the party the date is the headline and a table is one tap away. The morning after, the confetti is. ITS and FSU run on the same grid, each in its own colour.",
           "rows": [
             [
               {
-                "src": "PV/Bilbordi Novembar 2k26/FSU/DM.png",
+                "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/DM.png",
                 "type": "image",
-                "label": "FSU · feed 1:1"
+                "label": "ITS · Freshers’ Night · the date is the headline"
               },
               {
-                "src": "PV/Bilbordi Novembar 2k26/FSU/mejl.png",
+                "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_2_Alumni_Club_Night/DM.png",
                 "type": "image",
-                "label": "FSU · email 570×390"
-              },
-              {
-                "src": "PV/Bilbordi Novembar 2k26/FSU/fi.png",
-                "type": "image",
-                "label": "FSU · website card"
+                "label": "ITS · Alumni Club Night · same grid, gold for the graduates"
               }
             ],
             [
               {
-                "src": "PV/Bilbordi Novembar 2k26/FSU/slajfna.png",
+                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_1_ITS_Brucosijada/DM.png",
                 "type": "image",
-                "label": "FSU · website strip"
+                "label": "After · ITS · Freshers’ Night"
               },
               {
-                "src": "PV/Bilbordi Novembar 2k26/ITS/SAJT.png",
+                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_2_ITS_Alumni_Club_Night/DM.png",
                 "type": "image",
-                "label": "ITS · website 1200×630"
+                "label": "After · ITS · Alumni Club Night"
+              },
+              {
+                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_3_FSU_Brucosijada/DM.png",
+                "type": "image",
+                "label": "After · FSU · Freshers’ Night"
+              },
+              {
+                "src": "PV/ITS/Odrzana Brucosijada i Alumni Club Night 2026/Post_4_FSU_Alumni_Club_Night/DM.png",
+                "type": "image",
+                "label": "After · FSU · Alumni Club Night"
               }
             ]
           ]
         },
         {
-          "skill": "Beyond the billboard",
-          "title": "Calendars, ads and *events*",
-          "text": "The same motion language runs the academic calendar, vertical ads and event boards, so a chess trophy and a graduation feel like the same schools as the enrolment drive.",
+          "skill": "Tone of voice",
+          "title": "Talk to *teenagers*, not at them",
+          "text": "ITHS is a high school, so the voice gets younger: enrolment questions as a WhatsApp chat, Halloween as a glitching pumpkin, a free AI course sold with one crossed-out word. The A4 posters take the same voice into school hallways, with a QR code to apply.",
           "rows": [
             [
               {
-                "src": "PV/ITS/Kalendar nastave ITS/kalendar-its-2026-2027-1080p.mp4",
-                "type": "video",
-                "label": "ITS · animated academic calendar 2026/27"
+                "src": "PV/Plakati A3 Promo 2k26/ITS/plakat_A4_pregled.jpg",
+                "type": "image",
+                "label": "ITS · A4 poster · “Your future starts with technology”"
               },
               {
-                "src": "D/ITS/Animirana reklama/Animacija.mp4",
-                "type": "video",
-                "label": "ITS · animated ad 9:16"
+                "src": "PV/Plakati A3 Promo 2k26/ITHS/plakat_A4_pregled.jpg",
+                "type": "image",
+                "label": "ITHS · A4 poster · “Meet the school of the future”"
+              },
+              {
+                "src": "PV/ITHS/Upis 2027-28 WhatsApp ITS ITHS FSU/ITHS/ITHS_Upis-2027-28-WhatsApp_Meta-1080x1920.png",
+                "type": "image",
+                "label": "ITHS · enrolment as a WhatsApp chat · story 9:16"
+              },
+              {
+                "src": "PV/Halloween 2026/ITS-ITHS/story.png",
+                "type": "image",
+                "label": "ITS × ITHS · Halloween story 9:16"
               }
             ],
             [
               {
-                "src": "D/ITS/trofej beograda sah/animacija.mp4",
-                "type": "video",
-                "label": "ITS · 38th Belgrade Trophy, chess"
+                "src": "PV/ITHS/ITHS AI program/SAJT.png",
+                "type": "image",
+                "label": "ITHS · free AI course · “use AI” crossed out: “think with AI”"
               },
               {
-                "src": "D/ITS/Svecana dodela diploma/1152x640.mp4",
-                "type": "video",
-                "label": "ITS · graduation ceremony"
+                "src": "PV/ITS/ITS Halloween Say BOO/DM.png",
+                "type": "image",
+                "label": "ITS · a Halloween photo frame, live in the hallway"
               }
             ]
           ]
@@ -236,7 +246,7 @@
       ],
       "result_big": "50+",
       "result_label": "billboards live across Belgrade in two years",
-      "result": "Plus animated ads and academic calendars for all three schools: one motion language across every street and screen.",
+      "result": "And the campaigns around them for all three schools — an anniversary offer, enrolment, events — in one visual language from the street to the phone.",
       "hero": [
         {
           "src": "PV/Bilbordi Novembar 2k26/FSU/animacija.mp4",
