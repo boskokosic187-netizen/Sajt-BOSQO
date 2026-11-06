@@ -903,7 +903,7 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
 @keyframes ctRun { to { transform: scaleX(1); } }
 
 /* the direct lines, as three cards under the monitor */
-.ct__tiles { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); }
+.ct__tiles { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); }
 .ct__tiles > li { display: flex; min-width: 0; }
 .ct__tile {
   flex: 1; justify-content: space-between; gap: 12px; min-height: clamp(118px, 17vh, 186px);
@@ -920,8 +920,10 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
   transition: background-color 0.25s, border-color 0.25s, color 0.25s;
 }
 .ct__do svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; }
-.ct__mail { display: block; font-weight: 800; font-stretch: 106%; font-size: clamp(19px, 9.4cqi, 46px); line-height: 1.02; letter-spacing: -0.03em; }
-.ct__mail span { display: block; color: var(--muted); transition: color 0.3s; }
+.ct__mail { /* the whole address on one line, as big as the card allows */
+  display: block; white-space: nowrap; font-weight: 800; font-stretch: 106%; font-size: clamp(15px, 7cqi, 44px); line-height: 1.05; letter-spacing: -0.03em;
+}
+.ct__mail span { color: var(--muted); transition: color 0.3s; }
 .ct__tile--mail:hover .ct__do, .ct__tile--mail:focus-visible .ct__do { border-color: var(--text); background: var(--text); color: var(--bg); }
 .ct__tile--mail:hover .ct__mail span { color: var(--text); }
 .ct__tile--mail.is-copied .ct__do { border-color: var(--sig); background: var(--sig); color: #062520; }
@@ -1084,9 +1086,28 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
 /* a small laptop: the letter a little narrower, so the board keeps its monitor wide */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .ct { grid-template-columns: minmax(0, 1fr) 440px; }
-  .ct__tiles { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .ct__tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } /* the email gets a row of its own */
+  .ct__tiles > li:first-child { grid-column: 1 / -1; }
+  .ct__tile--mail { min-height: 0; padding-block: 12px; gap: 6px; }
+  .ct__mon { min-height: 220px; }
+  .contact__sub { max-width: none; } /* two lines, not three: the title stays clear of the On air bug */
   .ct__tile { padding-inline: 14px; }
   .ct__th { font-size: 11px; letter-spacing: 0.06em; white-space: nowrap; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) and (max-height: 720px) {
+  .ct__tiles > li:not(:first-child) .ct__tile { min-height: 96px; padding-block: 10px; gap: 6px; }
+  .ct__big { font-size: clamp(36px, 14cqi, 52px); }
+  .ct__soc a { padding: 3px 0; font-size: 15px; }
+  .ct__mail { font-size: clamp(15px, 5.6cqi, 34px); }
+  .contact .contact__title { font-size: clamp(30px, 5.4cqi, 46px); }
+  .ct__mon { min-height: 208px; }
+  .qb__h { margin-bottom: 8px; }
+  .qb__mail > div { padding-block: 4px; }
+  .qb__end { padding-top: 10px; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) and (max-height: 680px) {
+  .ct__mon { min-height: 180px; }
+  .contact__sub { display: none; }
 }
 /* tablet and portrait: one column, the monitor wide, the letter under the cards */
 @media (min-width: 768px) and (max-width: 1023px), (min-width: 768px) and (orientation: portrait) {
@@ -1240,7 +1261,7 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
   .ct__tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .ct__tiles > li:first-child { grid-column: 1 / -1; }
   .ct__tile { min-height: 132px; }
-  .ct__mail { font-size: clamp(24px, 10.6cqi, 40px); }
+  .ct__mail { font-size: clamp(17px, 7cqi, 34px); }
   .ct__big { font-size: clamp(40px, 34cqi, 64px); }
   .ct__note { font-size: 13px; }
   .qb__h span:last-child { display: none; }
