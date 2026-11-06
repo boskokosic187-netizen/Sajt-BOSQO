@@ -805,7 +805,78 @@ def lab_scrub(c, lab, R, media):
       </div>"""
 
 
-LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub}
+def lab_flip(c, lab, R, media):
+    n = len(lab["names"])
+    names = E(json.dumps(lab["names"], ensure_ascii=False, separators=(",", ":")))
+    zones = "".join(
+        f'<g class="fl__z" style="--i:{j}"><rect x="{x0 * 100}" y="{y0 * 100}" width="{(x1 - x0) * 100}" height="{(y1 - y0) * 100}" rx="0.6"/>'
+        f'<text x="{x0 * 100 + 1.2}" y="{y0 * 100 + 3.6}">{E(t)}</text></g>'
+        for j, (x0, y0, x1, y1, t) in enumerate(lab["zones"]))
+    m = lab["margin"] * 100
+    cols = "".join(f'<line x1="{m + (100 - 2 * m) * k / 12:.2f}" y1="0" x2="{m + (100 - 2 * m) * k / 12:.2f}" y2="100"/>' for k in range(1, 12))
+    return f"""
+      <div class="sc fl" data-lab="flip" data-base="{R}{lab['base']}" data-n="{n}" data-names="{names}">
+        <div class="sc__copy">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+          <div class="fl__now">
+            <p class="fl__count"><b data-fl-i>01</b><span>/ {n:02d}</span></p>
+            <p class="fl__name" data-fl-name aria-live="polite">{E(lab['names'][0])}</p>
+          </div>
+          <div class="sc__meter">
+            <div class="sc__track" aria-hidden="true"><i data-bar></i></div>
+            <input class="sc__range" type="range" min="0" max="{n - 1}" value="0" step="1" aria-label="Flip through the series" data-range>
+          </div>
+          <div class="mx__act">
+            <button class="mx__spin" type="button" data-riffle><span>Riffle through</span><kbd aria-hidden="true">Space</kbd></button>
+            <label class="fl__sys"><input type="checkbox" data-sys><span class="fl__sw" aria-hidden="true"></span>Show the system</label>
+          </div>
+        </div>
+        <div class="sc__stage">
+          <div class="sc__frame fl__frame" style="--ar:1">
+            <img class="sc__poster" src="{R}{lab['base']}00.webp" alt="{E(lab['alt'])}" width="720" height="720" decoding="async">
+            <canvas width="720" height="720" aria-hidden="true"></canvas>
+            <svg class="fl__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <g class="fl__cols">{cols}</g>
+              <rect class="fl__margin" x="{m}" y="{m}" width="{100 - 2 * m}" height="{100 - 2 * m}"/>
+              {zones}
+            </svg>
+            <span class="sc__hint" aria-hidden="true"><i>⟷</i>Drag across the post</span>
+          </div>
+        </div>
+      </div>"""
+
+
+def lab_gallery(c, lab, R, media):
+    pieces = []
+    for j, (it, m) in enumerate(zip(lab["media"], media["lab"])):
+        ar = m["w"] / m["h"]
+        pieces.append(
+            f'<figure class="gw__piece{" is-sq" if ar > 0.85 else ""}" style="--ar:{ar:.4f}" data-i="{j}">'
+            f'<span class="gw__light" aria-hidden="true"></span>'
+            f'<span class="gw__frame">{picture(m, "(min-width: 768px) 22vw, 50vw", alt=it["title"])}</span>'
+            f'<figcaption class="gw__label"><b>{E(it["title"])}</b><span>{E(it["meta"])}</span></figcaption></figure>')
+    n = len(pieces)
+    return f"""
+      <div class="gw" data-lab="gallery" data-n="{n}">
+        <div class="db__head">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+        </div>
+        <div class="gw__room">
+          <div class="gw__track">{"".join(pieces)}</div>
+          <span class="gw__floor" aria-hidden="true"></span>
+          <span class="sc__hint gw__hint" aria-hidden="true"><i>⟷</i>Drag to walk</span>
+        </div>
+        <div class="gw__ctrl">
+          <button class="gw__btn" type="button" data-step="-1" aria-label="Previous piece">←</button>
+          <p class="gw__now" aria-live="polite"><b data-gw-i>01</b><span>/ {n:02d}</span><em data-gw-t>{E(lab['media'][0]['title'])}</em></p>
+          <button class="gw__btn" type="button" data-step="1" aria-label="Next piece">→</button>
+        </div>
+      </div>"""
+
+
+LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub, "flip": lab_flip, "gallery": lab_gallery}
 
 
 def render_story(c, i, cases, media):

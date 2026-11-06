@@ -325,7 +325,7 @@
   content: ""; position: absolute; inset: 0; background: rgba(5, 6, 8, 0.28); pointer-events: none; transition: opacity 0.4s;
 }
 .lp__lens {
-  --d: clamp(190px, 25vw, 380px);
+  --d: clamp(130px, 25vw, 380px);
   position: absolute; z-index: 3; left: 0; top: 0; width: var(--d); height: var(--d); border-radius: 50%; overflow: hidden;
   transform: translate(-50%, -50%); background: #000; pointer-events: none;
   box-shadow: 0 0 0 2px rgba(242, 239, 234, 0.9), 0 0 0 7px rgba(10, 10, 11, 0.45), 0 24px 60px -10px rgba(0, 0, 0, 0.9);
@@ -356,7 +356,7 @@
 .lp__foot { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 18px 40px; align-items: start; margin-top: 18px; }
 .lp__list { display: flex; flex-wrap: wrap; gap: 8px; }
 .lp__spot {
-  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 10px; border-radius: 999px; border: 1px solid var(--line-2);
+  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 10px; border-radius: 999px; border: 1px solid var(--line-2); white-space: nowrap;
   color: var(--muted); font-weight: 600; font-size: 15px; transition: background-color 0.25s, color 0.25s, border-color 0.25s;
 }
 .lp__spot span { color: var(--rec); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 11.5px; letter-spacing: 0.06em; }
@@ -415,4 +415,92 @@
   .sc__meter { order: 4; margin-top: 0; }
   .sc .mx__act { order: 5; margin-top: 4px; }
   .sc__frame { height: min(70vh, 680px, 150vw); }
+}
+
+/* ---- lab: Flip the series (33 posts on one canvas; the system can be shown over it) ---- */
+.fl__frame { border-radius: 10px; background: #0b0c10; height: auto; width: min(100%, 76vh, 780px); } /* square: as wide as the column allows */
+.fl__now { margin-top: clamp(22px, 3.4vh, 36px); }
+.fl__count { display: flex; align-items: baseline; gap: 8px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
+.fl__count b { color: var(--text); font-family: var(--f-sans); font-stretch: 110%; font-weight: 800; font-size: 44px; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.fl__name { margin-top: 8px; min-height: 2.5em; font-family: var(--f-serif); font-style: italic; font-size: clamp(22px, 1.9vw, 30px); line-height: 1.15; }
+.fl .sc__meter { margin-top: 14px; }
+.fl__sys { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; font-size: 15px; }
+.fl__sys input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.fl__sw { position: relative; width: 44px; height: 26px; border-radius: 999px; background: rgba(242, 239, 234, 0.16); transition: background-color 0.25s; }
+.fl__sw::after { content: ""; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--text); transition: transform 0.3s var(--out); }
+.fl__sys input:checked + .fl__sw { background: var(--sig); }
+.fl__sys input:checked + .fl__sw::after { transform: translateX(18px); background: #000; }
+.fl__sys input:focus-visible + .fl__sw { outline: 2px solid var(--sig); outline-offset: 3px; }
+.fl__grid { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.4s; overflow: visible; }
+.fl.is-sys .fl__grid { opacity: 1; }
+.fl.is-sys canvas, .fl.is-sys .sc__poster { filter: saturate(0.5) brightness(0.72); transition: filter 0.4s; }
+.fl__cols line { stroke: rgba(102, 238, 216, 0.22); stroke-width: 0.15; vector-effect: non-scaling-stroke; }
+.fl__margin { fill: none; stroke: rgba(102, 238, 216, 0.55); stroke-width: 1; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+.fl__z rect { fill: rgba(102, 238, 216, 0.08); stroke: var(--sig); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.fl__z text { fill: var(--sig); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 2.6px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ---- lab: Walk the gallery (a year of FSU shows, framed and lit on one wall) ---- */
+.gw { margin-top: clamp(20px, 3vh, 36px); }
+.gw__room {
+  position: relative; overflow: hidden; margin-top: clamp(22px, 3.4vh, 36px); border-radius: 10px; height: min(74vh, 720px, 120vw);
+  cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(255, 236, 214, 0.1), transparent 70%),
+    linear-gradient(#1b1a1c 0%, #19181a 70%, #0d0d0e 70.2%, #090909 100%);
+  box-shadow: inset 0 0 0 1px rgba(242, 239, 234, 0.08), inset 0 -120px 120px -60px rgba(0, 0, 0, 0.7);
+}
+.gw__room.is-dragging { cursor: grabbing; }
+.gw__track { position: absolute; left: 0; top: 0; bottom: 34%; display: flex; align-items: flex-end; gap: clamp(150px, 15vw, 260px); padding: 0 50%; will-change: transform; }
+.gw__piece { position: relative; flex: none; height: 72%; aspect-ratio: var(--ar); margin: 0; transition: opacity 0.5s, filter 0.5s; filter: brightness(0.5) saturate(0.8); }
+.gw__piece.is-sq { height: 52%; top: -9%; } /* hung at the same eye level as the A3 posters (top: % of the wall's height) */
+.gw__piece.is-lit { filter: none; }
+.gw__frame {
+  position: relative; display: block; width: 100%; height: 100%; padding: 4.5%; background: #f4f1ec; border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 26px 50px -18px rgba(0, 0, 0, 0.85);
+}
+.gw__piece.is-sq .gw__frame { padding: 6%; background: #101012; }
+.gw__frame picture, .gw__frame img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.gw__light { /* a track light's pool on the wall */
+  position: absolute; left: 50%; bottom: 30%; width: 260%; height: 190%; transform: translateX(-50%); pointer-events: none;
+  background: radial-gradient(42% 46% at 50% 38%, rgba(255, 238, 214, 0.2), rgba(255, 238, 214, 0.05) 60%, transparent 72%);
+  opacity: 0.25; transition: opacity 0.6s;
+}
+.gw__piece.is-lit .gw__light { opacity: 1; }
+.gw__label {
+  position: absolute; left: 100%; bottom: 0; margin-left: clamp(16px, 2vw, 28px); width: max-content; max-width: min(150px, 12vw); padding: 8px 10px; background: #ece8e1; color: #141414; border-radius: 1px;
+  display: grid; gap: 2px; opacity: 0; transform: translateY(6px); transition: opacity 0.45s, transform 0.5s var(--out);
+}
+.gw__piece.is-lit .gw__label { opacity: 1; transform: none; }
+.gw__label b { font-weight: 700; font-size: 13px; line-height: 1.2; }
+.gw__label span { color: #555; font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+.gw__frame::after { /* its shadow on the floor */
+  content: ""; position: absolute; left: 6%; right: 6%; bottom: -16%; height: 9%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent); pointer-events: none;
+}
+.gw__floor { position: absolute; left: 0; right: 0; bottom: 0; height: 30%; pointer-events: none; background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)); }
+.gw__hint { bottom: 16px; }
+.gw.is-used .gw__hint { opacity: 0; }
+.gw__ctrl { display: flex; align-items: center; gap: 16px; margin-top: 16px; }
+.gw__btn { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-2); font-size: 18px; transition: background-color 0.25s, color 0.25s; }
+.gw__btn:hover { background: var(--text); color: var(--bg); }
+.gw__now { display: flex; align-items: baseline; gap: 8px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
+.gw__now b { color: var(--text); font-family: var(--f-sans); font-stretch: 110%; font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; }
+.gw__now em { margin-left: 10px; color: var(--text); font-size: 22px; letter-spacing: 0; text-transform: none; }
+@media (max-width: 767px) {
+  .gw__room { height: min(64vh, 560px); }
+  .gw__track { gap: 56px; }
+  .gw__label { left: 0; bottom: auto; top: 100%; margin: 14px 0 0; max-width: 170px; }
+  .gw__now em { font-size: 18px; }
+}
+
+@media (max-width: 1023px) {
+  .fl .fl__now { order: 4; margin-top: 0; }
+  .fl .sc__meter { order: 5; }
+  .fl .mx__act { order: 6; }
+}
+
+/* the flip's hint sits top right, off the post's title */
+.fl .sc__hint { left: auto; right: 14px; bottom: auto; top: 14px; transform: none; }
+@media (max-width: 767px) {
+  /* a one-word title fits the phone whole: no break inside PERSONAL or STREETS */
+  .page-story .case-title { font-size: clamp(40px, 12.2vw, 64px); overflow-wrap: normal; }
 }

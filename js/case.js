@@ -440,6 +440,10 @@
     const N = +el.dataset.n, fps = +el.dataset.fps || 12, base = el.dataset.base;
     const frame = $('.sc__frame', el), cv = $('canvas', frame), ctx = cv.getContext('2d');
     const poster = $('.sc__poster', frame), tc = $('[data-sctc]', el), bar = $('[data-bar]', el), range = $('[data-range]', el);
+    // the same lab flips a series of posts: a name and a count for each, and the system to show over it
+    const names = el.dataset.names ? JSON.parse(el.dataset.names) : null;
+    const flI = $('[data-fl-i]', el), flName = $('[data-fl-name]', el), sys = $('[data-sys]', el);
+    const pad = String(N - 1).length < 3 ? 2 : 3;
     const imgs = new Array(N);
     let cur = 0, shown = -1, playing = 0, coast = 0;
     const order = [];
@@ -452,7 +456,7 @@
         const im = new Image();
         im.onload = () => { imgs[i] = im; if (shown < 0 || Math.abs(i - cur) < Math.abs(nearest(cur) - cur) + 1) draw(); ok(); };
         im.onerror = ok;
-        im.src = `${base}${String(i).padStart(3, '0')}.webp`;
+        im.src = `${base}${String(i).padStart(pad, '0')}.webp`;
       }))).then(() => loadNext(q));
     })(order.slice());
     function nearest(i) {
@@ -471,9 +475,15 @@
         shown = i;
         poster.style.visibility = 'hidden';
       }
-      const t = cur * (24 / fps) ; // source frames at 24 fps, every second one kept
-      const s = Math.floor(t / 24), f = Math.floor(t % 24);
-      tc.textContent = `00:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`;
+      if (tc) {
+        const t = cur * (24 / fps); // source frames at 24 fps, every second one kept
+        const s = Math.floor(t / 24), f = Math.floor(t % 24);
+        tc.textContent = `00:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`;
+      }
+      if (names) {
+        flI.textContent = String(cur + 1).padStart(2, '0');
+        flName.textContent = names[cur];
+      }
       bar.style.transform = `scaleX(${(cur / (N - 1)).toFixed(4)})`;
       range.value = cur;
     }
@@ -530,8 +540,14 @@
     frame.addEventListener('pointerup', end);
     frame.addEventListener('pointercancel', end);
     range.addEventListener('input', () => { stop(); el.classList.add('is-used'); set(+range.value); });
-    $('[data-pour]', el).addEventListener('click', play);
-    $('[data-back]', el).addEventListener('click', () => { stop(); set(0); });
+    $('[data-pour], [data-riffle]', el).addEventListener('click', play);
+    const back = $('[data-back]', el);
+    if (back) back.addEventListener('click', () => { stop(); set(0); });
+    if (sys) {
+      const show = () => el.classList.toggle('is-sys', sys.checked);
+      sys.addEventListener('change', show);
+      show(); // ticked before the lab woke up
+    }
     let onScreen = false;
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (!onScreen) stop(); }, { threshold: 0.5 }).observe(frame);
@@ -539,7 +555,7 @@
     addEventListener('keydown', (e) => {
       if (e.code !== 'Space' || !onScreen || e.repeat) return;
       const t = e.target;
-      if (t && t !== document.body && t.closest('input:not([data-range]), textarea, select, [contenteditable], a, button:not([data-pour])')) return;
+      if (t && t !== document.body && t.closest('input:not([data-range]), textarea, select, [contenteditable], a, button:not([data-pour]):not([data-riffle])')) return;
       e.preventDefault();
       if (playing) stop(); else play();
     });
@@ -547,7 +563,91 @@
     if (!reduce) onceSeen(frame, () => setTimeout(() => { if (!el.classList.contains('is-used')) play(); }, 400), 0.6);
   }
 
-  const LABS = { mixer, driveby, loupe, scrub };
+  /* ------------------------------------------------------------ Walk the gallery
+     A year of shows framed on one wall. Drag to walk (it coasts and settles on the nearest
+     piece), or step with the arrows; the piece in front of you is lit and gets its wall label.
+     Until the visitor takes over, it walks on its own, one piece at a time. */
+  function gallery(el) {
+    const room = $('.gw__room', el), track = $('.gw__track', el), pieces = $$('.gw__piece', el);
+    const iOut = $('[data-gw-i]', el), tOut = $('[data-gw-t]', el);
+    let x = 0, cur = -1, raf = 0, auto = 0, touched = false, cs = [];
+    const measure = () => { cs = pieces.map((p) => p.offsetLeft + p.offsetWidth / 2); };
+    const mid = () => room.clientWidth / 2;
+    const clampX = (v) => Math.max(mid() - cs[cs.length - 1], Math.min(mid() - cs[0], v));
+    function nearestTo(px) {
+      const c = mid() - px;
+      let k = 0;
+      cs.forEach((v, j) => { if (Math.abs(v - c) < Math.abs(cs[k] - c)) k = j; });
+      return k;
+    }
+    function setX(v) {
+      x = clampX(v);
+      track.style.transform = `translateX(${x.toFixed(1)}px)`;
+      const k = nearestTo(x);
+      if (k !== cur) {
+        cur = k;
+        pieces.forEach((p, j) => p.classList.toggle('is-lit', j === k));
+        iOut.textContent = String(k + 1).padStart(2, '0');
+        tOut.textContent = $('.gw__label b', pieces[k]).textContent;
+        // the next two pictures load before you get there
+        [k + 1, k + 2].forEach((j) => { const im = pieces[j] && $('img', pieces[j]); if (im) im.loading = 'eager'; });
+      }
+    }
+    function goTo(i, ms = 900) {
+      cancelAnimationFrame(raf);
+      const to = clampX(mid() - cs[Math.max(0, Math.min(pieces.length - 1, i))]);
+      if (reduce || !ms) { setX(to); return; }
+      const from = x, t0 = performance.now();
+      const ease = (t) => 1 - Math.pow(1 - t, 3);
+      const step = (now) => {
+        const t = Math.min(1, (now - t0) / ms);
+        setX(from + (to - from) * ease(t));
+        if (t < 1) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    }
+    function take() { touched = true; clearInterval(auto); el.classList.add('is-used'); }
+    let x0 = null, start = 0, vx = 0, lx = 0, lt = 0;
+    room.addEventListener('pointerdown', (e) => {
+      take();
+      cancelAnimationFrame(raf);
+      x0 = e.clientX; start = x; lx = e.clientX; lt = performance.now(); vx = 0;
+      room.classList.add('is-dragging');
+      if (e.pointerType !== 'touch') room.setPointerCapture(e.pointerId);
+    });
+    room.addEventListener('pointermove', (e) => {
+      if (x0 === null) return;
+      setX(start + (e.clientX - x0));
+      const now = performance.now();
+      vx = (e.clientX - lx) / Math.max(1, now - lt); lx = e.clientX; lt = now;
+    });
+    const end = () => {
+      if (x0 === null) return;
+      x0 = null;
+      room.classList.remove('is-dragging');
+      goTo(nearestTo(clampX(x + vx * 260)), 650); // where the throw would land, then the nearest piece
+    };
+    room.addEventListener('pointerup', end);
+    room.addEventListener('pointercancel', end);
+    $$('[data-step]', el).forEach((b) => b.addEventListener('click', () => { take(); goTo(cur + +b.dataset.step); }));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { take(); goTo(cur + 1); }
+      if (e.key === 'ArrowLeft') { take(); goTo(cur - 1); }
+    });
+    const fit = () => { measure(); goTo(Math.max(0, cur), 0); };
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(room); else addEventListener('resize', fit);
+    // pictures arrive square or A3 and change the widths: measure again
+    $$('img', track).forEach((im) => im.addEventListener('load', fit, { once: true }));
+    fit();
+    if (!reduce) {
+      onceSeen(room, () => {
+        if (touched) return;
+        auto = setInterval(() => { if (!touched) goTo(cur + 1 < pieces.length ? cur + 1 : 0, 1100); }, 2800);
+      }, 0.5);
+    }
+  }
+
+  const LABS = { mixer, driveby, loupe, scrub, flip: scrub, gallery };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];
     if (f) whenNear(el, () => f(el));
