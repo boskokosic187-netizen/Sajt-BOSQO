@@ -359,9 +359,9 @@
     const CUES = {
       rule: 'main > section:not(.hero) > .sec-head',
       lines: '.case-title, .reel__title, .work__title, .process__title, .about__title, .contact__title',
-      screen: '.reel__screen, .row, .cover__item, .case-next',
+      screen: '.reel__screen, .row, .cover__item, .case-next, .ct__mon',
       rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
-      stack: '.case-meta, .ct__main, .story, .hl, .blk__head, .reel__chapters, .talk',
+      stack: '.case-meta, .ct__tiles, .story, .hl, .blk__head, .reel__chapters, .talk',
       panel: '.qb',
     };
     // what the cut brings in from the page before (the case's title and key visual) is already there
@@ -640,20 +640,78 @@
     update();
     send.addEventListener('click', () => { if (window.gtag) window.gtag('event', 'generate_lead', { method: 'quick_brief' }); });
 
-    // the same soft pointer light as the About cards
+    // the same soft pointer light as the About cards, on the letter and the three cards
     if (mqHover.matches && !reduceMotion) {
-      let x = 0, y = 0, raf = 0;
-      qb.addEventListener('pointermove', (e) => {
+      let card = null, x = 0, y = 0, raf = 0;
+      qb.closest('.contact').addEventListener('pointermove', (e) => {
+        card = e.target.closest('.card');
+        if (!card) return;
         x = e.clientX;
         y = e.clientY;
         if (!raf) raf = requestAnimationFrame(() => {
           raf = 0;
-          const r = qb.getBoundingClientRect();
-          qb.style.setProperty('--mx', x - r.left + 'px');
-          qb.style.setProperty('--my', y - r.top + 'px');
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', x - r.left + 'px');
+          card.style.setProperty('--my', y - r.top + 'px');
         });
       });
     }
+  }
+
+  /* --------------------------------------- contact: the monitor
+     The eight wall projects on air behind the title, one clip after another: two video
+     layers, the next one loaded while the current one plays and faded in when it ends; the
+     bug names what is on, the red line under the picture runs with the clip. Only while the
+     monitor is in view; in lite mode and with reduced motion the still stays (lite: until
+     motion is asked for). */
+  function setupContactMonitor() {
+    const mon = $('[data-ct-mon]');
+    if (!mon) return;
+    const base = mon.dataset.base;
+    const list = mon.dataset.loops.split(',').map((x) => x.split('|'));
+    const vids = $$('.ct__pix video', mon), now = $('[data-ct-now]', mon), run = $('.ct__run', mon);
+    let k = 0, cur = 0, started = false, inView = false;
+    const at = (i) => list[i % list.length];
+    function cue(v, i) {
+      v.poster = base + at(i)[0] + '.webp';
+      v.src = base + at(i)[0] + '.mp4';
+      v.preload = 'auto';
+      v.load();
+    }
+    function cut() {
+      const v = vids[cur], o = vids[1 - cur];
+      v.currentTime = 0;
+      const pr = v.play();
+      if (pr) pr.catch(() => {});
+      v.classList.add('is-on');
+      o.classList.remove('is-on');
+      now.classList.add('is-out');
+      setTimeout(() => { now.textContent = at(k)[1]; now.classList.remove('is-out'); }, 250);
+      run.classList.remove('is-go');
+      void run.offsetWidth;
+      run.style.setProperty('--d', (v.duration || 4) + 's');
+      run.classList.add('is-go');
+      setTimeout(() => { if (!o.classList.contains('is-on')) cue(o, k + 1); }, 800); // after the fade: the next clip loads underneath
+    }
+    vids.forEach((v) => v.addEventListener('ended', () => {
+      if (v !== vids[cur]) return;
+      k++;
+      cur = 1 - cur;
+      if (inView) cut();
+    }));
+    const start = () => {
+      if (lite || reduceMotion || !('IntersectionObserver' in window)) return;
+      new IntersectionObserver(([en]) => {
+        inView = en.isIntersecting;
+        if (inView && !started) { started = true; cue(vids[0], 0); cut(); }
+        else if (inView) {
+          const v = vids[cur];
+          if (v.ended) { k++; cur = 1 - cur; cut(); } else { const pr = v.play(); if (pr) pr.catch(() => {}); run.style.animationPlayState = ''; }
+        } else if (started) { vids[cur].pause(); run.style.animationPlayState = 'paused'; }
+      }, { threshold: 0.2 }).observe(mon);
+    };
+    if (lite && !reduceMotion) onLiteOff.push(start);
+    start();
   }
 
   /* --------------------------------------------------- dialog helpers */
@@ -3427,6 +3485,7 @@
 
   setupIntro();
   setupContact();
+  setupContactMonitor();
   setupAvatar();
   setupHome();
   setupProcess();

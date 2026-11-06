@@ -839,58 +839,107 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
   .row { grid-column: auto; }
 }
 
-/* ---- contact: one screen, two ways in. Left, the title and the direct lines: one row each,
-   a label, the value, what a click does. Right, the quick brief written as the email it becomes:
-   addressed to a face, its subject typing itself as the chips are picked, and one orange
-   button, the only filled orange thing in the section ---- */
+/* ---- contact: one board, edge to edge, no hole in the middle. Left, a program monitor: the
+   eight wall projects on air one after another with the title over them as a lower third,
+   and under it three cards for the direct lines (email, a call, the profiles). Right, the
+   quick brief written as the email it becomes: addressed to a face, its subject typing itself
+   as the chips are picked, one orange button, the only filled orange thing here ---- */
 .contact { position: relative; isolation: isolate; }
-.contact::before { /* a warm light behind the brief */
+.contact::before { /* a warm light behind the board */
   content: ""; position: absolute; z-index: -1; right: -10%; top: 12%; width: 70%; height: 80%; pointer-events: none;
   background: radial-gradient(closest-side, rgba(255, 77, 31, 0.11), transparent 72%);
 }
-.ct { display: grid; grid-template-columns: minmax(0, 1fr) clamp(400px, 46vw, 680px); gap: clamp(32px, 5.5vw, 120px); margin-top: clamp(22px, 3.4vh, 44px); }
-.ct__main { display: flex; flex-direction: column; min-width: 0; }
-.contact .contact__title { font-size: clamp(44px, min(5.4vw, 10.6vh), 108px); }
-.contact__sub { margin-top: clamp(14px, 2.2vh, 24px); color: var(--muted); font-size: clamp(16px, 1.1vw, 19px); max-width: 40ch; }
+.ct { display: grid; grid-template-columns: minmax(0, 1fr) clamp(440px, 43vw, 700px); gap: var(--gap); margin-top: clamp(16px, 2.8vh, 34px); }
+.ct__main { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--gap); min-width: 0; }
 
-/* the direct lines */
-.ct__direct { margin-top: clamp(28px, 5vh, 60px); max-width: 700px; }
-.ct__k, .ct__lk {
-  color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
+/* the monitor: the work runs, the title sits on it like a lower third */
+.ct__mon {
+  --mp: clamp(18px, 2.1vw, 34px);
+  position: relative; isolation: isolate; overflow: hidden; min-height: 300px; border-radius: 1.25em;
+  border: 1px solid rgba(242, 239, 234, 0.07); container-type: inline-size;
+  background: radial-gradient(90% 120% at 0% 100%, rgba(255, 77, 31, 0.1), transparent 60%), #0e0e10;
 }
-.ct__k { margin-bottom: clamp(8px, 1.4vh, 14px); }
-.ct__lines { border-top: 1px solid var(--line-2); }
-.ct__lines > li { border-bottom: 1px solid var(--line); }
-.ct__line {
-  position: relative; isolation: isolate; display: grid; grid-template-columns: 7.4em minmax(0, 1fr) auto; align-items: center; column-gap: 16px;
-  width: 100%; min-height: clamp(54px, 7.4vh, 76px); padding: 8px 2px; text-align: left;
+.ct__pix { /* the picture takes the right of the screen and fades in from the title side, so the work and the title never sit on each other */
+  position: absolute; inset: 0 0 0 38%; z-index: -2;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 42%); mask-image: linear-gradient(to right, transparent, #000 42%);
 }
-.ct__line::before { /* a soft light comes up behind the row under the pointer */
-  content: ""; position: absolute; z-index: -1; inset: 3px -12px; border-radius: 12px; background: rgba(242, 239, 234, 0.045);
-  opacity: 0; transition: opacity 0.25s;
+.ct__pix img, .ct__pix video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ct__pix video { opacity: 0; transition: opacity 0.7s var(--out); }
+.ct__pix video.is-on { opacity: 1; }
+.ct__mon::after { /* a little shade under the bug and along the foot, for the clock and the run line */
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(8, 8, 9, 0.55), rgba(8, 8, 9, 0) 20%, rgba(8, 8, 9, 0) 80%, rgba(8, 8, 9, 0.45));
 }
-.ct__lv {
-  min-width: 0; overflow-wrap: anywhere;
-  font-weight: 700; font-stretch: 106%; font-size: clamp(18px, 1.45vw, 26px); line-height: 1.15; letter-spacing: -0.02em;
-  transition: translate 0.4s var(--out);
+.ct__mon::before { /* the title-safe corners of a broadcast monitor */
+  --c: rgba(242, 239, 234, 0.85);
+  content: ""; position: absolute; inset: 12px; z-index: 1; pointer-events: none; opacity: 0.5;
+  background:
+    linear-gradient(var(--c), var(--c)) 0 0 / 16px 1.5px, linear-gradient(var(--c), var(--c)) 0 0 / 1.5px 16px,
+    linear-gradient(var(--c), var(--c)) 100% 0 / 16px 1.5px, linear-gradient(var(--c), var(--c)) 100% 0 / 1.5px 16px,
+    linear-gradient(var(--c), var(--c)) 0 100% / 16px 1.5px, linear-gradient(var(--c), var(--c)) 0 100% / 1.5px 16px,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 16px 1.5px, linear-gradient(var(--c), var(--c)) 100% 100% / 1.5px 16px;
+  background-repeat: no-repeat;
 }
-.ct__do {
-  display: inline-flex; align-items: center; gap: 7px; color: var(--muted); white-space: nowrap;
+.ct__bug {
+  position: absolute; left: var(--mp); right: var(--mp); top: var(--mp); display: flex; align-items: center; gap: 8px;
   font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
-  transition: color 0.2s;
 }
-.ct__do svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
-.ct__do i, .ct__line--soc i { font-style: normal; display: inline-block; transition: translate 0.3s var(--out), color 0.2s; }
-a.ct__line:hover::before, button.ct__line:hover::before, .ct__line:focus-visible::before { opacity: 1; }
-a.ct__line:hover .ct__lv, button.ct__line:hover .ct__lv { translate: 6px 0; }
-a.ct__line:hover .ct__do, button.ct__line:hover .ct__do { color: var(--text); }
-a.ct__line:hover .ct__do i { translate: 2px -2px; color: var(--rec); }
-.ct__line.is-copied .ct__do, button.ct__line.is-copied:hover .ct__do { color: var(--sig); }
-.ct__line--soc .ct__lv { display: flex; flex-wrap: wrap; gap: 4px clamp(18px, 1.8vw, 30px); }
-.ct__line--soc a { display: inline-flex; gap: 6px; transition: color 0.2s; }
-.ct__line--soc a i { font-size: 0.7em; color: var(--muted); }
-.ct__line--soc a:hover { color: var(--rec); }
-.ct__line--soc a:hover i { translate: 2px -2px; color: var(--rec); }
+.ct__bug > * { white-space: nowrap; }
+.ct__tally { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px 6px 9px; border-radius: 999px; background: var(--rec); color: #140805; font-weight: 800; }
+.ct__tally i { width: 7px; height: 7px; border-radius: 50%; background: #140805; animation: blink 1.2s steps(2, jump-none) infinite; }
+.ct__now, .ct__tc { /* small dark glass, so they read on a white frame too */
+  padding: 6px 11px; border-radius: 999px; color: rgba(242, 239, 234, 0.9);
+  background: rgba(10, 10, 11, 0.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.ct__now { transition: opacity 0.3s; }
+.ct__now.is-out { opacity: 0; }
+.ct__tc { margin-left: auto; white-space: nowrap; }
+.ct__tc b { color: var(--sig); font-weight: 700; font-variant-numeric: tabular-nums; }
+.ct__lower { position: absolute; left: var(--mp); right: var(--mp); bottom: calc(var(--mp) + 4px); }
+.contact .contact__title { font-size: clamp(36px, 7.2cqi, 112px); text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+.contact__sub { margin-top: clamp(10px, 1.6vh, 18px); max-width: min(46ch, 46cqi); color: rgba(242, 239, 234, 0.8); font-size: clamp(14.5px, 1.05vw, 19px); }
+.ct__run { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--rec); transform: scaleX(0); transform-origin: left; }
+.ct__run.is-go { animation: ctRun var(--d, 4s) linear forwards; }
+@keyframes ctRun { to { transform: scaleX(1); } }
+
+/* the direct lines, as three cards under the monitor */
+.ct__tiles { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); }
+.ct__tiles > li { display: flex; min-width: 0; }
+.ct__tile {
+  flex: 1; justify-content: space-between; gap: 12px; min-height: clamp(118px, 17vh, 186px);
+  padding: clamp(14px, 2vh, 22px) clamp(16px, 1.4vw, 24px); text-align: left; container-type: inline-size;
+}
+.ct__th {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%;
+  color: rgba(242, 239, 234, 0.6); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.ct__th > span:first-child { display: inline-flex; align-items: center; gap: 0.75em; }
+.ct__th > span:first-child::before { content: ""; flex: none; width: 0.55em; height: 0.55em; border-radius: 0.12em; background: var(--rec); }
+.ct__do {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--text);
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+.ct__do svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; }
+.ct__mail { display: block; font-weight: 800; font-stretch: 106%; font-size: clamp(19px, 9.4cqi, 46px); line-height: 1.02; letter-spacing: -0.03em; }
+.ct__mail span { display: block; color: var(--muted); transition: color 0.3s; }
+.ct__tile--mail:hover .ct__do, .ct__tile--mail:focus-visible .ct__do { border-color: var(--text); background: var(--text); color: var(--bg); }
+.ct__tile--mail:hover .ct__mail span { color: var(--text); }
+.ct__tile--mail.is-copied .ct__do { border-color: var(--sig); background: var(--sig); color: #062520; }
+.ct__arr { font-style: normal; font-size: 17px; color: var(--text); transition: translate 0.3s var(--out), color 0.2s; }
+.ct__tile--call:hover .ct__arr { translate: 3px -3px; color: var(--rec); }
+.ct__big { display: flex; align-items: baseline; gap: 8px; font-weight: 800; font-stretch: 112%; font-size: clamp(36px, 30cqi, 80px); line-height: 0.86; letter-spacing: -0.04em; }
+.ct__big small { color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.ct__tile--call:hover .ct__big { color: var(--rec); }
+.ct__big { transition: color 0.3s; }
+.ct__note { color: var(--muted); font-size: 13.5px; line-height: 1.3; }
+.ct__soc { display: grid; width: 100%; }
+.ct__soc a {
+  display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-top: 1px solid var(--line);
+  font-weight: 650; font-size: clamp(15px, 1.05vw, 18px); transition: color 0.2s;
+}
+.ct__soc a i { font-style: normal; color: var(--muted); transition: translate 0.3s var(--out), color 0.2s; }
+.ct__soc a:hover { color: var(--rec); }
+.ct__soc a:hover i { translate: 2px -2px; color: var(--rec); }
 
 /* the quick brief, as a letter */
 .qb { padding: clamp(18px, 2.7vh, 32px) clamp(20px, 1.9vw, 34px); font-size: 15px; }
@@ -900,7 +949,7 @@ a.ct__line:hover .ct__do i { translate: 2px -2px; color: var(--rec); }
 }
 .qb__h b { color: var(--text); font-weight: 700; }
 .qb__h span:last-child { margin-left: auto; }
-.qb__lamp { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 0 4px rgba(255, 77, 31, 0.16), 0 0 12px rgba(255, 77, 31, 0.8); animation: blink 1.2s steps(2, jump-none) infinite; }
+.qb__lamp { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 0 4px rgba(255, 77, 31, 0.16); }
 .qb__mail { margin: 0; border-top: 1px solid var(--line); }
 .qb__mail > div {
   display: grid; grid-template-columns: 4.6em minmax(0, 1fr); align-items: center; column-gap: 10px;
@@ -968,55 +1017,49 @@ a.ct__line:hover .ct__do i { translate: 2px -2px; color: var(--rec); }
 .foot__top:hover { color: var(--rec); }
 .foot__top:hover i { translate: 0 -3px; }
 
-/* wide screens: the menu's Contact lands on one full screen, footer included. The two sides
-   sit in the middle of what the head and the footer leave, as one block: the title level with
-   the top of the letter, the direct lines level with its end */
+/* wide screens: the menu's Contact lands on one full screen, footer included; the board takes
+   all of it, the monitor growing into whatever the letter and the cards leave */
 @media (min-width: 1024px) and (min-height: 600px) {
   .contact { display: flex; flex-direction: column; min-height: max(100svh, 600px); padding-top: 96px; padding-bottom: clamp(14px, 2.4vh, 26px); }
-  .contact > .ct { margin-block: clamp(22px, 3.4vh, 44px) auto; }
-  .ct__direct { margin-top: auto; padding-top: clamp(28px, 4.6vh, 60px); }
+  .contact > .ct { flex: 1 1 auto; min-height: 0; }
   .qb { justify-content: space-between; }
-  .contact > .foot { margin-top: clamp(18px, 3.2vh, 40px); }
+  .contact > .foot { margin-top: clamp(14px, 2.6vh, 32px); }
 }
 /* a tall screen: the letter grows into it */
 @media (min-width: 1024px) and (min-height: 960px) {
-  .contact > .ct { margin-block: auto; }
   .qb { padding: 34px 38px; }
   .qb__mail > div { padding: 14px 0; }
-  .qb__hi { margin: 36px 0 22px; font-size: 42px; }
-  .qb__q + .qb__q { margin-top: 30px; }
+  .qb__hi { margin: 32px 0 20px; font-size: 42px; }
+  .qb__q + .qb__q { margin-top: 28px; }
   .qb__n { margin-bottom: 14px; font-size: 16.5px; }
   .qb__chips { gap: 9px; }
   .qb__chip { padding: 11px 17px; font-size: 15.5px; }
-  .qb__end { padding-top: 36px; }
+  .qb__end { padding-top: 32px; }
   .qb__send { padding: 20px 24px; }
-  .ct__line { min-height: 84px; }
 }
-/* a very wide screen: both sides grow with it */
+/* a very wide screen: everything grows with it */
 @media (min-width: 2200px) and (min-height: 960px) {
   .ct { grid-template-columns: minmax(0, 1fr) 820px; }
-  .contact .contact__title { font-size: min(5.2vw, 11.5vh, 150px); }
   .contact__sub { font-size: 22px; }
-  .ct__direct { max-width: 860px; }
-  .ct__lv { font-size: 31px; }
   .qb { font-size: 17px; }
   .qb__chip { font-size: 17px; }
   .qb__n, .qb__re dd, .qb__who b { font-size: 17.5px; }
   .qb__go { font-size: 27px; }
+  .ct__soc a { font-size: 21px; }
 }
 /* a short laptop screen: everything a notch tighter, the greeting goes */
 @media (min-width: 1024px) and (min-height: 600px) and (max-height: 820px) {
   .contact { padding-top: 86px; }
-  .contact .contact__title { font-size: clamp(40px, min(5.4vw, 9.2vh), 72px); }
-  .contact__sub { margin-top: 10px; font-size: 15.5px; }
-  .ct__direct { padding-top: 20px; }
-  .ct__k { margin-bottom: 6px; }
-  .ct__line { min-height: 46px; padding-block: 4px; }
+  .ct__mon { --mp: clamp(16px, 1.8vw, 26px); }
+  .contact .contact__title { font-size: clamp(34px, 6.8cqi, 72px); }
+  .contact__sub { margin-top: 8px; font-size: 14.5px; }
+  .ct__tile { min-height: 104px; padding: 12px 16px; gap: 8px; }
+  .ct__soc a { padding: 5px 0; font-size: 15px; }
   .qb { padding-block: 16px; }
   .qb__hi { display: none; }
   .qb__mail { margin-bottom: 12px; }
   .qb__mail > div { padding-block: 6px; }
-  .qb__chip { padding: 6px 12px; font-size: 13.5px; }
+  .qb__chip { padding: 6px 11px; font-size: 13.5px; }
   .qb__q + .qb__q { margin-top: 10px; }
   .qb__n { margin-bottom: 7px; }
   .qb__end { padding-top: 14px; }
@@ -1025,20 +1068,31 @@ a.ct__line:hover .ct__do i { translate: 2px -2px; color: var(--rec); }
 }
 @media (min-width: 1024px) and (min-height: 600px) and (max-height: 700px) {
   .contact { padding-bottom: 10px; }
-  .contact > .ct { margin-block: 12px auto; }
-  .contact .contact__title { font-size: clamp(40px, min(5.4vw, 8.6vh), 60px); }
-  .ct__line { min-height: 42px; }
-  .contact > .foot { margin-top: 14px; padding-top: 12px; }
+  .ct { margin-top: 12px; }
+  .ct__tile { min-height: 92px; }
+  .ct__mon { min-height: 250px; }
+  .contact .contact__title { font-size: clamp(32px, 6.2cqi, 58px); }
+  .ct__tile { padding: 10px 14px; }
+  .ct__soc a { padding: 3px 0; }
+  .qb__h { margin-bottom: 8px; }
+  .qb__mail { margin-bottom: 8px; }
+  .qb__mail > div { padding-block: 4px; }
+  .qb__end { padding-top: 10px; }
+  .qb__after { margin-top: 6px; }
+  .contact > .foot { margin-top: 12px; padding-top: 12px; }
 }
-/* a small laptop: the labels take less room, so the three profiles keep to one row */
+/* a small laptop: the letter a little narrower, so the board keeps its monitor wide */
 @media (min-width: 1024px) and (max-width: 1279px) {
-  .ct__line { grid-template-columns: 6.2em minmax(0, 1fr) auto; column-gap: 12px; }
-  .ct__line--soc .ct__lv { column-gap: 14px; }
+  .ct { grid-template-columns: minmax(0, 1fr) 440px; }
+  .ct__tiles { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .ct__tile { padding-inline: 14px; }
+  .ct__th { font-size: 11px; letter-spacing: 0.06em; white-space: nowrap; }
 }
-/* tablet and portrait: one column, the letter at a readable width */
+/* tablet and portrait: one column, the monitor wide, the letter under the cards */
 @media (min-width: 768px) and (max-width: 1023px), (min-width: 768px) and (orientation: portrait) {
-  .ct { grid-template-columns: minmax(0, 1fr); gap: 48px; }
-  .qb { max-width: 640px; }
+  .ct { grid-template-columns: minmax(0, 1fr); }
+  .ct__main { grid-template-rows: auto auto; }
+  .ct__mon { aspect-ratio: 16 / 10; }
 }
 
 /* ---- reel player dialog ---- */
@@ -1175,13 +1229,20 @@ a.ct__line:hover .ct__do i { translate: 2px -2px; color: var(--rec); }
 
   .contact { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
   .contact::before { right: -40%; top: 40%; width: 140%; height: 50%; }
-  .ct { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .ct__direct { margin-top: 32px; }
-  .ct__line { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "k do" "v v"; row-gap: 4px; min-height: 0; padding: 14px 2px; }
-  .ct__lk { grid-area: k; }
-  .ct__do { grid-area: do; }
-  .ct__lv { grid-area: v; font-size: 20px; }
-  .ct__line--soc .ct__lv { column-gap: 16px; font-size: 18px; }
+  .ct { grid-template-columns: minmax(0, 1fr); }
+  .ct__main { grid-template-rows: auto auto; }
+  .ct__mon { aspect-ratio: 1 / 1.1; min-height: 0; --mp: 18px; }
+  .ct__pix { inset: 0 0 40% 0; -webkit-mask-image: linear-gradient(to top, transparent, #000 34%); mask-image: linear-gradient(to top, transparent, #000 34%); }
+  .contact__sub { max-width: none; }
+  .ct__tc { display: none; } /* the letter says the time */
+  .contact .contact__title { font-size: clamp(34px, 11.4cqi, 54px); }
+  .contact__sub { font-size: 15px; }
+  .ct__tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ct__tiles > li:first-child { grid-column: 1 / -1; }
+  .ct__tile { min-height: 132px; }
+  .ct__mail { font-size: clamp(24px, 10.6cqi, 40px); }
+  .ct__big { font-size: clamp(40px, 34cqi, 64px); }
+  .ct__note { font-size: 13px; }
   .qb__h span:last-child { display: none; }
   .qb__mail > div { grid-template-columns: 4em minmax(0, 1fr); }
   .qb__note { padding-left: 0; grid-column: 1 / -1; }
