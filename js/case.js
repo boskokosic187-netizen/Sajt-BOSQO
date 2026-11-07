@@ -745,7 +745,191 @@
     }
   }
 
-  const LABS = { mixer, driveby, loupe, scrub, flip: scrub, gallery };
+  /* ----------------------------------------------------------- Wake the cast
+     Baby Boo's five friends from the labels. Each drawing is cut into parts (clip-path on one image)
+     that turn on their own joints: the idle loops run in css on the outer span, a tap plays the
+     animal's own move with web animations on the inner span, so the two never fight. The elephant
+     blows bubbles from the tip of its trunk; bath time wakes all five. */
+  const ZK = (a, g) => a.querySelector(`.zo__g--${g} > .zo__k`);
+  const zAnim = (node, frames, o) => (node ? node.animate(frames, { easing: 'cubic-bezier(.3,.7,.3,1)', ...o }) : null);
+  const zFlag = (a, cls, ms) => {
+    clearTimeout(a['_t' + cls]);
+    a.classList.add(cls);
+    a['_t' + cls] = setTimeout(() => a.classList.remove(cls), ms);
+  };
+  // the koala sleeps: a tap lifts its head, it blushes, then it drifts back off
+  function koalaWake(a) {
+    zFlag(a, 'is-awake', 2700);
+    if (reduce) return;
+    zAnim(ZK(a, 'head'), [
+      { transform: 'none' }, { transform: 'rotate(17deg)', offset: 0.2 }, { transform: 'rotate(13deg)', offset: 0.32 },
+      { transform: 'rotate(15deg)', offset: 0.78 }, { transform: 'none' }], { duration: 2900, easing: 'ease-in-out' });
+    zAnim(ZK(a, 'body'), [{ transform: 'none' }, { transform: 'scale(1.025, .97)', offset: 0.16 }, { transform: 'none', offset: 0.42 }, { transform: 'none' }],
+      { duration: 2900 });
+  }
+  $$('[data-zo-solo]').forEach((a) => {
+    let last = 0;
+    const go = () => { if (Date.now() - last > 3200) { last = Date.now(); koalaWake(a); } };
+    a.addEventListener('pointerenter', go);
+    a.addEventListener('click', go);
+  });
+
+  function mascots(el) {
+    const cast = $('.zo__cast', el), scroller = $('.zo__scroll', el), bubbles = $('.zo__bubbles', el);
+    const info = JSON.parse(el.dataset.parts);
+    const nameOut = $('[data-zo-name]', el), partsOut = $('[data-zo-parts]', el);
+    const A = {};
+    $$('.zo__a', el).forEach((a) => (A[a.dataset.a] = a));
+    const keys = Object.keys(A);
+    let unit = 1, onScreen = false, live = 0;
+    const fit = () => {
+      unit = cast.getBoundingClientRect().width / 1500 || 1;
+      cast.style.setProperty('--lw', (4.4 * unit).toFixed(2) + 'px');
+    };
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(cast); else addEventListener('resize', fit);
+    fit();
+    // a phone scrolls the cast sideways: start on the middle of it, three friends in view
+    if (scroller.scrollWidth > scroller.clientWidth + 2) scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+    function hop(a, h = 9, d = 720) {
+      return zAnim($('.zo__in', a), [
+        { transform: 'none' },
+        { transform: 'scale(1.05, .93)', offset: 0.16 },
+        { transform: `translateY(-${h}%) scale(.97, 1.04)`, offset: 0.46 },
+        { transform: 'scale(1.04, .95)', offset: 0.74 },
+        { transform: 'none' }], { duration: d });
+    }
+    // a tail shears about the line it was cut on (skewY), so it wags without opening the joint
+    const wag = [{ transform: 'none' }, { transform: 'skewY(-26deg)' }, { transform: 'skewY(16deg)' }, { transform: 'skewY(-18deg)' }, { transform: 'skewY(7deg)' }, { transform: 'none' }];
+
+    // bubbles from the trunk's tip (or anywhere along the floor at bath time), drawn in the same ink
+    function bubble(x, y, i, spread) {
+      if (live > 70) return;
+      live++;
+      const b = document.createElement('i');
+      b.className = 'zo__bub';
+      const s = (14 + Math.random() * 30) * unit, rise = (190 + Math.random() * 260) * unit;
+      const dx = (Math.random() - 0.5) * spread * unit, w = (12 + Math.random() * 18) * unit;
+      b.style.setProperty('--s', s.toFixed(1) + 'px');
+      bubbles.appendChild(b);
+      const at = (p, sc = 1) => ({ transform: `translate(${(x + dx * p + Math.sin(p * 7 + i) * w).toFixed(1)}px, ${(y - rise * p).toFixed(1)}px) scale(${sc})` });
+      const an = b.animate([
+        { ...at(0, 0.2), opacity: 0 }, { ...at(0.08, 1), opacity: 1, offset: 0.08 }, { ...at(0.5), offset: 0.5 },
+        { ...at(0.94, 1.05), opacity: 1, offset: 0.94 }, { ...at(1, 1.35), opacity: 0 }],
+      { duration: 2400 + Math.random() * 1800, delay: i * 85, easing: 'linear', fill: 'backwards' });
+      an.onfinish = () => { b.remove(); live--; };
+    }
+    function blow(a, n, spread = 140) {
+      const tip = $('.zo__tip', a);
+      if (!tip) return;
+      const c = cast.getBoundingClientRect(), r = tip.getBoundingClientRect();
+      for (let i = 0; i < n; i++) bubble(r.left - c.left, r.top - c.top, i, spread);
+    }
+
+    const MOVES = {
+      lion(a) {
+        zFlag(a, 'is-happy', 1900);
+        if (reduce) return;
+        hop(a, 7);
+        zAnim(ZK(a, 'head'), [{ transform: 'none' }, { transform: 'skewX(-7deg)' }, { transform: 'skewX(6deg)' }, { transform: 'skewX(-3deg)' }, { transform: 'none' }], { duration: 950 });
+        zAnim(ZK(a, 'tail'), wag, { duration: 1250 });
+      },
+      koala: koalaWake,
+      elephant(a) {
+        if (reduce) { zFlag(a, 'is-happy', 1500); return; }
+        hop(a, 4, 620);
+        zAnim(ZK(a, 'head'), [{ transform: 'none' }, { transform: 'skewX(4deg) scaleY(1.02)' }, { transform: 'skewX(-3deg)' }, { transform: 'none' }], { duration: 900 });
+        zAnim(ZK(a, 'trunk'), [{ transform: 'none' }, { transform: 'rotate(122deg)', offset: 0.26 }, { transform: 'rotate(114deg)', offset: 0.72 }, { transform: 'none' }],
+          { duration: 2500, easing: 'ease-in-out' });
+        setTimeout(() => blow(a, 11), 640);
+      },
+      bunny(a) {
+        if (reduce) return;
+        hop(a, 15, 780);
+        const flop = (s) => [{ transform: 'none' }, { transform: `skewX(${16 * s}deg)`, offset: 0.3 }, { transform: `skewX(${-12 * s}deg)`, offset: 0.56 },
+          { transform: `skewX(${6 * s}deg)`, offset: 0.8 }, { transform: 'none' }];
+        zAnim(ZK(a, 'earl'), flop(1), { duration: 1150 });
+        zAnim(ZK(a, 'earr'), flop(-1), { duration: 1150, delay: 70 });
+      },
+      giraffe(a) {
+        zFlag(a, 'is-happy', 2700);
+        if (reduce) return;
+        zAnim(ZK(a, 'neck'), [{ transform: 'none' }, { transform: 'skewX(-9deg)', offset: 0.3 }, { transform: 'skewX(7deg)', offset: 0.6 }, { transform: 'skewX(-3deg)', offset: 0.85 }, { transform: 'none' }],
+          { duration: 1600, easing: 'ease-in-out' });
+        zAnim(ZK(a, 'tail'), wag, { duration: 1250, delay: 150 });
+      },
+    };
+
+    function say(k) {
+      if (!k) { nameOut.textContent = 'All five, awake'; partsOut.textContent = keys.reduce((n, x) => n + info[x][1].length, 0) + ' parts on the move'; return; }
+      nameOut.textContent = info[k][0];
+      partsOut.textContent = info[k][1].length + ' parts · ' + info[k][1].join(', ');
+    }
+    function press(k) { $$('[data-wake]', el).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.wake === k))); }
+    function wake(k, from) {
+      const a = A[k];
+      if (!a) return;
+      el.classList.add('is-used');
+      if (from === 'button' && scroller.scrollWidth > scroller.clientWidth + 2) { // a phone: bring it into view first
+        const r = a.getBoundingClientRect(), s = scroller.getBoundingClientRect();
+        scroller.scrollBy({ left: r.left + r.width / 2 - (s.left + s.width / 2), behavior: reduce ? 'auto' : 'smooth' });
+      }
+      MOVES[k](a);
+      say(k);
+      press(k);
+    }
+    function bath() {
+      el.classList.add('is-used');
+      say(null);
+      press(null);
+      keys.forEach((k, i) => setTimeout(() => MOVES[k](A[k]), (k === 'elephant' ? 0 : 200 + i * 170)));
+      if (reduce) return;
+      const c = cast.getBoundingClientRect();
+      setTimeout(() => {   // the whole stage foams up
+        for (let i = 0; i < 22; i++) bubble(c.width * (0.06 + Math.random() * 0.88), c.height * (0.84 + Math.random() * 0.08), i * 0.8, 120);
+      }, 400);
+    }
+
+    keys.forEach((k) => A[k].addEventListener('click', () => wake(k)));
+    $$('[data-wake]', el).forEach((b) => b.addEventListener('click', () => wake(b.dataset.wake, 'button')));
+    $('[data-bath]', el).addEventListener('click', bath);
+    // the stage, not the cast: on a phone the cast is wider than the screen and never shows enough of itself
+    if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => (onScreen = en.isIntersecting), { threshold: 0.35 }).observe(scroller);
+    addEventListener('keydown', (e) => {
+      if (e.code !== 'Space' || !onScreen || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (/^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(e.target.tagName)) return; // a focused button keeps its own Space
+      e.preventDefault();
+      bath();
+    });
+
+    // they lean a little toward the pointer
+    if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let raf = 0, px = 0;
+      const lean = () => {
+        raf = 0;
+        const c = cast.getBoundingClientRect();
+        keys.forEach((k) => {
+          const r = A[k].getBoundingClientRect();
+          const d = (px - (r.left + r.width / 2)) / c.width;
+          A[k].style.setProperty('--lean', Math.max(-1, Math.min(1, -d * 2.4)).toFixed(3));
+        });
+      };
+      el.addEventListener('pointermove', (e) => { px = e.clientX; if (!raf) raf = requestAnimationFrame(lean); });
+      el.addEventListener('pointerleave', () => keys.forEach((k) => A[k].style.setProperty('--lean', 0)));
+    }
+
+    // the cast arrives one by one; if nobody touches it, the elephant shows what a tap does
+    if (reduce || !('IntersectionObserver' in window)) { cast.classList.remove('is-pre'); return; }
+    onceSeen(scroller, () => {
+      keys.forEach((k, i) => zAnim(A[k], [{ opacity: 0, translate: '0 -28%' }, { opacity: 1, translate: '0 3%', offset: 0.7 }, { opacity: 1, translate: '0 0' }],
+        { duration: 760, delay: 120 + i * 150, fill: 'backwards', easing: 'cubic-bezier(.4,0,.6,1)' }));
+      cast.classList.remove('is-pre');
+      setTimeout(() => { if (!el.classList.contains('is-used')) MOVES.giraffe(A.giraffe); }, 1500);
+      setTimeout(() => { if (!el.classList.contains('is-used')) MOVES.elephant(A.elephant); }, 2600);
+    }, 0.45);
+  }
+
+  const LABS = { mixer, driveby, loupe, scrub, flip: scrub, gallery, mascots };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];
     if (f) whenNear(el, () => f(el));

@@ -660,7 +660,7 @@ def render_case(c, i, cases, media):
 
     <section class="case-result">
       <div class="sec-head"><span class="sec-head__num">05</span><span class="sec-head__label">Result</span></div>
-      <p class="result__big">{E(c['result_big'])}</p>
+      <p class="result__big">{E(c['result_big'])}{result_mascot(c, R)}</p>
       <p class="result__label">{E(c['result_label'])}</p>
       <p class="result__text">{E(c['result'])}</p>
     </section>
@@ -953,7 +953,90 @@ def lab_gallery(c, lab, R, media):
       </div>"""
 
 
-LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub, "flip": lab_flip, "gallery": lab_gallery}
+def mascot(a, base, tag="button", extra=""):
+    """One rigged animal: groups (body, head, tail, ears, neck, trunk) of the same drawing cut by
+    clip-path, each turning on its own joint; outer span idles (css), inner span acts (js)."""
+    bx, by, bw, bh = a["box"]
+
+    def imgs(g):
+        out = ""
+        for im in g.get("imgs", ()):
+            x, y, w, h = im["r"]
+            clip = f";clip-path:{im['clip']}" if im.get("clip") else ""
+            cls = f' class="zo__{im["cls"]}"' if im.get("cls") else ""
+            out += (f'<img{cls} src="{base}{im["src"]}" alt="" decoding="async" draggable="false" '
+                    f'style="left:{x}%;top:{y}%;width:{w}%;height:{h}%{clip}">')
+        for j, (x, y) in enumerate(g.get("dots", ())):
+            out += f'<i class="zo__dot" style="left:{x}%;top:{y}%"></i>'
+        if g.get("zzz"):
+            x, y = g["zzz"]
+            out += f'<i class="zo__zzz" style="left:{x}%;top:{y}%"><b>z</b><b>z</b><b>z</b></i>'
+        if g.get("tip"):
+            x, y = g["tip"]
+            out += f'<i class="zo__tip" style="left:{x}%;top:{y}%"></i>'
+        if g.get("sub"):
+            out += group(g["sub"])
+        return out
+
+    def group(g):
+        o = g.get("o")
+        org = f' style="--ox:{o[0]}%;--oy:{o[1]}%"' if o else ""
+        return f'<span class="zo__g zo__g--{g["g"]}"{org}><span class="zo__k">{imgs(g)}</span></span>'
+
+    body = "".join(group(g) for g in a["groups"])
+    label = f'{a["name"]}: wake it up'
+    btn = f' type="button" aria-label="{E(label)}"' if tag == "button" else ' aria-hidden="true"'
+    return (f'<{tag} class="zo__a zo__a--{a["key"]}" data-a="{a["key"]}"{btn}{extra} '
+            f'style="--bx:{bx};--by:{by};--bw:{bw};--bh:{bh}">'
+            f'<span class="zo__in">{body}</span><span class="zo__shadow"></span></{tag}>')
+
+
+def lab_mascots(c, lab, R, media):
+    rig = json.load(open(os.path.join(ROOT, lab["rig"]), encoding="utf-8"))
+    base = R + lab["base"]
+    sw, sh = rig["stage"]
+    cast = "".join(mascot(a, base) for a in rig["animals"])
+    names = "".join(f'<button type="button" class="db__opt" data-wake="{a["key"]}">{E(a["name"])}</button>' for a in rig["animals"])
+    parts = E(json.dumps({a["key"]: [a["name"], a["parts"]] for a in rig["animals"]}, separators=(",", ":")))
+    floor = rig["floor"] / sh * 100
+    # a floor drawn by hand: one wobbly ink line across the stage
+    pts = " ".join(f"{x},{rig['floor'] + (2.2 * math.sin(x / 37) + 1.4 * math.sin(x / 11.3)):.1f}" for x in range(0, sw + 1, 25))
+    return f"""
+      <div class="zo" data-lab="mascots" data-parts="{parts}">
+        <div class="db__head">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+        </div>
+        <div class="zo__stage">
+          <div class="zo__scroll">
+            <div class="zo__cast is-pre" style="--sw:{sw};--sh:{sh};--floor:{floor:.2f}%">
+              <svg class="zo__floor" viewBox="0 0 {sw} {sh}" preserveAspectRatio="none" aria-hidden="true"><polyline points="{pts}"/></svg>
+              {cast}
+              <span class="zo__bubbles" aria-hidden="true"></span>
+            </div>
+          </div>
+          <span class="sc__hint zo__hint" aria-hidden="true"><i>☞</i>Tap a friend</span>
+        </div>
+        <div class="db__ctrl zo__ctrl">
+          <div class="db__seg" role="group" aria-label="Wake one">{names}</div>
+          <p class="zo__read" aria-live="polite"><b data-zo-name>Five friends</b><span data-zo-parts>{sum(len(a['parts']) for a in rig['animals'])} parts, one line</span></p>
+          <button class="mx__spin db__go" type="button" data-bath><span>Bath time</span><kbd aria-hidden="true">Space</kbd></button>
+        </div>
+      </div>"""
+
+
+def result_mascot(c, R):
+    """A mascot beside the result number (the koala sleeps through it: no studio day to get up for)."""
+    m = c.get("result_mascot")
+    if not m:
+        return ""
+    rig = json.load(open(os.path.join(ROOT, m["rig"]), encoding="utf-8"))
+    a = next(x for x in rig["animals"] if x["key"] == m["key"])
+    return mascot(a, R + m["base"], tag="span", extra=' data-zo-solo')
+
+
+LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub, "flip": lab_flip, "gallery": lab_gallery,
+        "mascots": lab_mascots}
 
 
 def render_story(c, i, cases, media):
@@ -1038,7 +1121,7 @@ def render_story(c, i, cases, media):
 
     <section class="case-result">
       <div class="sec-head"><span class="sec-head__num">05</span><span class="sec-head__label">Result</span></div>
-      <p class="result__big">{E(c['result_big'])}</p>
+      <p class="result__big">{E(c['result_big'])}{result_mascot(c, R)}</p>
       <p class="result__label">{E(c['result_label'])}</p>
       <p class="result__text">{E(c['result'])}</p>
     </section>

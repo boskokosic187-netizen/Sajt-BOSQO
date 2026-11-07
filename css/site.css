@@ -2958,6 +2958,10 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .case-next__title { font-size: 15vw; }
   .bd__line::after { width: 40px; height: 40px; }
 }
+@media (min-width: 768px) and (max-width: 1023px) { /* three tall films are wider than a tablet: they scroll, like on a phone */
+  .cover.is-trio { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad); scrollbar-width: none; }
+  .cover.is-trio .cover__item { height: min(64svh, 640px); scroll-snap-align: start; }
+}
 
 
 /* ==========================================================================

@@ -912,30 +912,28 @@
       "format": "story",
       "title": "Baby Boo",
       "kicker": "AI product campaign · Natural cosmetics",
-      "line": "Product films and stills without a studio: honey that pours on cue, glass you break in case of a sudden voyage.",
+      "line": "Product films and stills without a studio, and a cast of hand-drawn friends from the labels that comes to life.",
       "client": "Baby Boo · natural cosmetics, made by moms",
       "years": "2026",
-      "role": "Concept, art direction, generation, edit, finishing",
+      "role": "Concept, art direction, generation, character animation, edit, finishing",
       "skills": [
         "Art direction",
         "AI production",
         "Product film",
-        "Edit & grade",
-        "Concept stills"
+        "Character animation",
+        "Concept stills",
+        "Edit & grade"
       ],
       "brief": "Premium films and stills for a small natural-cosmetics brand. No studio, no crew, no shoot day, and the jar has to look exactly like the one on the shelf.",
-      "idea": "Direct it like a commercial shoot: the label stays true to the real product, the honey pours on cue, the bees sit in shallow focus. Every still gets one bold idea, every film is cut and graded like a real spot.",
+      "idea": "Direct it like a commercial shoot: the label stays true to the real product, the honey pours on cue, the bees sit in shallow focus. And the friends drawn on the labels get a life of their own: one ink line, cut into parts, so every one of them can move.",
       "lab": {
-        "type": "scrub",
-        "kicker": "motion on cue",
-        "title": "Pour it *yourself*",
-        "line": "In a product film nothing moves by accident. Drag across the jar to pour the honey, drag back to undo it.",
-        "why": "Clients do not buy footage, they buy control: the product exactly right, the moment exactly when the cut needs it.",
-        "base": "media/labs/honey/",
-        "n": 110,
-        "fps": 12,
-        "ar": 0.5625,
-        "alt": "Manuka Honey face cream: honey pours over a stack of jars"
+        "type": "mascots",
+        "kicker": "the friends from the labels",
+        "title": "Wake the *cast*",
+        "line": "Every jar has a friend on its label, drawn by hand in one ink line and cut into parts so it can move. Tap one to wake it, or run bath time for all five.",
+        "why": "A mascot that moves works everywhere: a sticker, a loading screen, the next film. Drawn once, it keeps paying back.",
+        "base": "media/labs/mascots/",
+        "rig": "media/labs/mascots/rig.json"
       },
       "craft": [
         {
@@ -1030,7 +1028,12 @@
           "type": "video",
           "label": "Elephant · product film"
         }
-      ]
+      ],
+      "result_mascot": {
+        "key": "koala",
+        "base": "media/labs/mascots/",
+        "rig": "media/labs/mascots/rig.json"
+      }
     }
   ]
 }
