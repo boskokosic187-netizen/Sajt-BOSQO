@@ -27,7 +27,11 @@ PREFIX = {
     "A/": "D:/Arhiva/Desktop 2026-10/Projekti/",
     "S/": ROOT.replace("\\", "/") + "/",
 }
-IMG_WIDTHS = (800, 1600)
+IMG_WIDTHS = (800, 1600, 2560)   # 2560: a cover on a 2560 px screen; every width stops at the source's own
+# a video gets every width of its shape up to its source; the page plays the smallest that covers
+# its box (js: pickSrc), so a phone never loads the 2560 one
+VIDEO_WIDTHS = {"wide": (960, 1600, 2560), "tall": (540, 1080), "square": (720, 1080)}
+ARCHIVE = "D:/Arhiva/Desktop 2026-10/Projekti/"
 ONLY_PAGES = "--pages" in sys.argv
 BUILT = {}   # url -> media info from the last build (media/cases/manifest.json)
 
@@ -35,7 +39,10 @@ BUILT = {}   # url -> media info from the last build (media/cases/manifest.json)
 def resolve(src):
     for k, v in PREFIX.items():
         if src.startswith(k):
-            return v + src[len(k):]
+            p = v + src[len(k):]
+            if k == "D/" and not os.path.exists(p) and os.path.exists(ARCHIVE + src[len(k):]):
+                return ARCHIVE + src[len(k):]   # a Desktop original moved to the archive (Oct 2026)
+            return p
     return src
 
 
@@ -80,28 +87,42 @@ def build_image(src, base, keep_alpha=False):
     return {"w": im.width, "h": im.height, "widths": widths}
 
 
+def video_widths(w, h):
+    ar = w / h
+    shape = "wide" if ar > 1.25 else "tall" if ar < 0.8 else "square"
+    out = []
+    for tw in VIDEO_WIDTHS[shape]:
+        tw = min(tw, w) // 2 * 2
+        if not out or tw > out[-1]:
+            out.append(tw)
+    return out
+
+
 def build_video(src, base, start=0.0, dur=None):
+    """base.mp4 at the first width, base-<w>.mp4 for the bigger ones; a poster for the first
+    and the biggest (the next-case strip shows the biggest)."""
     w, h, d = probe(src)
     dur = min(dur or 16, d - start)
-    ar = w / h
-    if ar > 1.25:
-        vf = "scale=960:-2"
-    elif ar < 0.8:
-        vf = "scale=540:-2"
-    else:
-        vf = "scale=720:-2"
-    if not fresh(base + ".mp4", src):
+    widths = video_widths(w, h)
+    for j, tw in enumerate(widths):
+        name = base + ("" if j == 0 else f"-{tw}")
+        if fresh(name + ".mp4", src):
+            continue
+        crf = "29" if j == 0 else "30"   # a bigger frame hides a little more compression
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{dur:.2f}", "-i", src,
-             "-an", "-r", "25", "-vf", vf, "-c:v", "libx264", "-profile:v", "high",
-             "-pix_fmt", "yuv420p", "-crf", "29", "-preset", "slow", "-movflags", "+faststart",
-             base + ".mp4"])
-        run(["ffmpeg", "-v", "error", "-y", "-ss", "0.4", "-i", base + ".mp4", "-frames:v", "1", base + "_p.png"])
-        p = Image.open(base + "_p.png").convert("RGB")
-        p.save(base + ".webp", quality=74, method=6)
-        p.save(base + ".avif", quality=54)
-        os.remove(base + "_p.png")
+             "-an", "-r", "25", "-vf", f"scale={tw}:-2", "-c:v", "libx264", "-profile:v", "high",
+             "-pix_fmt", "yuv420p", "-crf", crf, "-preset", "slow", "-movflags", "+faststart",
+             name + ".mp4"])
+        if j == 0 or j == len(widths) - 1:
+            run(["ffmpeg", "-v", "error", "-y", "-ss", "0.4", "-i", name + ".mp4", "-frames:v", "1", name + "_p.png"])
+            p = Image.open(name + "_p.png").convert("RGB")
+            p.save(name + ".webp", quality=74, method=6)
+            if j == 0:
+                p.save(name + ".avif", quality=54)
+            os.remove(name + "_p.png")
     pw, ph = Image.open(base + ".webp").size
-    return {"w": pw, "h": ph, "kb": os.path.getsize(base + ".mp4") // 1024}
+    return {"w": pw, "h": ph, "kb": os.path.getsize(base + ".mp4") // 1024, "vw": widths,
+            "big": [widths[-1], round(widths[-1] * h / w / 2) * 2]}
 
 
 def media_for(item, outdir, rel):
@@ -116,7 +137,8 @@ def media_for(item, outdir, rel):
         info = {"type": "video"} if built_only else build_video(src, base, item.get("start", 0), item.get("dur"))
         if built_only:
             pw, ph = Image.open(base + ".webp").size
-            info = {"w": pw, "h": ph}
+            old = BUILT.get(url, {})
+            info = {"w": pw, "h": ph, **{k: old[k] for k in ("vw", "big") if k in old}}
         info["type"] = "video"
     else:
         if built_only:
@@ -140,6 +162,29 @@ def media_for(item, outdir, rel):
 E = lambda s: html.escape(s, quote=True)
 
 
+def biggest(m):
+    """(w, h) of the largest file the page has for this piece: it is never shown bigger."""
+    if m["type"] == "video":
+        return tuple(m.get("big") or (m["w"], m["h"]))
+    w = m["widths"][-1]
+    return w, round(m["h"] * w / m["w"])
+
+
+def video_srcs(m):
+    vw = m.get("vw") or [m["w"]]
+    return ", ".join(f'{m["url"]}{"" if j == 0 else "-" + str(w)}.mp4 {w}' for j, w in enumerate(vw))
+
+
+def video_big(m):
+    vw = m.get("vw") or [m["w"]]
+    return m["url"] + ("" if len(vw) == 1 else "-" + str(vw[-1]))
+
+
+def cap_style(m):
+    w, h = biggest(m)
+    return f"max-width:{w}px;max-height:{h}px"
+
+
 def picture(m, sizes, cls="", eager=False, alt=None):
     ws = m["widths"]
     avif = ", ".join(f"{m['url']}-{w}.avif {w}w" for w in ws)
@@ -152,16 +197,19 @@ def picture(m, sizes, cls="", eager=False, alt=None):
 
 
 def video_tag(m, eager=False):
+    # with more than one width the file is picked for the box it plays in (js: pickSrc)
+    src = (f'data-srcs="{video_srcs(m)}" data-poster-big="{video_big(m)}.webp"' if len(m.get("vw") or ()) > 1
+           else f'src="{m["url"]}.mp4"')
     return (f'<video muted loop playsinline preload="{"auto" if eager else "none"}" data-autoplay '
             f'poster="{m["url"]}.webp" width="{m["w"]}" height="{m["h"]}" '
-            f'src="{m["url"]}.mp4" aria-label="{E(m["label"])}"></video>')
+            f'{src} aria-label="{E(m["label"])}"></video>')
 
 
 def figure(m, sizes, eager=False):
     ar = m["w"] / m["h"]
     if m["type"] == "video":
         inner = video_tag(m, eager)
-        data = f'data-video="{m["url"]}.mp4"'
+        data = f'data-video="{video_big(m)}.mp4"'
     else:
         inner = picture(m, sizes, eager=eager)
         data = f'data-full="{m["url"]}-{m["widths"][-1]}.webp"'
@@ -177,7 +225,10 @@ def gallery_row(ms, extra=""):
     cls = "g-row" + (" is-small" if small and len(ms) > 1 else "") + extra
     figs = "".join(figure(m, f"(min-width: 768px) {max(20, round(100 * (m['w'] / m['h']) / tot))}vw, 100vw")
                    for m in ms)
-    return f'<div class="{cls}">{figs}</div>'
+    # the pieces share one height, so the row stops growing when its smallest piece is at 1:1
+    top = min(biggest(m)[1] for m in ms)
+    cap = f"calc({top * tot:.0f}px + {len(ms) - 1} * var(--gap))"
+    return f'<div class="{cls}" style="max-width:{cap}">{figs}</div>'
 
 
 # ------------------------------------------------------------------- blocks
@@ -442,8 +493,8 @@ CONTACT = """
       <div class="sec-head"><span class="sec-head__num">●</span><span class="sec-head__label">Contact</span></div>
       <div class="ct">
         <div class="ct__main">
-          <div class="ct__mon" data-ct-mon data-base="../../media/loops/" data-loops="interstellar|Interstellar,struja|STRUJA,deadair|DEAD AIR,accord|ACCORD,halfcourt|HALFCOURT,jurassic|Jurassic Park,bigger|BIGGER.,umbra|UMBRA">
-            <div class="ct__pix" aria-hidden="true"><img src="../../media/loops/interstellar.webp" alt="" width="960" height="540" loading="lazy" decoding="async"><video muted playsinline preload="none"></video><video muted playsinline preload="none"></video></div>
+          <div class="ct__mon" data-ct-mon data-hd="-1920" data-base="../../media/loops/" data-loops="interstellar|Interstellar,struja|STRUJA,deadair|DEAD AIR,accord|ACCORD,halfcourt|HALFCOURT,jurassic|Jurassic Park,bigger|BIGGER.,umbra|UMBRA">
+            <div class="ct__pix" aria-hidden="true"><img src="../../media/loops/interstellar.webp" srcset="../../media/loops/interstellar.webp 960w, ../../media/loops/interstellar-1920.webp 1920w" sizes="(min-width: 2000px) 1500px, 960px" alt="" width="960" height="540" loading="lazy" decoding="async"><video muted playsinline preload="none"></video><video muted playsinline preload="none"></video></div>
             <p class="ct__bug" aria-hidden="true"><span class="ct__tally"><i></i>On air</span><span class="ct__now" data-ct-now>Interstellar</span><span class="ct__tc">Belgrade <b data-clock>--:--</b></span></p>
             <div class="ct__lower">
               <h2 class="contact__title" id="contact-title">Got a brief?<br><em>Let’s make it move.</em></h2>
@@ -524,7 +575,7 @@ def render_case(c, i, cases, media):
     trio = len(hero) > 1
     cap_cls = lambda m: ' class="is-right"' if m.get("cap") == "right" else ""
     hero_html = "".join(
-        f'<figure class="cover__item" style="--ar:{m["w"] / m["h"]:.4f}">'
+        f'<figure class="cover__item" style="--ar:{m["w"] / m["h"]:.4f};{cap_style(m)}">'
         + (video_tag(m, eager=True) if m["type"] == "video"
            else picture(m, "100vw" if not trio else "33vw", eager=True))
         + f'<figcaption{cap_cls(m)}>{E(m["label"])}</figcaption></figure>'
@@ -726,8 +777,10 @@ def skyline(seed=7, w=2400, h=120):
 def lab_driveby(c, lab, R, media):
     boards = []
     for b, m in zip(lab["boards"], media["lab"]):
+        vw = m.get("vw") or [m["w"]]
         boards.append({"name": b["name"], "mp4": m["url"] + ".mp4", "poster": m["url"] + ".webp", "at": b.get("at", 0),
-                       "pins": b["pins"]})
+                       "srcs": [[m["url"] + ("" if j == 0 else f"-{w}") + ".mp4", w] for j, w in enumerate(vw)],
+                       "ar": round(m["w"] / m["h"], 4), "pins": b["pins"]})
     data = E(json.dumps(boards, ensure_ascii=False, separators=(",", ":")))
     b0 = boards[0]
     speeds = "".join(f'<button type="button" class="db__opt" data-kmh="{k}" aria-pressed="{str(k == 90).lower()}">{k}<small>km/h</small></button>'
@@ -912,7 +965,7 @@ def render_story(c, i, cases, media):
     h0 = hero[0]
     trio = len(hero) > 1
     cover = "".join(
-        f'<figure class="cover__item" style="--ar:{m["w"] / m["h"]:.4f}">'
+        f'<figure class="cover__item" style="--ar:{m["w"] / m["h"]:.4f};{cap_style(m)}">'
         + (video_tag(m, eager=True) if m["type"] == "video" else picture(m, "33vw" if trio else "100vw", eager=True))
         + (f'<figcaption>{E(m["label"])}</figcaption>' if m["label"] else "") + '</figure>'
         for m in hero)
@@ -937,7 +990,7 @@ def render_story(c, i, cases, media):
         <div class="cr__media gallery">{rows}</div>
       </article>""")
     note = f'<p class="case-note">{E(c["note"])}</p>' if c.get("note") else ""
-    next_bg = f'<img src="{nxt["_next_img"]}" alt="" loading="lazy" decoding="async">'
+    next_bg = nxt["_next_bg"]
     extra = f'\n  <link rel="stylesheet" href="{R}css/case.css">\n  <script src="{R}js/case.js" defer></script>'
 
     return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R, extra=extra) + f"""
@@ -1037,6 +1090,15 @@ def main():
                               media_for({"src": b["after"], "type": "image", "label": b["after_label"]}, outdir, rel))
         h0 = m["hero"][0]
         c["_next_img"] = h0["url"] + (".webp" if h0["type"] == "video" else f"-{h0['widths'][0]}.webp")
+        # the next-case strip: the biggest picture there is, never past its own size (css: .case-next__bg)
+        bw, bh = biggest(h0)
+        cap = f' style="--mw:{bw}px;--mh:{bh}px"'
+        if h0["type"] == "video":
+            c["_next_bg"] = f'<img src="{video_big(h0)}.webp" alt=""{cap} loading="lazy" decoding="async">'
+        else:
+            ws, u = h0["widths"], h0["url"]
+            c["_next_bg"] = (f'<img src="{u}-{ws[0]}.webp" srcset="{", ".join(f"{u}-{w}.webp {w}w" for w in ws)}" '
+                             f'sizes="100vw" alt=""{cap} loading="lazy" decoding="async">')
         allm[slug] = m
         if not ONLY_PAGES:   # drop media of items no longer in the case
             used = {x["url"].rsplit("/", 1)[1] for x in all_media(m)}

@@ -1123,7 +1123,7 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
 }
 .player::backdrop { background: rgba(0, 0, 0, 0.6); }
 .player[open] { display: grid; place-items: center; }
-.player__frame video { width: min(92vw, 86vh * 16 / 9); height: auto; aspect-ratio: 16 / 9; border-radius: 8px; background: #000; transform-origin: 0 0; }
+.player__frame video { width: min(92vw, 86vh * 16 / 9, 1920px); height: auto; aspect-ratio: 16 / 9; border-radius: 8px; background: #000; transform-origin: 0 0; }
 .player__close {
   position: absolute; top: 18px; right: 22px; padding: 10px 16px; border: 1px solid var(--line-2); border-radius: 999px;
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -2621,6 +2621,7 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
 
 .cover { padding: 0 var(--pad); }
 .cover__item { position: relative; overflow: hidden; border-radius: 6px; background: var(--bg-2); aspect-ratio: var(--ar); }
+.cover:not(.is-trio) .cover__item { margin-inline: auto; } /* capped at its file's own size (max-width from the build), so it centres */
 .cover__item img, .cover__item video, .cover__item picture { width: 100%; height: 100%; object-fit: cover; }
 .cover__item figcaption, .g-item figcaption {
   color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -2677,8 +2678,17 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
 .result__text { margin-top: 24px; max-width: 54ch; color: var(--muted); font-size: 18px; }
 
 .case-next { position: relative; display: block; overflow: hidden; isolation: isolate; padding: clamp(80px, 16vh, 180px) var(--pad); border-top: 1px solid var(--line); }
-.case-next__bg { position: absolute; inset: 0; z-index: -1; opacity: 0.22; transition: opacity 0.6s, transform 1.4s var(--out); }
-.case-next__bg img { width: 100%; height: 100%; object-fit: cover; }
+.case-next__bg { position: absolute; inset: 0; z-index: -1; display: flex; justify-content: flex-end; align-items: center; opacity: 0.22; transition: opacity 0.6s, transform 1.4s var(--out); }
+/* never past its own pixels (--mw/--mh from the build): on a screen wider than the picture it sits
+   on the right and its edges fade into the dark */
+.case-next__bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  max-width: calc(var(--mw, 100000px) / 1.04); max-height: calc(var(--mh, 100000px) / 1.04); /* the hover zoom (1.04) still ends at 1:1 */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 25%), linear-gradient(transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 25%), linear-gradient(transparent, #000 12%, #000 88%, transparent);
+  mask-composite: intersect;
+}
 .case-next__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10, 10, 11, 0.9), rgba(10, 10, 11, 0.3)); }
 .case-next:hover .case-next__bg { opacity: 0.6; transform: scale(1.04); }
 .case-next__label { color: var(--rec); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -2934,7 +2944,7 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
   .case-title { font-size: 14.5vw; }
   .case-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 36px; }
   .case-meta > div:last-child, .case-meta > div:nth-child(3) { grid-column: 1 / -1; }
-  .cover.is-trio { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; margin-right: calc(var(--pad) * -1); padding-right: var(--pad); scrollbar-width: none; }
+  .cover.is-trio { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad); scrollbar-width: none; } /* the scroller already runs to the screen edge through its padding (a negative margin made the page 18 px wider than the phone) */
   .cover.is-trio .cover__item { height: 68svh; scroll-snap-align: start; }
   .case-story, .case-system { grid-template-columns: 1fr; gap: 40px; padding: 72px var(--pad); }
   .story__text { font-size: 21px; }

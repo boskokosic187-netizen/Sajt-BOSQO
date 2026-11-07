@@ -26,17 +26,17 @@
         "why": "Design for the glance, not the desk. A message that survives 130 km/h survives a feed.",
         "media": [
           {
-            "src": "PV/Bilbordi Novembar 2k26/ITS/animacija.mp4",
+            "src": "PV/Bilbordi Novembar 2k26/_radni fajlovi/out/led/its_loop_2560x1200.mp4",
             "type": "video",
             "label": "ITS · Nov 2026 · Pre-enrolment 2027/28"
           },
           {
-            "src": "PV/Bilbordi Novembar 2k26/ITHS/animacija.mp4",
+            "src": "PV/Bilbordi Novembar 2k26/_radni fajlovi/out/led/iths_loop_2560x1200.mp4",
             "type": "video",
             "label": "ITHS · Nov 2026 · Enrolment 2027/28"
           },
           {
-            "src": "PV/Bilbordi Novembar 2k26/FSU/animacija.mp4",
+            "src": "PV/Bilbordi Novembar 2k26/_radni fajlovi/out/led/fsu_loop_2560x1200.mp4",
             "type": "video",
             "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540"
           }
@@ -154,7 +154,7 @@
             ],
             [
               {
-                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Vaucer/2_Aktivni_vaucer/prednja.png",
+                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/_radni_fajlovi/out/web/aktivni_vaucer_prednja_web.png",
                 "type": "image",
                 "label": "The prize · a 300 EUR gear voucher, printed as a DL gift card"
               }
@@ -240,7 +240,7 @@
       "result": "And the campaigns around them for all three schools — an anniversary offer, enrolment, school news — in one visual language from the street to the phone.",
       "hero": [
         {
-          "src": "PV/Bilbordi Novembar 2k26/FSU/animacija.mp4",
+          "src": "PV/Bilbordi Novembar 2k26/_radni fajlovi/out/led/fsu_loop_2560x1200.mp4",
           "type": "video",
           "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540"
         }

@@ -58,7 +58,9 @@ VIDEOS = [
     ("deadair", PV + "BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_16x9.mp4", 4, 0),
     ("deadair-v", PV + "BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_9x16.mp4", 4, 0),
 ]
-# a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider
+# a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider;
+# it also gets a 1920 copy (<slug>-1920.mp4) for the program and contact monitors on big screens (js: loopSrc)
+HD_W = 1920
 TILE_W = {"struja": 960, "umbra": 960, "interstellar": 960, "accord": 960, "bigger": 960, "jurassic": 960, "halfcourt": 960, "deadair": 960}
 # fine lines on a pale, nearly still ground smear at the default crf 30, and they cost little more
 CRF = {"umbra": 22, "umbra-v": 23, "accord": 25, "accord-v": 24, "bigger": 22, "bigger-v": 24, "deadair": 24, "deadair-v": 25}
@@ -85,6 +87,16 @@ STILLS = [
     ("sta-radi", PV + "ITS/ITS Sta radi zanimanja/01_Sta_radi_Build-Release_inzenjer/DM.png"),
 ]
 STILL_WIDTHS = (480, 960, 1600)
+ARCHIVE = "D:/Arhiva/Desktop 2026-10/Projekti/"
+
+
+def source(p):
+    """A Desktop original moved to the archive (Oct 2026) is read from there."""
+    if not os.path.exists(p) and p.startswith(DESK):
+        a = ARCHIVE + p[len(DESK):]
+        if os.path.exists(a):
+            return a
+    return p
 
 
 def run(cmd):
@@ -135,17 +147,17 @@ def best_window(path, length, dur):
 
 
 def tile_scale(w, h):
+    """Big enough for the largest place a loop is shown (a 2560 px screen: the wide wall
+    screens and the rundown shot ~1070 px, the square ones ~850, the tall ones ~910 px high),
+    never past the source (an LED board is 1152 px wide, so its loop stays 1152)."""
     ar = w / h
-    if ar > 1.2:
-        return "scale=640:-2"
-    if ar < 0.8:
-        return "scale=360:-2"
-    return "scale=480:-2"
+    tw = 1280 if ar > 1.2 else 540 if ar < 0.8 else 960
+    return f"scale={min(tw, w) // 2 * 2}:-2"
 
 
-VERTICAL_FILL = ("split[a][b];[a]scale=360:640:force_original_aspect_ratio=increase,"
-                 "crop=360:640,boxblur=18:2,eq=brightness=-0.18[bg];"
-                 "[b]scale=360:640:force_original_aspect_ratio=decrease[fg];"
+VERTICAL_FILL = ("split[a][b];[a]scale=540:960:force_original_aspect_ratio=increase,"
+                 "crop=540:960,boxblur=27:2,eq=brightness=-0.18[bg];"
+                 "[b]scale=540:960:force_original_aspect_ratio=decrease[fg];"
                  "[bg][fg]overlay=(W-w)/2:(H-h)/2")
 
 
@@ -173,6 +185,7 @@ def build_videos(only, manifest):
     for slug, src, length, forced in VIDEOS:
         if only and slug not in only:
             continue
+        src = source(src)
         w, h, dur = probe(src)
         start = forced if forced is not None else best_window(src, length, dur)
         # a seamless master keeps every frame, or the loop jumps
@@ -183,6 +196,10 @@ def build_videos(only, manifest):
                       CRF.get(slug, 34 if busy else 30), 46 if busy else 40)
         entry = {"type": "video", "src": src, "start": round(start, 2), "len": length,
                  "w": size[0], "h": size[1]}
+        if slug in TILE_W and w > TILE_W[slug]:
+            hd = encode(src, start, length, f"scale={min(HD_W, w)}:-2", os.path.join(d, f"{slug}-{HD_W}"),
+                        CRF.get(slug, 30) + 2, 40)   # a bigger frame hides a little more compression
+            entry["hd"] = {"w": hd[0], "h": hd[1], "kb": os.path.getsize(os.path.join(d, f"{slug}-{HD_W}.mp4")) // 1024}
         own_v = any(s == slug + "-v" for s, *_ in VIDEOS)
         if w / h > 0.8 and not own_v:  # landscape/square also gets a 9:16 version for mobile
             encode(src, start, length, VERTICAL_FILL, os.path.join(d, slug + "-v"),
@@ -200,6 +217,7 @@ def build_stills(only, manifest):
     for slug, src in STILLS:
         if only and slug not in only:
             continue
+        src = source(src)
         im = Image.open(src)
         im.draft("RGB", (3200, 3200))
         im = im.convert("RGB")
@@ -226,7 +244,7 @@ def build_mobile_reel():
         ("fsu-duh", 1.8), ("ballies-ai", 1.8), ("its-sah", 1.6), ("bb-med", 1.8),
         ("fsu-predupis", 1.8),
     ]
-    src_by = {s: (p, f) for s, p, _l, f in VIDEOS}
+    src_by = {s: (source(p), f) for s, p, _l, f in VIDEOS}
     man = json.load(open(os.path.join(OUT, "manifest.json"), encoding="utf-8"))
     parts = []
     fill = VERTICAL_FILL.replace("360:640", "720:1280").replace("boxblur=18:2", "boxblur=30:2")

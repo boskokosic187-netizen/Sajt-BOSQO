@@ -444,7 +444,7 @@
   border-radius: 50%; background: radial-gradient(closest-side, rgba(246, 163, 22, 0.24), rgba(246, 163, 22, 0.05) 62%, transparent); pointer-events: none;
 }
 .sc__frame {
-  position: relative; z-index: 1; height: min(76vh, 780px, 150vw); aspect-ratio: var(--ar); overflow: hidden; border-radius: 22px;
+  position: relative; z-index: 1; height: min(76vh, 768px, 150vw); aspect-ratio: var(--ar); /* 768: the frames' own height */ overflow: hidden; border-radius: 22px;
   background: #e9e7e3; cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none;
   box-shadow: 0 0 0 1px rgba(242, 239, 234, 0.1), 0 40px 90px -40px rgba(0, 0, 0, 0.95);
 }
@@ -470,7 +470,7 @@
 }
 
 /* ---- lab: Flip the series (33 posts on one canvas; the system can be shown over it) ---- */
-.fl__frame { border-radius: 10px; background: #0b0c10; height: auto; width: min(100%, 76vh, 780px); } /* square: as wide as the column allows */
+.fl__frame { border-radius: 10px; background: #0b0c10; height: auto; width: min(100%, 76vh, 720px); } /* square: as wide as the column allows */
 .fl__now { margin-top: clamp(22px, 3.4vh, 36px); }
 .fl__count { display: flex; align-items: baseline; gap: 8px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
 .fl__count b { color: var(--text); font-family: var(--f-sans); font-stretch: 110%; font-weight: 800; font-size: 44px; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }

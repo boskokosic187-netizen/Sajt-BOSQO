@@ -170,6 +170,8 @@ def monitor(mon, outdir, rel):
         lp = os.path.join(ROOT, "media", "loops", mon["loop"])
         w, h = Image.open(lp + ".webp").size
         d = {"kind": "loop", "src": f"media/loops/{mon['loop']}.mp4", "poster": f"media/loops/{mon['loop']}.webp", "w": w, "h": h}
+        if os.path.exists(lp + "-1920.mp4"):   # the program monitor on a big screen plays this one (js: piece)
+            d["hd"] = f"media/loops/{mon['loop']}-1920.mp4"
         parts = [{"_frame": lp + ".webp"}]
     elif t == "live":
         th = image({"type": "image", "src": mon["thumb"]}, outdir, rel)

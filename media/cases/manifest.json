@@ -4,9 +4,18 @@
    {
     "w": 960,
     "h": 450,
-    "kb": 325,
+    "kb": 329,
+    "vw": [
+     960,
+     1600,
+     2560
+    ],
+    "big": [
+     2560,
+     1200
+    ],
     "type": "video",
-    "url": "../../media/cases/live-on-the-streets/d705c98e",
+    "url": "../../media/cases/live-on-the-streets/c81676d1",
     "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540",
     "matte": false
    }
@@ -16,27 +25,54 @@
    {
     "w": 960,
     "h": 450,
-    "kb": 358,
+    "kb": 360,
+    "vw": [
+     960,
+     1600,
+     2560
+    ],
+    "big": [
+     2560,
+     1200
+    ],
     "type": "video",
-    "url": "../../media/cases/live-on-the-streets/d1bdd9b0",
+    "url": "../../media/cases/live-on-the-streets/e945b2e5",
     "label": "ITS · Nov 2026 · Pre-enrolment 2027/28",
     "matte": false
    },
    {
     "w": 960,
     "h": 450,
-    "kb": 513,
+    "kb": 522,
+    "vw": [
+     960,
+     1600,
+     2560
+    ],
+    "big": [
+     2560,
+     1200
+    ],
     "type": "video",
-    "url": "../../media/cases/live-on-the-streets/ea980a78",
+    "url": "../../media/cases/live-on-the-streets/6f98249e",
     "label": "ITHS · Nov 2026 · Enrolment 2027/28",
     "matte": false
    },
    {
     "w": 960,
     "h": 450,
-    "kb": 325,
+    "kb": 329,
+    "vw": [
+     960,
+     1600,
+     2560
+    ],
+    "big": [
+     2560,
+     1200
+    ],
     "type": "video",
-    "url": "../../media/cases/live-on-the-streets/d705c98e",
+    "url": "../../media/cases/live-on-the-streets/c81676d1",
     "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540",
     "matte": false
    }
@@ -53,7 +89,8 @@
        "h": 1080,
        "widths": [
         800,
-        1600
+        1600,
+        1920
        ],
        "type": "image",
        "url": "../../media/cases/live-on-the-streets/441720eb",
@@ -75,14 +112,15 @@
      ],
      [
       {
-       "w": 1240,
-       "h": 585,
+       "w": 2481,
+       "h": 1170,
        "widths": [
         800,
-        1240
+        1600,
+        2481
        ],
        "type": "image",
-       "url": "../../media/cases/live-on-the-streets/1cb62a6f",
+       "url": "../../media/cases/live-on-the-streets/3c74b0cc",
        "label": "The prize · a 300 EUR gear voucher, printed as a DL gift card",
        "matte": false
       }
@@ -241,7 +279,8 @@
     "h": 1100,
     "widths": [
      800,
-     1600
+     1600,
+     2400
     ],
     "type": "image",
     "url": "../../media/cases/ballies/ca683319",
@@ -357,7 +396,8 @@
        "h": 2000,
        "widths": [
         800,
-        1600
+        1600,
+        2000
        ],
        "type": "image",
        "url": "../../media/cases/ballies/29674679",
@@ -445,7 +485,8 @@
     "h": 2160,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/personal-art/4926e8a4",
@@ -460,7 +501,8 @@
     "h": 2160,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/personal-art/58c6de0f",
@@ -480,7 +522,8 @@
        "h": 2160,
        "widths": [
         800,
-        1600
+        1600,
+        2560
        ],
        "type": "image",
        "url": "../../media/cases/personal-art/993423fe",
@@ -534,7 +577,8 @@
        "h": 300,
        "widths": [
         800,
-        1600
+        1600,
+        2560
        ],
        "type": "image",
        "url": "../../media/cases/personal-art/50b43c0c",
@@ -567,7 +611,8 @@
     "h": 1749,
     "widths": [
      800,
-     1600
+     1600,
+     2481
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/247104fc",
@@ -582,7 +627,8 @@
     "h": 2516,
     "widths": [
      800,
-     1600
+     1600,
+     1789
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/aa100770",
@@ -594,7 +640,8 @@
     "h": 5031,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/05af5e73",
@@ -618,7 +665,8 @@
     "h": 5031,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/bc600825",
@@ -642,7 +690,8 @@
     "h": 2516,
     "widths": [
      800,
-     1600
+     1600,
+     1789
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/06d01655",
@@ -666,7 +715,8 @@
     "h": 5031,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/00657ef4",
@@ -690,7 +740,8 @@
     "h": 5031,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/e63ec159",
@@ -714,7 +765,8 @@
     "h": 5031,
     "widths": [
      800,
-     1600
+     1600,
+     2560
     ],
     "type": "image",
     "url": "../../media/cases/fsu-2026/a28c6442",
@@ -860,7 +912,8 @@
        "h": 1749,
        "widths": [
         800,
-        1600
+        1600,
+        2481
        ],
        "type": "image",
        "url": "../../media/cases/fsu-2026/247104fc",
@@ -872,7 +925,8 @@
        "h": 1080,
        "widths": [
         800,
-        1600
+        1600,
+        1920
        ],
        "type": "image",
        "url": "../../media/cases/fsu-2026/1b4fc720",
@@ -1058,6 +1112,14 @@
     "w": 540,
     "h": 960,
     "kb": 339,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
     "type": "video",
     "url": "../../media/cases/baby-boo/ed696b69",
     "label": "Manuka Honey · pilot film",
@@ -1066,6 +1128,15 @@
    {
     "w": 540,
     "h": 960,
+    "kb": 197,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
     "type": "video",
     "url": "../../media/cases/baby-boo/26f17ae0",
     "label": "Valentine's · product film",
@@ -1074,6 +1145,15 @@
    {
     "w": 540,
     "h": 960,
+    "kb": 292,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
     "type": "video",
     "url": "../../media/cases/baby-boo/3772d45e",
     "label": "Elephant · product film",
@@ -1193,6 +1273,15 @@
       {
        "w": 540,
        "h": 960,
+       "kb": 294,
+       "vw": [
+        540,
+        720
+       ],
+       "big": [
+        720,
+        1280
+       ],
        "type": "video",
        "url": "../../media/cases/baby-boo/2ed6683a",
        "label": "Manuka Honey · the pour, 9:16",
@@ -1201,6 +1290,15 @@
       {
        "w": 540,
        "h": 960,
+       "kb": 289,
+       "vw": [
+        540,
+        1080
+       ],
+       "big": [
+        1080,
+        1920
+       ],
        "type": "video",
        "url": "../../media/cases/baby-boo/fcc10112",
        "label": "Montenegro · mascot animation",

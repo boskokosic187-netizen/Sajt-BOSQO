@@ -63,7 +63,7 @@
         {
           "type": "film",
           "src": "PV/BOSQO/DEAD_AIR/01_Film/DEAD_AIR_film_16x9.mp4",
-          "w": 1280,
+          "w": 1920,
           "dur": 48,
           "poster_at": 8.3,
           "crf": 27,
@@ -208,7 +208,7 @@
         {
           "type": "film",
           "src": "PV/BOSQO/HALFCOURT/01_Film/HALFCOURT_film_16x9.mp4",
-          "w": 1280,
+          "w": 1920,
           "dur": 24,
           "poster_at": 6,
           "crf": 22,
@@ -288,7 +288,7 @@
             {
               "type": "video",
               "src": "PV/BOSQO/HALFCOURT/04_Mockupi/dooh_led.mp4",
-              "w": 1280,
+              "w": 1372,
               "dur": 8,
               "poster_at": 7,
               "crf": 22
@@ -302,7 +302,7 @@
         {
           "type": "video",
           "src": "PV/BOSQO/HALFCOURT/04_Mockupi/on_air_tv.mp4",
-          "w": 1280,
+          "w": 1920,
           "dur": 8,
           "poster_at": 5,
           "crf": 22,
@@ -388,7 +388,7 @@
         ]},
         {"type": "set", "cols": 2, "umd": "Motion 9:16", "label": "Motion poster 9:16, and the same as a story on the phone", "items": [
           {"type": "video", "src": "PV/BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_9x16.mp4", "w": 540},
-          {"type": "video", "src": "PV/BOSQO/JURASSIC/04_Mockupi/phone.mp4", "w": 720}
+          {"type": "video", "src": "PV/BOSQO/JURASSIC/04_Mockupi/phone.mp4", "w": 1280}
         ]},
         {"type": "set", "cols": 3, "umd": "In the wild", "label": "A framed print at home, a lit citylight as the train passes, lightboxes along the escalator", "items": [
           {"type": "image", "src": "PV/BOSQO/JURASSIC/04_Mockupi/room.jpg"},
@@ -426,7 +426,7 @@
       "monitors": [
         {"type": "loop", "loop": "bigger", "umd": "Loop", "label": "Loop · the client stares at the logo, then wants it bigger"},
         {"type": "live", "href": "projects/bigger/live/", "thumb": "PV/BOSQO/BIGGER/06_Web/bigger-live/media/poster-wide.webp", "umd": "Live · Bigger", "label": "Live · you are the client: make the logo bigger"},
-        {"type": "film", "src": "PV/BOSQO/BIGGER/01_Film/BIGGER_film_16x9.mp4", "w": 1280, "dur": 30.5, "poster_at": 11.9, "crf": 22, "umd": "Film · sound", "label": "The film · 30 s, real voices, an original bossa that grows a semitone per click"},
+        {"type": "film", "src": "PV/BOSQO/BIGGER/01_Film/BIGGER_film_16x9.mp4", "w": 1920, "dur": 30.5, "poster_at": 11.9, "crf": 22, "umd": "Film · sound", "label": "The film · 30 s, real voices, an original bossa that grows a semitone per click"},
         {"type": "set", "cols": 3, "umd": "Social 9:16", "label": "The vertical film with captions (made for no sound), and on the phone", "items": [
           {"type": "video", "src": "PV/BOSQO/BIGGER/01_Film/BIGGER_film_9x16.mp4", "w": 540, "dur": 30.5, "poster_at": 11.9, "crf": 23},
           {"type": "image", "src": "PV/BOSQO/BIGGER/04_Mockupi/phone_social.jpg"},
@@ -436,12 +436,12 @@
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_01_pigeon_turnaround.jpg"},
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_02_pigeon_expressions.jpg"},
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_03_designer.jpg"},
-          {"type": "video", "src": "PV/BOSQO/BIGGER/05_Sistem/BIGGER_walk_cycle.mp4", "w": 960, "dur": 4, "crf": 23}
+          {"type": "video", "src": "PV/BOSQO/BIGGER/05_Sistem/BIGGER_walk_cycle.mp4", "w": 1536, "dur": 4, "crf": 23}
         ]},
         {"type": "set", "cols": 3, "umd": "Process", "label": "Script, storyboard, animatic, rig, squash and stretch", "items": [
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_05_script.jpg"},
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_06_storyboard.jpg"},
-          {"type": "video", "src": "PV/BOSQO/BIGGER/05_Sistem/BIGGER_animatic.mp4", "w": 960, "dur": 30.5, "poster_at": 15.2, "crf": 24},
+          {"type": "video", "src": "PV/BOSQO/BIGGER/05_Sistem/BIGGER_animatic.mp4", "w": 1708, "dur": 30.5, "poster_at": 15.2, "crf": 24},
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_07_rig.jpg"},
           {"type": "image", "src": "PV/BOSQO/BIGGER/05_Sistem/board_08_squash_stretch.jpg"}
         ]}
@@ -471,7 +471,7 @@
       "monitors": [
         {"type": "loop", "loop": "accord", "umd": "Loop", "label": "Living identity · the bottle turns, the chord runs through the glass"},
         {"type": "live", "href": "projects/accord/live/", "thumb": "PV/BOSQO/ACCORD/06_Web/accord-live/media/poster-wide.webp", "umd": "Live · Spin", "label": "Live · turn the bottle: the light on the glass tunes the chord"},
-        {"type": "film", "src": "PV/BOSQO/ACCORD/01_Film/ACCORD_film_16x9.mp4", "w": 1280, "dur": 30, "poster_at": 6, "crf": 22, "umd": "Film · sound", "label": "Brand film · 30 s, original score: top, heart, base, then one chord"},
+        {"type": "film", "src": "PV/BOSQO/ACCORD/01_Film/ACCORD_film_16x9.mp4", "w": 1920, "dur": 30, "poster_at": 6, "crf": 22, "umd": "Film · sound", "label": "Brand film · 30 s, original score: top, heart, base, then one chord"},
         {"type": "set", "cols": 4, "umd": "Posters ×4", "label": "Key visual THE CHORD and the three notes · 50×70", "items": [
           {"type": "image", "src": "PV/BOSQO/ACCORD/02_Posteri/ACCORD_poster_00_the_chord.jpg"},
           {"type": "image", "src": "PV/BOSQO/ACCORD/02_Posteri/ACCORD_poster_01_top.jpg"},
@@ -568,10 +568,10 @@
       "monitors": [
         {"type": "loop", "loop": "umbra", "umd": "Loop", "label": "Living identity · a whole day in four seconds"},
         {"type": "live", "href": "projects/umbra/live/", "thumb": "PV/BOSQO/UMBRA/06_Web/umbra-live/media/poster.webp", "umd": "Live · WebGL", "label": "Live · move the sun, or see what it does in Belgrade now"},
-        {"type": "film", "src": "PV/BOSQO/UMBRA/01_Film/UMBRA_film_16x9.mp4", "w": 1280, "dur": 26, "poster_at": 6, "crf": 22, "umd": "Film · sound", "label": "Brand film · 26 s, original score"},
+        {"type": "film", "src": "PV/BOSQO/UMBRA/01_Film/UMBRA_film_16x9.mp4", "w": 1920, "dur": 26, "poster_at": 6, "crf": 22, "umd": "Film · sound", "label": "Brand film · 26 s, original score"},
         {"type": "set", "cols": 2, "umd": "Social 9:16", "label": "Brand film 9:16 and the app that counts down to the minute", "items": [
           {"type": "video", "src": "PV/BOSQO/UMBRA/01_Film/UMBRA_film_9x16.mp4", "w": 540, "dur": 26, "poster_at": 6, "crf": 23},
-          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/phone.mp4", "w": 720}
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/phone.mp4", "w": 768}
         ]},
         {"type": "set", "cols": 3, "umd": "Posters ×6", "label": "Poster series · six minutes of the opening day, 50×70", "items": [
           {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_01_first_light.jpg"},
@@ -582,11 +582,11 @@
           {"type": "image", "src": "PV/BOSQO/UMBRA/02_Posteri/UMBRA_poster_06_last_light.jpg"}
         ]},
         {"type": "set", "cols": 2, "umd": "DOOH", "label": "Digital outdoor · the clock runs to 18:47 on the billboard and the façade", "items": [
-          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/billboard.mp4", "w": 960},
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/billboard.mp4", "w": 1440},
           {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/led_facade.mp4", "w": 720}
         ]},
         {"type": "set", "cols": 2, "umd": "Event & space", "label": "Opening night on the plaza, and the plan in the pavilion", "items": [
-          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/opening.mp4", "w": 1280, "crf": 24},
+          {"type": "video", "src": "PV/BOSQO/UMBRA/04_Mockupi/opening.mp4", "w": 1712, "crf": 24},
           {"type": "image", "src": "PV/BOSQO/UMBRA/04_Mockupi/gallery.jpg"}
         ]},
         {"type": "set", "cols": 2, "umd": "Street & merch", "label": "Street posters and the tote", "items": [
@@ -625,11 +625,11 @@
         {"type": "loop", "loop": "struja", "umd": "Loop", "label": "Living identity — the loop"},
         {"type": "live", "href": "projects/struja/live/", "thumb": "PV/BOSQO/STRUJA/06_Web/struja-live/media/poster.webp",
          "umd": "Live · WebGL", "label": "Live — play the track, use the mic, move the cursor"},
-        {"type": "film", "src": "PV/BOSQO/STRUJA/01_Film/STRUJA_film_16x9.mp4", "w": 1280, "dur": 30, "poster_at": 6,
+        {"type": "film", "src": "PV/BOSQO/STRUJA/01_Film/STRUJA_film_16x9.mp4", "w": 1920, "dur": 30, "poster_at": 6,
          "umd": "Film · sound", "label": "Brand film — 30 s, original score"},
         {"type": "set", "cols": 2, "umd": "Social 9:16", "label": "Brand film 9:16 and the festival app", "items": [
           {"type": "video", "src": "PV/BOSQO/STRUJA/01_Film/STRUJA_film_9x16.mp4", "w": 540, "dur": 30, "poster_at": 6},
-          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/phone.mp4", "w": 720}
+          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/phone.mp4", "w": 774}
         ]},
         {"type": "set", "cols": 3, "umd": "Posters ×6", "label": "Poster series — six moments of one night, 50×70", "items": [
           {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_01_prvi_takt.jpg"},
@@ -640,10 +640,10 @@
           {"type": "image", "src": "PV/BOSQO/STRUJA/02_Posteri/STRUJA_poster_06_svice.jpg"}
         ]},
         {"type": "set", "cols": 2, "umd": "DOOH", "label": "Digital outdoor — billboard and façade", "items": [
-          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/bb_orange.mp4", "w": 960},
-          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/bb_building.mp4", "w": 720}
+          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/bb_orange.mp4", "w": 1200},
+          {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/bb_building.mp4", "w": 768}
         ]},
-        {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/stage.mp4", "w": 1280, "umd": "Stage", "label": "Main stage on the Sava"},
+        {"type": "video", "src": "PV/BOSQO/STRUJA/04_Mockupi/stage.mp4", "w": 1920, "umd": "Stage", "label": "Main stage on the Sava"},
         {"type": "set", "cols": 2, "umd": "Street & merch", "label": "Street posters and the wristband", "items": [
           {"type": "image", "src": "PV/BOSQO/STRUJA/04_Mockupi/posters_wall.jpg"},
           {"type": "image", "src": "PV/BOSQO/STRUJA/04_Mockupi/posters_sidewalk.jpg"},

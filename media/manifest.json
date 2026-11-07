@@ -1,98 +1,98 @@
 {
  "its-future": {
   "type": "video",
-  "src": "D:/Desktop/ITS/Bilbord Jul/Animacija_1.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/ITS/Bilbord Jul/Animacija_1.mp4",
   "start": 10.38,
   "len": 4,
-  "w": 640,
-  "h": 300,
+  "w": 1152,
+  "h": 540,
   "kb": {
-   "mp4": 52,
-   "webp": 16
+   "mp4": 116,
+   "webp": 32
   }
  },
  "fsu-predupis": {
   "type": "video",
-  "src": "D:/Desktop/FSU Best/Animacija_1.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/FSU Best/Animacija_1.mp4",
   "start": 10.12,
   "len": 4,
-  "w": 640,
-  "h": 356,
+  "w": 1152,
+  "h": 640,
   "kb": {
-   "mp4": 42,
-   "webp": 14
+   "mp4": 91,
+   "webp": 29
   }
  },
  "fsu-prolecni": {
   "type": "video",
-  "src": "D:/Desktop/FSU Best/FSU.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/FSU Best/FSU.mp4",
   "start": 0.75,
   "len": 4,
-  "w": 640,
-  "h": 356,
+  "w": 1152,
+  "h": 640,
   "kb": {
-   "mp4": 44,
-   "webp": 11
+   "mp4": 99,
+   "webp": 21
   }
  },
  "its-diplome": {
   "type": "video",
-  "src": "D:/Desktop/ITS/Svecana dodela diploma/1152x640.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/ITS/Svecana dodela diploma/1152x640.mp4",
   "start": 3.0,
   "len": 4,
-  "w": 640,
-  "h": 356,
+  "w": 1152,
+  "h": 640,
   "kb": {
-   "mp4": 150,
-   "webp": 24
+   "mp4": 357,
+   "webp": 52
   }
  },
  "its-sah": {
   "type": "video",
-  "src": "D:/Desktop/ITS/trofej beograda sah/animacija.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/ITS/trofej beograda sah/animacija.mp4",
   "start": 11.38,
   "len": 4,
-  "w": 640,
-  "h": 356,
+  "w": 1152,
+  "h": 640,
   "kb": {
-   "mp4": 97,
-   "webp": 26
+   "mp4": 217,
+   "webp": 56
   }
  },
  "its-maj": {
   "type": "video",
-  "src": "D:/Desktop/ITS/Bilbord Maj/ITS ITHS animacija.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/ITS/Bilbord Maj/ITS ITHS animacija.mp4",
   "start": 10.38,
   "len": 4,
-  "w": 640,
-  "h": 278,
+  "w": 1200,
+  "h": 520,
   "kb": {
-   "mp4": 65,
-   "webp": 18
+   "mp4": 149,
+   "webp": 41
   }
  },
  "its-matematika": {
   "type": "video",
-  "src": "D:/Desktop/ITS/Republicko takmicenje iz matematike/1152x640.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/ITS/Republicko takmicenje iz matematike/1152x640.mp4",
   "start": 0.75,
   "len": 4,
-  "w": 640,
-  "h": 356,
+  "w": 1152,
+  "h": 640,
   "kb": {
-   "mp4": 110,
-   "webp": 8
+   "mp4": 262,
+   "webp": 16
   }
  },
  "its-novogodisnji": {
   "type": "video",
-  "src": "D:/Desktop/FSU/Novogodisnji bilbordi/ITS Vizuali/Animacija.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/FSU/Novogodisnji bilbordi/ITS Vizuali/Animacija.mp4",
   "start": 9.5,
   "len": 4,
-  "w": 640,
-  "h": 356,
+  "w": 1152,
+  "h": 640,
   "kb": {
-   "mp4": 85,
-   "webp": 21
+   "mp4": 203,
+   "webp": 46
   }
  },
  "kalendar-fsu": {
@@ -100,23 +100,23 @@
   "src": "D:/Desktop/Production Visuals/FSU/Kalendar nastave FSU/kalendar-fsu-2026-2027-1080p.mp4",
   "start": 16.38,
   "len": 4,
-  "w": 640,
-  "h": 360,
+  "w": 1280,
+  "h": 720,
   "kb": {
-   "mp4": 58,
-   "webp": 9
+   "mp4": 162,
+   "webp": 27
   }
  },
  "ballies-strike": {
   "type": "video",
-  "src": "D:/Desktop/Ballies Best/strike 1.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/Ballies Best/strike 1.mp4",
   "start": 5.0,
   "len": 3,
-  "w": 480,
-  "h": 480,
+  "w": 960,
+  "h": 960,
   "kb": {
-   "mp4": 255,
-   "webp": 12
+   "mp4": 694,
+   "webp": 32
   }
  },
  "fsu-duh": {
@@ -124,35 +124,35 @@
   "src": "D:/Desktop/Production Visuals/FSU/FSU_DuhBeograda/video/Video DM.mp4",
   "start": 4.62,
   "len": 4,
-  "w": 480,
-  "h": 480,
+  "w": 960,
+  "h": 960,
   "kb": {
-   "mp4": 135,
-   "webp": 12
+   "mp4": 385,
+   "webp": 29
   }
  },
  "lisica": {
   "type": "video",
   "src": "D:/Desktop/Production Visuals/Testovi/Lisica mase/Lisica_mase-1080x1080.mp4",
   "start": 0,
-  "len": 2.95,
-  "w": 480,
-  "h": 480,
+  "len": 3,
+  "w": 960,
+  "h": 960,
   "kb": {
-   "mp4": 57,
-   "webp": 11
+   "mp4": 204,
+   "webp": 30
   }
  },
  "ballies-ai": {
   "type": "video",
-  "src": "D:/Desktop/Ballies Best/9-16.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/Ballies Best/9-16.mp4",
   "start": 0.88,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 162,
-   "webp": 28
+   "mp4": 320,
+   "webp": 49
   }
  },
  "manuka": {
@@ -160,47 +160,47 @@
   "src": "D:/Desktop/Production Visuals/Baby Boo/Manuka Honey Pilot/BabyBoo_ManukaHoney_Pilot-1080x1920.mp4",
   "start": 1.38,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 84,
-   "webp": 9
+   "mp4": 162,
+   "webp": 17
   }
  },
  "bb-med": {
   "type": "video",
-  "src": "D:/Desktop/Ai Baby Boo/Gotove/med 4.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/Ai Baby Boo/Gotove/med 4.mp4",
   "start": 4.38,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 69,
-   "webp": 14
+   "mp4": 122,
+   "webp": 23
   }
  },
  "bb-slon": {
   "type": "video",
-  "src": "D:/Desktop/Ai Baby Boo/Slon.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/Ai Baby Boo/Slon.mp4",
   "start": 0.75,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 96,
-   "webp": 7
+   "mp4": 178,
+   "webp": 12
   }
  },
  "its-reklama": {
   "type": "video",
-  "src": "D:/Desktop/ITS/Animirana reklama/Animacija.mp4",
+  "src": "D:/Arhiva/Desktop 2026-10/Projekti/ITS/Animirana reklama/Animacija.mp4",
   "start": 4.75,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 215,
-   "webp": 30
+   "mp4": 417,
+   "webp": 60
   }
  },
  "bvs": {
@@ -354,6 +354,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 1874
+  },
   "kb": {
    "mp4": 831,
    "webp": 29
@@ -364,11 +369,11 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/STRUJA/06_Web/media/STRUJA_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 277,
-   "webp": 10
+   "mp4": 525,
+   "webp": 18
   }
  },
  "umbra": {
@@ -378,6 +383,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 894
+  },
   "kb": {
    "mp4": 308,
    "webp": 7
@@ -388,11 +398,11 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/UMBRA/06_Web/media/UMBRA_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 192,
-   "webp": 5
+   "mp4": 377,
+   "webp": 9
   }
  },
  "interstellar": {
@@ -402,6 +412,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 717
+  },
   "kb": {
    "mp4": 291,
    "webp": 42
@@ -412,11 +427,11 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/INTERSTELLAR/06_Web/media/INTERSTELLAR_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 124,
-   "webp": 22
+   "mp4": 228,
+   "webp": 41
   }
  },
  "accord": {
@@ -426,6 +441,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 1025
+  },
   "kb": {
    "mp4": 425,
    "webp": 13
@@ -436,11 +456,11 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/ACCORD/06_Web/media/ACCORD_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 255,
-   "webp": 9
+   "mp4": 470,
+   "webp": 16
   }
  },
  "bigger": {
@@ -450,6 +470,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 500
+  },
   "kb": {
    "mp4": 201,
    "webp": 12
@@ -462,6 +487,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 201
+  },
   "kb": {
    "mp4": 71,
    "webp": 24
@@ -472,11 +502,11 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/JURASSIC/06_Web/media/JURASSIC_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 37,
-   "webp": 15
+   "mp4": 72,
+   "webp": 31
   }
  },
  "halfcourt": {
@@ -486,6 +516,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 295
+  },
   "kb": {
    "mp4": 118,
    "webp": 41
@@ -496,11 +531,11 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/HALFCOURT/06_Web/media/HALFCOURT_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 102,
-   "webp": 21
+   "mp4": 199,
+   "webp": 36
   }
  },
  "prostor-poster": {
@@ -564,6 +599,11 @@
   "len": 4,
   "w": 960,
   "h": 540,
+  "hd": {
+   "w": 1920,
+   "h": 1080,
+   "kb": 2261
+  },
   "kb": {
    "mp4": 430,
    "webp": 23
@@ -574,11 +614,23 @@
   "src": "D:/Desktop/Production Visuals/BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_9x16.mp4",
   "start": 0,
   "len": 4,
-  "w": 360,
-  "h": 640,
+  "w": 540,
+  "h": 960,
   "kb": {
-   "mp4": 239,
-   "webp": 9
+   "mp4": 485,
+   "webp": 18
+  }
+ },
+ "bigger-v": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/BIGGER/06_Web/media/BIGGER_loop_9x16.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 540,
+  "h": 960,
+  "kb": {
+   "mp4": 135,
+   "webp": 12
   }
  }
 }

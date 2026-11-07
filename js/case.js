@@ -303,11 +303,19 @@
     if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage); else addEventListener('resize', fit);
     fit();
 
+    // the smallest file that covers the box (the board is made in several widths; never shown past its own)
+    function srcFor(b, box, k = 1) {
+      const r = box.getBoundingClientRect(), need = Math.max(r.width, r.height * (b.ar || 2)) * k * 0.98;
+      const s = b.srcs || [[b.mp4, 0]];
+      return (s.find((x) => x[1] >= need) || s[s.length - 1])[0];
+    }
     function load(j) {
       const b = boards[j];
       cur = j;
       vid.poster = b.poster;
-      if (vid.dataset.src !== b.mp4) { vid.dataset.src = b.mp4; vid.src = b.mp4; vid.preload = 'auto'; }
+      // passing the camera the board grows to ~55% of the stage's width
+      const fs = srcFor(b, stage, 0.56);
+      if (vid.dataset.src !== fs) { vid.dataset.src = fs; vid.src = fs; vid.preload = 'auto'; }
       $$('[data-board]', el).forEach((x) => x.setAttribute('aria-pressed', String(+x.dataset.board === j)));
     }
     function setSpeed(k) {
@@ -341,11 +349,12 @@
         list.appendChild(li);
       });
       rvid.poster = b.poster;
-      if (rvid.dataset.src !== b.mp4) { rvid.dataset.src = b.mp4; rvid.src = b.mp4; }
+      read.hidden = false;   // laid out first: the file is picked for the card's size
+      read.classList.remove('is-on');
+      const rs = srcFor(b, rvid);
+      if (rvid.dataset.src !== rs) { rvid.dataset.src = rs; rvid.src = rs; }
       try { rvid.currentTime = b.at || 0; } catch (e) { /* not loaded yet */ }
       play(rvid);
-      read.hidden = false;
-      read.classList.remove('is-on');
       requestAnimationFrame(() => requestAnimationFrame(() => read.classList.add('is-on')));
     }
     function hideRead() { read.hidden = true; read.classList.remove('is-on'); rvid.pause(); }

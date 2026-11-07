@@ -49,6 +49,21 @@
     return v;
   }
   const play = (v) => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+  /* No piece is shown bigger than its own file. A video made in several widths lists them
+     (data-srcs="a.mp4 960, a-1600.mp4 1600"); it plays the smallest that covers its box
+     (object-fit: cover, so the box's height counts too), so a phone never loads the big one. */
+  function pickSrc(v) {
+    const list = (v.dataset.srcs || '').split(',').map((x) => x.trim().split(/\s+/)).filter((x) => x[0]);
+    if (!list.length) return;
+    const r = v.getBoundingClientRect();
+    const ar = (+v.getAttribute('width') || 16) / (+v.getAttribute('height') || 9);
+    const need = Math.max(r.width, r.height * ar) * 0.98;
+    const k = list.findIndex((x) => +x[1] >= need), i = k < 0 ? list.length - 1 : k;
+    if (i === list.length - 1 && i > 0 && v.dataset.posterBig) v.poster = v.dataset.posterBig; // the first frame as sharp as the film
+    if (v.getAttribute('src') !== list[i][0]) v.src = list[i][0];
+  }
+  // a 16:9 box that needs more than the 960 px loop (cover: its height counts too)
+  const needsHd = (el) => { const r = el.getBoundingClientRect(); return Math.max(r.width, r.height * 16 / 9) > 1000; };
   const store = {
     get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } },
     set: (k, v) => { try { sessionStorage.setItem(k, v); } catch { /* private mode */ } },
@@ -673,8 +688,9 @@
     let k = 0, cur = 0, started = false, inView = false;
     const at = (i) => list[i % list.length];
     function cue(v, i) {
-      v.poster = base + at(i)[0] + '.webp';
-      v.src = base + at(i)[0] + '.mp4';
+      const hd = mon.dataset.hd && needsHd(v) ? mon.dataset.hd : ''; // the -1920 copy on a big screen
+      v.poster = base + at(i)[0] + hd + '.webp';
+      v.src = base + at(i)[0] + hd + '.mp4';
       v.preload = 'auto';
       v.load();
     }
@@ -1169,7 +1185,7 @@
       };
       const makePreview = () => {
         if (pv) return;
-        pv = makeVideo(REEL + 'preview.mp4' + RV);
+        pv = makeVideo(REEL + (scr.clientWidth > 1000 ? 'preview-1600' : 'preview') + '.mp4' + RV); // never past its own pixels
         pv.setAttribute('aria-hidden', 'true');
         pv.tabIndex = -1;
         pv.addEventListener('loadedmetadata', () => { if (!talking) pv.currentTime = CH[2]; }, { once: true }); // the poster is this frame
@@ -1600,6 +1616,8 @@
         im.alt = m.label || '';
         if (m.srcset) { im.srcset = m.srcset; im.sizes = m.sizes || Math.round(p.pgm.clientWidth) + 'px'; }
         im.src = m.src;
+        const big = Math.max(...(m.srcset || '').split(',').map((x) => parseInt(x.trim().split(' ')[1], 10) || 0), 0) || m.w;
+        if (big && m.w) cap(im, big, big * m.h / m.w);
         return im;
       }
       if (m.kind === 'set') {
@@ -1631,8 +1649,9 @@
         });
         return box;
       }
-      const v = makeVideo(m.src);
+      const v = makeVideo(m.hd && needsHd(p.pgm) ? m.hd : m.src);
       v.poster = m.poster;
+      if (m.kind !== 'loop' && m.w) cap(v, m.w, m.h);
       if (m.kind === 'film') { // once, with its sound (the click is the permission) and controls
         v.loop = false;
         v.removeAttribute('muted');
@@ -1641,6 +1660,25 @@
       }
       play(v);
       return v;
+    }
+    // centred at most at its own size (css: .mv__screen > *, .mv__cell > * fill their box)
+    function cap(el, w, h) {
+      Object.assign(el.style, { maxWidth: Math.round(w) + 'px', maxHeight: Math.round(h) + 'px', margin: 'auto' });
+    }
+    // the screen's own loop came along at 960 px: on a big monitor the 1920 copy takes over, in step
+    function sharpen(p) {
+      const m = p.mons[0], v = p.tv;
+      if (!v || !m.hd || p.tvOld || !needsHd(p.pgm)) return;
+      const hv = makeVideo(m.hd);
+      hv.addEventListener('canplay', () => {
+        if (proj !== p || p.tv !== v || v.parentNode !== p.screen) return;
+        hv.currentTime = v.currentTime;
+        play(hv);
+        v.replaceWith(hv);
+        v.pause();
+        p.tvOld = v;   // the wall gets its own back on close
+        p.tv = hv;
+      }, { once: true });
     }
     function showOn(p, i, flash = true) {
       const m = p.mons[i];
@@ -1694,7 +1732,7 @@
         el.classList.add(animated ? 'is-in' : 'is-fade');
       }).then(() => {
         p.pgm.style.viewTransitionName = '';
-        if (proj === p) el.focus({ preventScroll: true });
+        if (proj === p) { el.focus({ preventScroll: true }); sharpen(p); }
       });
       if (how === 'push') history.pushState({ proj: slug }, '', '#' + slug);
       else if (how === 'link') history.replaceState({ proj: slug, link: true }, '', '#' + slug);
@@ -1712,7 +1750,7 @@
         hero.classList.remove('is-open');
         root.classList.remove('is-proj');
         if (tile) {
-          if (p.tv) tile.appendChild(p.tv);
+          if (p.tvOld || p.tv) tile.appendChild(p.tvOld || p.tv);
           tile.style.viewTransitionName = 'take';
           setOrigin(tile);
         }
@@ -3235,8 +3273,9 @@
       document.body.classList.toggle('is-scrolled', scrollY > 24);
     }, { passive: true });
 
-    /* gallery + cover videos: play only while visible */
+    /* gallery + cover videos: play only while visible, each in the width its box needs */
     const vids = $$('video[data-autoplay]');
+    vids.forEach(pickSrc);
     function startAutoplay() {
       if (lite || !('IntersectionObserver' in window)) return;
       const io = new IntersectionObserver((entries) => {
