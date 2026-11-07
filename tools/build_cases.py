@@ -1039,6 +1039,88 @@ LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub":
         "mascots": lab_mascots}
 
 
+def stage_mint(c, R):
+    """Ballies key visual, a mint stage instead of a still: a curved wall of 60 Ballies behind
+    (the originals among new ones from the same layers), one original big in the middle with
+    its ten traits called out, and the next original revealed top to bottom every few seconds.
+    Pictures and data: tools/build_ballies_mint.py (media/labs/ballies-mint). js/case.js mints,
+    css/case.css builds the room; this renders the first original whole, so the stage stands
+    before any script runs."""
+    rel = "media/labs/ballies-mint/"
+    base = R + rel
+    d = json.load(open(os.path.join(ROOT, rel, "mint.json"), encoding="utf-8"))
+    L, T = d["layers"], d["tokens"]
+    t = T[0]
+    cw, ch = d["card"]
+    total = math.prod(len(x[2]) for x in L)
+    n_traits = sum(len(x[2]) for x in L)
+
+    def trait(l):
+        k, label, names = L[l]
+        v = t["c"][l]
+        return (f'<li class="mint__t" data-t="{l}" style="--k:{v};--n:{len(names)}">'
+                f'<span class="mint__k"><b>{l + 1:02d}</b>{E(label)}</span>'
+                f'<span class="mint__v" data-v>{E(names[v])}</span>'
+                f'<span class="mint__n"><i class="mint__m"></i><span data-n>{v + 1:02d}/{len(names):02d}</span></span></li>')
+
+    left = "".join(trait(l) for l in (5, 4, 3, 0, 7))       # head, eyes, skin, background, ball
+    right = "".join(trait(l) for l in (8, 6, 1, 2, 9))      # mouth, extra, jersey, number, arm
+    rows = "".join(
+        f'<div class="mint__row" style="--r:{r}">' + "".join(
+            f'<i class="mint__nft" style="--i:{j};--x:{n % d["cols"]};--y:{n // d["cols"]}"'
+            + (f' data-o="{o}" data-s="Original #{o:02d}"' if o else f' data-s="Mint #{(n * 7919 + 1301) % 8000 + 1000}"')
+            + '></i>' for j, (n, o) in enumerate(row)) + '</div>'
+        for r, row in enumerate(d["wall"]))
+    on = ' is-on" aria-current="true'
+    ticks = "".join(
+        f'<button class="mint__tick{on if j == 0 else ""}" type="button" data-go="{j}" aria-label="Original #{x["id"]:02d}"><i></i></button>'
+        for j, x in enumerate(T))
+    dna = " ".join(f"{v:02d}" for v in t["c"])
+    data = json.dumps({"light": d["light"], "layers": L, "tokens": T}, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return f"""
+    <section class="cover cover--stage" id="cover" aria-label="Key visual: the Ballies originals, minted one by one">
+      <div class="mint" data-stage="mint" data-base="{base}" style="--tint:{d['light'][t['c'][0]]};--cols:{d['cols']};--rows:{d['rows']}">
+        <script type="application/json" data-mint>{data}</script>
+        <style>.mint__nft{{background-image:url("{base}wall.webp")}}</style>
+        <div class="mint__space" aria-hidden="true">
+          <div class="mint__sky"></div>
+          <div class="mint__floor"></div>
+          <div class="mint__wall">{rows}</div>
+        </div>
+        <div class="mint__veil" aria-hidden="true"></div>
+        <div class="mint__float">
+          <div class="mint__rig">
+            <ul class="mint__traits mint__traits--l" aria-label="Traits, left">{left}</ul>
+            <button class="mint__card" type="button" aria-label="Mint the next original">
+              <span class="mint__frame">
+                <img class="mint__bg" src="{base}bg-{t['c'][0]}.webp" alt="" width="{cw}" height="{d['bgh']}" decoding="async" draggable="false">
+                <img class="mint__bg is-top" alt="" width="{cw}" height="{d['bgh']}" decoding="async" draggable="false">
+                <span class="mint__holo"></span>
+              </span>
+              <img class="mint__char" src="{base}r-{t['id']:02d}.webp" alt="Ballies original #{t['id']:02d}" width="{cw}" height="{ch}" fetchpriority="high" decoding="async" draggable="false">
+              <img class="mint__char is-top" alt="" width="{cw}" height="{ch}" decoding="async" draggable="false">
+              <span class="mint__beam"></span>
+              <span class="mint__plate"><b>Ballies Rookies</b><span data-id>#{t['id']:02d}</span></span>
+            </button>
+            <ul class="mint__traits mint__traits--r" aria-label="Traits, right">{right}</ul>
+            <svg class="mint__lines" aria-hidden="true"></svg>
+          </div>
+        </div>
+        <div class="mint__hud" aria-hidden="true">
+          <span class="mint__corner"></span><span class="mint__corner"></span><span class="mint__corner"></span><span class="mint__corner"></span>
+          <p class="mint__tl"><span><i class="mint__rec"></i><b data-state>Live mint</b></span><span class="mint__dim">{len(L)} layers · {n_traits} traits · {len(T)} originals</span></p>
+          <p class="mint__tr"><span>Original <b data-id>#{t['id']:02d}</b></span><span class="mint__dim"><span data-pos>01</span> / {len(T):02d}</span></p>
+          <p class="mint__bl"><span class="mint__dim">DNA</span><b data-dna>{dna}</b></p>
+          <p class="mint__br"><b>{total:,}</b><span class="mint__dim">possible Ballies</span></p>
+        </div>
+        <div class="mint__ticks" role="group" aria-label="Originals">{ticks}</div>
+      </div>
+    </section>"""
+
+
+STAGES = {"mint": stage_mint}
+
+
 def render_story(c, i, cases, media):
     R = "../../"
     n = len(cases)
@@ -1075,6 +1157,10 @@ def render_story(c, i, cases, media):
     note = f'<p class="case-note">{E(c["note"])}</p>' if c.get("note") else ""
     next_bg = nxt["_next_bg"]
     extra = f'\n  <link rel="stylesheet" href="{R}css/case.css">\n  <script src="{R}js/case.js" defer></script>'
+    # the key visual: a still (or three side by side), or a live stage built for the case;
+    # "hero" stays the still for the share image and the next-case strip either way
+    stage = (STAGES[c["stage"]](c, R) if c.get("stage") else
+             f'    <section class="cover{" is-trio" if trio else ""}" id="cover" aria-label="Key visual">\n      {cover}\n    </section>')
 
     return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R, extra=extra) + f"""
 <body class="page-case page-story">
@@ -1094,9 +1180,7 @@ def render_story(c, i, cases, media):
       <dl class="case-meta cs-meta">{meta}</dl>
     </section>
 
-    <section class="cover{' is-trio' if trio else ''}" id="cover" aria-label="Key visual">
-      {cover}
-    </section>
+{stage}
 
     <section class="case-story cs-story">
       <div class="story">

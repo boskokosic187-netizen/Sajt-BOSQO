@@ -275,15 +275,15 @@
  "ballies": {
   "hero": [
    {
-    "w": 2400,
-    "h": 1100,
+    "w": 2481,
+    "h": 1120,
     "widths": [
      800,
      1600,
-     2400
+     2481
     ],
     "type": "image",
-    "url": "../../media/cases/ballies/ca683319",
+    "url": "../../media/cases/ballies/aa1c1354",
     "label": "",
     "matte": false
    }

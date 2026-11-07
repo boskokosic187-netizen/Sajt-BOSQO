@@ -929,6 +929,185 @@
     }, 0.45);
   }
 
+  /* ------------------------------------------------------------ the Ballies mint (stage)
+     The key visual on top of work/ballies (markup: build_cases.stage_mint, room: case.css).
+     Every few seconds (the fill of the current tick) the next original is printed over the
+     one on the card: a scan line runs top to bottom, uncovering the new character and its
+     background, and each of the ten traits changes the moment the line passes it, its
+     callout line redrawn to where that trait now sits. A click on the card mints the next,
+     a tick goes to that original; the mouse leans the card, the wall turns the other way. */
+  function mintStage(el) {
+    const D = JSON.parse($('[data-mint]', el).textContent);
+    const T = D.tokens, L = D.layers, base = el.dataset.base;
+    const card = $('.mint__card', el), rig = $('.mint__rig', el), svg = $('.mint__lines', el), frame = $('.mint__frame', el);
+    const [bg0, bg1] = $$('.mint__bg', el), [ch0, ch1] = $$('.mint__char', el);
+    const ticks = $$('.mint__tick', el), nfts = $$('.mint__nft[data-o]', el);
+    const ids = $$('[data-id]', el), pos = $('[data-pos]', el), dna = $('[data-dna]', el), state = $('[data-state]', el);
+    const pad = (n) => String(n).padStart(2, '0');
+    const src = (t) => [base + 'bg-' + t.c[0] + '.webp', base + 'r-' + pad(t.id) + '.webp'];
+    const NS = 'http://www.w3.org/2000/svg';
+    const OUT = 'cubic-bezier(.2,.8,.2,1)';
+    let cur = 0, busy = false, pending = -1;
+
+    // text that settles letter by letter into the new value
+    const GL = { u: 'ABCDEFGHJKLMNPQRSTUVWXYZ', l: 'abcdefghijkmnopqrstuvwxyz', d: '0123456789' };
+    function scramble(node, to, ms) {
+      const id = (node._s = (node._s || 0) + 1);
+      if (!ms) { node.textContent = to; return; }
+      const t0 = performance.now();
+      const tick = (now) => {
+        if (node._s !== id) return;
+        const k = Math.min(1, (now - t0) / ms), n = Math.floor(k * to.length);
+        let s = to.slice(0, n);
+        for (let i = n; i < to.length; i++) {
+          const c = to[i], set = /\d/.test(c) ? GL.d : /[A-Z]/.test(c) ? GL.u : /[a-z]/.test(c) ? GL.l : '';
+          s += set ? set[(Math.random() * set.length) | 0] : c;
+        }
+        node.textContent = s;
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    // one callout per trait: from its label to the card's edge, then in to the trait itself
+    const G = {};
+    $$('.mint__t', el).forEach((li, n) => {
+      const l = +li.dataset.t;
+      const g = document.createElementNS(NS, 'g');
+      const path = document.createElementNS(NS, 'path');
+      const ring = document.createElementNS(NS, 'circle');
+      const dot = document.createElementNS(NS, 'circle');
+      path.setAttribute('pathLength', '1');
+      ring.setAttribute('class', 'mint__ring'); ring.setAttribute('r', '3.5'); ring.style.setProperty('--d', n);
+      dot.setAttribute('class', 'mint__dot'); dot.setAttribute('r', '3.5');
+      g.append(path, ring, dot); svg.append(g);
+      G[l] = { li, path, ring, dot, k: $('.mint__k', li), v: T[0].c[l], a: T[0].a[l], left: !!li.closest('.mint__traits--l') };
+    });
+    function place(l) {
+      const o = G[l];
+      const cl = card.offsetLeft, ct = card.offsetTop, cw = card.offsetWidth, chh = card.offsetHeight;
+      const y0 = o.k.offsetTop + o.k.offsetHeight / 2;
+      const x0 = o.left ? o.li.offsetLeft + o.li.offsetWidth + 14 : o.li.offsetLeft - 14;
+      const xe = o.left ? cl - 10 : cl + cw + 10;
+      const ax = cl + (o.a[0] / 100) * cw, ay = ct + (o.a[1] / 100) * chh;
+      o.path.setAttribute('d', `M${x0.toFixed(1)} ${y0.toFixed(1)}H${xe.toFixed(1)}L${ax.toFixed(1)} ${ay.toFixed(1)}`);
+      for (const c of [o.ring, o.dot]) { c.setAttribute('cx', ax.toFixed(1)); c.setAttribute('cy', ay.toFixed(1)); }
+    }
+    const shown = () => svg.getBoundingClientRect().width > 0;
+    const layout = () => { if (shown()) Object.keys(G).forEach((l) => place(+l)); };
+    function draw(l, delay) {
+      if (reduce || !shown()) return;
+      const o = G[l];
+      o.path.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 560, delay, easing: OUT, fill: 'backwards' });
+      o.dot.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: delay + 420, fill: 'backwards' });
+    }
+
+    function hit(l, t, quick) {
+      const o = G[l];
+      if (!o) return;
+      const names = L[l][2], v = t.c[l], a = t.a[l];
+      const changed = o.v !== v, moved = o.a[0] !== a[0] || o.a[1] !== a[1];
+      o.v = v; o.a = a;
+      if (changed) {
+        scramble($('[data-v]', o.li), names[v], quick ? 0 : 420);
+        $('[data-n]', o.li).textContent = pad(v + 1) + '/' + pad(names.length);
+        o.li.style.setProperty('--k', v);
+        if (!quick) { o.li.classList.remove('is-hit'); void o.li.offsetWidth; o.li.classList.add('is-hit'); }
+      }
+      if ((changed || moved) && shown()) { place(l); if (!quick) draw(l, 0); }
+    }
+
+    function setTicks() {
+      ticks.forEach((b, i) => {
+        b.classList.toggle('is-on', i === cur);
+        b.classList.toggle('is-done', i < cur);
+        if (i === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+      });
+    }
+    const decode = (...ims) => Promise.all(ims.map((im) => im.decode().catch(() => {})));
+    const preload = (t) => src(t).forEach((s) => { const im = new Image(); im.decoding = 'async'; im.src = s; });
+
+    async function go(j) {
+      j = ((j % T.length) + T.length) % T.length;
+      if (busy) { pending = j; return; }
+      if (j === cur) return;
+      busy = true;
+      const t = T[j], [bs, cs] = src(t);
+      cur = j; setTicks();
+      bg1.src = bs; ch1.src = cs;                       // the new one, on top, still covered
+      await decode(bg1, ch1);
+      el.style.setProperty('--tint', D.light[t.c[0]]);
+      ids.forEach((n) => { n.textContent = '#' + pad(t.id); });
+      pos.textContent = pad(j + 1);
+      scramble(dna, t.c.map(pad).join(' '), reduce ? 0 : 1000);
+      nfts.forEach((n) => n.classList.toggle('is-live', +n.dataset.o === t.id));
+      const order = Object.keys(G).map(Number).sort((a, b) => t.a[a][1] - t.a[b][1]);
+      let k = 0;
+      if (!reduce) {
+        state.textContent = 'Minting';
+        card.classList.add('is-minting');
+        const F = frame.offsetTop / card.offsetHeight, t0 = performance.now(), MS = 1500;
+        await new Promise((done) => {
+          const step = (now) => {
+            const x = Math.min(1, (now - t0) / MS), p = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(2 - 2 * x, 3) / 2;
+            card.style.setProperty('--p', p.toFixed(4));
+            card.style.setProperty('--q', Math.max(0, (p - F) / (1 - F)).toFixed(4));
+            while (k < order.length && p * 100 >= t.a[order[k]][1]) hit(order[k++], t);
+            if (x < 1) requestAnimationFrame(step); else done();
+          };
+          requestAnimationFrame(step);
+        });
+      }
+      while (k < order.length) hit(order[k++], t, reduce);
+      bg0.src = bs; ch0.src = cs; ch0.alt = 'Ballies original #' + pad(t.id);   // the bottom catches up, then the top lets go
+      await decode(bg0, ch0);
+      card.style.setProperty('--p', 0); card.style.setProperty('--q', 0);
+      card.classList.remove('is-minting');
+      state.textContent = 'Live mint';
+      busy = false;
+      preload(T[(cur + 1) % T.length]);
+      if (pending >= 0) { const n = pending; pending = -1; go(n); }
+    }
+
+    card.addEventListener('click', () => go(cur + 1));
+    ticks.forEach((b) => b.addEventListener('click', () => go(+b.dataset.go)));
+    el.addEventListener('animationend', (e) => {
+      if (e.animationName === 'mint-fill' && e.target.closest('.mint__tick') === ticks[cur]) go(cur + 1);
+    });
+    nfts.forEach((n) => n.classList.toggle('is-live', +n.dataset.o === T[0].id));
+    preload(T[1]);
+
+    layout();
+    if (document.fonts) document.fonts.ready.then(layout);
+    if ('ResizeObserver' in window) new ResizeObserver(layout).observe(rig);
+    onceSeen(el, () => Object.keys(G).forEach((l, n) => draw(+l, 250 + n * 70)), 0.3);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((en) => en.forEach((e) => el.classList.toggle('is-off', !e.isIntersecting))).observe(el);
+    }
+
+    // the card leans to the mouse, the wall turns the other way, the foil follows
+    if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+      const step = () => {
+        x += (tx - x) * 0.07; y += (ty - y) * 0.07;
+        rig.style.setProperty('--ry', (x * 6).toFixed(3) + 'deg');
+        rig.style.setProperty('--rx', (-y * 4).toFixed(3) + 'deg');
+        el.style.setProperty('--wy', (-x * 3).toFixed(3) + 'deg');
+        card.style.setProperty('--mx', ((x + 1) / 2).toFixed(4));
+        raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.002 ? requestAnimationFrame(step) : 0;
+      };
+      const kick = () => { if (!raf) raf = requestAnimationFrame(step); };
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+        ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+        el.classList.add('is-tilt'); kick();
+      });
+      el.addEventListener('pointerleave', () => { tx = 0; ty = 0; el.classList.remove('is-tilt'); kick(); });
+    }
+  }
+  $$('[data-stage="mint"]').forEach(mintStage);
+
   const LABS = { mixer, driveby, loupe, scrub, flip: scrub, gallery, mascots };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];

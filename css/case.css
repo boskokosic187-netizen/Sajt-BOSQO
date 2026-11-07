@@ -657,3 +657,216 @@
   .zo__in, .zo__g, .zo__zzz b { animation: none !important; }
   .zo__a { transition: none; }
 }
+
+/* ---- stage: the Ballies mint (the key visual on top of work/ballies; markup: build_cases.stage_mint) ----
+   A room in CSS 3D. Behind, a curved wall of 60 Ballies on four rows that slide slowly
+   along the arc (the originals among new ones made from the same layers). In front, one
+   original big on its card with its ten traits called out on both sides; every few
+   seconds a scan line mints the next original over it, top to bottom, and each trait
+   changes as the line passes it (js: mintStage). Sizes are in cqh, the stage's height, so
+   the room is the same at any size; the wall's nearest card and the big character never
+   come out bigger than their files (240 x 283 and 840 x 991). */
+@property --tint { syntax: "<color>"; inherits: true; initial-value: #66eec8; }
+html.vt-in .mint { view-transition-name: cut-pic; }
+html.cues .mint img { animation: none !important; } /* the cue opens the stage; the pictures inside are never scaled past their files */
+.mint {
+  --hold: 6.6s; --ink: #060708;
+  position: relative; overflow: hidden; isolation: isolate; border-radius: 6px; background: var(--ink);
+  height: clamp(560px, min(46vw, calc(100svh - 120px)), 1120px);
+  container-type: size; perspective: 1800px; perspective-origin: 50% 50%;
+  transition: --tint 1.4s var(--out);
+  -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+
+/* the room: a glow, a floor, the curved wall */
+.mint__space { position: absolute; inset: 0; overflow: hidden; perspective: 120cqh; perspective-origin: 50% 50%; }
+.mint__sky {
+  position: absolute; inset: 0;
+  background: radial-gradient(70% 80% at 50% 48%, color-mix(in oklab, var(--tint) 20%, transparent), transparent 72%), linear-gradient(#050607, #0b0c0f 60%, #050607);
+}
+.mint__floor {
+  position: absolute; left: -100%; width: 300%; bottom: 0; height: 320cqh; transform-origin: 50% 100%; transform: rotateX(90deg);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--tint) 30%, transparent) 1px, transparent 1px) 50% 0 / 9cqh 9cqh,
+    linear-gradient(color-mix(in oklab, var(--tint) 30%, transparent) 1px, transparent 1px) 50% 0 / 9cqh 9cqh;
+  -webkit-mask: linear-gradient(transparent, #000 80%); mask: linear-gradient(transparent, #000 80%);
+  opacity: 0.55;
+}
+.mint__wall { position: absolute; left: 50%; top: 50%; transform-style: preserve-3d; transform: translateZ(55cqh) rotateY(var(--wy, 0deg)); }
+.mint__row { --dur: 150s; position: absolute; transform-style: preserve-3d; transform: translateY(calc((var(--r) - 1.5) * 27cqh)); }
+.mint__row:nth-child(2) { --dur: 128s; --dir: reverse; }
+.mint__row:nth-child(3) { --dur: 172s; }
+.mint__row:nth-child(4) { --dur: 138s; --dir: reverse; }
+.mint__nft {
+  position: absolute; left: 0; top: 0; width: 18.6cqh; height: 22cqh; border-radius: 1.1cqh; background-color: #121418;
+  background-size: calc(var(--cols) * 100%) calc(var(--rows) * 100%);
+  background-position: calc(var(--x) / (var(--cols) - 1) * 100%) calc(var(--y) / (var(--rows) - 1) * 100%);
+  backface-visibility: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  animation: mint-arc var(--dur) linear calc(var(--dur) * var(--i) / -15) infinite var(--dir, normal);
+}
+.mint__nft::after { /* its serial, small under it */
+  content: attr(data-s); position: absolute; left: 0.2cqh; top: calc(100% + 0.9cqh); color: rgba(242, 239, 234, 0.62);
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 1.15cqh; letter-spacing: 0.14em; text-transform: uppercase; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.mint__nft[data-o]::after { color: var(--tint); }
+.mint__nft.is-live { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3), 0 0 0 0.25cqh var(--tint), 0 0 4cqh color-mix(in oklab, var(--tint) 70%, transparent); }
+@keyframes mint-arc {
+  0% { transform: translate(-50%, -50%) rotateY(-66deg) translateZ(-150cqh); opacity: 0; }
+  8%, 92% { opacity: 0.58; }
+  100% { transform: translate(-50%, -50%) rotateY(66deg) translateZ(-150cqh); opacity: 0; }
+}
+
+/* the dark the card stands in, its light, the pool it throws on the floor */
+.mint__veil {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(78cqh 54cqh at 50% 50%, color-mix(in oklab, var(--ink) 94%, transparent) 28%, color-mix(in oklab, var(--ink) 55%, transparent) 68%, transparent),
+    linear-gradient(var(--ink), transparent 20%, transparent 74%, var(--ink)),
+    linear-gradient(90deg, color-mix(in oklab, var(--ink) 75%, transparent), transparent 13%, transparent 87%, color-mix(in oklab, var(--ink) 75%, transparent));
+}
+.mint__veil::before, .mint__veil::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); }
+.mint__veil::before { top: 4cqh; width: 120cqh; height: 92cqh; background: radial-gradient(closest-side, color-mix(in oklab, var(--tint) 24%, transparent), transparent); }
+.mint__veil::after { bottom: 3cqh; width: 92cqh; height: 16cqh; background: radial-gradient(closest-side, color-mix(in oklab, var(--tint) 34%, transparent), transparent); }
+
+/* the card, its traits and the lines to them: one rig that floats and leans */
+.mint__float { position: absolute; inset: 0; display: grid; place-items: center; transform-style: preserve-3d; animation: mint-sway 16s ease-in-out infinite alternate; }
+@keyframes mint-sway {
+  from { transform: rotateY(-2.4deg) rotateX(0.8deg) translateY(-0.5cqh); }
+  to { transform: rotateY(2.4deg) rotateX(-0.8deg) translateY(0.5cqh); }
+}
+.mint__rig {
+  position: relative; display: grid; grid-template-columns: minmax(0, 300px) auto minmax(0, 300px); column-gap: clamp(40px, 8cqh, 104px);
+  transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+.mint__card {
+  position: relative; display: block; height: min(80cqh, 991px); aspect-ratio: 1000 / 1180; padding: 0; border: 0; background: none;
+  color: inherit; font: inherit; cursor: pointer; transform-style: preserve-3d;
+}
+.mint__card:focus-visible { outline: none; }
+.mint__card:focus-visible .mint__frame { outline: 2px solid var(--sig); outline-offset: 8px; }
+/* depth inside the card (perspective 1800): each layer is scaled back to its own size, so
+   at rest they line up exactly and only move apart as the rig turns */
+.mint__frame {
+  position: absolute; left: 0; right: 0; top: 10.169%; bottom: 0; overflow: hidden; border-radius: 3.4cqh; background: #101216;
+  transform: translateZ(-30px) scale(1.01667);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--tint) 60%, transparent), 0 0 8cqh -1cqh color-mix(in oklab, var(--tint) 50%, transparent), 0 5cqh 10cqh -3cqh #000;
+}
+.mint__frame::after { /* fine scan lines over the background only; the character stays clean */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px); mix-blend-mode: overlay;
+}
+.mint__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mint__bg.is-top { clip-path: inset(0 0 calc(100% - var(--q, 0) * 100%) 0); }
+.mint__holo {
+  position: absolute; inset: 0; mix-blend-mode: soft-light;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.55) 48%, rgba(255, 255, 255, 0.12) 54%, transparent 64%) 0 0 / 300% 100%;
+  animation: mint-sheen 9s ease-in-out infinite alternate;
+}
+.mint.is-tilt .mint__holo { animation: none; background-position: calc(var(--mx, 0.5) * 100%) 0; }
+@keyframes mint-sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.mint__char { position: absolute; inset: 0; width: 100%; height: 100%; transform: translateZ(40px) scale(0.97778); pointer-events: none; }
+.mint__char:not(.is-top) { clip-path: inset(calc(var(--p, 0) * 100%) -20% -20% -20%); } /* the old one goes as the line passes, its hat too */
+.mint__char.is-top { transform: translateZ(41px) scale(0.97722); clip-path: inset(-20% -20% calc(100% - var(--p, 0) * 100%) -20%); }
+.mint__plate {
+  position: absolute; left: 0; right: 0; top: 10.169%; display: flex; justify-content: space-between; padding: 2.4cqh 2.8cqh; pointer-events: none;
+  transform: translateZ(-28px) scale(1.01556);
+  color: rgba(8, 9, 10, 0.74); font-family: var(--f-label); font-stretch: 80%; font-weight: 700; font-size: clamp(10.5px, 1.15cqh, 13px); letter-spacing: 0.12em; text-transform: uppercase;
+}
+.mint__plate b { font-weight: 800; }
+.mint__beam { position: absolute; inset: 0; pointer-events: none; opacity: 0; transform: translateZ(43px) scale(0.97611) translateY(calc(var(--p, 0) * 100%)); transition: opacity 0.3s; }
+.mint__card.is-minting .mint__beam { opacity: 1; }
+.mint__beam::before { /* what the line has just printed still glows */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 18%;
+  background: linear-gradient(transparent, color-mix(in oklab, var(--tint) 30%, transparent)); mix-blend-mode: screen;
+}
+.mint__beam::after {
+  content: ""; position: absolute; left: -7%; right: -7%; top: -1px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--tint) 18%, #fff 50%, var(--tint) 82%, transparent);
+  box-shadow: 0 0 14px 2px color-mix(in oklab, var(--tint) 80%, transparent), 0 0 44px 8px color-mix(in oklab, var(--tint) 35%, transparent);
+}
+
+/* the traits */
+.mint__traits { list-style: none; margin: 0; padding: 12.5cqh 0 6cqh; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+.mint__traits--l { align-items: flex-end; text-align: right; }
+.mint__t { text-shadow: 0 0 14px var(--ink), 0 0 4px var(--ink), 0 1px 2px var(--ink); }
+.mint__t { display: grid; gap: 0.7cqh; max-width: 100%; }
+.mint__k, .mint__n { display: flex; align-items: center; gap: 9px; font-family: var(--f-label); font-stretch: 80%; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.mint__traits--l .mint__k { justify-content: flex-end; }
+.mint__k { color: var(--muted); font-size: 11.5px; }
+.mint__k b { color: var(--tint); font-weight: 700; }
+.mint__v { overflow: hidden; color: var(--text); font-weight: 600; font-size: clamp(15px, 1.8cqh, 20px); line-height: 1.15; letter-spacing: -0.005em; white-space: nowrap; text-overflow: ellipsis; }
+.mint__n { color: rgba(242, 239, 234, 0.5); font-size: 11px; }
+.mint__traits--l .mint__n { flex-direction: row-reverse; }
+.mint__m { position: relative; overflow: hidden; width: clamp(48px, 7cqh, 80px); height: 3px; border-radius: 2px; background: rgba(242, 239, 234, 0.14); }
+.mint__m::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: calc(var(--k) * 100% / var(--n)); width: max(3px, calc(100% / var(--n)));
+  background: var(--tint); box-shadow: 0 0 8px var(--tint); transition: left 0.6s var(--out);
+}
+.mint__t.is-hit .mint__v { animation: mint-hit 0.9s var(--out); }
+.mint__t.is-hit .mint__k b { animation: mint-hit 0.9s var(--out); }
+@keyframes mint-hit { from { color: #fff; text-shadow: 0 0 16px var(--tint), 0 0 2px var(--tint); } }
+.mint__lines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transform: translateZ(44px) scale(0.97556); }
+.mint__lines path { fill: none; stroke: color-mix(in oklab, var(--tint) 80%, transparent); stroke-width: 1; stroke-dasharray: 1 1; }
+.mint__dot { fill: var(--tint); stroke: var(--ink); stroke-width: 2; }
+.mint__ring { fill: none; stroke: var(--tint); stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: mint-ring 2.8s var(--out) calc(var(--d, 0) * -0.28s) infinite; }
+@keyframes mint-ring { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4.4); opacity: 0; } }
+
+/* the broadcast frame around it all */
+.mint__hud {
+  position: absolute; inset: clamp(14px, 2.2cqh, 26px); pointer-events: none; color: var(--text);
+  font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11.5px; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; font-variant-numeric: tabular-nums;
+}
+.mint__corner { position: absolute; width: 18px; height: 18px; border: 0 solid rgba(242, 239, 234, 0.42); }
+.mint__corner:nth-child(1) { left: 0; top: 0; border-width: 1px 0 0 1px; }
+.mint__corner:nth-child(2) { right: 0; top: 0; border-width: 1px 1px 0 0; }
+.mint__corner:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 1px 1px; }
+.mint__corner:nth-child(4) { right: 0; bottom: 0; border-width: 0 1px 1px 0; }
+.mint__hud p { position: absolute; display: grid; gap: 6px; margin: 0; }
+.mint__hud p > span:first-child { display: flex; align-items: center; gap: 9px; }
+.mint__hud b { font-weight: 700; }
+.mint__tl { left: 30px; top: 3px; }
+.mint__tr { right: 30px; top: 3px; text-align: right; }
+.mint__tr > span:first-child { justify-content: flex-end; }
+.mint__bl { left: 30px; bottom: 3px; }
+.mint__br { right: 30px; bottom: 3px; text-align: right; }
+.mint__dim { color: var(--muted); }
+.mint__bl b, .mint__tr b { color: var(--tint); }
+.mint__bl b { letter-spacing: 0.16em; }
+.mint__rec { width: 7px; height: 7px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 10px var(--rec); animation: mint-rec 1.8s steps(1) infinite; }
+@keyframes mint-rec { 50% { opacity: 0.25; } }
+.mint__ticks { position: absolute; left: 50%; bottom: clamp(10px, 2cqh, 22px); z-index: 2; display: flex; transform: translateX(-50%); }
+.mint__tick { display: grid; place-items: center; width: 24px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer; }
+.mint__tick i { position: relative; display: block; overflow: hidden; width: 17px; height: 3px; border-radius: 2px; background: rgba(242, 239, 234, 0.2); transition: background-color 0.2s; }
+.mint__tick i::after { content: ""; position: absolute; inset: 0; background: var(--text); transform-origin: 0 50%; transform: scaleX(0); }
+.mint__tick.is-done i::after { transform: none; opacity: 0.4; }
+.mint__tick.is-on i::after { background: var(--tint); animation: mint-fill var(--hold) linear forwards; }
+.mint__tick:hover i { background: rgba(242, 239, 234, 0.5); }
+.mint__tick:focus-visible { outline: 2px solid var(--sig); outline-offset: -2px; border-radius: 4px; }
+.mint:has(.mint__rig:hover) .mint__tick.is-on i::after { animation-play-state: paused; } /* looking at it holds it */
+@keyframes mint-fill { to { transform: scaleX(1); } }
+.mint.is-off *, .mint.is-off *::before, .mint.is-off *::after { animation-play-state: paused !important; } /* off screen nothing runs */
+
+@media (max-width: 1099px) {
+  .mint__traits, .mint__lines { display: none; }
+  .mint__rig { display: block; }
+}
+@media (max-width: 767px) {
+  .mint { --hold: 6s; height: min(150vw, 700px); border-radius: 4px; }
+  .mint__card { height: auto; width: 66cqw; }
+  .mint__wall { transform: translateZ(80cqh); }
+  .mint__row { transform: translateY(calc((var(--r) - 1.5) * 30cqh)); }
+  .mint__hud { font-size: 10px; letter-spacing: 0.08em; }
+  .mint__tl, .mint__bl { left: 22px; }
+  .mint__tr, .mint__br { right: 22px; }
+  .mint__ticks { bottom: auto; top: calc(50% + 66cqw * 0.59 + 1.6cqh); }
+  .mint__tick { width: 16px; height: 24px; }
+  .mint__tick i { width: 11px; }
+  .mint__plate { padding: 1.8cqh 2.2cqh; font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mint { transition: none; }
+  .mint__nft { animation-play-state: paused; }
+  .mint__float, .mint__holo, .mint__rec, .mint__ring { animation: none; }
+  .mint__ring { opacity: 0; }
+  .mint__tick.is-on i::after { animation: none; transform: none; }
+}

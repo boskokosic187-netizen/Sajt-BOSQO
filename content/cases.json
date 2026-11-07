@@ -373,9 +373,10 @@
       "result_big": "9,999",
       "result_label": "characters from one rig",
       "result": "Then three years of seasons, launches and key art starring them: hundreds of assets in one recognisable universe.",
+      "stage": "mint",
       "hero": [
         {
-          "src": "S/_izvori/ballies/lineup.png",
+          "src": "S/_izvori/ballies/mint-stage.png",
           "type": "image",
           "label": ""
         }
