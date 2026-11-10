@@ -6,17 +6,28 @@
   <title>Boško Kosić — Visual &amp; Motion Designer</title>
   <meta name="description" content="Belgrade-based visual and motion designer. Campaigns, key art and animation for education, gaming and Web3 brands — from social posts to city billboards.">
   <meta name="theme-color" content="#0A0A0B">
+  <link rel="canonical" href="https://bosko.trif.rs/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Boško Kosić">
+  <meta property="og:url" content="https://bosko.trif.rs/">
   <meta property="og:title" content="Boško Kosić — campaigns, key art &amp; motion">
   <meta property="og:description" content="50+ billboards across Belgrade. Three years building a Web3 sports brand. See the work.">
-  <meta property="og:image" content="media/stills/kolubara-1600.webp">
+  <meta property="og:image" content="https://bosko.trif.rs/media/og/home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Boško Kosić — a wall of screens showing campaigns, key art and motion work">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://bosko.trif.rs/media/og/home.jpg">
   <link rel="icon" href="favicon.ico?v=0c991286" sizes="any">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=f911308f">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=7efaf94c">
+  <!-- the fonts live on the site and load ahead of the stylesheet, so the first paint is already in Archivo -->
+  <link rel="preload" href="media/fonts/archivo-v25-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="media/fonts/archivo-v25-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="media/fonts/instrument-serif-v5-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- the chrome of the name is the biggest thing in the first paint -->
+  <link rel="preload" href="media/fx/chrome.avif" as="image" type="image/avif" media="(min-width: 768px)">
+  <link rel="preload" href="media/fx/chrome-s.avif" as="image" type="image/avif" media="(max-width: 767px)">
+  <link rel="stylesheet" href="css/site.css?v=662e3dc0">
   <script>
     // js flag + the avatar intro decision, before first paint so the page never flashes under the intro
     // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per
@@ -45,7 +56,7 @@
     })(document.documentElement);
   </script>
   <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
-  <script src="js/site.js?v=ab813c16" defer></script>
+  <script src="js/site.js?v=a8c27f4e" defer></script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>

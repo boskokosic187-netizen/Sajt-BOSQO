@@ -115,9 +115,26 @@
   /* --------------------------------------------- avatar intro (home, desktop)
      <head> decides (html.is-intro) so the black cover is there from the first paint.
      ~1.3 s: the logo avatar pops up and winks; a tilt of the head launches it into the logo
-     while the black closes into it like a camera iris. Any click, key or scroll skips it. */
+     while the black closes into it like a camera iris. Any click, key or scroll skips it.
+     The launch waits for the pictures of the wall behind the black (at most 1.4 s more, with
+     a second wink meanwhile), so the iris opens on a finished wall, not on one still loading. */
   let introPlayed = false;
   let introReveal = Promise.resolve(); // the hero powers on when the iris starts to open
+  let introDone = Promise.resolve();   // the black is gone: the page may start its heavier parts
+  // the wall's pictures that are on screen, loaded and decoded (or `max` ms have passed)
+  const wallReady = (max) => {
+    const pics = $$('.hero img').filter((im) => {
+      const r = im.getBoundingClientRect();
+      return r.width > 0 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth;
+    });
+    const one = (im) => new Promise((done) => {
+      const dec = () => (im.decode ? im.decode().then(done, done) : done());
+      if (im.complete) { if (im.naturalWidth) dec(); else done(); return; }
+      im.addEventListener('load', dec, { once: true });
+      im.addEventListener('error', done, { once: true });
+    });
+    return Promise.race([Promise.all(pics.map(one)), new Promise((r) => setTimeout(r, max))]);
+  };
   function setupIntro() {
     if (!root.classList.contains('is-intro')) return;
     const cover = $('.intro');
@@ -139,8 +156,10 @@
     cover.appendChild(wrap);
     const head = $('.av-head', av);
 
-    let open;
+    let open, over, gone = false;
     introReveal = new Promise((r) => { open = r; });
+    introDone = new Promise((r) => { over = r; });
+    const ready = wallReady(2140); // from now: the 740 ms of the pop and the wink, then at most 1.4 s of waiting
     const anims = [];
     const timers = [];
     const at = (ms, fn) => timers.push(setTimeout(fn, ms));
@@ -155,7 +174,8 @@
     // 2) a wink
     at(500, () => av.classList.add('is-wink'));
     // 3) the head tilts and that launches it into the logo; the black closes into it like an iris
-    at(740, () => {
+    const launch = () => {
+      if (gone) return;
       av.classList.remove('is-wink');
       const a = wrap.getBoundingClientRect();
       const b = markAv.getBoundingClientRect();
@@ -172,15 +192,24 @@
         { clipPath: `circle(${b.width / 2}px at ${cx + dx}px ${cy + dy}px)` },
       ], o);
       open();
+      // 4) hand over to the real logo
+      at(570, finish);
+    };
+    at(740, () => {
+      av.classList.remove('is-wink');
+      ready.then(launch);
     });
-    // 4) hand over to the real logo
-    at(1310, finish);
+    // the wall is still loading: he winks once more while he waits
+    at(1500, () => { if (!gone) { av.classList.add('is-wink'); at(260, () => av.classList.remove('is-wink')); } });
 
     const SKIP = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
     function finish() {
+      if (gone) return;
+      gone = true;
       timers.forEach(clearTimeout);
       SKIP.forEach((t) => removeEventListener(t, finish));
       open();
+      over();
       cover.remove();
       anims.forEach((x) => x.cancel());
       root.classList.remove('is-intro');
@@ -1151,13 +1180,25 @@
           strip.scrollTo({ left: Math.max(0, li.offsetLeft - (parseFloat(getComputedStyle(strip).paddingLeft) || 0)), behavior: reduceMotion ? 'auto' : 'smooth' });
         }
       };
+      /* the loop's next pass. While the reel rolls it runs once per frame the video shows
+         (25 a second on any screen, so a 144 Hz monitor does not redo the page 144 times);
+         during his hello there are no video frames, so it follows the screen. A new call
+         replaces the one still waiting, so two loops never run side by side */
+      let pass = 0;
+      const next = () => {
+        const mine = ++pass;
+        const run = (now) => { if (mine === pass) tick(now); };
+        if (pv && !talkIntro && pv.requestVideoFrameCallback) pv.requestVideoFrameCallback(run);
+        else requestAnimationFrame(run);
+        return 1;
+      };
       function tick(now) {
         raf = 0;
         // during his hello the reel stands by on frame 0, but the meters follow his voice
         if (!pv || (pv.paused && !talkIntro)) return;
         const t = talkIntro ? 0 : pv.currentTime;
-        if (tl) { place(t); tl.classList.add('is-on'); }
         const f = Math.floor(t * 25);
+        if (tl && (f !== lastF || talkIntro)) { place(t); if (!tl.classList.contains('is-on')) tl.classList.add('is-on'); }
         const g = levels && Math.min(levels.l.length - 1, f);
         const lv = talkVu ? talkVu() : levels && [levels.l[g] / 99, levels.r[g] / 99];
         if (lv && f !== lastF) {
@@ -1176,12 +1217,12 @@
           if (i !== lastCh) { lastCh = i; showChapter(i); }
           if (fills[i]) fills[i].style.transform = `scaleX(${Math.min(1, (t - CH[i]) / ((CH[i + 1] || DUR) - CH[i])).toFixed(3)})`;
         }
-        raf = requestAnimationFrame(tick);
+        raf = next();
       }
       const live = (on) => {
         reel.classList.toggle('is-live', on);
         stEl.textContent = on ? 'On air' : 'Standby';
-        if (on && !raf) raf = requestAnimationFrame(tick);
+        if (on && !raf) raf = next();
       };
       const makePreview = () => {
         if (pv) return;
@@ -1211,7 +1252,7 @@
       if (lite) onLiteOff.push(watch);
       // the ticker at the foot of the stage runs only while it is in view (css: .reel__ticker)
       const ticker = $('.reel__ticker', reel);
-      if (ticker && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => ticker.classList.toggle('is-run', e.isIntersecting)).observe(ticker);
+      if (ticker && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => ticker.classList.toggle('is-run', e.isIntersecting), { rootMargin: '-1px 0px' }).observe(ticker);
 
       /* director's commentary (css: talk). The avatar from the logo sits beside the monitor and
          talks the visitor through the reel. His voice over the reel's own mix is one file
@@ -1303,7 +1344,7 @@
           // the reel on the monitor keeps step with the voice
           const rt = t - data.pre;
           talkIntro = rt < 0;
-          if (talkIntro && !raf) raf = requestAnimationFrame(tick);
+          if (talkIntro) raf = next(); // also takes over from a pass still waiting on a video frame
           if (rt >= 0 && rt < DUR - 0.05) {
             if (!rolled) { rolled = true; pv.currentTime = rt; pv.playbackRate = 1; play(pv); }
             else if (pv.paused) play(pv);
@@ -1885,7 +1926,7 @@
         heroOnScreen = en.isIntersecting;
         hero.classList.toggle('is-offscreen', !heroOnScreen);
         startMobileReel();
-      }).observe(hero);
+      }, { rootMargin: '-1px 0px' }).observe(hero); // -1px: touching the window's edge is not on screen (the Reel landing)
     }
     mqDesktop.addEventListener('change', () => {
       fitName();
@@ -1906,7 +1947,10 @@
     });
     fontsReady.then(fitName);
     addEventListener('load', () => {
-      setTimeout(() => { startDirector(); setupFeed(); }, reduceMotion ? 0 : 900);
+      // the screens start playing 0.9 s after the page has loaded, and never before the intro is
+      // over: the first videos start decoding once the iris has closed, not while it moves
+      const settled = new Promise((r) => setTimeout(r, reduceMotion ? 0 : 900));
+      Promise.all([settled, introDone.then(() => new Promise((r) => setTimeout(r, introPlayed ? 250 : 0)))]).then(() => { startDirector(); setupFeed(); });
       const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1500));
       setTimeout(() => idle(() => { reelReady = true; startMobileReel(); }, { timeout: 3000 }), 900);
     });
@@ -2743,10 +2787,17 @@
     // the stage takes the height left under the title and the steps, so a jump to
     // #process shows all of it at once (its size doesn't move anything above it)
     const section = pr.closest('section') || pr;
-    const fit = () => pr.style.setProperty('--pr-top', Math.round(stage.getBoundingClientRect().top - section.getBoundingClientRect().top) + 'px');
-    fit();
-    addEventListener('resize', fit);
-    if (document.fonts) document.fonts.ready.then(fit);
+    // Asking where the stage sits makes the browser lay the whole section out, although it
+    // skips its rendering until it comes near (~45 ms). So the first measure waits until the
+    // page is idle after the intro, instead of landing in the first frames; a jump to the
+    // section, or the section coming near, measures at once.
+    let fitted = false;
+    const fit = () => { fitted = true; pr.style.setProperty('--pr-top', Math.round(stage.getBoundingClientRect().top - section.getBoundingClientRect().top) + 'px'); };
+    const whenIdle = window.requestIdleCallback || ((f) => setTimeout(f, 1500));
+    introDone.then(() => whenIdle(() => { if (!fitted) fit(); }, { timeout: 4000 }));
+    addEventListener('resize', () => { if (fitted) fit(); });
+    if (document.fonts) document.fonts.ready.then(() => { if (fitted) fit(); });
+    document.addEventListener('click', (e) => { if (!fitted && e.target.closest && e.target.closest('a[href$="#process"]')) fit(); }, true);
 
     let full = !lite;                       // false: still frames, cross-faded
     let step = 1, started = false, inView = false, userPaused = false, running = false;
@@ -3255,6 +3306,7 @@
       const near = new IntersectionObserver(([en]) => {
         if (!en.isIntersecting) return;
         near.disconnect();
+        if (!fitted) fit();
         prep(pj);
       }, { rootMargin: '800px 0px' });
       near.observe(pr);
