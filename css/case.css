@@ -674,7 +674,9 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
   position: relative; overflow: hidden; isolation: isolate; border-radius: 6px; background: var(--ink);
   height: clamp(560px, min(46vw, calc(100svh - 120px)), 1120px);
   container-type: size; perspective: 1800px; perspective-origin: 50% 50%;
-  transition: --tint 1.4s var(--out);
+  /* the colour of the room turns in twenty steps, not on every frame: each step repaints the
+     sky, the floor, the glows and the shadows, and on every frame that cost the scan its frames */
+  transition: --tint 1.4s steps(20, end);
   -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 
@@ -803,13 +805,24 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
 .mint__n { color: rgba(242, 239, 234, 0.5); font-size: 11px; }
 .mint__traits--l .mint__n { flex-direction: row-reverse; }
 .mint__m { position: relative; overflow: hidden; width: clamp(48px, 7cqh, 80px); height: 3px; border-radius: 2px; background: rgba(242, 239, 234, 0.14); }
-.mint__m::after {
-  content: ""; position: absolute; top: 0; bottom: 0; left: calc(var(--k) * 100% / var(--n)); width: max(3px, calc(100% / var(--n)));
-  background: var(--tint); box-shadow: 0 0 8px var(--tint); transition: left 0.6s var(--out);
+.mint__m::after { /* the marker slides by transform (as "left" it was a layout on each frame of the slide) */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(var(--tint), var(--tint)) 0 0 / max(3px, calc(100% / var(--n))) 100% no-repeat;
+  filter: drop-shadow(0 0 8px var(--tint));
+  transform: translateX(calc(var(--k) / var(--n) * 100%)); transition: transform 0.6s var(--out);
 }
-.mint__t.is-hit .mint__v { animation: mint-hit 0.9s var(--out); }
-.mint__t.is-hit .mint__k b { animation: mint-hit 0.9s var(--out); }
-@keyframes mint-hit { from { color: #fff; text-shadow: 0 0 16px var(--tint), 0 0 2px var(--tint); } }
+/* a trait lights up as the line passes it: its text flares and a patch of the room's colour
+   behind it fades. Both run on the compositor (filter, opacity). As an animated text-shadow
+   the flash had the whole rig laid out and painted again on every frame of the scan */
+.mint__k { position: relative; }
+.mint__k::before {
+  content: ""; position: absolute; z-index: -1; left: -3cqh; right: -3cqh; top: -2.2cqh; height: 10.5cqh; pointer-events: none; opacity: 0;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--tint) 36%, transparent), transparent);
+}
+.mint__t.is-hit .mint__k::before { animation: mint-glow 0.9s var(--out); }
+.mint__t.is-hit .mint__v, .mint__t.is-hit .mint__k b { animation: mint-hit 0.9s var(--out); }
+@keyframes mint-hit { from { filter: brightness(2.2); } }
+@keyframes mint-glow { from { opacity: 1; } }
 .mint__lines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transform: translateZ(44px) scale(0.97556); }
 .mint__lines path { fill: none; stroke: color-mix(in oklab, var(--tint) 80%, transparent); stroke-width: 1; stroke-dasharray: 1 1; }
 .mint__dot { fill: var(--tint); stroke: var(--ink); stroke-width: 2; }

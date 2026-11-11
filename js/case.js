@@ -955,9 +955,15 @@
       const id = (node._s = (node._s || 0) + 1);
       if (!ms) { node.textContent = to; return; }
       const t0 = performance.now();
+      let last = 0;
       const tick = (now) => {
         if (node._s !== id) return;
         const k = Math.min(1, (now - t0) / ms), n = Math.floor(k * to.length);
+        // new letters about 22 times a second: every change of text is a layout of the stage,
+        // and on a fast screen that was one on each frame for the whole scan
+        const beat = Math.floor(now / 45);   // one clock for every text that is settling: they change in the same frames
+        if (k < 1 && beat === last) { requestAnimationFrame(tick); return; }
+        last = beat;
         let s = to.slice(0, n);
         for (let i = n; i < to.length; i++) {
           const c = to[i], set = /\d/.test(c) ? GL.d : /[A-Z]/.test(c) ? GL.u : /[a-z]/.test(c) ? GL.l : '';
