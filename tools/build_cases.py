@@ -432,6 +432,45 @@ def blocks_html(blocks):
             f'      <nav class="chap" aria-label="The work by kind">{nav}</nav>')
 
 
+SITE = "https://bosko.trif.rs/"   # share tags need absolute addresses
+
+
+def og_image(slug, hero):
+    """The picture a link to the case shows when it is shared: 1200x630 JPG in media/og/.
+    One wide key visual fills it; tall pieces (three films) stand side by side on the site's black."""
+    from PIL import Image
+    out = os.path.join(ROOT, "media", "og", slug + ".jpg")
+    srcs = []
+    for m in hero[:3]:
+        rel = m["url"] + (".webp" if m["type"] == "video" else f"-{m['widths'][-1]}.webp")
+        rel = re.sub(r"^(\.\./)+", "", rel)   # the pages' own "../../" prefix
+        srcs.append(os.path.join(ROOT, rel.replace("/", os.sep)))
+    if not (os.path.exists(out) and all(os.path.getmtime(out) >= os.path.getmtime(p) for p in srcs)):
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        W, H = 1200, 630
+        ims = [Image.open(p).convert("RGB") for p in srcs]
+        card = Image.new("RGB", (W, H), (10, 10, 11))
+        if len(ims) == 1 and ims[0].width / ims[0].height >= 1.2:
+            im = ims[0]
+            if im.width / im.height > 2.0:   # a billboard: all of it, with a little black above and below
+                im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)
+                card.paste(im, (0, (H - im.height) // 2))
+            else:
+                k = max(W / im.width, H / im.height)
+                im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+                card.paste(im.crop(((im.width - W) // 2, (im.height - H) // 2, (im.width - W) // 2 + W, (im.height - H) // 2 + H)), (0, 0))
+        else:
+            gap, pad = 14, 28
+            h = H - 2 * pad
+            ims = [im.resize((round(im.width * h / im.height), h), Image.LANCZOS) for im in ims]
+            x = (W - sum(im.width for im in ims) - gap * (len(ims) - 1)) // 2
+            for im in ims:
+                card.paste(im, (x, pad))
+                x += im.width + gap
+        card.save(out, quality=88, optimize=True, progressive=True)
+    return SITE + "media/og/" + slug + ".jpg"
+
+
 TOPBAR = """
   <header class="topbar">
     {MARK}
@@ -454,16 +493,23 @@ HEAD = """<!doctype html>
   <title>{title} — Boško Kosić</title>
   <meta name="description" content="{desc}">
   <meta name="theme-color" content="#0A0A0B">
+  <link rel="canonical" href="{url}">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Boško Kosić">
+  <meta property="og:url" content="{url}">
   <meta property="og:title" content="{title} — Boško Kosić">
   <meta property="og:description" content="{desc}">
   <meta property="og:image" content="{og}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{og}">
   <link rel="icon" href="{R}favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="{R}apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@1&display=swap">
+  <!-- the fonts live on the site and load ahead of the stylesheet, so the first paint is already in Archivo -->
+  <link rel="preload" href="{R}media/fonts/archivo-v25-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{R}media/fonts/archivo-v25-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{R}media/fonts/instrument-serif-v5-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{R}css/site.css">
   <!-- the cut needs the title and key visual on the first frame -->
   <link rel="expect" href="#cover" blocking="render">
@@ -505,7 +551,7 @@ CONTACT = """
           <ul class="ct__tiles" aria-label="Reach me directly">
             <li><button class="ct__tile ct__tile--mail card" type="button" data-copy="boskokosic187@gmail.com"><span class="ct__th"><span>Email</span><span class="ct__do"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/></svg><span data-copy-hint>Copy</span></span></span><span class="ct__mail">boskokosic187<span>@gmail.com</span></span></button></li>
             <li><a class="ct__tile ct__tile--call card" href="https://calendly.com/boskokosic187/30min" target="_blank" rel="noopener"><span class="ct__th"><span>Book a call</span><i class="ct__arr" aria-hidden="true">↗</i></span><span class="ct__big">30<small>min</small></span><span class="ct__note">Pick a time that suits you</span></a></li>
-            <li><div class="ct__tile ct__tile--soc card"><span class="ct__th"><span>Elsewhere</span></span><span class="ct__soc"><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" rel="noopener">LinkedIn <i aria-hidden="true">↗</i></a><a href="https://www.behance.net/bosko_kosic" target="_blank" rel="noopener">Behance <i aria-hidden="true">↗</i></a><a href="https://www.instagram.com/boskokosic/" target="_blank" rel="noopener">Instagram <i aria-hidden="true">↗</i></a></span></div></li>
+            <li><div class="ct__tile ct__tile--soc card"><span class="ct__th"><span>Elsewhere</span></span><span class="ct__soc"><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/" target="_blank" rel="noopener">LinkedIn <i aria-hidden="true">↗</i></a><a href="https://www.behance.net/boskokosic" target="_blank" rel="noopener">Behance <i aria-hidden="true">↗</i></a><a href="https://www.instagram.com/boskokosic/" target="_blank" rel="noopener">Instagram <i aria-hidden="true">↗</i></a></span></div></li>
           </ul>
         </div>
 
@@ -614,7 +660,7 @@ def render_case(c, i, cases, media):
     note = f'<p class="case-note">{E(c["note"])}</p>' if c.get("note") else ""
     next_bg = f'<img src="{nxt["_next_img"]}" alt="" loading="lazy" decoding="async">'
 
-    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R, extra="") + f"""
+    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og_image(c["slug"], hero)), url=SITE + "work/" + c["slug"] + "/", R=R, extra="") + f"""
 <body class="page-case">
   <a class="skip" href="#case-main">Skip to content</a>
   <div class="field" aria-hidden="true"></div>
@@ -1162,7 +1208,7 @@ def render_story(c, i, cases, media):
     stage = (STAGES[c["stage"]](c, R) if c.get("stage") else
              f'    <section class="cover{" is-trio" if trio else ""}" id="cover" aria-label="Key visual">\n      {cover}\n    </section>')
 
-    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og), R=R, extra=extra) + f"""
+    return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og_image(c["slug"], hero)), url=SITE + "work/" + c["slug"] + "/", R=R, extra=extra) + f"""
 <body class="page-case page-story">
   <a class="skip" href="#case-main">Skip to content</a>
   <div class="field" aria-hidden="true"></div>

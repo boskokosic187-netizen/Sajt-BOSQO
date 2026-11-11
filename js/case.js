@@ -971,16 +971,22 @@
 
     // one callout per trait: from its label to the card's edge, then in to the trait itself
     const G = {};
+    // the pulses live in an HTML layer under the lines (css: .mint__pulses): there they run on the
+    // compositor; inside the SVG every one of them was laid out again on each frame
+    const pulses = document.createElement('div');
+    pulses.className = 'mint__pulses';
+    pulses.setAttribute('aria-hidden', 'true');
+    svg.before(pulses);
     $$('.mint__t', el).forEach((li, n) => {
       const l = +li.dataset.t;
       const g = document.createElementNS(NS, 'g');
       const path = document.createElementNS(NS, 'path');
-      const ring = document.createElementNS(NS, 'circle');
+      const ring = document.createElement('i');
       const dot = document.createElementNS(NS, 'circle');
       path.setAttribute('pathLength', '1');
-      ring.setAttribute('class', 'mint__ring'); ring.setAttribute('r', '3.5'); ring.style.setProperty('--d', n);
+      ring.className = 'mint__ring'; ring.style.setProperty('--d', n);
       dot.setAttribute('class', 'mint__dot'); dot.setAttribute('r', '3.5');
-      g.append(path, ring, dot); svg.append(g);
+      g.append(path, dot); svg.append(g); pulses.append(ring);
       G[l] = { li, path, ring, dot, k: $('.mint__k', li), v: T[0].c[l], a: T[0].a[l], left: !!li.closest('.mint__traits--l') };
     });
     function place(l) {
@@ -991,7 +997,8 @@
       const xe = o.left ? cl - 10 : cl + cw + 10;
       const ax = cl + (o.a[0] / 100) * cw, ay = ct + (o.a[1] / 100) * chh;
       o.path.setAttribute('d', `M${x0.toFixed(1)} ${y0.toFixed(1)}H${xe.toFixed(1)}L${ax.toFixed(1)} ${ay.toFixed(1)}`);
-      for (const c of [o.ring, o.dot]) { c.setAttribute('cx', ax.toFixed(1)); c.setAttribute('cy', ay.toFixed(1)); }
+      o.dot.setAttribute('cx', ax.toFixed(1)); o.dot.setAttribute('cy', ay.toFixed(1));
+      o.ring.style.left = ax.toFixed(1) + 'px'; o.ring.style.top = ay.toFixed(1) + 'px';
     }
     const shown = () => svg.getBoundingClientRect().width > 0;
     const layout = () => { if (shown()) Object.keys(G).forEach((l) => place(+l)); };

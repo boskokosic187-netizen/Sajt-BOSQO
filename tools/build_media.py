@@ -57,6 +57,10 @@ VIDEOS = [
     ("halfcourt-v", PV + "BOSQO/HALFCOURT/06_Web/media/HALFCOURT_loop_9x16.mp4", 4, 0),
     ("deadair", PV + "BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_16x9.mp4", 4, 0),
     ("deadair-v", PV + "BOSQO/DEAD_AIR/06_Web/media/DEAD_AIR_loop_9x16.mp4", 4, 0),
+    # the phone's card for Live on the Streets: the three LED boards of Nov 2026 (ITS, FSU, ITHS)
+    # one above the other on the site's black, made with ffmpeg from the 2560x1200 loops
+    # (860 px wide at x 110, y 84 / 502 / 920 on 1080x1920, so a narrow phone card crops none of them). A wide board alone leaves a phone screen empty
+    ("streets-v", ROOT + "/_izvori/streets-v/streets_stack_1080x1920.mp4", 6, None),
 ]
 # a project's loop also opens on the program monitor (content/projects.json), so it is encoded wider;
 # it also gets a 1920 copy (<slug>-1920.mp4) for the program and contact monitors on big screens (js: loopSrc)
@@ -240,9 +244,11 @@ def build_mobile_reel():
     d = os.path.join(OUT, "reel")
     os.makedirs(d, exist_ok=True)
     cuts = [  # slug of an already-built loop source, seconds
-        ("manuka", 2.2), ("ballies-strike", 1.6), ("its-future", 1.8), ("bb-slon", 1.8),
-        ("fsu-duh", 1.8), ("ballies-ai", 1.8), ("its-sah", 1.6), ("bb-med", 1.8),
-        ("fsu-predupis", 1.8),
+        # only pieces made upright (or square): a wide billboard on a blurred fill left most of
+        # the phone's first screen empty. The newest film opens it
+        ("deadair-v", 2.0), ("ballies-strike", 1.6), ("interstellar-v", 1.8), ("manuka", 2.0),
+        ("halfcourt-v", 1.8), ("its-reklama", 1.8), ("accord-v", 1.8), ("jurassic-v", 1.8),
+        ("bb-slon", 1.6), ("bigger-v", 1.8),
     ]
     src_by = {s: (source(p), f) for s, p, _l, f in VIDEOS}
     man = json.load(open(os.path.join(OUT, "manifest.json"), encoding="utf-8"))

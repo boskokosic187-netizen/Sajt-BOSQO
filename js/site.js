@@ -219,6 +219,21 @@
     SKIP.forEach((t) => addEventListener(t, finish, { passive: true }));
   }
 
+  /* ------------------------------------ sections far off screen: their animations wait
+     (css: SECTIONS FAR OFF SCREEN). A section is "near" from a quarter of a screen before it
+     comes in until a quarter of a screen after it has left; the browser itself keeps it
+     rendered for longer than that on both sides, so the pause always lands while the section
+     is still being styled. */
+  function setupNear() {
+    const secs = $$('.reel, .work, .process, .about, .contact');
+    if (!secs.length) return;
+    if (!('IntersectionObserver' in window)) { secs.forEach((s) => s.classList.add('is-near')); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => en.target.classList.toggle('is-near', en.isIntersecting));
+    }, { rootMargin: '25% 0px' });
+    secs.forEach((s) => io.observe(s));
+  }
+
   /* ------------------------------------------------- pixel sparks on the background
      Single LED pixels, scattered: each one lights up on its own in an empty patch of the
      black background, flickers, drifts up a little and goes out, then lights up again
@@ -3575,6 +3590,7 @@
   }
 
   setupIntro();
+  setupNear();
   setupContact();
   setupContactMonitor();
   setupAvatar();

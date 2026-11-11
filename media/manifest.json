@@ -632,5 +632,17 @@
    "mp4": 135,
    "webp": 12
   }
+ },
+ "streets-v": {
+  "type": "video",
+  "src": "D:\\Desktop\\Sajt BOSQO/_izvori/streets-v/streets_stack_1080x1920.mp4",
+  "start": 1.75,
+  "len": 6,
+  "w": 540,
+  "h": 960,
+  "kb": {
+   "mp4": 118,
+   "webp": 32
+  }
  }
 }

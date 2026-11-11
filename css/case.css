@@ -757,13 +757,18 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
 }
 .mint__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .mint__bg.is-top { clip-path: inset(0 0 calc(100% - var(--q, 0) * 100%) 0); }
-.mint__holo {
-  position: absolute; inset: 0; mix-blend-mode: soft-light;
-  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.55) 48%, rgba(255, 255, 255, 0.12) 54%, transparent 64%) 0 0 / 300% 100%;
+.mint__holo { position: absolute; inset: 0; overflow: hidden; mix-blend-mode: soft-light; }
+/* the foil's light is a band three cards wide that slides by transform, on the compositor. As a
+   background whose position moved it was repainted on every frame, and those frames made the
+   browser restyle all sixty cards of the wall each time */
+.mint__holo::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 300%;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.55) 48%, rgba(255, 255, 255, 0.12) 54%, transparent 64%);
+  transform: translateX(-66.667%);
   animation: mint-sheen 9s ease-in-out infinite alternate;
 }
-.mint.is-tilt .mint__holo { animation: none; background-position: calc(var(--mx, 0.5) * 100%) 0; }
-@keyframes mint-sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.mint.is-tilt .mint__holo::before { animation: none; transform: translateX(calc(var(--mx, 0.5) * -66.667%)); }
+@keyframes mint-sheen { from { transform: translateX(-66.667%); } to { transform: translateX(0); } }
 .mint__char { position: absolute; inset: 0; width: 100%; height: 100%; transform: translateZ(40px) scale(0.97778); pointer-events: none; }
 .mint__char:not(.is-top) { clip-path: inset(calc(var(--p, 0) * 100%) -20% -20% -20%); } /* the old one goes as the line passes, its hat too */
 .mint__char.is-top { transform: translateZ(41px) scale(0.97722); clip-path: inset(-20% -20% calc(100% - var(--p, 0) * 100%) -20%); }
@@ -808,7 +813,14 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
 .mint__lines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transform: translateZ(44px) scale(0.97556); }
 .mint__lines path { fill: none; stroke: color-mix(in oklab, var(--tint) 80%, transparent); stroke-width: 1; stroke-dasharray: 1 1; }
 .mint__dot { fill: var(--tint); stroke: var(--ink); stroke-width: 2; }
-.mint__ring { fill: none; stroke: var(--tint); stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: mint-ring 2.8s var(--out) calc(var(--d, 0) * -0.28s) infinite; }
+/* the pulse on each trait: an HTML ring in a layer under the lines (js makes it), placed by left/top
+   and pulsing by scale and opacity on the compositor. As circles inside the SVG the ten of them
+   were laid out again on every frame */
+.mint__pulses { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; transform: translateZ(44px) scale(0.97556); }
+.mint__ring {
+  position: absolute; left: 0; top: 0; box-sizing: border-box; width: 8px; height: 8px; margin: -4px 0 0 -4px; border: 1px solid var(--tint); border-radius: 50%;
+  animation: mint-ring 2.8s var(--out) calc(var(--d, 0) * -0.28s) infinite;
+}
 @keyframes mint-ring { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4.4); opacity: 0; } }
 
 /* the broadcast frame around it all */
@@ -847,7 +859,7 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
 .mint.is-off *, .mint.is-off *::before, .mint.is-off *::after { animation-play-state: paused !important; } /* off screen nothing runs */
 
 @media (max-width: 1099px) {
-  .mint__traits, .mint__lines { display: none; }
+  .mint__traits, .mint__lines, .mint__pulses { display: none; }
   .mint__rig { display: block; }
 }
 @media (max-width: 767px) {
@@ -866,7 +878,7 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
 @media (prefers-reduced-motion: reduce) {
   .mint { transition: none; }
   .mint__nft { animation-play-state: paused; }
-  .mint__float, .mint__holo, .mint__rec, .mint__ring { animation: none; }
+  .mint__float, .mint__holo::before, .mint__rec, .mint__ring { animation: none; }
   .mint__ring { opacity: 0; }
   .mint__tick.is-on i::after { animation: none; transform: none; }
 }
