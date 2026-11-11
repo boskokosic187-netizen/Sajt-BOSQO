@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>ACCORD — web shop concept · Boško Kosić</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Concept: a web shop for ACCORD, an eau de parfum built like a chord. UI/UX design by Boško Kosić.">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<link rel="preload" href="../../media/ui/fonts/Zodiak-VariableItalic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../media/ui/fonts/Switzer-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--back,#0a0a0b);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+img,canvas,svg{display:block}
+ul,ol{list-style:none}
+#fit{position:absolute;left:50%;top:50%;width:var(--w);height:var(--h);margin:calc(var(--h)/-2) 0 0 calc(var(--w)/-2);transform:rotate(var(--r,0deg)) scale(var(--s,1));overflow:hidden;contain:layout paint}
+.is-embed #fit{border-radius:0}
+.by{position:fixed;left:18px;bottom:14px;z-index:9;font:500 12px/1 Switzer,Archivo,system-ui,sans-serif;letter-spacing:.04em;color:rgba(255,255,255,.55);mix-blend-mode:difference}
+.by b{font-weight:600;color:#fff}
+.is-embed .by,.is-tight .by{display:none}
+.no-scrollbar{scrollbar-width:none}.no-scrollbar::-webkit-scrollbar{display:none}
+</style>
+<style>
+@font-face{font-family:Switzer;src:url(../../media/ui/fonts/Switzer-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:Zodiak;src:url(../../media/ui/fonts/Zodiak-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:Zodiak;src:url(../../media/ui/fonts/Zodiak-VariableItalic.woff2) format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+:root{--back:#060608;--ink:#0D0C10;--ink2:#151318;--bone:#F2EDE4;--mut:rgba(242,237,228,.58);--dim:rgba(242,237,228,.34);--line:rgba(242,237,228,.13);
+  --top:#D6E05A;--heart:#7E6CF0;--base:#D08A2E;--n:var(--bone);--out:cubic-bezier(.2,.8,.2,1)}
+#fit{background:var(--ink);color:var(--bone);font:400 15px/1.5 Switzer,system-ui,sans-serif}
+.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:auto}
+.lab{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+em,.serif{font-family:Zodiak,Georgia,serif;font-style:italic;font-weight:300}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:5;height:76px;margin-bottom:-76px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 56px;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.is-stuck{background:rgba(13,12,16,.72);backdrop-filter:blur(18px) saturate(1.3);border-color:var(--line)}
+.nav ul{display:flex;gap:34px;font-size:13px;letter-spacing:.04em}
+.nav li a{color:var(--mut);transition:color .25s}.nav li a:hover,.nav li a[aria-current]{color:var(--bone)}
+.wm{height:22px;width:auto}
+.nav__r{justify-self:end;display:flex;gap:28px;align-items:center;font-size:13px;letter-spacing:.04em}
+.bag{display:flex;align-items:center;gap:9px}
+.bag i{font-style:normal;display:grid;place-items:center;min-width:22px;height:22px;border-radius:11px;border:1px solid var(--line);font-size:11px;font-variant-numeric:tabular-nums;transition:background .3s,color .3s,border-color .3s}
+.bag.has i{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.bag.bump i{animation:bump .5s var(--out)}
+@keyframes bump{40%{transform:scale(1.45)}}
+
+/* hero */
+.hero{position:relative;height:900px;display:grid;grid-template-columns:820px 1fr}
+.stage{position:relative;overflow:hidden;background:radial-gradient(60% 55% at 50% 52%,#1b191f 0,#0f0e12 62%,var(--ink) 100%)}
+.glow{position:absolute;left:410px;top:470px;width:760px;height:760px;margin:-380px;border-radius:50%;background:radial-gradient(closest-side,var(--n),transparent 70%);opacity:.2;transition:background .6s,opacity .6s;filter:blur(6px)}
+#wave{position:absolute;left:0;top:320px;width:820px;height:320px}
+#spin{position:absolute;left:210px;top:156px;width:400px;height:600px;mix-blend-mode:screen;cursor:grab;touch-action:none;
+  -webkit-mask-image:radial-gradient(52% 54% at 50% 50%,#000 58%,transparent 100%);mask-image:radial-gradient(52% 54% at 50% 50%,#000 58%,transparent 100%)}
+#spin:active{cursor:grabbing}
+.hint{position:absolute;left:0;right:0;top:778px;text-align:center;display:flex;justify-content:center;align-items:center;gap:12px}
+.hint::before,.hint::after{content:"";width:34px;height:1px;background:var(--line)}
+.tones{position:absolute;left:56px;top:140px;display:grid;gap:14px}
+.tones li{display:grid;grid-template-columns:64px auto;align-items:center;gap:12px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-variant-numeric:tabular-nums;transition:color .4s}
+.tones i{height:2px;background:var(--line);position:relative;overflow:hidden;border-radius:2px}
+.tones i::after{content:"";position:absolute;inset:0;background:var(--c);transform:scaleX(var(--v,.3));transform-origin:left;transition:transform .5s var(--out)}
+.tones li.on{color:var(--bone)}
+.edition{position:absolute;right:40px;top:140px;text-align:right;line-height:1.7}
+
+.buy{padding:150px 76px 0 44px;display:flex;flex-direction:column}
+h1{font:300 italic 80px/.96 Zodiak,Georgia,serif;letter-spacing:-.02em;margin:20px 0 22px}
+.lead{color:var(--mut);font-size:16px;max-width:430px}
+.notes-pick{margin-top:30px;border-top:1px solid var(--line)}
+.np{display:grid;grid-template-columns:18px 62px 1fr auto;align-items:baseline;gap:10px;width:100%;text-align:left;padding:13px 0;border-bottom:1px solid var(--line);color:var(--mut);transition:color .3s,padding .4s var(--out)}
+.np::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);align-self:center;opacity:.55;transition:opacity .3s,box-shadow .3s}
+.np b{font:300 italic 25px/1 Zodiak,Georgia,serif;color:var(--bone);letter-spacing:-.01em}
+.np b small{font:400 13px/1 Switzer,sans-serif;font-style:normal;color:var(--mut);margin-left:12px;letter-spacing:0}
+.np span:last-child{font-size:12px;font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.np:hover,.np.on{color:var(--bone);padding-left:8px}
+.np.on::before,.np:hover::before{opacity:1;box-shadow:0 0 0 5px color-mix(in srgb,var(--c) 22%,transparent)}
+.hero.solo .np:not(.on) b{color:var(--dim)}
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:26px}
+.sizes{display:flex;gap:8px}
+.sz{height:40px;padding:0 18px;border-radius:20px;border:1px solid var(--line);font-size:13px;color:var(--mut);transition:all .25s}
+.sz:hover{border-color:var(--dim);color:var(--bone)}
+.sz.on{border-color:var(--bone);color:var(--bone)}
+.price{font:300 34px/1 Zodiak,Georgia,serif;font-variant-numeric:tabular-nums}
+.price small{font:400 12px/1 Switzer,sans-serif;color:var(--mut);margin-right:10px;letter-spacing:.06em}
+.cta{margin-top:22px;display:grid;grid-template-columns:1fr 56px;gap:10px}
+.add{height:56px;border-radius:28px;background:var(--bone);color:var(--ink);font-weight:600;font-size:14px;letter-spacing:.03em;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;transition:transform .25s var(--out),background .3s}
+.add:hover{transform:translateY(-1px);background:#fff}
+.add:active{transform:scale(.985)}
+.add span{transition:transform .45s var(--out),opacity .3s}
+.add .ok{position:absolute;transform:translateY(160%);opacity:0}
+.add.done .go{transform:translateY(-160%);opacity:0}.add.done .ok{transform:none;opacity:1}
+.fav{height:56px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:border-color .25s}
+.fav:hover{border-color:var(--bone)}
+.fav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;transition:fill .25s}
+.fav.on svg{fill:var(--bone)}
+.perks{margin-top:20px;display:flex;gap:22px;font-size:12px;color:var(--dim)}
+.perks li{display:flex;align-items:center;gap:8px}.perks li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--dim)}
+
+/* the notes */
+.sec{padding:110px 80px 0}
+.sec__head{display:grid;grid-template-columns:1fr 430px;align-items:end;gap:40px;margin-bottom:44px}
+h2{font:300 italic 64px/1 Zodiak,Georgia,serif;letter-spacing:-.02em;margin-top:14px}
+h2 i{font-style:normal;font-family:Switzer,sans-serif;font-weight:300;font-size:.62em;letter-spacing:.02em;color:var(--mut);margin-left:.3em;font-variant-numeric:tabular-nums}
+.sec__head p{color:var(--mut)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:4px;text-align:left;background:#000;display:block;width:100%}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--out),opacity .5s;opacity:.9}
+.card:hover img,.card.on img{transform:scale(1.045);opacity:1}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(13,12,16,.86) 0,transparent 42%);pointer-events:none}
+.card__t{position:absolute;left:26px;right:26px;bottom:24px;z-index:1;display:grid;gap:6px}
+.card__t b{font:300 italic 44px/1 Zodiak,Georgia,serif;letter-spacing:-.015em}
+.card__t span:last-child{font-size:13px;color:var(--mut)}
+.card__hz{position:absolute;right:22px;top:20px;z-index:1;font-size:11px;letter-spacing:.14em;padding:7px 11px;border-radius:14px;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);color:var(--c);backdrop-filter:blur(6px);font-variant-numeric:tabular-nums}
+.card i.bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--c);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--out);z-index:2}
+.card:hover i.bar,.card.on i.bar{transform:none}
+
+/* the set */
+.set{position:relative;margin:110px 80px 0;height:600px;border-radius:4px;overflow:hidden;background:#000}
+.set img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.set__t{position:absolute;left:54px;top:54px;width:286px}
+.set__t h2{font-size:54px}
+.set__t p{color:var(--mut);margin:16px 0 26px}
+.ghost{height:48px;padding:0 24px;border-radius:24px;border:1px solid var(--dim);font-size:13px;font-weight:500;letter-spacing:.03em;transition:all .25s}
+.ghost:hover{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+
+footer{margin:110px 80px 0;padding:44px 0 40px;border-top:1px solid var(--line);display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:40px;font-size:13px;color:var(--mut)}
+footer .wm{height:30px;color:var(--bone);margin-bottom:18px}
+footer h3{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+footer li{margin-bottom:8px}
+.fine{grid-column:1/-1;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--dim);display:flex;justify-content:space-between}
+
+/* toast */
+.toast{position:absolute;right:32px;bottom:32px;z-index:8;width:340px;padding:16px 18px;border-radius:14px;background:rgba(242,237,228,.96);color:var(--ink);display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:translateY(24px);opacity:0;pointer-events:none;transition:transform .5s var(--out),opacity .35s}
+.toast.on{transform:none;opacity:1}
+.toast i{width:44px;height:44px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.toast i::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--bone);box-shadow:0 0 0 5px var(--ink),0 0 0 6px rgba(242,237,228,.4)}
+.toast b{display:block;font-weight:600;font-size:14px}.toast span{font-size:12.5px;opacity:.66}
+</style>
+</head>
+<body>
+<div id="fit" data-w="1440" data-h="900" data-max="1.2">
+  <div class="page no-scrollbar" id="page">
+    <header class="nav" id="nav">
+      <ul><li><a href="#top" aria-current="page">Eau de Parfum</a></li><li><a href="#notes">The notes</a></li><li><a href="#set">The set</a></li><li><a href="#top">Atelier</a></li></ul>
+      <a href="#top"><svg class="wm" aria-label="ACCORD" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5244 940"><path transform="translate(120,120)" fill="currentColor" fill-rule="evenodd" d="M101.0 616C87.0 655 75.0 666 51.0 666H10.0V700H223.0V666H169.0C145.0 666 134.0 658 146.0 623L201.0 468H483.0V464L538.0 620C549.0 651 541.0 666 509.0 666H455.0V700H727.0V666H687.0C658.0 666 648.0 649 634.0 609L412.0 0H325.0ZM213.0 433 342.0 65 472.0 433ZM1488.0 465H1447.0C1431.0 597 1339.0 669 1224.0 669C1072.0 669 984.0 553 984.0 349C984.0 157 1055.0 28 1214.0 28C1333.0 28 1404.0 103 1433.0 227H1478.0V0H1438.0L1432.0 116C1381.0 29 1305.0 -10 1208.0 -10C1009.0 -10 882.0 143 882.0 350C882.0 567 1023.0 710 1216.0 710C1359.0 710 1469.0 618 1488.0 465ZM2286.0 465H2245.0C2229.0 597 2137.0 669 2022.0 669C1870.0 669 1782.0 553 1782.0 349C1782.0 157 1853.0 28 2012.0 28C2131.0 28 2202.0 103 2231.0 227H2276.0V0H2236.0L2230.0 116C2179.0 29 2103.0 -10 2006.0 -10C1807.0 -10 1680.0 143 1680.0 350C1680.0 567 1821.0 710 2014.0 710C2157.0 710 2267.0 618 2286.0 465ZM2483.00,350.00a354.00,354.00 0 1,0 708.00,0a354.00,354.00 0 1,0 -708.00,0ZM2664.96,350.00a172.04,172.04 0 1,0 344.09,0a172.04,172.04 0 1,0 -344.09,0ZM2672.74,350.00a164.26,164.26 0 1,0 328.51,0a164.26,164.26 0 1,0 -328.51,0ZM2641.95,350.00a195.05,195.05 0 1,0 390.11,0a195.05,195.05 0 1,0 -390.11,0ZM2647.61,350.00a189.39,189.39 0 1,0 378.78,0a189.39,189.39 0 1,0 -378.78,0ZM2617.87,350.00a219.13,219.13 0 1,0 438.25,0a219.13,219.13 0 1,0 -438.25,0ZM2623.54,350.00a213.46,213.46 0 1,0 426.92,0a213.46,213.46 0 1,0 -426.92,0ZM2592.74,350.00a244.26,244.26 0 1,0 488.52,0a244.26,244.26 0 1,0 -488.52,0ZM2600.53,350.00a236.47,236.47 0 1,0 472.94,0a236.47,236.47 0 1,0 -472.94,0ZM2569.73,350.00a267.27,267.27 0 1,0 534.54,0a267.27,267.27 0 1,0 -534.54,0ZM2575.39,350.00a261.61,261.61 0 1,0 523.21,0a261.61,261.61 0 1,0 -523.21,0ZM2545.66,350.00a291.34,291.34 0 1,0 582.68,0a291.34,291.34 0 1,0 -582.68,0ZM2551.32,350.00a285.68,285.68 0 1,0 571.36,0a285.68,285.68 0 1,0 -571.36,0ZM2520.52,350.00a316.48,316.48 0 1,0 632.95,0a316.48,316.48 0 1,0 -632.95,0ZM2528.31,350.00a308.69,308.69 0 1,0 617.38,0a308.69,308.69 0 1,0 -617.38,0ZM2711.33,350.00a125.67,125.67 0 1,0 251.34,0a125.67,125.67 0 1,0 -251.34,0ZM2818.59,350.00a18.41,18.41 0 1,0 36.82,0a18.41,18.41 0 1,0 -36.82,0ZM3400.0 34H3458.0C3476.0 34 3487.0 44 3487.0 70V630C3487.0 656 3476.0 666 3458.0 666H3400.0V700H3668.0V666H3608.0C3590.0 666 3579.0 656 3579.0 630V380H3699.0C3831.0 380 3883.0 419 3883.0 532V597C3883.0 682 3923.0 710 3984.0 710C4048.0 710 4076.0 679 4076.0 620V563H4039.0V618C4039.0 654 4029.0 667 4007.0 667C3986.0 667 3976.0 650 3976.0 598V517C3976.0 432 3921.0 380 3829.0 363C3941.0 335 3988.0 271 3988.0 189C3988.0 67 3892.0 0 3695.0 0H3400.0ZM3665.0 34C3842.0 34 3891.0 95 3891.0 192C3891.0 285 3842.0 346 3672.0 346H3579.0V34ZM4256.0 34H4310.0C4328.0 34 4339.0 44 4339.0 70V630C4339.0 656 4328.0 666 4310.0 666H4256.0V700H4553.0C4806.0 700 4945.0 557 4945.0 347C4945.0 138 4797.0 0 4532.0 0H4256.0ZM4431.0 636V34H4526.0C4663.0 34 4844.0 90 4844.0 349C4844.0 573 4722.0 666 4548.0 666H4462.0C4441.0 666 4431.0 660 4431.0 636Z"/></svg></a>
+      <div class="nav__r"><a href="#top">Search</a><a href="#top">Account</a><a class="bag" id="bag" href="#top">Bag <i>0</i></a></div>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="stage">
+        <span class="glow"></span>
+        <canvas id="wave" width="1640" height="640" aria-hidden="true"></canvas>
+        <canvas id="spin" width="480" height="720" role="img" aria-label="The ACCORD bottle: drag to turn it"></canvas>
+        <ul class="tones" aria-hidden="true">
+          <li data-n="top" style="--c:var(--top)"><i></i>660 Hz</li>
+          <li data-n="heart" style="--c:var(--heart)"><i></i>275 Hz</li>
+          <li data-n="base" style="--c:var(--base)"><i></i>110 Hz</li>
+        </ul>
+        <p class="edition lab">Eau de Parfum<br>100 ml · 3.4 fl.oz.</p>
+        <p class="hint lab">Drag to turn</p>
+      </div>
+      <div class="buy">
+        <p class="lab">Fragrance — Eau de Parfum</p>
+        <h1>Three notes.<br>One chord.</h1>
+        <p class="lead">Bergamot opens high, iris holds the middle and amber settles low. Tuned 4 : 5 : 6, they sound as one.</p>
+        <div class="notes-pick" role="group" aria-label="Hear one note">
+          <button class="np" data-n="top" style="--c:var(--top)"><span class="lab">Top</span><b>Bergamot<small>green, bright, sharp</small></b><span>660 Hz</span></button>
+          <button class="np" data-n="heart" style="--c:var(--heart)"><span class="lab">Heart</span><b>Iris<small>powder, violet, cool</small></b><span>275 Hz</span></button>
+          <button class="np" data-n="base" style="--c:var(--base)"><span class="lab">Base</span><b>Amber<small>resin, smoke, warm</small></b><span>110 Hz</span></button>
+        </div>
+        <div class="row">
+          <div class="sizes" role="group" aria-label="Size">
+            <button class="sz" data-ml="30" data-p="85">30 ml</button><button class="sz" data-ml="50" data-p="120">50 ml</button><button class="sz on" data-ml="100" data-p="165">100 ml</button>
+          </div>
+          <p class="price"><small id="per">€1.65 / ml</small><span id="price">€165</span></p>
+        </div>
+        <div class="cta">
+          <button class="add" id="add"><span class="go">Add to bag</span><span class="ok">Added — thank you</span></button>
+          <button class="fav" id="fav" aria-label="Save"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z"/></svg></button>
+        </div>
+        <ul class="perks"><li>Free delivery over €100</li><li>Refillable glass</li><li>2 ml sample inside</li></ul>
+      </div>
+    </section>
+
+    <section class="sec" id="notes">
+      <div class="sec__head">
+        <div><p class="lab">The notes</p><h2>Tuned like a chord <i>4 : 5 : 6</i></h2></div>
+        <p>In perfumery an accord is a few notes that blend into one scent; in music, a few tones that sound as one. Here each note has its own tone, and its own light on the glass.</p>
+      </div>
+      <div class="cards">
+        <button class="card" data-n="top" style="--c:var(--top)"><img src="../../media/ui/accord/note-top.webp" width="1008" height="1344" alt="ACCORD with bergamot" loading="lazy" decoding="async"><span class="card__hz">660 Hz</span><span class="card__t"><span class="lab">01 — Top note</span><b>Bergamot</b><span>Green, bright, sharp. The first ten minutes.</span></span><i class="bar"></i></button>
+        <button class="card" data-n="heart" style="--c:var(--heart)"><img src="../../media/ui/accord/note-heart.webp" width="1008" height="1344" alt="ACCORD with iris" loading="lazy" decoding="async"><span class="card__hz">275 Hz</span><span class="card__t"><span class="lab">02 — Heart note</span><b>Iris</b><span>Powder, violet, cool. It holds the middle.</span></span><i class="bar"></i></button>
+        <button class="card" data-n="base" style="--c:var(--base)"><img src="../../media/ui/accord/note-base.webp" width="1008" height="1344" alt="ACCORD with amber" loading="lazy" decoding="async"><span class="card__hz">110 Hz</span><span class="card__t"><span class="lab">03 — Base note</span><b>Amber</b><span>Resin, smoke, warm. What stays on the skin.</span></span><i class="bar"></i></button>
+      </div>
+    </section>
+
+    <section class="set" id="set">
+      <img src="../../media/ui/accord/set.webp" width="1920" height="1280" alt="The ACCORD bottle with its box and bag" loading="lazy" decoding="async">
+      <div class="set__t"><p class="lab">The set</p><h2>Bottle, box, bag.</h2><p>One scene lights all three, so glass, paper and foil carry the same chord.</p><button class="ghost" id="addset">Add the set — €195</button></div>
+    </section>
+
+    <footer>
+      <div><svg class="wm" aria-label="ACCORD" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5244 940"><path transform="translate(120,120)" fill="currentColor" fill-rule="evenodd" d="M101.0 616C87.0 655 75.0 666 51.0 666H10.0V700H223.0V666H169.0C145.0 666 134.0 658 146.0 623L201.0 468H483.0V464L538.0 620C549.0 651 541.0 666 509.0 666H455.0V700H727.0V666H687.0C658.0 666 648.0 649 634.0 609L412.0 0H325.0ZM213.0 433 342.0 65 472.0 433ZM1488.0 465H1447.0C1431.0 597 1339.0 669 1224.0 669C1072.0 669 984.0 553 984.0 349C984.0 157 1055.0 28 1214.0 28C1333.0 28 1404.0 103 1433.0 227H1478.0V0H1438.0L1432.0 116C1381.0 29 1305.0 -10 1208.0 -10C1009.0 -10 882.0 143 882.0 350C882.0 567 1023.0 710 1216.0 710C1359.0 710 1469.0 618 1488.0 465ZM2286.0 465H2245.0C2229.0 597 2137.0 669 2022.0 669C1870.0 669 1782.0 553 1782.0 349C1782.0 157 1853.0 28 2012.0 28C2131.0 28 2202.0 103 2231.0 227H2276.0V0H2236.0L2230.0 116C2179.0 29 2103.0 -10 2006.0 -10C1807.0 -10 1680.0 143 1680.0 350C1680.0 567 1821.0 710 2014.0 710C2157.0 710 2267.0 618 2286.0 465ZM2483.00,350.00a354.00,354.00 0 1,0 708.00,0a354.00,354.00 0 1,0 -708.00,0ZM2664.96,350.00a172.04,172.04 0 1,0 344.09,0a172.04,172.04 0 1,0 -344.09,0ZM2672.74,350.00a164.26,164.26 0 1,0 328.51,0a164.26,164.26 0 1,0 -328.51,0ZM2641.95,350.00a195.05,195.05 0 1,0 390.11,0a195.05,195.05 0 1,0 -390.11,0ZM2647.61,350.00a189.39,189.39 0 1,0 378.78,0a189.39,189.39 0 1,0 -378.78,0ZM2617.87,350.00a219.13,219.13 0 1,0 438.25,0a219.13,219.13 0 1,0 -438.25,0ZM2623.54,350.00a213.46,213.46 0 1,0 426.92,0a213.46,213.46 0 1,0 -426.92,0ZM2592.74,350.00a244.26,244.26 0 1,0 488.52,0a244.26,244.26 0 1,0 -488.52,0ZM2600.53,350.00a236.47,236.47 0 1,0 472.94,0a236.47,236.47 0 1,0 -472.94,0ZM2569.73,350.00a267.27,267.27 0 1,0 534.54,0a267.27,267.27 0 1,0 -534.54,0ZM2575.39,350.00a261.61,261.61 0 1,0 523.21,0a261.61,261.61 0 1,0 -523.21,0ZM2545.66,350.00a291.34,291.34 0 1,0 582.68,0a291.34,291.34 0 1,0 -582.68,0ZM2551.32,350.00a285.68,285.68 0 1,0 571.36,0a285.68,285.68 0 1,0 -571.36,0ZM2520.52,350.00a316.48,316.48 0 1,0 632.95,0a316.48,316.48 0 1,0 -632.95,0ZM2528.31,350.00a308.69,308.69 0 1,0 617.38,0a308.69,308.69 0 1,0 -617.38,0ZM2711.33,350.00a125.67,125.67 0 1,0 251.34,0a125.67,125.67 0 1,0 -251.34,0ZM2818.59,350.00a18.41,18.41 0 1,0 36.82,0a18.41,18.41 0 1,0 -36.82,0ZM3400.0 34H3458.0C3476.0 34 3487.0 44 3487.0 70V630C3487.0 656 3476.0 666 3458.0 666H3400.0V700H3668.0V666H3608.0C3590.0 666 3579.0 656 3579.0 630V380H3699.0C3831.0 380 3883.0 419 3883.0 532V597C3883.0 682 3923.0 710 3984.0 710C4048.0 710 4076.0 679 4076.0 620V563H4039.0V618C4039.0 654 4029.0 667 4007.0 667C3986.0 667 3976.0 650 3976.0 598V517C3976.0 432 3921.0 380 3829.0 363C3941.0 335 3988.0 271 3988.0 189C3988.0 67 3892.0 0 3695.0 0H3400.0ZM3665.0 34C3842.0 34 3891.0 95 3891.0 192C3891.0 285 3842.0 346 3672.0 346H3579.0V34ZM4256.0 34H4310.0C4328.0 34 4339.0 44 4339.0 70V630C4339.0 656 4328.0 666 4310.0 666H4256.0V700H4553.0C4806.0 700 4945.0 557 4945.0 347C4945.0 138 4797.0 0 4532.0 0H4256.0ZM4431.0 636V34H4526.0C4663.0 34 4844.0 90 4844.0 349C4844.0 573 4722.0 666 4548.0 666H4462.0C4441.0 666 4431.0 660 4431.0 636Z"/></svg><p style="max-width:300px">An eau de parfum built like a chord. Made in small batches, in refillable glass.</p></div>
+      <div><h3>Shop</h3><ul><li>Eau de Parfum</li><li>The set</li><li>Refills</li><li>Samples</li></ul></div>
+      <div><h3>House</h3><ul><li>The chord</li><li>Atelier</li><li>Stockists</li><li>Journal</li></ul></div>
+      <div><h3>Care</h3><ul><li>Delivery</li><li>Returns</li><li>Contact</li></ul></div>
+      <p class="fine"><span>ACCORD is a fictional brand. Identity, 3D, interface and code: Boško Kosić.</span><span>EUR · English</span></p>
+    </footer>
+  </div>
+  <div class="toast" id="toast" role="status"><i></i><div><b>Added to your bag</b><span id="toastl">Eau de Parfum, 100 ml · €165</span></div></div>
+</div>
+<a class="by" href="../../#interfaces">← Concept &amp; design: <b>Boško Kosić</b></a>
+<script>/* Shared by every prototype: the design canvas (#fit, data-w x data-h) is scaled to the
+   window (never past data-max, so no picture is shown above its file), and the page plays
+   by itself ("attract") until somebody touches it. Inside the portfolio's device frame the
+   page is an iframe that takes no input until the visitor clicks it. */
+const UI = (() => {
+  const fit = document.getElementById('fit'), W = +fit.dataset.w, H = +fit.dataset.h, MAX = +fit.dataset.max || 1.6;
+  const embed = self !== top, rootEl = document.documentElement;
+  rootEl.classList.toggle('is-embed', embed);
+  fit.style.setProperty('--w', W + 'px'); fit.style.setProperty('--h', H + 'px');
+  let scale = 1;
+  const size = () => {
+    // on its own page on a phone held upright, a landscape canvas lies on its side, like a film
+    const vw = rootEl.clientWidth, vh = rootEl.clientHeight;   // not innerWidth: a phone widens that to fit what overflows
+    const turn = !embed && W > H && vh > vw * 1.2;
+    scale = turn ? Math.min(vh / W, vw / H, MAX) : Math.min(vw / W, vh / H, MAX);
+    fit.style.setProperty('--s', scale.toFixed(5)); fit.style.setProperty('--r', turn ? '90deg' : '0deg');
+    rootEl.classList.toggle('is-tight', turn || vh - H * scale < 70);
+  };
+  size(); addEventListener('resize', size);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let last = embed ? -1e9 : performance.now() - 2500;   // on its own page the show starts after a moment
+  const touch = () => { last = performance.now(); };
+  ['pointerdown', 'pointermove', 'wheel', 'keydown', 'touchstart'].forEach((e) => addEventListener(e, touch, { passive: true, capture: true }));
+  const api = {
+    W, H, embed, reduce,
+    get scale() { return scale; },
+    /* true while nobody has touched the page for a while: the page may play itself */
+    get idle() { return !reduce && performance.now() - last > 6000; },
+    /* fn(t, dt) every frame while the tab is visible; t and dt in seconds */
+    loop(fn) {
+      let p = performance.now();
+      const step = (now) => { const dt = Math.min(0.05, (now - p) / 1000); p = now; if (!document.hidden) fn(now / 1000, dt); requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    },
+    /* run steps [seconds, fn] in a circle while idle; a touch pauses, the circle resumes where it stopped */
+    attract(steps) {
+      if (reduce) return;
+      let i = 0, wait = steps[0][0];
+      api.loop((t, dt) => { if (!api.idle) return; wait -= dt; if (wait > 0) return; steps[i][1](); i = (i + 1) % steps.length; wait = steps[i][0]; });
+    },
+    /* pointer position inside the canvas, in design pixels */
+    pt(e) { const r = fit.getBoundingClientRect(); return [(e.clientX - r.left) / scale, (e.clientY - r.top) / scale]; },
+  };
+  return api;
+})();
+</script>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+  const page = $('#page'), hero = $('.hero'), fit = $('#fit');
+  const COL = { top: '#D6E05A', heart: '#7E6CF0', base: '#D08A2E' };
+  const WL = { top: 34, heart: 81.6, base: 204 };            // wavelengths on screen, 4 : 5 : 6 in open voicing (660, 275, 110 Hz)
+  let note = null, bag = 0, ml = 100, price = 165;
+
+  /* one note or the whole chord */
+  function pick(n) {
+    note = n === note ? null : n;
+    hero.classList.toggle('solo', !!note);
+    fit.style.setProperty('--n', note ? COL[note] : '#F2EDE4');
+    $$('.np, .card, .tones li').forEach((e) => e.classList.toggle('on', e.dataset.n === note));
+    $$('.tones li').forEach((e) => e.style.setProperty('--v', !note ? 0.62 : e.dataset.n === note ? 1 : 0.08));
+  }
+  $$('.np, .card').forEach((b) => b.addEventListener('click', () => pick(b.dataset.n)));
+  pick(null);
+
+  /* size, bag */
+  function size(b) {
+    $$('.sz').forEach((x) => x.classList.toggle('on', x === b));
+    ml = +b.dataset.ml; price = +b.dataset.p;
+    $('#price').textContent = '€' + price; $('#per').textContent = '€' + (price / ml).toFixed(2) + ' / ml';
+  }
+  $$('.sz').forEach((b) => b.addEventListener('click', () => size(b)));
+  let tt = 0;
+  function add(label) {
+    bag++;
+    const el = $('#bag'); el.classList.add('has'); el.querySelector('i').textContent = bag;
+    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+    $('#toastl').textContent = label; $('#toast').classList.add('on');
+    clearTimeout(tt); tt = setTimeout(() => $('#toast').classList.remove('on'), 2600);
+  }
+  $('#add').addEventListener('click', (e) => {
+    add(`Eau de Parfum, ${ml} ml · €${price}`);
+    const b = e.currentTarget; b.classList.add('done'); setTimeout(() => b.classList.remove('done'), 1800);
+  });
+  $('#addset').addEventListener('click', () => add('The set · €195'));
+  $('#fav').addEventListener('click', (e) => e.currentTarget.classList.toggle('on'));
+  page.addEventListener('scroll', () => $('#nav').classList.toggle('is-stuck', page.scrollTop > 40), { passive: true });
+  $$('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault(); const t = $(a.getAttribute('href')); if (t) page.scrollTo({ top: t.offsetTop - (t.id === 'top' ? 0 : 60), behavior: 'smooth' });
+  }));
+
+  /* the bottle: 48 turntable frames in one sheet, turned by dragging (or by itself) */
+  const spin = $('#spin'), sx = spin.getContext('2d'), sheet = new Image();
+  let ang = 0.5, vel = 0, drag = null, shown = -1;
+  sheet.src = '../../media/ui/accord/spin.webp';
+  const frame = () => {
+    const f = ((Math.round(ang * 48) % 48) + 48) % 48;
+    if (f === shown || !sheet.complete || !sheet.naturalWidth) return;
+    shown = f; sx.drawImage(sheet, (f % 8) * 480, ((f / 8) | 0) * 720, 480, 720, 0, 0, 480, 720);
+  };
+  sheet.onload = frame;
+  spin.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, a: ang }; vel = 0; spin.setPointerCapture(e.pointerId); });
+  spin.addEventListener('pointermove', (e) => { if (!drag) return; const a = drag.a - (e.clientX - drag.x) / (420 * UI.scale); vel = a - ang; ang = a; });
+  ['pointerup', 'pointercancel'].forEach((n) => spin.addEventListener(n, () => { drag = null; }));
+
+  /* the chord: three tones run into the glass from the left, one line leaves on the right */
+  const cv = $('#wave'), cx = cv.getContext('2d'), CW = 820, CH = 320, MID = 410;
+  cx.scale(2, 2);
+  const lvl = { top: 1, heart: 1, base: 1 };
+  function wave(t) {
+    cx.clearRect(0, 0, CW, CH);
+    cx.lineCap = 'round';
+    const y0 = CH / 2, AMP = { top: 20, heart: 32, base: 46 };
+    for (const k of ['base', 'heart', 'top']) {
+      lvl[k] += ((!note || note === k ? 1 : 0.1) - lvl[k]) * 0.08;
+      const A = AMP[k];
+      const g = cx.createLinearGradient(0, 0, MID, 0);
+      g.addColorStop(0, COL[k] + '00'); g.addColorStop(0.25, COL[k]); g.addColorStop(1, COL[k]);
+      cx.strokeStyle = g; cx.globalAlpha = 0.18 + 0.72 * lvl[k]; cx.lineWidth = 1.4;
+      cx.beginPath();
+      for (let x = 0; x <= MID; x += 2) { const y = y0 + A * Math.sin((x / WL[k] - t * 0.55 * (204 / WL[k]) ** 0.5) * 6.2832); x ? cx.lineTo(x, y) : cx.moveTo(x, y); }
+      cx.stroke();
+    }
+    // the sum, in bone; one note alone leaves in its own colour
+    const c = note ? COL[note] : '#F2EDE4';
+    const g = cx.createLinearGradient(MID, 0, CW, 0);
+    g.addColorStop(0, c); g.addColorStop(0.7, c); g.addColorStop(1, c + '00');
+    for (const [w, a] of [[7, 0.1], [2, 0.95]]) {
+      cx.strokeStyle = g; cx.globalAlpha = a; cx.lineWidth = w;
+      cx.beginPath();
+      for (let x = MID; x <= CW; x += 2) {
+        let s = 0, n = 0;
+        for (const k in WL) { s += lvl[k] * AMP[k] * Math.sin((x / WL[k] - t * 0.55 * (204 / WL[k]) ** 0.5) * 6.2832); n += lvl[k]; }
+        const y = y0 + 1.5 * (s / Math.max(1, n)) * Math.min(1, (x - MID) / 60 + 0.25);
+        x > MID ? cx.lineTo(x, y) : cx.moveTo(x, y);
+      }
+      cx.stroke();
+    }
+    cx.globalAlpha = 1;
+  }
+
+  UI.loop((t, dt) => {
+    if (!drag) { if (UI.idle || Math.abs(vel) > 0.0004) { ang += UI.idle ? dt / 16 : vel; vel *= 0.94; } }
+    frame();
+    if (page.scrollTop < 760) wave(UI.reduce ? 0 : t);
+  });
+  if (UI.reduce) wave(0);
+
+  /* nobody at the page: it shows itself */
+  const to = (y) => () => page.scrollTo({ top: y, behavior: 'smooth' });
+  UI.attract([
+    [2.4, () => pick('top')], [2.6, () => pick('heart')], [2.6, () => pick('base')], [2.6, () => pick(note)],
+    [1.4, () => size($$('.sz')[1])], [1.2, () => $('#add').click()], [2.2, () => size($$('.sz')[2])],
+    [1.6, to(790)], [1.6, () => pick('heart')], [2.4, () => pick('base')], [2.2, () => pick(note)],
+    [0.6, to(1560)], [4.2, to(0)], [1.5, () => {}],
+  ]);
+})();
+</script>
+</body>
+</html>

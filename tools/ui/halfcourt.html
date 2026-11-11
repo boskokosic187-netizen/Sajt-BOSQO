@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>HALFCOURT Live — app concept · Boško Kosić</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Concept: the live game app of HALFCOURT, a 3x3 world tour. The shot clock is the logo. UI/UX design by Boško Kosić.">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<link rel="preload" href="../../media/ui/fonts/Panchang-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../media/ui/fonts/Switzer-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<!--@shared.css-->
+<style>
+@font-face{font-family:Switzer;src:url(../../media/ui/fonts/Switzer-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:Panchang;src:url(../../media/ui/fonts/Panchang-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{--back:#08090a;--ink:#111314;--ink2:#1a1d1f;--ink3:#24282b;--chalk:#F2F1EC;--volt:#CCF23D;--mut:rgba(242,241,236,.56);--dim:rgba(242,241,236,.3);--line:rgba(242,241,236,.1);--out:cubic-bezier(.2,.8,.2,1)}
+#fit{background:var(--ink);color:var(--chalk);font:500 14px/1.35 Switzer,system-ui,sans-serif;border-radius:46px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 120px rgba(0,0,0,.6)}
+.is-embed #fit{border-radius:0;box-shadow:none}
+.num{font-family:Panchang,Switzer,sans-serif;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cap{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+
+.sb{height:50px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 32px 6px;font-weight:600;font-size:15px}
+.sb span{display:flex;gap:6px;align-items:center}
+.sb svg{height:12px;width:auto;fill:currentColor}
+.top{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.wm{height:13px;width:auto}
+.live{display:flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:13px;background:var(--volt);color:var(--ink);font-size:10.5px;font-weight:700;letter-spacing:.12em}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--ink);animation:pulse 1.2s infinite}
+.live.end{background:var(--ink3);color:var(--chalk)}.live.end i{animation:none;background:var(--mut)}
+@keyframes pulse{50%{opacity:.25}}
+
+.views{position:absolute;inset:104px 0 84px;overflow:hidden}
+.view{position:absolute;inset:0;padding:0 16px 30px;scrollbar-width:none;overflow-y:auto;opacity:0;transform:translateX(18px);pointer-events:none;transition:opacity .3s,transform .45s var(--out)}
+.view.on{opacity:1;transform:none;pointer-events:auto}
+
+/* scoreboard */
+.stop{display:flex;justify-content:space-between;align-items:center;margin:2px 4px 10px}
+.stop b{font-family:Panchang;font-size:15px;letter-spacing:.02em}
+.stop b i{font-style:normal;color:var(--volt);margin-right:8px}
+.board{position:relative;border-radius:26px;background:linear-gradient(180deg,#1d2022,#151819);padding:18px 18px 16px;overflow:hidden}
+.board::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 50% 0,rgba(204,242,61,.1),transparent 70%);opacity:var(--heat,.4);transition:opacity .6s}
+.sc{position:relative;display:grid;grid-template-columns:1fr 136px 1fr;align-items:end}
+.team{display:grid;gap:2px;justify-items:start}
+.team:last-child{justify-items:end;text-align:right}
+.team small{display:flex;align-items:center;gap:6px}
+.team small::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--volt);opacity:0;transition:opacity .25s}
+.team:last-child small{flex-direction:row-reverse}
+.team.has small::before{opacity:1}
+.team b{font-size:17px;letter-spacing:.04em}
+.team .pts{font-size:50px;line-height:.96;letter-spacing:-.04em;margin-top:4px;display:block;transition:color .3s}
+.team .pts.hit{animation:hit .7s var(--out)}
+@keyframes hit{0%{transform:scale(1.28);color:var(--volt)}100%{transform:none}}
+.clock{position:relative;justify-self:center;width:136px;height:92px}
+.clock svg{width:136px;height:79px;overflow:visible}
+.seg{fill:var(--ink3);transition:fill .18s}
+.seg.on{fill:var(--volt)}
+.seg.hot{fill:#ff5a36}
+.clock .s{position:absolute;left:0;right:0;top:34px;text-align:center;font-size:26px;line-height:1}
+.clock .base{position:absolute;left:8px;right:8px;bottom:0;height:5px;border-radius:3px;background:var(--chalk)}
+.meta{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.fouls{display:flex;gap:4px;align-items:center}
+.fouls:last-child{justify-content:flex-end}
+.fouls i{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--dim)}
+.fouls i.on{background:var(--chalk);border-color:var(--chalk)}
+.game{font-size:19px;text-align:center}
+.game small{display:block;font:600 9.5px/1 Switzer;letter-spacing:.14em;color:var(--mut);margin-top:5px}
+
+/* court */
+.court{position:relative;margin-top:12px;border-radius:26px;background:var(--ink2);padding:14px 14px 10px}
+.court header{display:flex;justify-content:space-between;align-items:center;margin:0 4px 8px}
+.court svg{width:100%;height:auto;overflow:visible}
+.ln{fill:none;stroke:rgba(242,241,236,.34);stroke-width:1.6}
+.arc2{fill:none;stroke:var(--volt);stroke-width:2.4}
+.shot{transform-box:fill-box;transform-origin:center;animation:pop .5s var(--out)}
+.shot.made{fill:var(--volt)}.shot.miss{fill:none;stroke:var(--mut);stroke-width:1.6}
+.shot.sel{stroke:var(--chalk);stroke-width:3}
+.ping{fill:none;stroke:var(--volt);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ping 1s var(--out) forwards}
+@keyframes pop{0%{transform:scale(0)}}
+@keyframes ping{0%{transform:scale(.4);opacity:1}100%{transform:scale(3.4);opacity:0}}
+.legend{display:flex;gap:14px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:8px;height:8px;border-radius:50%;background:var(--volt)}
+.legend span:last-child i{background:none;border:1.5px solid var(--mut)}
+
+/* feed / box */
+.segc{display:grid;grid-template-columns:1fr 1fr;margin:14px 0 6px;padding:4px;border-radius:16px;background:var(--ink2);position:relative}
+.segc button{height:34px;border-radius:12px;font-size:12.5px;font-weight:600;color:var(--mut);position:relative;z-index:1;transition:color .25s}
+.segc button.on{color:var(--ink)}
+.segc::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:12px;background:var(--chalk);transform:translateX(calc(var(--i,0)*100%));transition:transform .4s var(--out)}
+.feed li{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:11px 6px;border-bottom:1px solid var(--line);animation:in .5s var(--out)}
+@keyframes in{0%{opacity:0;transform:translateY(-12px)}}
+.feed time{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+.feed b{font-weight:600}.feed span{display:block;font-size:12px;color:var(--mut);font-weight:400}
+.feed em{font-style:normal;font-family:Panchang;font-size:12px;padding:5px 8px;border-radius:9px;background:var(--ink3)}
+.feed li.pt em{background:var(--volt);color:var(--ink)}
+.box{display:none}.box.on{display:block}.feed.off{display:none}
+.box table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.box th{font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--mut);text-align:right;padding:10px 6px 6px}
+.box th:first-child,.box td:first-child{text-align:left}
+.box td{padding:9px 6px;border-top:1px solid var(--line);text-align:right;font-size:13px}
+.box td b{font-weight:600}.box td:nth-child(2){font-family:Panchang;font-size:13px}
+.box tr.hd td{border:0;padding-top:14px;font-family:Panchang;font-size:12px;color:var(--volt);letter-spacing:.04em}
+
+/* bracket */
+h2{font-family:Panchang;font-size:22px;line-height:1.05;letter-spacing:-.01em;margin:8px 4px 4px}
+.sub{color:var(--mut);margin:0 4px 16px;font-weight:400}
+.rounds{display:grid;gap:10px}
+.rd{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rd.one{grid-template-columns:1fr}
+.m{border-radius:18px;background:var(--ink2);padding:11px 13px;display:grid;gap:7px;position:relative}
+.m p{display:flex;justify-content:space-between;font-weight:600;color:var(--mut)}
+.m p.w{color:var(--chalk)}.m p span{font-family:Panchang;font-size:13px}
+.m.now{background:var(--chalk);color:var(--ink)}.m.now p{color:rgba(17,19,20,.5)}.m.now p.w{color:var(--ink)}
+.m.now::after{content:"LIVE";position:absolute;right:12px;top:-8px;font-size:9px;font-weight:700;letter-spacing:.12em;background:var(--volt);color:var(--ink);padding:3px 7px;border-radius:8px}
+.rl{margin:14px 4px 8px}
+
+/* stops */
+.stops li{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:12px;padding:13px 12px;border-radius:20px;margin-bottom:8px;background:var(--ink2);transition:background .3s,color .3s}
+.stops svg{width:52px;height:30px}
+.stops b{font-family:Panchang;font-size:15px;display:block}
+.stops span{font-size:12px;color:var(--mut);font-weight:400}
+.stops em{font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--mut)}
+.stops li.now{background:var(--volt);color:var(--ink)}.stops li.now span,.stops li.now em{color:rgba(17,19,20,.66)}
+.stops li.now .seg{fill:rgba(17,19,20,.18)}.stops li.now .seg.on{fill:var(--ink)}
+.stops li.done b{color:var(--mut)}
+
+/* tab bar */
+.tabs{position:absolute;left:14px;right:14px;bottom:22px;height:60px;border-radius:30px;background:rgba(36,40,43,.86);backdrop-filter:blur(16px);display:grid;grid-template-columns:repeat(3,1fr);padding:6px}
+.tabs button{border-radius:24px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--mut);transition:color .25s;position:relative;z-index:1}
+.tabs button.on{color:var(--ink)}
+.tabs svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs::before{content:"";position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/3);border-radius:24px;background:var(--volt);transform:translateX(calc(var(--i,0)*100%));transition:transform .45s var(--out)}
+.home{position:absolute;left:50%;bottom:7px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:rgba(242,241,236,.5)}
+.final{position:absolute;inset:0;border-radius:26px;background:var(--volt);color:var(--ink);display:grid;place-content:center;text-align:center;gap:4px;opacity:0;pointer-events:none;transform:scale(.96);transition:opacity .4s,transform .5s var(--out);z-index:2}
+.final.on{opacity:1;transform:none}
+.final b{font-family:Panchang;font-size:34px;line-height:1}.final span{font-weight:600;letter-spacing:.12em;font-size:11px}
+</style>
+</head>
+<body>
+<div id="fit" data-w="390" data-h="844" data-max="1.35">
+  <div class="sb"><span>9:41</span><span><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x=".6" y=".6" width="21.8" height="10.8" rx="3.2" fill="none" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="16" height="7.6" rx="1.8"/><rect x="23.6" y="4" width="1.8" height="4" rx=".9" opacity=".5"/></svg></span></div>
+  <div class="top"><!--@file:halfcourt-wordmark.svg--><span class="live" id="live"><i></i><span>LIVE</span></span></div>
+
+  <div class="views">
+    <section class="view on" id="v-live">
+      <p class="stop"><b><i>03</i>MANILA</b><span class="cap">Final · Court 1</span></p>
+      <div class="board" id="board">
+        <div class="sc">
+          <div class="team" id="tA"><small class="cap">Tide</small><b>TDE</b><span class="pts num">0</span></div>
+          <div class="clock"><svg viewBox="-74 -76 148 86" id="arc"></svg><span class="s num" id="shot">12</span><i class="base"></i></div>
+          <div class="team" id="tB"><small class="cap">Kiln</small><b>KLN</b><span class="pts num">0</span></div>
+        </div>
+        <div class="meta">
+          <span class="fouls" id="fA"></span>
+          <span class="game num"><span id="game">10:00</span><small>FIRST TO 21</small></span>
+          <span class="fouls" id="fB"></span>
+        </div>
+        <div class="final" id="final"><span>FINAL · MANILA</span><b id="finalb">TDE 21–19</b><span>NEXT GAME IN A MOMENT</span></div>
+      </div>
+
+      <div class="court">
+        <header><span class="cap">Shot chart</span><span class="legend cap"><span><i></i>Made</span><span><i></i>Missed</span></span></header>
+        <svg viewBox="-8 -8 346 236" id="court">
+          <rect class="ln" x="0" y="0" width="330" height="220" rx="2"/>
+          <rect class="ln" x="111" y="92" width="108" height="128"/>
+          <path class="ln" d="M125 92a40 40 0 0 1 80 0"/>
+          <path class="arc2" d="M19.8 220V184.9A148.5 148.5 0 0 1 310.2 184.9V220"/>
+          <circle class="ln" cx="165" cy="185.4" r="7"/><path class="ln" d="M145 197h40"/>
+          <g id="shots"></g>
+        </svg>
+      </div>
+
+      <div class="segc" id="segc"><button class="on" data-i="0">Play-by-play</button><button data-i="1">Box score</button></div>
+      <ul class="feed" id="feed"></ul>
+      <div class="box" id="box"><table><thead><tr><th>Player</th><th>PTS</th><th>1PT</th><th>2PT</th><th>REB</th></tr></thead><tbody id="boxb"></tbody></table></div>
+    </section>
+
+    <section class="view" id="v-bracket">
+      <h2>MANILA<br>MASTERS</h2><p class="sub">Stop 03 of 06 · 10–11 July 2027 · knockout</p>
+      <p class="cap rl">Quarter-finals</p>
+      <div class="rd"><div class="m"><p class="w">TDE <span>21</span></p><p>NVA <span>14</span></p></div><div class="m"><p>RIO <span>17</span></p><p class="w">ARC <span>20</span></p></div></div>
+      <div class="rd" style="margin-top:10px"><div class="m"><p class="w">KLN <span>21</span></p><p>BLK <span>18</span></p></div><div class="m"><p class="w">SUN <span>19</span></p><p>OSL <span>16</span></p></div></div>
+      <p class="cap rl">Semi-finals</p>
+      <div class="rd"><div class="m"><p class="w">TDE <span>21</span></p><p>ARC <span>19</span></p></div><div class="m"><p class="w">KLN <span>22</span></p><p>SUN <span>20</span></p></div></div>
+      <p class="cap rl">Final</p>
+      <div class="rd one"><div class="m now"><p class="w">TDE <span id="bA">0</span></p><p class="w">KLN <span id="bB">0</span></p></div></div>
+    </section>
+
+    <section class="view" id="v-stops">
+      <h2>WORLD TOUR<br>2027</h2><p class="sub">Six cities, one half of a court.</p>
+      <ul class="stops" id="stops"></ul>
+    </section>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="on" data-v="live"><svg viewBox="0 0 24 24"><path d="M3 18a9 9 0 0 1 18 0"/><path d="M12 18V9"/></svg>Live</button>
+    <button data-v="bracket"><svg viewBox="0 0 24 24"><path d="M4 5h5v6h6M4 19h5v-6M15 12h5"/></svg>Bracket</button>
+    <button data-v="stops"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11Z"/></svg>Stops</button>
+  </nav>
+  <i class="home"></i>
+</div>
+<a class="by" href="../../#interfaces">← Concept &amp; design: <b>Boško Kosić</b></a>
+<!--@shared.js-->
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+  /* the mark: twelve segments over the baseline, one per second of the shot clock */
+  function arc(svg, R, w) {
+    const gap = 3.4, span = (180 - gap * 11) / 12, out = [];
+    for (let i = 0; i < 12; i++) {
+      const a0 = (180 - i * (span + gap)) * Math.PI / 180, a1 = (180 - i * (span + gap) - span) * Math.PI / 180, r = R - w;
+      const p = (rr, a) => (rr * Math.cos(a)).toFixed(2) + ' ' + (-rr * Math.sin(a)).toFixed(2);
+      const s = el('path', { class: 'seg', d: `M${p(R, a0)}A${R} ${R} 0 0 1 ${p(R, a1)}L${p(r, a1)}A${r} ${r} 0 0 0 ${p(r, a0)}Z` });
+      svg.append(s); out.push(s);
+    }
+    return out;
+  }
+  const segs = arc($('#arc'), 72, 13);
+
+  /* the tour */
+  const STOPS = [['01', 'PARIS', '15–16 May', 12], ['02', 'TOKYO', '12–13 June', 12], ['03', 'MANILA', '10–11 July', 7], ['04', 'LAGOS', '14–15 August', 0], ['05', 'SÃO PAULO', '11–12 September', 0], ['06', 'NEW YORK', '16–17 October', 0]];
+  STOPS.forEach(([n, city, date, k]) => {
+    const li = document.createElement('li');
+    li.className = k === 12 ? 'done' : k ? 'now' : '';
+    li.innerHTML = `<svg viewBox="-50 -50 100 58"></svg><div><b>${city}</b><span>${date} 2027</span></div><em>${k === 12 ? 'PLAYED' : k ? 'NOW' : 'STOP ' + n}</em>`;
+    $('#stops').append(li);
+    arc(li.querySelector('svg'), 48, 10).forEach((s, i) => s.classList.toggle('on', i < k));
+  });
+
+  /* tabs and the segmented control */
+  const tabs = $$('#tabs button');
+  function tab(i) {
+    tabs.forEach((b, j) => b.classList.toggle('on', i === j));
+    $('#tabs').style.setProperty('--i', i);
+    $$('.view').forEach((v) => v.classList.toggle('on', v.id === 'v-' + tabs[i].dataset.v));
+  }
+  tabs.forEach((b, i) => b.addEventListener('click', () => tab(i)));
+  function seg(i) {
+    $$('#segc button').forEach((b, j) => b.classList.toggle('on', i === j));
+    $('#segc').style.setProperty('--i', i);
+    $('#feed').classList.toggle('off', i === 1); $('#box').classList.toggle('on', i === 1);
+  }
+  $$('#segc button').forEach((b, i) => b.addEventListener('click', () => seg(i)));
+
+  /* a game of 3x3, played by the page: twelve seconds a possession, first to 21 */
+  const T = [{ code: 'TDE', el: $('#tA'), f: $('#fA'), pl: ['Reyes', 'Santos', 'Cruz', 'Lim'] }, { code: 'KLN', el: $('#tB'), f: $('#fB'), pl: ['Okafor', 'Mensah', 'Bello', 'Ade'] }];
+  let pos, shot, game, next, over, st, painted;
+  const rnd = (a, b) => a + Math.random() * (b - a), pick = (a) => a[(Math.random() * a.length) | 0];
+  const mmss = (s) => String((s / 60) | 0).padStart(2, '0') + ':' + String((s | 0) % 60).padStart(2, '0');
+  T.forEach((t) => { for (let i = 0; i < 6; i++) t.f.append(document.createElement('i')); });
+
+  function reset() {
+    game = 222; over = 0; pos = Math.random() < 0.5 ? 0 : 1; shot = 12; next = rnd(4, 9);
+    st = T.map((t) => ({ pts: 0, fouls: 0, p: t.pl.map(() => [0, 0, 0, 0, 0, 0]) }));   // pts, 1pt made, 1pt tried, 2pt made, 2pt tried, reb
+    const pre = [[14, 15], [15, 13], [13, 14]][(Math.random() * 3) | 0];
+    $('#feed').innerHTML = ''; $('#shots').innerHTML = '';
+    pre.forEach((n, i) => { for (let k = 0; k < n;) { const two = Math.random() < 0.3 && n - k >= 2, p = (Math.random() * 3) | 0; score(i, p, two ? 2 : 1, true); k += two ? 2 : 1; } st[i].fouls = 2 + ((Math.random() * 3) | 0); });
+    $('#final').classList.remove('on'); $('#live').classList.remove('end'); $('#live span').textContent = 'LIVE';
+    paint(); say('Second half', 'Check ball, ' + T[pos].code, '');
+  }
+  function spot(two) {   // a place on the half court, inside or outside the arc
+    const a = rnd(0.12, 0.88) * Math.PI, r = two ? rnd(156, 176) : rnd(20, 128);
+    return [Math.max(10, Math.min(320, 165 + r * Math.cos(a))), Math.max(12, 185 - r * Math.sin(a))];
+  }
+  function mark(made, two, quiet) {
+    const [x, y] = spot(two), g = $('#shots');
+    if (!quiet && made) { const p = el('circle', { class: 'ping', cx: x, cy: y, r: 6 }); g.append(p); setTimeout(() => p.remove(), 1000); }
+    g.append(el('circle', { class: 'shot ' + (made ? 'made' : 'miss'), cx: x, cy: y, r: 4.6 }));
+    while (g.childElementCount > 26) g.firstElementChild.remove();
+  }
+  function score(i, p, n, quiet) {
+    const s = st[i]; s.pts += n; s.p[p][0] += n; s.p[p][n === 2 ? 3 : 1]++; s.p[p][n === 2 ? 4 : 2]++;
+    mark(true, n === 2, quiet);
+    if (!quiet) { const e = T[i].el.querySelector('.pts'); e.classList.remove('hit'); void e.offsetWidth; e.classList.add('hit'); }
+  }
+  function say(a, b, tag, pt) {
+    const li = document.createElement('li'); if (pt) li.className = 'pt';
+    li.innerHTML = `<time>${mmss(game)}</time><div><b>${a}</b><span>${b}</span></div>${tag ? `<em>${tag}</em>` : ''}`;
+    $('#feed').prepend(li);
+    while ($('#feed').childElementCount > 9) $('#feed').lastElementChild.remove();
+  }
+  function paint() {
+    T.forEach((t, i) => {
+      t.el.querySelector('.pts').textContent = st[i].pts; t.el.classList.toggle('has', i === pos && !over);
+      [...t.f.children].forEach((d, k) => d.classList.toggle('on', k < st[i].fouls));
+    });
+    $('#bA').textContent = st[0].pts; $('#bB').textContent = st[1].pts;
+    $('#game').textContent = mmss(game);
+    const left = Math.max(0, Math.ceil(shot)), gone = 12 - left;
+    $('#shot').textContent = String(left).padStart(2, '0');
+    segs.forEach((s, k) => { s.classList.toggle('on', k < gone); s.classList.toggle('hot', left <= 3 && k < gone); });
+    $('#board').style.setProperty('--heat', (0.25 + gone / 16).toFixed(2));
+    if (painted !== (painted = st[0].pts + '.' + st[1].pts + '.' + $('#feed').childElementCount + $('#feed').firstElementChild?.textContent)) $('#boxb').innerHTML = T.map((t, i) => `<tr class="hd"><td colspan="5">${t.code} · ${st[i].pts}</td></tr>` + t.pl.map((n, k) => { const p = st[i].p[k]; return `<tr><td><b>${n}</b></td><td>${p[0]}</td><td>${p[1]}/${p[2]}</td><td>${p[3]}/${p[4]}</td><td>${p[5]}</td></tr>`; }).join('')).join('');
+  }
+  function play() {   // the possession ends: a make, a miss or a foul
+    const i = pos, t = T[i], p = (Math.random() * 3) | 0, name = t.pl[p], r = Math.random(), two = Math.random() < 0.34;
+    if (r < 0.52) {
+      score(i, p, two ? 2 : 1); say(`${name} scores`, two ? 'Two-pointer from behind the arc' : pick(['Drive and finish', 'Mid-range jumper', 'Put-back under the rim']), '+' + (two ? 2 : 1), true); pos = 1 - i;
+    } else if (r < 0.88) {
+      st[i].p[p][two ? 4 : 2]++; mark(false, two);
+      const o = Math.random() < 0.3, q = (Math.random() * 3) | 0; st[o ? i : 1 - i].p[q][5]++;
+      say(`${name} misses`, `${o ? 'Offensive' : 'Defensive'} rebound, ${T[o ? i : 1 - i].pl[q]}`, 'REB'); if (!o) pos = 1 - i;
+    } else {
+      st[1 - i].fouls = Math.min(6, st[1 - i].fouls + 1); say(`Foul on ${T[1 - i].code}`, `${pick(T[1 - i].pl)} reaches in, ${t.code} ball`, 'FOUL');
+    }
+    shot = 12; next = rnd(3.5, 10.5);
+    const w = st.findIndex((s) => s.pts >= 21);
+    if (w >= 0 || game <= 0) end(w >= 0 ? w : st[0].pts >= st[1].pts ? 0 : 1);
+  }
+  function end(w) {
+    over = 1; $('#finalb').textContent = `${T[w].code} ${st[w].pts}–${st[1 - w].pts}`;
+    $('#final').classList.add('on'); $('#live').classList.add('end'); $('#live span').textContent = 'FINAL';
+    say('Final', `${T[w].code} win the Manila Masters`, ''); setTimeout(reset, 5200);
+  }
+  reset();
+  if (UI.reduce) { shot = 7; paint(); return; }
+  UI.loop((t, dt) => {
+    if (over) return;
+    game = Math.max(0, game - dt); shot -= dt; next -= dt;
+    if (next <= 0 || shot <= 0) play();
+    paint();
+  });
+  UI.attract([[9, () => seg(1)], [5, () => seg(0)], [7, () => tab(1)], [4.5, () => tab(2)], [4.5, () => tab(0)]]);
+})();
+</script>
+</body>
+</html>

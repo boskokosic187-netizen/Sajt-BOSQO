@@ -225,7 +225,7 @@
      rendered for longer than that on both sides, so the pause always lands while the section
      is still being styled. */
   function setupNear() {
-    const secs = $$('.reel, .work, .process, .about, .contact');
+    const secs = $$('.reel, .work, .ux, .process, .about, .contact');
     if (!secs.length) return;
     if (!('IntersectionObserver' in window)) { secs.forEach((s) => s.classList.add('is-near')); return; }
     const io = new IntersectionObserver((entries) => {
@@ -419,7 +419,7 @@
       rule: 'main > section:not(.hero) > .sec-head',
       lines: '.case-title, .reel__title, .work__title, .process__title, .about__title, .contact__title',
       screen: '.reel__screen, .row, .cover__item, .case-next, .ct__mon',
-      rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
+      rise: '.case-hero__top, .case-hero .eyebrow, .case-line, .reel__sub, .work__intro, .ux__body, .pr, .result__big, .result__label, .result__text' + (aboutOwn ? '' : ', .about__photo, .about__intro, .about .card'),
       stack: '.case-meta, .ct__tiles, .story, .hl, .blk__head, .reel__chapters, .talk',
       panel: '.qb',
     };
@@ -3590,6 +3590,89 @@
     else addEventListener('load', () => idle(load, { timeout: 3000 }));
   }
 
+  /* ------------------------------------------------------------ interfaces (UI/UX)
+     Five interfaces on one stage (css: .ux). A name on the left puts its work on stage: the
+     device takes the shape the work needs (browser, phone, watch), sized so the prototype
+     fills it at no more than its own design scale, and the live page (ui/<slug>/) loads into
+     it over its still. The page plays by itself and takes no input, so the wheel keeps
+     scrolling the site; a click on the device hands it over, and the first move of the
+     pointer anywhere else takes it back. Only the work on stage is loaded, only while the
+     section is near the screen; in lite mode it loads on that click. The fifth, this site,
+     is a sheet of its own tokens, no page to load. */
+  function setupUX() {
+    const sec = $('.ux');
+    if (!sec) return;
+    const stage = $('.ux__stage', sec), dev = $('.ux__dev', sec), screen = $('.ux__screen', sec);
+    const poster = $('.ux__poster', sec), url = $('.ux__url b', sec), tryb = $('.ux__try', sec);
+    const tabs = $$('.ux__tab', sec), items = $$('.ux__item', sec);
+    let cur = 0, frame = null, near = false, on = false;
+    const spec = () => tabs[cur].dataset;
+
+    function size() {
+      const s = spec();
+      if (s.dev === 'sys') return;
+      const a = getComputedStyle(stage), b = getComputedStyle(dev), n = parseFloat;
+      const chrome = s.dev === 'browser' ? $('.ux__chrome', dev).offsetHeight : 0;
+      const w = stage.clientWidth - n(a.paddingLeft) - n(a.paddingRight) - n(b.paddingLeft) - n(b.paddingRight);
+      const h = stage.clientHeight - n(a.paddingTop) - n(a.paddingBottom) - n(b.paddingTop) - n(b.paddingBottom) - chrome;
+      const k = Math.max(0.1, Math.min(w / s.w, h / s.h, +s.max));
+      screen.style.width = Math.floor(s.w * k) + 'px';
+      screen.style.height = Math.floor(s.h * k) + 'px';
+    }
+    function unload() { if (frame) { frame.remove(); frame = null; } }
+    function load() {
+      const s = spec();
+      unload();
+      if (s.dev === 'sys') return;
+      const f = document.createElement('iframe');
+      f.className = 'ux__frame';
+      f.title = $('.ux__name', tabs[cur]).textContent + ', live prototype';
+      f.tabIndex = -1;
+      f.addEventListener('load', () => setTimeout(() => f.classList.add('is-in'), 400));
+      f.src = 'ui/' + s.ux + '/';
+      tryb.before(f);
+      frame = f;
+    }
+    function leave() { on = false; dev.classList.remove('is-on'); if (frame) frame.tabIndex = -1; }
+    function show(i) {
+      cur = i;
+      const s = spec();
+      leave();
+      tabs.forEach((t, j) => { t.classList.toggle('is-on', j === i); t.setAttribute('aria-selected', j === i); });
+      items.forEach((it) => it.classList.toggle('is-on', it.dataset.ux === s.ux));
+      sec.style.setProperty('--c', tabs[i].style.getPropertyValue('--c'));
+      stage.dataset.kind = s.dev;
+      if (s.dev !== 'sys') {
+        dev.className = 'ux__dev ux__dev--' + s.dev;
+        poster.src = 'media/ui/' + s.ux + '/poster.webp';
+        poster.width = s.w; poster.height = s.h;
+        poster.alt = $('.ux__name', tabs[i]).textContent + ': ' + $('.ux__kind', tabs[i]).textContent.toLowerCase();
+        if (s.url) url.textContent = s.url;
+      }
+      size();
+      if (near && !lite) load(); else unload();
+    }
+    tabs.forEach((t, i) => t.addEventListener('click', () => { if (i !== cur) show(i); }));
+    tryb.addEventListener('click', () => {
+      if (!frame) load();
+      on = true;
+      dev.classList.add('is-on');
+      frame.tabIndex = 0;
+      try { frame.focus({ preventScroll: true }); } catch (e) { /* older browsers */ }
+    });
+    // over the live page the pointer belongs to it and nothing arrives here; a move here means it left
+    document.addEventListener('pointermove', (e) => { if (on && !dev.contains(e.target)) leave(); }, { passive: true });
+
+    size();
+    addEventListener('resize', size);
+    if ('ResizeObserver' in window) new ResizeObserver(size).observe(stage);
+    if (!('IntersectionObserver' in window)) return;
+    new IntersectionObserver((en) => {
+      near = en[0].isIntersecting;
+      if (!near) { leave(); unload(); } else if (!frame && !lite) load();
+    }, { rootMargin: '30% 0px' }).observe(stage);
+  }
+
   setupIntro();
   setupNear();
   setupContact();
@@ -3597,6 +3680,7 @@
   setupAvatar();
   setupHome();
   setupProcess();
+  setupUX();
   setupCase();
   setupBlocks();
   setupCut();

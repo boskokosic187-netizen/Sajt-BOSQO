@@ -27,7 +27,7 @@
   <!-- the chrome of the name is the biggest thing in the first paint -->
   <link rel="preload" href="media/fx/chrome.avif" as="image" type="image/avif" media="(min-width: 768px)">
   <link rel="preload" href="media/fx/chrome-s.avif" as="image" type="image/avif" media="(max-width: 767px)">
-  <link rel="stylesheet" href="css/site.css?v=080435bd">
+  <link rel="stylesheet" href="css/site.css?v=e022a0c3">
   <script>
     // js flag + the avatar intro decision, before first paint so the page never flashes under the intro
     // (same "lite" rules as js/site.js: desktop width, motion allowed, not a low-end device, once per
@@ -57,7 +57,7 @@
   </script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Boško Kosić", "url": "https://bosko.trif.rs/", "image": "https://bosko.trif.rs/media/og/home.jpg", "jobTitle": "Visual & Motion Designer", "description": "Belgrade-based visual and motion designer: campaigns, key art and animation, from social posts to city billboards.", "address": {"@type": "PostalAddress", "addressLocality": "Belgrade", "addressCountry": "RS"}, "knowsLanguage": ["sr", "en"], "knowsAbout": ["Motion design", "Campaign design", "Key art", "Billboards and DOOH", "Brand identity", "AI-assisted production"], "sameAs": ["https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/", "https://www.instagram.com/boskokosic/"]}</script>
   <script type="speculationrules">{"prefetch": [{"where": {"href_matches": "/work/*"}, "eagerness": "moderate"}]}</script>
-  <script src="js/site.js?v=fa5e784e" defer></script>
+  <script src="js/site.js?v=7d147fb5" defer></script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
@@ -103,6 +103,7 @@
 </svg></span><span class="mark__txt"><b>Boško Kosić</b><small>Visual &amp; Motion Designer</small></span></a>
     <nav class="topnav" aria-label="Main">
       <a href="#work">Work</a>
+      <a href="#interfaces">UI/UX</a>
       <a href="#reel">Reel</a>
       <a href="#process">Process</a>
       <a href="#about">About</a>
@@ -580,10 +581,113 @@
       </ol>
     </section>
 
+    <!-- ============ INTERFACES (UI/UX) ============ -->
+    <section class="ux" data-lit id="interfaces" aria-labelledby="ux-title" style="--c:#7E6CF0">
+      <div class="sec-head">
+        <span class="sec-head__num">03</span>
+        <span class="sec-head__label">UI/UX design · 05 interfaces · web, app, dashboard, watch</span>
+      </div>
+      <div class="work__head ux__head">
+        <h2 class="work__title ux__title" id="ux-title">Interfaces you can <em>use.</em></h2>
+        <p class="work__intro">Websites, apps and dashboards, designed end to end: the flow, the system, the screens and how they move. Nothing here is a screenshot. Every screen runs, so click one and use it.</p>
+      </div>
+
+      <div class="ux__body">
+        <div class="ux__side">
+          <div class="ux__tabs" role="tablist" aria-label="Interfaces">
+            <button class="ux__tab is-on" type="button" role="tab" aria-selected="true" data-ux="accord" data-dev="browser" data-w="1440" data-h="900" data-max="1.2" data-url="accord · eau de parfum" style="--c:#7E6CF0"><span class="ux__n">01</span><span class="ux__name">ACCORD</span><span class="ux__kind">Web shop</span></button>
+            <button class="ux__tab" type="button" role="tab" aria-selected="false" data-ux="halfcourt" data-dev="phone" data-w="390" data-h="844" data-max="1.35" style="--c:#CCF23D"><span class="ux__n">02</span><span class="ux__name">HALFCOURT</span><span class="ux__kind">Mobile app</span></button>
+            <button class="ux__tab" type="button" role="tab" aria-selected="false" data-ux="tabla" data-dev="browser" data-w="1440" data-h="900" data-max="1.6" data-url="tabla · enrolment 2027/28 · overview" style="--c:#6C8CFF"><span class="ux__n">03</span><span class="ux__name">TABLA</span><span class="ux__kind">Dashboard</span></button>
+            <button class="ux__tab" type="button" role="tab" aria-selected="false" data-ux="umbra" data-dev="watch" data-w="396" data-h="484" data-max="1.1" style="--c:#F29A3C"><span class="ux__n">04</span><span class="ux__name">UMBRA</span><span class="ux__kind">Watch face</span></button>
+            <button class="ux__tab" type="button" role="tab" aria-selected="false" data-ux="onair" data-dev="sys" style="--c:#ff4d1f"><span class="ux__n">05</span><span class="ux__name">ON AIR</span><span class="ux__kind">This website</span></button>
+          </div>
+
+          <div class="ux__items">
+            <article class="ux__item is-on" data-ux="accord">
+              <p class="ux__tag">Concept · Web shop · Desktop</p>
+              <p class="ux__line">A fragrance sold like a chord. Pick a note and the page retunes its light, its line and its colour.</p>
+              <ul class="ux__did"><li>Product page and the flow to the bag</li><li>One control drives colour, sound line and light</li><li>A bottle you can turn, from my own 3D</li></ul>
+              <div class="ux__sys"><span class="ux__sw" aria-hidden="true"><i style="background:#0D0C10"></i><i style="background:#F2EDE4"></i><i style="background:#D6E05A"></i><i style="background:#7E6CF0"></i><i style="background:#D08A2E"></i></span><span>Zodiak Italic · Switzer</span></div>
+              <p class="ux__try-l"><b>Try:</b> pick a note, turn the bottle, add to bag.</p>
+              <a class="ux__open" href="ui/accord/" target="_blank" rel="noopener">Open full screen <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="ux__item" data-ux="halfcourt">
+              <p class="ux__tag">Concept · Mobile app · iOS</p>
+              <p class="ux__line">A live game app where the logo is the shot clock: twelve segments, twelve seconds, on every screen.</p>
+              <ul class="ux__did"><li>Live game, bracket and tour screens</li><li>A scoreboard built around the 12-second arc</li><li>Shot chart and play-by-play that fill in as the game runs</li></ul>
+              <div class="ux__sys"><span class="ux__sw" aria-hidden="true"><i style="background:#111314"></i><i style="background:#24282b"></i><i style="background:#F2F1EC"></i><i style="background:#CCF23D"></i></span><span>Panchang Bold · Switzer</span></div>
+              <p class="ux__try-l"><b>Try:</b> the game plays itself. Switch tabs, open the box score.</p>
+              <a class="ux__open" href="ui/halfcourt/" target="_blank" rel="noopener">Open full screen <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="ux__item" data-ux="tabla">
+              <p class="ux__tag">Concept · Dashboard · Web app</p>
+              <p class="ux__line">A planner for outdoor campaigns: where each board is, what it plays now and how the day is booked. The creatives in it are my real billboards.</p>
+              <ul class="ux__did"><li>An overview a planner reads in one look</li><li>Map, live preview and schedule tied to one selection</li><li>A light system: one type family, one accent</li></ul>
+              <div class="ux__sys"><span class="ux__sw" aria-hidden="true"><i style="background:#F3F2EE"></i><i style="background:#14151A"></i><i style="background:#2B55FF"></i><i style="background:#1FA968"></i><i style="background:#E8590C"></i></span><span>Switzer, tabular figures</span></div>
+              <p class="ux__try-l"><b>Try:</b> click a pin on the map, switch Today and Week.</p>
+              <a class="ux__open" href="ui/tabla/" target="_blank" rel="noopener">Open full screen <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="ux__item" data-ux="umbra">
+              <p class="ux__tag">Concept · Watch face · Wearable</p>
+              <p class="ux__line">An installation whose shadows spell its name for one minute a day. The watch counts down to that minute, and the shadow on it moves with the sun.</p>
+              <ul class="ux__did"><li>One glance: the time, and how long until 18:47</li><li>The shadow is computed from the sun, not drawn</li><li>Type that stretches: one variable font</li></ul>
+              <div class="ux__sys"><span class="ux__sw" aria-hidden="true"><i style="background:#ECE8DF"></i><i style="background:#151515"></i><i style="background:#2F55F5"></i><i style="background:#F29A3C"></i></span><span>Archivo, variable width</span></div>
+              <p class="ux__try-l"><b>Try:</b> drag across the face to move the sun to 18:47.</p>
+              <a class="ux__open" href="ui/umbra/" target="_blank" rel="noopener">Open full screen <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="ux__item" data-ux="onair">
+              <p class="ux__tag">Live · Portfolio · Responsive website</p>
+              <p class="ux__line">The site you are on. A portfolio built like a broadcast: a wall of work on air, a rundown of projects, a timecode that never stops.</p>
+              <ul class="ux__did"><li>Concept, design system, motion and build</li><li>No template, no framework, no libraries</li><li>One layout from a phone to a 2560 px monitor</li></ul>
+              <p class="ux__try-l"><b>Try:</b> you already are.</p>
+              <a class="ux__open" href="#top">Back to the top <span aria-hidden="true">↑</span></a>
+            </article>
+          </div>
+        </div>
+
+        <div class="ux__stage" data-kind="browser">
+          <div class="ux__dev ux__dev--browser">
+            <div class="ux__chrome" aria-hidden="true"><i></i><i></i><i></i><span class="ux__url"><svg viewBox="0 0 12 12"><rect x="2.5" y="5.5" width="7" height="5" rx="1.2"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5"/></svg><b>accord · eau de parfum</b></span></div>
+            <div class="ux__screen">
+              <img class="ux__poster" src="media/ui/accord/poster.webp" alt="ACCORD web shop: the product page" width="1440" height="900" loading="lazy" decoding="async">
+              <button class="ux__try" type="button" aria-label="Use this prototype"></button>
+            </div>
+            <p class="ux__hint" aria-hidden="true"><span>Click to use it</span></p>
+          </div>
+
+          <div class="ux__sheet" aria-label="The design system of this website">
+            <div class="ux__card ux__card--type">
+              <p class="ux__cap">Type · one variable family</p>
+              <p class="ux__aa" aria-hidden="true">ON AIR</p>
+              <p class="ux__serif">Every <em>format.</em></p>
+              <p class="ux__lbl">Archivo 62–125 · Instrument Serif Italic</p>
+            </div>
+            <div class="ux__card ux__card--col">
+              <p class="ux__cap">Colour · five tokens</p>
+              <ul class="ux__cols"><li style="--k:#0a0a0b"><i></i><b>Black</b><span>#0A0A0B</span></li><li style="--k:#f2efea"><i></i><b>Paper</b><span>#F2EFEA</span></li><li style="--k:#8f8c86"><i></i><b>Muted</b><span>#8F8C86</span></li><li style="--k:#ff4d1f"><i></i><b>On air</b><span>#FF4D1F</span></li><li style="--k:#66eed8"><i></i><b>Aurora</b><span>#66EED8</span></li></ul>
+            </div>
+            <div class="ux__card ux__card--comp">
+              <p class="ux__cap">Components</p>
+              <div class="ux__comps" aria-hidden="true">
+                <span class="ux__nav"><i>Work</i><i>Reel</i><i>Process</i><i class="is-cta">Contact</i></span>
+                <span class="ux__chip"><i></i>Available — Q4 2026</span>
+                <span class="ux__btn">Start a project <b>→</b></span>
+                <span class="ux__head-s"><b>03</b>Selected work · 06 projects</span>
+              </div>
+            </div>
+            <div class="ux__card ux__card--facts">
+              <p class="ux__cap">Built</p>
+              <ul class="ux__facts"><li><b>0</b><span>frameworks and libraries</span></li><li><b>6</b><span>case studies, each with one thing to try</span></li><li><b>390–2560</b><span>px, one layout</span></li><li><b>2</b><span>quiet modes: reduced motion, low power</span></li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ PROCESS ============ -->
     <section class="process" data-lit id="process" aria-labelledby="process-title">
       <div class="sec-head">
-        <span class="sec-head__num">03</span>
+        <span class="sec-head__num">04</span>
         <span class="sec-head__label">Process</span>
       </div>
       <div class="process__head">
@@ -845,7 +949,7 @@
     <!-- ============ ABOUT ============ -->
     <section class="about" data-lit id="about" aria-labelledby="about-title">
       <div class="sec-head">
-        <span class="sec-head__num">04</span>
+        <span class="sec-head__num">05</span>
         <span class="sec-head__label">About</span>
       </div>
       <div class="about__grid">
@@ -888,7 +992,7 @@
               <li>Key art &amp; compositing</li>
               <li>Brand systems</li>
               <li>AI-assisted production</li>
-              <li>Web design &amp; front-end</li>
+              <li>UI/UX &amp; web design</li>
             </ul>
           </div>
           <div class="card card--kit">
@@ -927,7 +1031,7 @@
     <!-- ============ CONTACT ============ -->
     <section class="contact" data-lit id="contact" aria-labelledby="contact-title">
       <div class="sec-head">
-        <span class="sec-head__num">05</span>
+        <span class="sec-head__num">06</span>
         <span class="sec-head__label">Contact</span>
       </div>
       <div class="ct">

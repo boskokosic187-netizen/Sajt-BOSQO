@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>TABLA — outdoor campaign dashboard concept · Boško Kosić</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Concept: TABLA, a dashboard that plans and tracks billboard campaigns across a city. UI/UX design by Boško Kosić.">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<link rel="preload" href="../../media/ui/fonts/Switzer-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--back,#0a0a0b);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+img,canvas,svg{display:block}
+ul,ol{list-style:none}
+#fit{position:absolute;left:50%;top:50%;width:var(--w);height:var(--h);margin:calc(var(--h)/-2) 0 0 calc(var(--w)/-2);transform:rotate(var(--r,0deg)) scale(var(--s,1));overflow:hidden;contain:layout paint}
+.is-embed #fit{border-radius:0}
+.by{position:fixed;left:18px;bottom:14px;z-index:9;font:500 12px/1 Switzer,Archivo,system-ui,sans-serif;letter-spacing:.04em;color:rgba(255,255,255,.55);mix-blend-mode:difference}
+.by b{font-weight:600;color:#fff}
+.is-embed .by,.is-tight .by{display:none}
+.no-scrollbar{scrollbar-width:none}.no-scrollbar::-webkit-scrollbar{display:none}
+</style>
+<style>
+@font-face{font-family:Switzer;src:url(../../media/ui/fonts/Switzer-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--back:#dcdad3;--paper:#F3F2EE;--card:#fff;--ink:#14151A;--mut:#6B6E78;--dim:#A4A6AD;--line:#E6E4DE;--blue:#2B55FF;--blue2:#E9EEFF;--ok:#1FA968;--warn:#E8590C;
+  --c0:#C8102E;--c1:#E9B10C;--c2:#7A1022;--c3:#2B55FF;--out:cubic-bezier(.2,.8,.2,1)}
+#fit{background:var(--paper);color:var(--ink);font:500 13px/1.35 Switzer,system-ui,sans-serif;display:grid;grid-template-columns:72px 1fr;font-variant-numeric:tabular-nums}
+.cap{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+svg{overflow:visible}
+
+/* rail */
+.rail{background:var(--ink);display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:6px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--paper);display:grid;place-items:center;margin-bottom:22px}
+.logo i{width:20px;height:11px;border-radius:2px;background:var(--ink);position:relative}
+.logo i::after{content:"";position:absolute;left:8px;top:11px;width:4px;height:7px;background:var(--ink)}
+.rail button{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;color:rgba(255,255,255,.46);transition:all .25s}
+.rail button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.rail button.on{color:var(--ink);background:var(--paper)}
+.rail svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.me{margin-top:auto;width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600}
+
+.main{display:grid;grid-template-rows:72px 1fr;min-width:0}
+.bar{display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--line)}
+.bar h1{font-size:20px;font-weight:600;letter-spacing:-.015em;margin-right:6px}
+.chip{height:32px;padding:0 12px;border-radius:16px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink)}
+.chip svg{width:13px;height:13px;fill:none;stroke:var(--mut);stroke-width:1.8;stroke-linecap:round}
+.pill{height:26px;padding:0 10px;border-radius:13px;background:#E4F5EC;color:#147A4A;display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600}
+.pill i{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.sp{flex:1}
+.seg{display:flex;padding:3px;border-radius:17px;background:#E9E7E1;position:relative}
+.seg button{height:28px;padding:0 14px;border-radius:14px;font-size:12px;font-weight:600;color:var(--mut);position:relative;z-index:1;transition:color .25s}
+.seg button.on{color:var(--ink)}
+.seg::before{content:"";position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:14px;background:var(--card);box-shadow:0 1px 3px rgba(20,21,26,.12);transform:translateX(calc(var(--i,0)*100%));transition:transform .4s var(--out)}
+.btn{height:36px;padding:0 16px;border-radius:18px;background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px;transition:transform .2s var(--out),background .2s}
+.btn:hover{background:var(--blue);transform:translateY(-1px)}
+
+.grid{padding:18px 24px 20px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:108px 1fr 252px;gap:14px;min-height:0}
+.card{background:var(--card);border-radius:18px;border:1px solid var(--line);padding:16px 18px;position:relative;min-width:0;min-height:0}
+.card > header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.card h2{font-size:13.5px;font-weight:600}
+
+/* kpi */
+.kpi{display:grid;grid-template-columns:1fr auto;align-items:end}
+.kpi b{display:block;font-size:30px;font-weight:600;letter-spacing:-.03em;line-height:1.05;margin-top:8px}
+.kpi b small{font-size:15px;color:var(--dim);font-weight:500;letter-spacing:0}
+.kpi .d{font-size:11.5px;font-weight:600;color:var(--ok);margin-top:4px;display:block}
+.kpi .d.dn{color:var(--warn)}
+.kpi .d span{color:var(--mut);font-weight:500}
+.spark{width:96px;height:40px}
+.spark path{fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.spark .fill{fill:url(#g);stroke:none}
+.ring{width:52px;height:52px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:6;stroke:#ECEAE4}
+.ring .v{stroke:var(--blue);stroke-linecap:round;stroke-dasharray:138.2;stroke-dashoffset:138.2;transition:stroke-dashoffset 1.2s var(--out)}
+.dots{display:grid;grid-template-columns:repeat(8,7px);gap:4px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--ok)}.dots i.off{background:var(--warn)}
+
+/* map */
+.map{grid-column:span 2;padding:0;overflow:hidden}
+.map header{position:absolute;left:18px;right:18px;top:14px;z-index:2;margin:0}
+.map header .chip{height:28px;font-size:11.5px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px)}
+.map svg{width:100%;height:100%}
+.land{fill:#EFEDE7}.water{fill:#D5E0F2}.isl{fill:#E3EADF}
+.road{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.road.s{stroke-width:2.2}.hw{fill:none;stroke:#F5D9A8;stroke-width:4;stroke-linecap:round}
+.lbl{font:600 9px Switzer;letter-spacing:.16em;fill:#9A9CA3}
+.lbl.w{fill:#8FA5CC;font-style:italic;letter-spacing:.2em}
+.pin{cursor:pointer}
+.pin circle{stroke:#fff;stroke-width:2;transition:r .3s var(--out)}
+.pin .h{fill:transparent;stroke:none}
+.pin .pulse{fill:none;stroke-width:1.5;opacity:0}
+.pin.on .pulse{animation:ring 1.6s var(--out) infinite}
+.pin.off circle:not(.h){fill:#B9BBC2}
+@keyframes ring{0%{r:7;opacity:.9}100%{r:24;opacity:0}}
+.tip{position:absolute;z-index:3;transform:translate(-50%,-100%);margin-top:-16px;background:var(--ink);color:#fff;padding:8px 11px;border-radius:10px;font-size:11.5px;white-space:nowrap;pointer-events:none;transition:left .5s var(--out),top .5s var(--out)}
+.tip span{display:block;color:rgba(255,255,255,.6);font-weight:400;font-size:10.5px}
+.tip::after{content:"";position:absolute;left:50%;top:100%;margin-left:-5px;border:5px solid transparent;border-top-color:var(--ink)}
+
+/* now playing */
+.now{grid-column:span 2;display:grid;grid-template-columns:1fr 196px;gap:18px}
+.now header{grid-column:1/-1;margin-bottom:0}
+.screen{position:relative;border-radius:10px;overflow:hidden;background:#111;aspect-ratio:32/15;align-self:start;box-shadow:0 14px 34px rgba(20,21,26,.18)}
+.screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}
+.screen video.on{opacity:1}
+.slot{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:12px}
+.slot i{height:5px;border-radius:3px;background:#ECEAE4;overflow:hidden;position:relative}
+.slot i.us::after{content:"";position:absolute;inset:0;background:var(--blue);transform:scaleX(var(--p,0));transform-origin:left}
+.slotl{display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--mut)}
+.slotl b{color:var(--ink);font-weight:600}
+.tele{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.tele li{border:1px solid var(--line);border-radius:12px;padding:9px 11px;display:grid;gap:4px}.tele b{font-size:15px;font-weight:600;letter-spacing:-.01em}.tele .cap{font-size:9.5px}
+.side{display:grid;align-content:start;gap:8px}
+.side dl{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:12px;margin-bottom:6px}
+.side dt{color:var(--mut)}.side dd{text-align:right;font-weight:600}
+.cr{display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:center;padding:6px;border-radius:10px;border:1px solid transparent;text-align:left;transition:background .2s,border-color .2s}
+.cr img{width:54px;height:25px;object-fit:cover;border-radius:4px}
+.cr b{display:block;font-size:12px;font-weight:600;line-height:1.2}.cr span{font-size:10.5px;color:var(--mut)}
+.cr:hover{background:var(--paper)}
+.cr.on{background:var(--blue2);border-color:#C9D5FF}
+
+/* schedule */
+.sched{grid-column:span 3}
+.tl{position:relative;display:grid;gap:9px;margin-top:4px}
+.hrs{display:grid;grid-template-columns:118px 1fr}
+.hrs div{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim)}
+.trk{display:grid;grid-template-columns:118px 1fr;align-items:center}
+.trk > span{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+.trk > span i{width:8px;height:8px;border-radius:3px;background:var(--c)}
+.lane{position:relative;height:30px;border-radius:8px;background:repeating-linear-gradient(90deg,#F6F5F1 0,#F6F5F1 calc(100%/18 - 1px),#EAE8E2 calc(100%/18 - 1px),#EAE8E2 calc(100%/18))}
+.blk{font-style:normal;position:absolute;top:3px;bottom:3px;border-radius:6px;background:var(--c);opacity:.92;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden;transform-origin:left;animation:grow .9s var(--out) backwards;cursor:pointer;transition:filter .2s,transform .2s}
+.blk:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.blk.lt{color:var(--ink)}
+@keyframes grow{0%{transform:scaleX(0);opacity:0}}
+.head{position:absolute;top:18px;bottom:-4px;width:2px;margin-left:117px;background:var(--ink);border-radius:1px;z-index:2;pointer-events:none}
+.head::before{content:attr(data-t);position:absolute;left:50%;top:-20px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;font-weight:600;padding:3px 6px;border-radius:6px}
+
+/* chart */
+.chart .bars{display:grid;grid-template-columns:repeat(18,1fr);gap:4px;align-items:end;height:112px;margin-top:10px;position:relative}
+.bars i{border-radius:4px 4px 2px 2px;background:#DCE3FF;height:calc(var(--v)*1%);transform-origin:bottom;animation:rise .9s var(--out) backwards;transition:background .2s;position:relative}
+.bars i.pk{background:var(--blue)}
+.bars i:hover{background:var(--ink)}
+.bars i:hover::after{content:attr(data-v);position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;font-weight:600;padding:3px 6px;border-radius:6px;white-space:nowrap;z-index:2}
+@keyframes rise{0%{transform:scaleY(0)}}
+.ax{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:8px}
+.chart .big{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.chart .big small{font-size:11.5px;color:var(--mut);font-weight:500;letter-spacing:0;margin-left:6px}
+</style>
+</head>
+<body>
+<div id="fit" data-w="1440" data-h="900" data-max="1.6">
+  <nav class="rail">
+    <span class="logo"><i></i></span>
+    <button class="on" aria-label="Overview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></button>
+    <button aria-label="Boards"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="10" rx="2"/><path d="M12 14v6M8 20h8"/></svg></button>
+    <button aria-label="Creatives"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.500" cy="9" r="1.5"/></svg></button>
+    <button aria-label="Schedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></button>
+    <button aria-label="Reports"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+    <span class="me">BK</span>
+  </nav>
+
+  <div class="main">
+    <header class="bar">
+      <h1>Enrolment 2027/28</h1>
+      <span class="chip">3 – 30 Nov<svg viewBox="0 0 12 12"><path d="m3 4.500 3 3 3-3"/></svg></span>
+      <span class="pill"><i></i><span id="livec">23 of 24 boards live</span></span>
+      <span class="sp"></span>
+      <div class="seg" id="range"><button class="on">Today</button><button>Week</button></div>
+      <span class="chip"><svg viewBox="0 0 12 12"><circle cx="5.200" cy="5.200" r="3.600"/><path d="m8 8 2.500 2.500"/></svg>Search boards</span>
+      <button class="btn">+ New booking</button>
+    </header>
+
+    <div class="grid">
+      <section class="card kpi"><div><p class="cap">Plays <span class="rl">today</span></p><b id="k0">0</b><span class="d">▲ 4.2% <span>vs last <span class="rl2">Tuesday</span></span></span></div>
+        <svg class="spark" viewBox="0 0 96 40"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B55FF" stop-opacity=".22"/><stop offset="1" stop-color="#2B55FF" stop-opacity="0"/></linearGradient></defs><path class="fill" id="sf"/><path id="sl"/></svg></section>
+      <section class="card kpi"><div><p class="cap">Est. impressions</p><b id="k1">0</b><span class="d">▲ 7.9% <span>drivers and passers-by</span></span></div></section>
+      <section class="card kpi"><div><p class="cap">Share of loop</p><b><span id="k2">0</span><small>%</small></b><span class="d dn">10 s <span>of every 60 s</span></span></div>
+        <svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22"/><circle class="v" id="ring" cx="26" cy="26" r="22"/></svg></section>
+      <section class="card kpi"><div><p class="cap">Boards live</p><b>23<small> / 24</small></b><span class="d dn">1 offline <span>· Zemun, since 14:02</span></span></div><div class="dots" id="dots"></div></section>
+
+      <section class="card map">
+        <header><span class="chip">Belgrade · 24 boards</span><span class="chip" id="mapc">All creatives</span></header>
+        <svg viewBox="0 0 640 372" id="map" preserveAspectRatio="xMidYMid slice">
+          <rect class="land" width="640" height="372"/>
+          <path class="water" d="M-10 52C60 60 130 78 190 100c40 14 76 26 112 22 52-6 96-34 160-44 60-10 120-4 190-22v38c-70 16-124 12-178 22-58 10-104 40-166 44-44 2-86-12-126-28C128 112 62 92-10 86Z"/>
+          <path class="water" d="M40 382c30-40 66-76 104-100 34-22 62-40 80-70 14-24 30-54 66-82l16 16c-30 24-44 50-58 76-20 36-52 58-88 80-34 20-66 52-92 88Z"/>
+          <path class="isl" d="M236 96c16-10 40-10 52-2 8 6 2 16-12 18-18 4-36 2-44-4-4-4-2-8 4-12Z"/>
+          <path class="isl" d="M96 318c20-16 44-24 60-22 8 2 6 10-4 16-18 12-40 20-54 18-8-2-8-6-2-12Z"/>
+          <g class="road s"><path d="M70 150h150M70 178h140M70 206h126M96 130v100M132 130v96M168 132v88M204 136v70"/></g>
+          <path class="hw" d="M-10 248c70-6 150-8 214-14 30-4 44-6 62-6 40 0 70 22 110 44 60 32 140 52 270 70"/>
+          <g class="road"><path d="M318 132c20 30 40 70 52 110M318 132c40 12 100 24 170 20M370 242c50-20 110-36 180-40M370 242c10 40 14 80 10 130M330 160c-10 40-30 70-60 76M488 152c20 40 50 90 70 150M200 100c-30-20-70-40-110-52"/></g>
+          <g class="road s"><path d="M392 168c30 10 70 14 110 12M352 200c40-4 90-2 130 8M420 260c40 10 90 14 150 10M300 280c20 30 30 60 30 92M90 60c20 10 50 14 80 12"/></g>
+          <text class="lbl" x="122" y="58">ZEMUN</text><text class="lbl" x="84" y="252">NOVI BEOGRAD</text><text class="lbl" x="336" y="186">STARI GRAD</text><text class="lbl" x="404" y="236">VRAČAR</text>
+          <text class="lbl" x="398" y="330">VOŽDOVAC</text><text class="lbl" x="190" y="340">ČUKARICA</text><text class="lbl" x="508" y="122">PALILULA</text><text class="lbl" x="540" y="250">ZVEZDARA</text>
+          <text class="lbl w" x="470" y="84" transform="rotate(-7 470 84)">DANUBE</text><text class="lbl w" x="150" y="296" transform="rotate(-34 150 296)">SAVA</text>
+          <g id="pins"></g>
+        </svg>
+        <div class="tip" id="tip"><b></b><span></span></div>
+      </section>
+
+      <section class="card now">
+        <header><h2>Now playing · <span id="bname">Autokomanda</span></h2><span class="cap" id="bfmt">LED 12 × 5.6 m</span></header>
+        <div>
+          <div class="screen" id="screen"></div>
+          <div class="slot" id="slot"><i></i><i></i><i class="us"></i><i></i><i></i><i></i></div>
+          <p class="slotl"><span>Slot <b>3 of 6</b> · 10 s spot</span><span id="nextp">Next play in <b>50 s</b></span></p>
+          <ul class="tele"><li><span class="cap">Uptime · 30 days</span><b>99.2%</b></li><li><span class="cap">Brightness</span><b>5,200 nits</b></li><li><span class="cap">Panel temp</span><b>41 °C</b></li></ul>
+        </div>
+        <div class="side">
+          <dl><dt>Traffic</dt><dd id="btr">74,000 / day</dd><dt>Plays today</dt><dd id="bpl">812</dd><dt>Facing</dt><dd id="bfc">Inbound</dd></dl>
+          <p class="cap" style="margin-bottom:2px">Creatives in rotation</p>
+          <div id="crs"></div>
+        </div>
+      </section>
+
+      <section class="card sched">
+        <header><h2>Schedule · <span class="rl3">Tuesday 9 Nov</span></h2><span class="cap">06:00 – 24:00</span></header>
+        <div class="tl" id="tl"><div class="hrs"><span></span><div><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span></div></div></div>
+      </section>
+
+      <section class="card chart">
+        <header><h2>Impressions by hour</h2></header>
+        <p class="big"><span id="peak">17:00</span><small>peak hour</small></p>
+        <div class="bars" id="bars"></div>
+        <div class="ax"><span>06</span><span>12</span><span>18</span><span>24</span></div>
+      </section>
+    </div>
+  </div>
+</div>
+<a class="by" href="../../#interfaces">← Concept &amp; design: <b>Boško Kosić</b></a>
+<script>/* Shared by every prototype: the design canvas (#fit, data-w x data-h) is scaled to the
+   window (never past data-max, so no picture is shown above its file), and the page plays
+   by itself ("attract") until somebody touches it. Inside the portfolio's device frame the
+   page is an iframe that takes no input until the visitor clicks it. */
+const UI = (() => {
+  const fit = document.getElementById('fit'), W = +fit.dataset.w, H = +fit.dataset.h, MAX = +fit.dataset.max || 1.6;
+  const embed = self !== top, rootEl = document.documentElement;
+  rootEl.classList.toggle('is-embed', embed);
+  fit.style.setProperty('--w', W + 'px'); fit.style.setProperty('--h', H + 'px');
+  let scale = 1;
+  const size = () => {
+    // on its own page on a phone held upright, a landscape canvas lies on its side, like a film
+    const vw = rootEl.clientWidth, vh = rootEl.clientHeight;   // not innerWidth: a phone widens that to fit what overflows
+    const turn = !embed && W > H && vh > vw * 1.2;
+    scale = turn ? Math.min(vh / W, vw / H, MAX) : Math.min(vw / W, vh / H, MAX);
+    fit.style.setProperty('--s', scale.toFixed(5)); fit.style.setProperty('--r', turn ? '90deg' : '0deg');
+    rootEl.classList.toggle('is-tight', turn || vh - H * scale < 70);
+  };
+  size(); addEventListener('resize', size);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let last = embed ? -1e9 : performance.now() - 2500;   // on its own page the show starts after a moment
+  const touch = () => { last = performance.now(); };
+  ['pointerdown', 'pointermove', 'wheel', 'keydown', 'touchstart'].forEach((e) => addEventListener(e, touch, { passive: true, capture: true }));
+  const api = {
+    W, H, embed, reduce,
+    get scale() { return scale; },
+    /* true while nobody has touched the page for a while: the page may play itself */
+    get idle() { return !reduce && performance.now() - last > 6000; },
+    /* fn(t, dt) every frame while the tab is visible; t and dt in seconds */
+    loop(fn) {
+      let p = performance.now();
+      const step = (now) => { const dt = Math.min(0.05, (now - p) / 1000); p = now; if (!document.hidden) fn(now / 1000, dt); requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    },
+    /* run steps [seconds, fn] in a circle while idle; a touch pauses, the circle resumes where it stopped */
+    attract(steps) {
+      if (reduce) return;
+      let i = 0, wait = steps[0][0];
+      api.loop((t, dt) => { if (!api.idle) return; wait -= dt; if (wait > 0) return; steps[i][1](); i = (i + 1) % steps.length; wait = steps[i][0]; });
+    },
+    /* pointer position inside the canvas, in design pixels */
+    pt(e) { const r = fit.getBoundingClientRect(); return [(e.clientX - r.left) / scale, (e.clientY - r.top) / scale]; },
+  };
+  return api;
+})();
+</script>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+  const NS = 'http://www.w3.org/2000/svg', M = '../../media/ui/tabla/';
+  const CR = [   // the creatives: real billboards from Live on the Streets
+    { id: 'iths', name: 'ITHS · Otvoren upis', sh: 'ITHS Upis', c: '#C8102E', len: '15 s' }, { id: 'fsu', name: 'FSU · Predupis', sh: 'FSU Predupis', c: '#E9B10C', len: '15 s', lt: 1 },
+    { id: 'its', name: 'ITS · Predupis', sh: 'ITS Predupis', c: '#7A1022', len: '15 s' }, { id: 'future', name: 'ITS · Future', sh: 'ITS Future', c: '#2B55FF', len: '10 s' },
+  ];
+  const B = [   // boards: name, x, y on the map, creative, traffic a day, format, facing
+    ['Autokomanda', 392, 286, 0, 74000, 'LED 12 × 5.6 m', 'Inbound'], ['Gazela', 262, 228, 2, 96000, 'LED 14 × 6.5 m', 'Both ways'], ['Slavija', 398, 246, 1, 61000, 'LED 10 × 4.7 m', 'Roundabout'],
+    ['Zeleni venac', 322, 166, 0, 48000, 'LED 8 × 3.8 m', 'Outbound'], ['Bulevar kralja Aleksandra', 470, 204, 3, 52000, 'LED 10 × 4.7 m', 'Inbound'], ['Mostar', 300, 240, 1, 88000, 'LED 12 × 5.6 m', 'Inbound'],
+    ['Ušće', 232, 158, 2, 57000, 'LED 10 × 4.7 m', 'Outbound'], ['Arena', 150, 196, 0, 43000, 'LED 8 × 3.8 m', 'Both ways'], ['Pančevački most', 468, 118, 3, 69000, 'LED 12 × 5.6 m', 'Inbound'],
+    ['Zemun · Glavna', 98, 62, 1, 31000, 'LED 8 × 3.8 m', 'Outbound', 1], ['Banovo brdo', 214, 302, 0, 36000, 'LED 8 × 3.8 m', 'Inbound'], ['Vukov spomenik', 440, 178, 2, 45000, 'LED 8 × 3.8 m', 'Outbound'],
+    ['Dušanovac', 452, 300, 3, 58000, 'LED 10 × 4.7 m', 'Outbound'], ['Bežanijska kosa', 76, 214, 2, 39000, 'LED 8 × 3.8 m', 'Inbound'], ['Bogoslovija', 520, 150, 0, 41000, 'LED 8 × 3.8 m', 'Both ways'],
+    ['Studentski grad', 132, 150, 1, 34000, 'LED 8 × 3.8 m', 'Outbound'], ['Trošarina', 384, 340, 1, 47000, 'LED 10 × 4.7 m', 'Inbound'], ['Cvetkova pijaca', 556, 228, 0, 38000, 'LED 8 × 3.8 m', 'Inbound'],
+    ['Brankov most', 286, 146, 3, 64000, 'LED 10 × 4.7 m', 'Both ways'], ['Sava centar', 196, 214, 3, 51000, 'LED 10 × 4.7 m', 'Outbound'], ['Tašmajdan', 404, 190, 1, 44000, 'LED 8 × 3.8 m', 'Inbound'],
+    ['Konjarnik', 548, 296, 2, 56000, 'LED 12 × 5.6 m', 'Outbound'], ['Karaburma', 560, 100, 1, 29000, 'LED 8 × 3.8 m', 'Inbound'], ['Ada', 232, 268, 2, 42000, 'LED 10 × 4.7 m', 'Both ways'],
+  ];
+  const fmt = (n) => Math.round(n).toLocaleString('en-US');
+  let sel = 0, cur = -1, week = 0;
+
+  /* videos: one per creative, only the one on screen plays */
+  const vids = CR.map((c) => { const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; v.poster = M + c.id + '.webp'; v.dataset.src = M + c.id + '.mp4'; $('#screen').append(v); return v; });
+  function show(i) {
+    if (i === cur) return; cur = i;
+    vids.forEach((v, k) => { v.classList.toggle('on', k === i); if (k === i) { if (!v.src) v.src = v.dataset.src; if (!UI.reduce) v.play().catch(() => {}); } else v.pause(); });
+    $$('.cr').forEach((b, k) => b.classList.toggle('on', k === i));
+  }
+  CR.forEach((c, i) => {
+    const b = document.createElement('button'); b.className = 'cr';
+    b.innerHTML = `<img src="${M + c.id}.webp" alt="" width="54" height="25"><div><b>${c.name}</b><span>${c.len} · 16.7% of loop</span></div>`;
+    b.addEventListener('click', () => show(i)); $('#crs').append(b);
+  });
+
+  /* the map */
+  const pins = B.map((b, i) => {
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'pin' + (b[7] ? ' off' : '')); g.setAttribute('transform', `translate(${b[1]} ${b[2]})`);
+    g.innerHTML = `<circle class="pulse" r="7" stroke="${CR[b[3]].c}"/><circle class="h" r="13"/><circle class="d" r="5.5" fill="${CR[b[3]].c}"/>`;
+    g.addEventListener('click', () => board(i)); $('#pins').append(g); return g;
+  });
+  function board(i) {
+    sel = i; const b = B[i];
+    pins.forEach((p, k) => { p.classList.toggle('on', k === i); p.querySelector('.d').setAttribute('r', k === i ? 8 : 5.5); });
+    $('#bname').textContent = b[0]; $('#bfmt').textContent = b[5]; $('#btr').textContent = fmt(b[4]) + ' / day'; $('#bfc').textContent = b[6];
+    $('#bpl').textContent = b[7] ? '0 · offline' : fmt(b[4] / 91);
+    const svg = $('#map'), r = svg.getBoundingClientRect(), pt = pins[i].querySelector('.d').getBoundingClientRect(), box = svg.parentNode.getBoundingClientRect();
+    const tip = $('#tip'); tip.style.left = ((pt.left + pt.width / 2 - box.left) / UI.scale) + 'px'; tip.style.top = ((pt.top - box.top) / UI.scale) + 'px';
+    tip.querySelector('b').textContent = b[0]; tip.querySelector('span').textContent = b[7] ? 'Offline since 14:02' : CR[b[3]].name;
+    show(b[3]);
+  }
+
+  /* schedule: a day in blocks, the playhead is the clock */
+  const DAY = [[[6, 10, 'Morning drive'], [12, 14.500, 'Lunch'], [16, 19.500, 'Evening drive']], [[7, 9.500, 'School run'], [13, 16, 'Afternoon'], [19, 22, 'Prime']], [[6, 8, 'Early'], [10, 13, 'Midday'], [17, 21, 'Evening drive']], [[9, 12, 'Late morning'], [15, 17.500, 'After school'], [21, 24, 'Night']]];
+  CR.forEach((c, i) => {
+    const row = document.createElement('div'); row.className = 'trk'; row.style.setProperty('--c', c.c);
+    row.innerHTML = `<span><i></i>${c.sh}</span><div class="lane">${DAY[i].map(([a, b, n], k) => `<i class="blk${c.lt ? ' lt' : ''}" style="left:${(a - 6) / 18 * 100}%;width:${(b - a) / 18 * 100}%;animation-delay:${0.25 + i * 0.08 + k * 0.1}s">${n}</i>`).join('')}</div>`;
+    row.querySelector('.lane').addEventListener('click', () => show(i)); $('#tl').append(row);
+  });
+  const head = document.createElement('i'); head.className = 'head'; $('#tl').append(head);
+
+  /* impressions by hour */
+  const HR = [14, 26, 58, 74, 52, 44, 49, 61, 57, 55, 66, 100, 92, 70, 48, 36, 24, 15];
+  HR.forEach((v, i) => { const b = document.createElement('i'); b.style.cssText = `--v:${v};animation-delay:${0.3 + i * 0.03}s`; b.dataset.v = fmt(v * 1280) + ' · ' + String(i + 6).padStart(2, '0') + ':00'; if (v === 100) b.className = 'pk'; $('#bars').append(b); });
+  for (let i = 0; i < 24; i++) { const d = document.createElement('i'); if (i === 9) d.className = 'off'; $('#dots').append(d); }
+
+  /* numbers count up; today or the week */
+  const K = [[18420, 127300], [1284000, 8890000]];
+  function count(el, to, f) { const a = +el.dataset.n || 0, t0 = performance.now(); el.dataset.n = to; const s = (now) => { const k = Math.min(1, (now - t0) / 900), e = 1 - (1 - k) ** 3; el.textContent = f(a + (to - a) * e); if (k < 1) requestAnimationFrame(s); }; UI.reduce ? (el.textContent = f(to)) : requestAnimationFrame(s); }
+  function range(w) {
+    week = w; $('#range').style.setProperty('--i', w); $$('#range button').forEach((b, i) => b.classList.toggle('on', i === w));
+    count($('#k0'), K[0][w], fmt); count($('#k1'), K[1][w], (n) => (n / 1e6).toFixed(2) + 'M'); count($('#k2'), 16.7, (n) => n.toFixed(1));
+    $$('.rl').forEach((e) => (e.textContent = w ? 'this week' : 'today')); $$('.rl2').forEach((e) => (e.textContent = w ? 'week' : 'Tuesday')); $$('.rl3').forEach((e) => (e.textContent = w ? '3 – 9 Nov' : 'Tuesday 9 Nov'));
+    const pts = (w ? [8, 14, 12, 20, 18, 26, 30] : [6, 10, 22, 18, 20, 28, 34, 26, 30]).map((v, i, a) => [i / (a.length - 1) * 96, 38 - v]);
+    const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('');
+    $('#sl').setAttribute('d', d); $('#sf').setAttribute('d', d + 'L96 40L0 40Z');
+  }
+  $$('#range button').forEach((b, i) => b.addEventListener('click', () => range(i)));
+  $$('.rail button').forEach((b) => b.addEventListener('click', () => { $$('.rail button').forEach((x) => x.classList.toggle('on', x === b)); }));
+  range(0); setTimeout(() => ($('#ring').style.strokeDashoffset = 138.2 * (1 - 0.167)), 300);
+  board(0);
+  addEventListener('resize', () => board(sel));
+
+  /* the clock: the playhead crosses the day, the slot bar fills while our spot plays, plays tick up */
+  let plays = K[0][0];
+  UI.loop((t) => {
+    const h = 6 + ((t * 0.006 + 0.62) % 1) * 18, hh = Math.floor(h), mm = Math.floor((h - hh) * 60);
+    head.style.left = ((h - 6) / 18 * 100 * (1 - 118 / $('#tl').offsetWidth)) + '%';
+    head.dataset.t = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+    const loop = (t % 12) / 12 * 60, on = loop >= 20 && loop < 30;
+    $('#slot .us').style.setProperty('--p', on ? (loop - 20) / 10 : loop >= 30 ? 1 : 0);
+    $('#nextp').innerHTML = on ? '<b>On air now</b>' : 'Next play in <b>' + Math.ceil(((80 - loop) % 60) || 60) + ' s</b>';
+    if (!week && Math.random() < 0.03) { plays += 1 + ((Math.random() * 3) | 0); $('#k0').textContent = fmt(plays); $('#k0').dataset.n = plays; }
+  });
+  let n = 0;
+  UI.attract([[3.4, () => board((n = (n + 5) % B.length))], [3.4, () => board((n = (n + 5) % B.length))], [3.4, () => board((n = (n + 5) % B.length))], [2.2, () => range(1)], [3.4, () => board((n = (n + 5) % B.length))], [2.6, () => range(0)]]);
+})();
+</script>
+</body>
+</html>

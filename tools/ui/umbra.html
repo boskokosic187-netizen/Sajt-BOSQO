@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>UMBRA — watch face concept · Boško Kosić</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Concept: a watch face for UMBRA, an installation whose shadows spell its name for one minute a day. UI/UX design by Boško Kosić.">
+<link rel="icon" href="../../favicon.ico" sizes="any">
+<link rel="preload" href="../../media/fonts/archivo-v25-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--@shared.css-->
+<style>
+@font-face{font-family:Archivo;src:url(../../media/fonts/archivo-v25-latin.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+:root{--back:#0b0b0c;--paper:#ECE8DF;--ink:#151515;--mut:rgba(21,21,21,.56);--line:rgba(21,21,21,.16);--blue:#2F55F5;--sun:#F29A3C;--out:cubic-bezier(.2,.8,.2,1)}
+#fit{background:var(--paper);color:var(--ink);font:600 13px/1.2 Archivo,system-ui,sans-serif;border-radius:96px;box-shadow:0 0 0 10px #1c1c1e,0 0 0 11px #3a3a3d,0 40px 120px rgba(0,0,0,.6);user-select:none;touch-action:none;cursor:ew-resize;transition:background .6s,color .6s}
+.is-embed #fit{border-radius:0;box-shadow:none}
+#fit.now{background:var(--blue);color:#fff;--mut:rgba(255,255,255,.7);--line:rgba(255,255,255,.3);--ink:#fff}
+.cap{font-size:11px;font-stretch:88%;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);transition:color .6s}
+.top{position:absolute;left:46px;right:46px;top:44px;display:flex;justify-content:space-between;align-items:center}
+.top b{font-weight:800;font-stretch:118%;font-size:15px;letter-spacing:.02em}
+.sun{display:flex;align-items:center;gap:7px;font-variant-numeric:tabular-nums}
+.sun i{width:9px;height:9px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 3px color-mix(in srgb,var(--sun) 28%,transparent)}
+#fit.now .sun i{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.3)}
+
+/* the field: a row of pillars and the shadow they throw */
+.field{position:absolute;left:0;right:0;top:100px;height:150px;overflow:hidden}
+.pillars{position:absolute;left:34px;right:34px;top:22px;height:5px;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 7px);opacity:.85;transition:opacity .6s}
+.shadow{position:absolute;left:0;right:0;top:27px;text-align:center;font-weight:900;font-stretch:125%;font-size:71px;line-height:1;letter-spacing:0;transform-origin:50% 0;will-change:transform;color:var(--ink);white-space:nowrap}
+
+.time{position:absolute;left:0;right:0;top:238px;text-align:center;font-weight:800;font-stretch:108%;font-size:104px;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.time span{display:inline-block;animation:blink 1s steps(2) infinite;transform:translateY(-.06em);margin:0 -.02em}
+@keyframes blink{50%{opacity:.25}}
+.state{position:absolute;left:0;right:0;top:356px;text-align:center;font-size:14.5px;font-weight:600;font-stretch:96%}
+.state b{font-weight:800}
+
+.dial{position:absolute;left:38px;right:38px;bottom:26px;height:76px}
+.dial svg{width:100%;height:100%;overflow:visible}
+.dial path{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:2 5;stroke-linecap:round;transition:stroke .6s}
+.dial .mk{stroke:var(--blue);stroke-width:3;stroke-dasharray:none}
+#fit.now .dial .mk{stroke:#fff}
+.dial circle{fill:var(--sun);stroke:var(--paper);stroke-width:3;transition:stroke .6s}
+#fit.now .dial circle{stroke:var(--blue);fill:#fff}
+.dial text{font:600 10px Archivo;font-stretch:88%;letter-spacing:.1em;fill:var(--mut);transition:fill .6s}
+.livebtn{position:absolute;right:42px;top:356px;height:22px;padding:0 9px;border-radius:11px;background:var(--ink);color:var(--paper);font-size:10px;letter-spacing:.12em;opacity:0;pointer-events:none;transition:opacity .3s}
+</style>
+</head>
+<body>
+<div id="fit" data-w="396" data-h="484" data-max="1.5">
+  <p class="top"><b>UMBRA</b><span class="sun cap"><i></i><span id="alt">15.2°</span></span></p>
+  <div class="field"><i class="pillars"></i><div class="shadow" id="sh" aria-hidden="true">UMBRA</div></div>
+  <p class="time" id="time">18<span>:</span>47</p>
+  <p class="state" id="state">Readable in <b>1 h 17 min</b></p>
+  <div class="dial">
+    <svg viewBox="0 0 320 76"><path id="arc" d="M6 62Q160 -34 314 62"/><path class="mk" id="mk" d="M0 0"/><circle id="dot" r="6.500" cx="6" cy="62"/>
+      <text x="0" y="76">05:20</text><text x="320" y="76" text-anchor="end">20:05</text><text id="mkt" text-anchor="middle" fill="var(--blue)">18:47</text></svg>
+  </div>
+</div>
+<a class="by" href="../../#interfaces">← Concept &amp; design: <b>Boško Kosić</b></a>
+<!--@shared.js-->
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s), fit = $('#fit');
+  const RISE = 5 + 20 / 60, SET = 20 + 5 / 60, THE = 18 + 47 / 60;   // first light, last light, the minute
+  const arc = $('#arc'), LEN = arc.getTotalLength();
+  const at = (h) => arc.getPointAtLength(LEN * (h - RISE) / (SET - RISE));
+  { const p = at(THE), q = at(THE + 0.01), a = Math.atan2(q.y - p.y, q.x - p.x) + Math.PI / 2;
+    $('#mk').setAttribute('d', `M${p.x - 7 * Math.cos(a)} ${p.y - 7 * Math.sin(a)}L${p.x + 7 * Math.cos(a)} ${p.y + 7 * Math.sin(a)}`);
+    $('#mkt').setAttribute('x', p.x - 8); $('#mkt').setAttribute('y', p.y - 14); }
+
+  /* one sun: its height sets the length of the shadow, its direction the lean; at 18:47 the two agree with the letters */
+  function sun(h) {
+    const x = Math.min(1, Math.max(0, (h - RISE) / (SET - RISE)));
+    const alt = 76.7 * Math.sin(Math.PI * x) ** 1.25, th = (h - THE) * 13 * Math.PI / 180;
+    const s = Math.min(3.2, Math.tan(15.15 * Math.PI / 180) / Math.tan(Math.max(1.2, alt) * Math.PI / 180));
+    return { alt, th, s };
+  }
+  let h = THE - 1.28, shown = '';
+  function paint() {
+    const { alt, th, s } = sun(h), now = Math.abs(h - THE) < 1 / 120;
+    const sh = $('#sh');
+    sh.style.transform = now ? 'none' : `matrix(1,0,${(s * Math.sin(th)).toFixed(4)},${(s * Math.cos(th)).toFixed(4)},0,0)`;
+    sh.style.opacity = now ? 1 : (0.2 + 0.5 * Math.min(1, alt / 30) * Math.min(1, 1.6 / s)).toFixed(3);
+    sh.style.filter = now ? 'none' : `blur(${Math.min(5, Math.abs(h - THE) * 1.1).toFixed(2)}px)`;
+    fit.classList.toggle('now', now);
+    const hh = Math.floor(h), mm = Math.floor((h - hh) * 60), key = hh + ':' + mm + now;
+    const p = at(h); $('#dot').setAttribute('cx', p.x); $('#dot').setAttribute('cy', p.y);
+    if (key === shown) return; shown = key;
+    $('#time').innerHTML = String(hh).padStart(2, '0') + '<span>:</span>' + String(mm).padStart(2, '0');
+    $('#alt').textContent = alt.toFixed(1) + '°';
+    const d = Math.round((THE - h) * 60);
+    $('#state').innerHTML = now ? '<b>Readable now.</b> One minute.' : d > 0 ? `Readable in <b>${d >= 60 ? Math.floor(d / 60) + ' h ' : ''}${d % 60} min</b>` : h > SET - 0.2 ? 'Last light. <b>Gone until tomorrow.</b>' : `Gone <b>${-d} min</b> ago`;
+  }
+
+  /* drag across the face (or turn the wheel) to move the sun */
+  let drag = null;
+  const clamp = (v) => Math.min(SET, Math.max(RISE, v));
+  fit.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, h }; fit.setPointerCapture(e.pointerId); });
+  fit.addEventListener('pointermove', (e) => { if (!drag) return; h = clamp(drag.h + (e.clientX - drag.x) / UI.scale / 300 * (SET - RISE)); if (Math.abs(h - THE) < 0.035) h = THE; paint(); });
+  ['pointerup', 'pointercancel'].forEach((n) => fit.addEventListener(n, () => { drag = null; }));
+  addEventListener('wheel', (e) => { h = clamp(h + Math.sign(e.deltaY) * 0.1); paint(); }, { passive: true });
+  addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { h = clamp(h + (e.key === 'ArrowRight' ? 1 : -1) / 12); paint(); } });
+
+  /* nobody at the watch: the day runs by itself and stops for the minute */
+  let hold = 0;
+  paint();
+  UI.loop((t, dt) => {
+    if (!UI.idle || drag) return;
+    if (hold > 0) { hold -= dt; if (hold <= 0) h += 0.02; paint(); return; }
+    const before = h; h += dt * (h < THE - 1.5 || h > THE + 0.4 ? 1.6 : 0.42);
+    if (before < THE && h >= THE) { h = THE; hold = 3.2; }
+    if (h >= SET) h = RISE;
+    paint();
+  });
+})();
+</script>
+</body>
+</html>
