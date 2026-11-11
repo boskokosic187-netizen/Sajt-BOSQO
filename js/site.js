@@ -11,7 +11,7 @@
   const LOOPS = 'media/loops/';
   const FX = new URL('../media/fx/', document.currentScript.src).href; // works from case pages too
   const CASES = {
-    live: 'live-on-the-streets', ballies: 'ballies', keyart: 'personal-art',
+    live: 'live-on-the-streets', ballies: 'ballies',
     fsu: 'fsu-2026', series: 'series-at-scale', babyboo: 'baby-boo',
   };
 
@@ -1887,7 +1887,8 @@
       setTimeout(open, 450);
     }
     $$('[data-guide]').forEach((b) => {
-      b.addEventListener('click', () => {
+      b.addEventListener('click', (e) => {
+        e.preventDefault();   // the On Air card in Selected work is a link (to the hero, without the script)
         hero.classList.remove('is-scan');
         guide = guide || buildGuide();
         openDialog(guide);

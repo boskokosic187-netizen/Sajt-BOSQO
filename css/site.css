@@ -1276,6 +1276,7 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
   .row__tags { margin: 0; align-self: center; }
   .row__go { font-size: 0; }
   .row__go::before { content: "View case →"; font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; background: var(--text); color: var(--bg); }
+  .row--live .row__go::before { content: "See all 8 →"; } /* the On Air card opens the guide, not a case */
   .row::before { content: ""; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 3px; background: var(--c); }
   .row__tags { color: var(--c); }
 
