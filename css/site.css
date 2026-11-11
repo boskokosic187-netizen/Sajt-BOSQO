@@ -3678,3 +3678,14 @@ html.js :is(.reel, .work, .process, .about, .contact):not(.is-near)::after,
 html.js :is(.reel, .work, .process, .about, .contact):not(.is-near) *,
 html.js :is(.reel, .work, .process, .about, .contact):not(.is-near) *::before,
 html.js :is(.reel, .work, .process, .about, .contact):not(.is-near) *::after { animation-play-state: paused !important; }
+
+/* the CV: a small button on the portrait in About (the file: media/cv, built by tools/build_cv.mjs) */
+.about__cv {
+  justify-self: start; display: inline-flex; align-items: center; gap: 0.6em; margin-top: 0.7em; padding: 0.62em 1em; border-radius: 999px;
+  background: var(--text); color: var(--bg); font-weight: 700; font-size: 0.86em; line-height: 1; white-space: nowrap;
+  transition: background-color 0.2s, transform 0.3s var(--out);
+}
+.about__cv i { font-style: normal; transition: translate 0.3s var(--out); }
+.about__cv em { font-style: normal; font-weight: 600; opacity: 0.55; }
+.about__cv:hover { background: var(--rec); color: #000; transform: translateY(-2px); }
+.about__cv:hover i { translate: 0 2px; }

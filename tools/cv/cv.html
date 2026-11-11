@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Boško Kosić — Visual & Motion Designer — CV</title>
+<meta name="author" content="Boško Kosić">
+<style>
+@font-face { font-family: "Archivo"; font-weight: 300 900; font-stretch: 62% 125%; src: url(../../media/fonts/archivo-v25-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Archivo"; font-weight: 300 900; font-stretch: 62% 125%; src: url(../../media/fonts/archivo-v25-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212; }
+@font-face { font-family: "Instrument Serif"; font-style: italic; src: url(../../media/fonts/instrument-serif-v5-italic-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+1E00-1E9F; }
+@font-face { font-family: "Instrument Serif"; font-style: italic; src: url(../../media/fonts/instrument-serif-v5-italic-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F; }
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink: #0c0c0d; --paper: #f6f3ee; --card: #ffffff; --muted: #6b6762; --line: #dcd7ce; --rec: #ff4d1f; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { position: relative; width: 210mm; height: 297mm; overflow: hidden; background: var(--paper); color: var(--ink); font: 400 7.9pt/1.4 "Archivo", sans-serif; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+.lbl { font-stretch: 80%; font-weight: 600; font-size: 7pt; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* head: the site's dark studio. Two lights (rec orange, aurora teal), a fine grid that fades
+   out, and the portrait in a viewfinder frame */
+.head { position: relative; height: 49mm; background: #09090a; color: var(--paper); padding: 8.5mm 12mm 0 12mm; overflow: hidden; }
+.head::before { content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(62mm 40mm at 86% 112%, rgba(255, 77, 31, 0.62), transparent 72%),
+    radial-gradient(70mm 34mm at 58% -22%, rgba(102, 238, 216, 0.17), transparent 70%),
+    radial-gradient(90mm 60mm at 0% 0%, rgba(255, 255, 255, 0.05), transparent 70%); }
+.head::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(rgba(246, 243, 238, 0.07) 0.2mm, transparent 0.2mm) 0 0 / 6mm 6mm, linear-gradient(90deg, rgba(246, 243, 238, 0.07) 0.2mm, transparent 0.2mm) 0 0 / 6mm 6mm;
+  -webkit-mask: linear-gradient(100deg, transparent 38%, #000 100%); mask: linear-gradient(100deg, transparent 38%, #000 100%); }
+.head > * { position: relative; z-index: 1; }
+.head__top { color: rgba(246, 243, 238, 0.66); }
+.head__top b { color: var(--rec); font-weight: 600; }
+.head__top i { display: inline-block; width: 1.8mm; height: 1.8mm; margin-right: 1.6mm; border-radius: 50%; background: var(--rec); box-shadow: 0 0 2.4mm var(--rec); }
+h1 { margin-top: 5.6mm; font-weight: 800; font-stretch: 125%; font-size: 31pt; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
+.role { margin-top: 2.8mm; font: italic 400 15pt/1 "Instrument Serif", serif; color: rgba(246, 243, 238, 0.94); }
+.role b { font: 600 7.4pt/1 "Archivo", sans-serif; font-stretch: 80%; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(246, 243, 238, 0.62); margin-left: 3mm; vertical-align: 1.1mm; }
+.shot { position: absolute; z-index: 2; right: 14mm; top: 7.5mm; width: 27.2mm; height: 34mm; }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 3.4mm; filter: grayscale(1) contrast(1.08) brightness(1.03); box-shadow: 0 3mm 9mm rgba(0, 0, 0, 0.55); }
+.shot::before { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: 3.4mm; background: linear-gradient(200deg, transparent 55%, rgba(255, 77, 31, 0.34)); box-shadow: inset 0 0 0 0.25mm rgba(246, 243, 238, 0.3); }
+.shot::after { content: ""; position: absolute; inset: -2mm; border-radius: 5mm; /* viewfinder corners */
+  background:
+    linear-gradient(var(--rec), var(--rec)) 0 0 / 5mm 0.35mm, linear-gradient(var(--rec), var(--rec)) 0 0 / 0.35mm 5mm,
+    linear-gradient(var(--paper), var(--paper)) 100% 0 / 5mm 0.3mm, linear-gradient(var(--paper), var(--paper)) 100% 0 / 0.3mm 5mm,
+    linear-gradient(var(--paper), var(--paper)) 0 100% / 5mm 0.3mm, linear-gradient(var(--paper), var(--paper)) 0 100% / 0.3mm 5mm,
+    linear-gradient(var(--paper), var(--paper)) 100% 100% / 5mm 0.3mm, linear-gradient(var(--paper), var(--paper)) 100% 100% / 0.3mm 5mm;
+  background-repeat: no-repeat; border-radius: 0; opacity: 0.9; }
+.shot span { position: absolute; z-index: 2; left: 1.6mm; bottom: 1.6mm; display: flex; align-items: center; gap: 1mm; padding: 0.7mm 1.6mm 0.6mm; border-radius: 3mm; background: rgba(9, 9, 10, 0.72); color: var(--paper); font-stretch: 80%; font-weight: 700; font-size: 5.6pt; letter-spacing: 0.1em; text-transform: uppercase; }
+.shot span i { width: 1.2mm; height: 1.2mm; border-radius: 50%; background: #66eed8; }
+
+/* contact strip under the head */
+.strip { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 0 6mm; padding: 3.1mm 12mm; background: var(--card); border-bottom: 0.25mm solid var(--line); }
+.strip li { display: flex; align-items: baseline; gap: 2mm; white-space: nowrap; }
+.strip .lbl { color: var(--rec); }
+.strip b { font-weight: 650; }
+
+.body { display: grid; grid-template-columns: 60mm 1fr; gap: 0 7mm; padding: 5.5mm 12mm 0 12mm; }
+/* section heads: a number tab and a full rule, so the page reads at a glance */
+h2 { display: flex; align-items: stretch; margin-bottom: 2.4mm; border-bottom: 0.5mm solid var(--ink); font-stretch: 112%; font-weight: 800; font-size: 8.6pt; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; }
+h2 span { display: grid; place-items: center; min-width: 6.4mm; margin-right: 2.4mm; padding: 1.5mm 1.2mm 1.2mm; background: var(--ink); color: var(--paper); font-stretch: 80%; font-weight: 700; font-size: 7.2pt; letter-spacing: 0.04em; border-radius: 1mm 1mm 0 0; }
+h2 em { align-self: center; font-style: normal; }
+section + section { margin-top: 5.4mm; }
+
+/* side */
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6mm; }
+.nums li { padding: 2.2mm 2mm 2mm; background: var(--card); border: 0.25mm solid var(--line); border-radius: 1.4mm; }
+.nums b { display: block; font-weight: 800; font-stretch: 125%; font-size: 13pt; line-height: 1; letter-spacing: -0.02em; }
+.nums b i { font-style: normal; color: var(--rec); }
+.nums span { display: block; margin-top: 1.1mm; font-size: 6.4pt; line-height: 1.25; color: var(--muted); }
+.grp + .grp { margin-top: 2.2mm; }
+.grp > .lbl { display: block; margin-bottom: 1.2mm; color: var(--rec); }
+.tags { display: flex; flex-wrap: wrap; gap: 1.1mm; }
+.tags li { padding: 0.65mm 1.7mm; border: 0.25mm solid var(--line); border-radius: 5mm; font-size: 7pt; font-weight: 550; background: var(--card); white-space: nowrap; }
+.tags .hot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.plain li { padding: 1mm 0; border-bottom: 0.2mm solid var(--line); }
+.plain li:first-child { padding-top: 0; }
+.plain li:last-child { border: 0; padding-bottom: 0; }
+.plain b { display: block; font-weight: 650; }
+.plain small { font-size: 7pt; color: var(--muted); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 4mm; }
+.two li { border: 0; padding: 0; }
+
+/* main */
+.lead { padding: 3.2mm 4mm; background: var(--card); border: 0.25mm solid var(--line); border-left: 0.9mm solid var(--rec); border-radius: 1.4mm; font-size: 9pt; line-height: 1.42; font-weight: 450; }
+.lead em { font: italic 400 11pt/1 "Instrument Serif", serif; }
+.lead b { font-weight: 700; }
+.job { display: grid; grid-template-columns: 19mm 1fr; gap: 0 3mm; padding: 1.9mm 0; border-bottom: 0.2mm solid var(--line); }
+.job:first-of-type { padding-top: 0.2mm; }
+.job:last-child { border: 0; padding-bottom: 0; }
+.job time { font-stretch: 80%; font-weight: 700; font-size: 7.2pt; letter-spacing: 0.06em; color: var(--rec); text-transform: uppercase; padding-top: 0.5mm; }
+.job h3 { font-size: 8.8pt; font-weight: 750; line-height: 1.25; }
+.job h3 span { font-weight: 450; color: var(--muted); }
+.job ul { margin-top: 0.6mm; }
+.job li { position: relative; padding-left: 3.2mm; color: #2a2927; }
+.job li::before { content: ""; position: absolute; left: 0; top: 1.5mm; width: 1.3mm; height: 0.3mm; background: var(--rec); }
+.job li b { font-weight: 700; color: var(--ink); }
+.own { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6mm; }
+.own li { padding: 1.7mm 2.4mm; background: var(--card); border: 0.25mm solid var(--line); border-radius: 1.4mm; color: #2a2927; line-height: 1.3; }
+.own b { display: block; font-weight: 800; font-stretch: 112%; color: var(--ink); letter-spacing: 0.01em; }
+
+.foot { position: absolute; left: 12mm; right: 12mm; top: 287mm; display: flex; justify-content: space-between; padding-top: 2mm; border-top: 0.25mm solid var(--line); color: var(--muted); }
+.foot b { color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="head__top lbl"><i></i><b>On air</b> &nbsp;·&nbsp; Curriculum vitae &nbsp;·&nbsp; 2026</div>
+  <h1>Boško Kosić</h1>
+  <p class="role">Visual &amp; Motion Designer <b>Design · Motion · UI/UX · AI video</b></p>
+  <figure class="shot"><img src="photo.jpg" alt="Boško Kosić"><span><i></i>Available</span></figure>
+</header>
+<ul class="strip">
+  <li><span class="lbl">Portfolio</span><b><a href="https://bosko.trif.rs/">bosko.trif.rs</a></b></li>
+  <li><span class="lbl">Email</span><a href="mailto:boskokosic187@gmail.com">boskokosic187@gmail.com</a></li>
+  <li><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/">in/boško-kosić</a></li>
+  <li><span class="lbl">Based</span><span>Belgrade, Serbia · open worldwide</span></li>
+</ul>
+
+<div class="body">
+  <aside class="side">
+    <section>
+      <h2><span>01</span><em>In numbers</em></h2>
+      <ul class="nums">
+        <li><b>5<i>+</i></b><span>years in design &amp; motion</span></li>
+        <li><b>50<i>+</i></b><span>billboards live in Belgrade</span></li>
+        <li><b>15<i>+</i></b><span>brands &amp; studios</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2><span>02</span><em>What I do</em></h2>
+      <div class="grp"><span class="lbl">Design</span>
+        <ul class="tags"><li class="hot">Campaigns &amp; key visuals</li><li class="hot">UI/UX design</li><li>Brand systems</li><li>Billboards &amp; DOOH</li><li>Key art &amp; compositing</li><li>Social content at scale</li><li>Character design</li></ul></div>
+      <div class="grp"><span class="lbl">Motion &amp; AI</span>
+        <ul class="tags"><li class="hot">Motion design</li><li class="hot">AI video &amp; editing</li><li>2D animation</li><li>Video editing</li><li>AI image production</li></ul></div>
+      <div class="grp"><span class="lbl">Web</span>
+        <ul class="tags"><li class="hot">HTML &amp; CSS</li><li>JavaScript</li><li>Web design</li><li>Interactive prototypes</li></ul></div>
+    </section>
+    <section>
+      <h2><span>03</span><em>Toolkit</em></h2>
+      <ul class="tags">
+        <li>Photoshop</li><li>Illustrator</li><li>After Effects</li><li>Premiere Pro</li><li>InDesign</li><li>Figma</li><li>Midjourney</li><li>AI video tools</li><li>HTML / CSS / JS</li><li>Python</li><li>Blender (learning)</li>
+      </ul>
+    </section>
+    <section>
+      <h2><span>04</span><em>Education</em></h2>
+      <ul class="plain">
+        <li><b>Master’s, Digital Communication &amp; Multimedia</b><small>ITS Belgrade · in progress</small></li>
+        <li><b>B.Sc. Computer Multimedia Engineering</b><small>ITS Belgrade · 2022</small></li>
+      </ul>
+    </section>
+    <section>
+      <h2><span>05</span><em>Languages</em></h2>
+      <ul class="plain two">
+        <li><b>Serbian</b><small>Native</small></li>
+        <li><b>English</b><small>Professional</small></li>
+      </ul>
+    </section>
+  </aside>
+
+  <main>
+    <section>
+      <p class="lead">Designer who animates, <em>animator who designs.</em> Five-plus years of shipping work that has to perform: <b>campaigns, motion, UI/UX and AI video</b>, from a social post to a city billboard. I take an idea to every format it needs, and I can build it in HTML and CSS myself.</p>
+    </section>
+    <section>
+      <h2><span>06</span><em>Experience</em></h2>
+      <div class="job">
+        <time>2024 — now</time>
+        <div><h3>Campaign &amp; Motion Designer <span>· ITS · ITHS · FSU, Belgrade</span></h3>
+          <ul>
+            <li>Concept, design, animation and delivery of <b>50+ billboards and DOOH screens</b> across Belgrade, each shipped with its social, web and email set.</li>
+            <li>Enrolment campaigns for three schools at once: one message, three identities.</li>
+            <li>Art direction for the Faculty of Contemporary Arts: <b>30+ campaign, exhibition and event identities</b> in one academic year.</li>
+            <li>Content systems for social: <b>eight series, 330+ assets</b>, built so post 33 looks as considered as post 1.</li>
+          </ul></div>
+      </div>
+      <div class="job">
+        <time>2024 — now</time>
+        <div><h3>Teaching Assistant <span>· ITS, Information Technology School, Belgrade</span></h3>
+          <ul><li>Graphic Design and NFT Technology courses: practical classes, briefs and feedback on student work.</li></ul></div>
+      </div>
+      <div class="job">
+        <time>2023 — 2026</time>
+        <div><h3>Digital Artist <span>· Ballies, Web3 sports</span></h3>
+          <ul>
+            <li>Built a team of characters as a layered system for a <b>9,999-piece collection</b>.</li>
+            <li>Three years of launches, seasons and key art with the same cast, in still and motion.</li>
+          </ul></div>
+      </div>
+      <div class="job">
+        <time>Jun 2026</time>
+        <div><h3>Adobe Illustrator Expert, AI model training <span>· micro1</span></h3>
+          <ul><li>Expert vector work and evaluation used to train AI models.</li></ul></div>
+      </div>
+      <div class="job">
+        <time>2023</time>
+        <div><h3>Graphic Designer <span>· LINK Group</span></h3>
+          <ul><li>Campaign and social visuals for an education group with several schools.</li></ul></div>
+      </div>
+      <div class="job">
+        <time>2020 — now</time>
+        <div><h3>Freelance Visual &amp; Motion Designer <span>· brands and studios</span></h3>
+          <ul>
+            <li><b>Baby Boo</b>, natural cosmetics: <b>AI product films</b> and stills with no studio days, edited for Reels and TikTok, plus hand-drawn mascots cut into parts and animated.</li>
+            <li><b>UI/UX and web</b>: websites, apps and dashboards designed end to end and built as working HTML/CSS prototypes.</li>
+            <li>Also for BeClutch, Wall Street Games, ArmaBeton, Telegraf, KUN Podcast and others.</li>
+          </ul></div>
+      </div>
+    </section>
+    <section>
+      <h2><span>07</span><em>Self-initiated · live on bosko.trif.rs</em></h2>
+      <ul class="own">
+        <li><b>DEAD AIR</b>AI film: written, designed, directed and edited</li>
+        <li><b>HALFCOURT</b>Broadcast identity for a street-basketball tour</li>
+        <li><b>ACCORD</b>Fragrance identity, from bottle to billboard</li>
+        <li><b>The portfolio itself</b>Designed, animated and coded in HTML, CSS, JS</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer class="foot lbl"><span><b>Boško Kosić</b> · Visual &amp; Motion Designer</span><span>Full portfolio and showreel: <b><a href="https://bosko.trif.rs/">bosko.trif.rs</a></b></span></footer>
+</body>
+</html>
