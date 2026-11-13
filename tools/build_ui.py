@@ -16,7 +16,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "tools", "ui")
 BOSQO = "D:/Desktop/Production Visuals/BOSQO"
-SLUGS = ["accord", "halfcourt", "tabla", "umbra"]
+SLUGS = ["accord", "halfcourt", "tabla", "umbra", "apsis"]
 
 
 def read(name):
