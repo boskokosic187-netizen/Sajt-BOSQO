@@ -46,6 +46,8 @@ def media():
         "ACCORD/07_Izvor/accord/fonts/Zodiak-Variable.woff2": "Zodiak-Variable.woff2",
         "ACCORD/07_Izvor/accord/fonts/Zodiak-VariableItalic.woff2": "Zodiak-VariableItalic.woff2",
         "HALFCOURT/07_Izvor/fonts/Panchang-Bold.woff2": "Panchang-Bold.woff2",
+        "APSIS/07_Izvor/fonts/Nippo-Variable.woff2": "Nippo-Variable.woff2",
+        "APSIS/07_Izvor/fonts/Satoshi-Variable.woff2": "Satoshi-Variable.woff2",
     }
     for a, b in fonts.items():
         shutil.copyfile(os.path.join(BOSQO, a), os.path.join(M, "fonts", b))

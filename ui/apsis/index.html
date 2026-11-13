@@ -7,7 +7,8 @@
 <meta name="robots" content="noindex">
 <meta name="description" content="Concept project, not a real product: APSIS, a sportsbook where your limit is part of the interface. Demo credits only, no real-money gambling. UI/UX design by Boško Kosić.">
 <link rel="icon" href="../../favicon.ico" sizes="any">
-<link rel="preload" href="../../media/ui/fonts/Switzer-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../media/ui/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../media/ui/fonts/Nippo-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;background:var(--back,#0a0a0b);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -22,12 +23,13 @@ ul,ol{list-style:none}
 .no-scrollbar{scrollbar-width:none}.no-scrollbar::-webkit-scrollbar{display:none}
 </style>
 <style>
-@font-face{font-family:Switzer;src:url(../../media/ui/fonts/Switzer-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:Satoshi;src:url(../../media/ui/fonts/Satoshi-Variable.woff2) format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:Nippo;src:url(../../media/ui/fonts/Nippo-Variable.woff2) format("woff2");font-weight:200 700;font-display:swap}
 /* tokens: every colour, face and radius of the product is named here and nowhere else */
 :root{--back:#03041a;--bg:#060827;--s1:#0C1038;--s2:#141A4E;--s3:#1D2566;--line:rgba(214,220,255,.12);--line2:rgba(214,220,255,.26);
 --tx:#F4F5FF;--mut:#AEB3DE;--dim:#7C82B8;--act:#FF5CB8;--ink:#1A0420;--live:#8FE3FF;--ok:#6DF2B0;--warn:#FFD166;
 --pearl:conic-gradient(from 210deg,#FF5CB8,#C9B8FF,#8FE3FF,#F4F5FF,#C9B8FF,#FF5CB8);
---fd:Switzer,system-ui,sans-serif;--fu:Switzer,system-ui,sans-serif;--out:cubic-bezier(.2,.8,.2,1);--r:14px;--r2:22px}
+--fd:Nippo,Satoshi,system-ui,sans-serif;--fu:Satoshi,system-ui,sans-serif;--out:cubic-bezier(.2,.8,.2,1);--r:14px;--r2:22px}
 /* ?wire: the same screens as wireframes (structure only), for the case study */
 .wire{--back:#fff;--bg:#fff;--s1:#f2f2f4;--s2:#e4e4e9;--s3:#d2d2d9;--line:rgba(0,0,0,.16);--line2:rgba(0,0,0,.34);--tx:#17171a;--mut:#4f4f58;--dim:#6c6c75;--act:#17171a;--ink:#fff;--live:#17171a;--ok:#17171a;--warn:#17171a;--pearl:conic-gradient(#8a8a92,#8a8a92)}
 .wire .art{display:none}
@@ -42,7 +44,8 @@ svg.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;str
 /* ---- shell ---- */
 .app{position:relative;display:grid;height:100%;grid-template:64px minmax(0,1fr)/224px minmax(0,1fr) 384px;grid-template-areas:"top top top" "rail main slip"}
 .top{grid-area:top;display:flex;align-items:center;gap:14px;padding:0 20px;border-bottom:1px solid var(--line);background:var(--bg);z-index:3}
-.brand{display:flex;align-items:center;gap:10px;font:700 19px/1 var(--fd);letter-spacing:.08em;min-height:44px}
+.brand{display:flex;align-items:center;gap:10px;min-height:44px}
+.wm{height:15px;width:auto}
 .mark{width:26px;height:26px;border-radius:50%;background:var(--pearl);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4.5px),#000 calc(100% - 3.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 4.5px),#000 calc(100% - 3.5px));position:relative}
 .pill{display:flex;align-items:center;gap:8px;height:28px;padding:0 12px;border-radius:14px;border:1px solid var(--line2);font-size:12px;color:var(--mut);white-space:nowrap}
 .sp{flex:1}
@@ -75,8 +78,8 @@ svg.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;str
 .view{display:none;max-width:1040px;margin:0 auto}
 .view.on{display:block;animation:in .35s var(--out)}
 @keyframes in{0%{opacity:0;transform:translateY(8px)}}
-h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
-.h2{font:700 18px/1.2 var(--fd);margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+h1,.h1{font:500 30px/1.08 var(--fd);letter-spacing:.005em}
+.h2{font:500 18px/1.2 var(--fd);margin:28px 0 12px;display:flex;align-items:center;gap:10px}
 .sub{color:var(--mut);margin-top:6px;max-width:60ch}
 .disc{max-width:1040px;margin:32px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mut)}
 
@@ -120,10 +123,10 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 .game{position:relative;overflow:hidden;min-height:118px;border-radius:var(--r2);background:var(--s1);padding:14px;display:grid;align-content:end;gap:4px;text-align:left}
 .game:hover{background:var(--s2)}
 .game .art{position:absolute;right:-34px;top:-34px;width:110px;height:110px;border-radius:50%;border:1.5px solid var(--line2)}
-.game b{font:700 15px/1.2 var(--fd)}
+.game b{font:500 15px/1.2 var(--fd)}
 .game span{font-size:12px;color:var(--mut)}
 .state{border-radius:var(--r2);border:1px dashed var(--line2);padding:36px 24px;text-align:center;display:grid;justify-items:center;gap:8px}
-.state b{font:700 17px/1.2 var(--fd)}
+.state b{font:500 17px/1.2 var(--fd)}
 .state p{color:var(--mut);max-width:44ch}
 .btn{min-height:44px;padding:0 18px;border-radius:var(--r);background:var(--s3);font-weight:600;margin-top:8px}
 .btn:hover{background:var(--line2)}
@@ -138,8 +141,8 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 .back{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px 0 6px;margin:-8px 0 8px -6px;border-radius:var(--r);color:var(--mut);font-weight:600}
 .back:hover{color:var(--tx)}
 .score{border-radius:var(--r2);background:var(--s1);padding:22px 24px;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;text-align:center}
-.score p{font:700 20px/1.15 var(--fd)}
-.score .n{font:700 46px/1 var(--fd);letter-spacing:-.02em}
+.score p{font:500 20px/1.15 var(--fd)}
+.score .n{font:500 46px/1 var(--fd)}
 .score .mid{display:grid;gap:8px;justify-items:center}
 .mks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
 .mk{border-radius:var(--r2);background:var(--s1);padding:14px}
@@ -149,7 +152,7 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 /* ---- slip ---- */
 .slip{grid-area:slip;display:flex;flex-direction:column;border-left:1px solid var(--line);background:var(--bg);min-height:0;z-index:5}
 .slip__h{display:flex;align-items:center;gap:8px;padding:14px 12px 10px 20px}
-.slip__h h2{font:700 18px/1 var(--fd);display:flex;gap:8px;align-items:center;flex:1}
+.slip__h h2{font:500 18px/1 var(--fd);display:flex;gap:8px;align-items:center;flex:1}
 .lnk{min-height:44px;padding:0 10px;color:var(--mut);font-weight:600;font-size:13px;border-radius:10px}
 .lnk:hover{color:var(--tx)}
 .x{width:44px;height:44px;border-radius:var(--r);display:none;place-content:center;color:var(--mut)}
@@ -170,7 +173,7 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 .leg.off{opacity:.6}
 .empty{flex:1;display:grid;place-content:center;justify-items:center;text-align:center;gap:8px;padding:24px 8px;color:var(--mut)}
 .empty i{width:76px;height:76px;border-radius:50%;border:1.5px dashed var(--line2);margin-bottom:8px}
-.empty b{color:var(--tx);font:700 16px/1.2 var(--fd)}
+.empty b{color:var(--tx);font:500 16px/1.2 var(--fd)}
 .stake label{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
 .stake label span{color:var(--mut);font-weight:500}
 .inp{display:flex;align-items:center;height:52px;border-radius:var(--r);background:var(--s1);box-shadow:inset 0 0 0 1px var(--line2);padding:0 14px}
@@ -206,7 +209,7 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 .rcpt .okr circle{fill:none;stroke:var(--ok);stroke-width:3;stroke-dasharray:201;stroke-dashoffset:201;animation:close .7s var(--out) forwards}
 .rcpt .okr path{fill:none;stroke:var(--ok);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 @keyframes close{to{stroke-dashoffset:0}}
-.rcpt h3{font:700 22px/1.15 var(--fd);text-align:center}
+.rcpt h3{font:500 22px/1.15 var(--fd);text-align:center}
 .rcpt p{color:var(--mut);text-align:center}
 .rcpt .sum{margin-top:auto;padding:14px;border-radius:var(--r);background:var(--s1)}
 .rcpt .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -244,12 +247,12 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 .orbit .ring{width:148px;height:148px}
 .orbit .ring circle{stroke-width:3.2}
 .orbit .pct{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
-.orbit .pct b{font:700 34px/1 var(--fd)}
+.orbit .pct b{font:500 34px/1 var(--fd)}
 .orbit .pct small{font-size:11.5px;color:var(--mut)}
-.orbit h2{font:700 20px/1.2 var(--fd)}
+.orbit h2{font:500 20px/1.2 var(--fd)}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
 .panel{border-radius:var(--r2);background:var(--s1);padding:18px 20px;display:grid;gap:10px;align-content:start}
-.panel h3{font:700 16px/1.2 var(--fd)}
+.panel h3{font:500 16px/1.2 var(--fd)}
 .panel p{color:var(--mut);font-size:13.5px}
 .opts{display:flex;gap:6px;flex-wrap:wrap}
 .opts button{min-height:44px;min-width:64px;padding:0 14px;border-radius:var(--r);background:var(--s2);font-weight:600}
@@ -267,7 +270,7 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 .app.slip-open .scrim,.app.dlg-open .scrim{opacity:1;pointer-events:auto}
 .app.dlg-open .scrim{z-index:8}
 .dlg{position:absolute;left:50%;top:50%;width:min(440px,calc(100% - 32px));transform:translate(-50%,-50%);border-radius:var(--r2);background:var(--s1);box-shadow:0 0 0 1px var(--line2),0 30px 80px rgba(0,0,0,.5);padding:24px;display:grid;gap:12px;z-index:9;animation:in .3s var(--out)}
-.dlg h2{font:700 21px/1.2 var(--fd)}
+.dlg h2{font:500 21px/1.2 var(--fd)}
 .dlg p{color:var(--mut)}
 .dlg .row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
 .dlg .btn{margin:0;min-height:48px}
@@ -332,7 +335,7 @@ h1,.h1{font:700 30px/1.05 var(--fd);letter-spacing:-.01em}
 <div id="fit">
 <div class="app" id="app">
   <header class="top">
-    <a class="brand" href="#/lobby" aria-label="APSIS, lobby"><i class="mark" aria-hidden="true"></i>APSIS</a>
+    <a class="brand" href="#/lobby" aria-label="APSIS, lobby"><i class="mark" aria-hidden="true"></i><svg class="wm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2790 696" role="img" aria-label="APSIS" fill="currentColor"><path fill-rule="evenodd" d="M148 696V577L164 529H420L436 577V696H584V560L393 0H191L0 561V696ZM292 122 390 408H194Z M860 696V479H1108L1224 362V87L1137 0H712V696ZM866.5 242.5a102.0 102.0 0 1 0 204.0 0a102.0 102.0 0 1 0 -204.0 0Z M1754 696 1841 608V375L1754 287H1487V121H1692V216H1836V87L1748 0H1430L1343 87V321L1430 408H1697V575H1484V487H1340V608L1428 696Z M1991 696H2139V0H1991Z M2703 696 2790 608V375L2703 287H2436V121H2641V216H2785V87L2697 0H2379L2292 87V321L2379 408H2646V575H2433V487H2289V608L2377 696Z"/></svg></a>
     <p class="pill" title="Concept project — not a real product. No real-money gambling."><b>Concept</b><span>· demo credits only</span></p>
     <i class="sp"></i>
     <button class="tbtn" id="b-states" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Prototype states"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span>States</span></button>
