@@ -80,6 +80,7 @@ def media():
         webp(f"APSIS/00_Ulaz/{src}.webp", f"apsis/{name}.webp", box, 320, 78)
     webp("APSIS/00_Ulaz/04_bg_orbits.webp", "apsis/orbits.webp", None, 1100, 72)
     webp("APSIS/00_Ulaz/05_coin.webp", "apsis/coin.webp", (90, 150, 930, 990), 360, 80)
+    webp("APSIS/07_Izvor/case/lobby_d.png", "apsis/poster.webp", None, 1440)   # the still under the live page in Interfaces
     from PIL import ImageDraw
     for src, name, box in (("08_ball_football", "football", (112, 96, 928, 912)), ("08_ball_basketball", "basketball", (162, 166, 858, 862)), ("08_ball_tennis", "tennis", (152, 146, 870, 864))):
         im = Image.open(os.path.join(BOSQO, f"APSIS/00_Ulaz/{src}.webp")).convert("RGB").crop(box).resize((384, 384), Image.LANCZOS)

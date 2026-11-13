@@ -3726,6 +3726,8 @@ html.js .ux:not(.is-near) *, html.js .ux:not(.is-near) *::before, html.js .ux:no
   font-weight: 600; font-size: 14px; transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.4s var(--out);
 }
 .ux__open:hover, .ux__open:focus-visible { background: var(--text); color: var(--bg); border-color: var(--text); transform: translateY(-2px); }
+.ux__links { display: flex; flex-wrap: wrap; gap: 10px; }
+.ux__open--case { background: var(--c); border-color: var(--c); color: #0a0a0b; }
 
 /* the stage */
 .ux__stage {

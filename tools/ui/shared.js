@@ -13,7 +13,7 @@ const UI = (() => {
     const vw = rootEl.clientWidth, vh = rootEl.clientHeight;   // not innerWidth: a phone widens that to fit what overflows
     const turn = !embed && W > H && vh > vw * 1.2;
     scale = turn ? Math.min(vh / W, vw / H, MAX) : Math.min(vw / W, vh / H, MAX);
-    fit.style.setProperty('--s', scale.toFixed(5)); fit.style.setProperty('--r', turn ? '90deg' : '0deg');
+    fit.style.setProperty('--s', scale.toFixed(5)); fit.style.setProperty('--rot', turn ? '90deg' : '0deg');
     rootEl.classList.toggle('is-tight', turn || vh - H * scale < 70);
   };
   size(); addEventListener('resize', size);
