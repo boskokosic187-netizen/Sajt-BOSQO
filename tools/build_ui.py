@@ -72,6 +72,22 @@ def media():
                       ("media/cases/live-on-the-streets/e945b2e5", "its"), ("media/loops/its-future", "future")):
         for ext in (".mp4", ".webp"):
             shutil.copyfile(os.path.join(ROOT, src + ext), os.path.join(M, "tabla", name + ext))
+    # APSIS: the plates of the prototype. Nothing is made wider than its source (1456 px plates).
+    os.makedirs(os.path.join(M, "apsis"), exist_ok=True)
+    webp("APSIS/00_Ulaz/03_hero_player.webp", "apsis/hero.webp", (0, 96, 1456, 720), 1456, 80)
+    for src, name, box in (("06_trophy", "g-wheel", (150, 180, 810, 840)), ("05_coin", "g-dice", (90, 150, 930, 990)),
+                           ("07_ticket", "g-hilo", (120, 150, 900, 930)), ("06_trophy_alt_ring", "g-halo", (130, 220, 830, 920))):
+        webp(f"APSIS/00_Ulaz/{src}.webp", f"apsis/{name}.webp", box, 320, 78)
+    webp("APSIS/00_Ulaz/04_bg_orbits.webp", "apsis/orbits.webp", None, 1100, 72)
+    webp("APSIS/00_Ulaz/05_coin.webp", "apsis/coin.webp", (90, 150, 930, 990), 360, 80)
+    from PIL import ImageDraw
+    for src, name, box in (("08_ball_football", "football", (112, 96, 928, 912)), ("08_ball_basketball", "basketball", (162, 166, 858, 862)), ("08_ball_tennis", "tennis", (152, 146, 870, 864))):
+        im = Image.open(os.path.join(BOSQO, f"APSIS/00_Ulaz/{src}.webp")).convert("RGB").crop(box).resize((384, 384), Image.LANCZOS)
+        mask = Image.new("L", (384, 384), 0)
+        ImageDraw.Draw(mask).ellipse((6, 6, 378, 378), fill=255)   # the ball itself, cut on its own outline
+        im = im.resize((96, 96), Image.LANCZOS); im.putalpha(mask.resize((96, 96), Image.LANCZOS))
+        im.save(os.path.join(M, "apsis", f"b-{name}.webp"), "WEBP", quality=84, method=6)
+        print(f"apsis/b-{name}.webp", im.size)
     svg = io.open(os.path.join(BOSQO, "ACCORD/03_Logo/ACCORD_wordmark_transparent.svg"), encoding="utf-8").read()
     svg = re.sub(r' width="\d+" height="\d+"', "", svg).replace('fill="#0D0C10"', 'fill="currentColor"').replace("<svg ", '<svg class="wm" aria-label="ACCORD" role="img" ')
     io.open(os.path.join(SRC, "accord-wordmark.svg"), "w", encoding="utf-8").write(svg)
