@@ -895,3 +895,160 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
   .mint__ring { opacity: 0; }
   .mint__tick.is-on i::after { animation: none; transform: none; }
 }
+
+/* ==========================================================================
+   UX CASE STUDY (tools/build_cases.py: render_ux; work/apsis)
+   The site's own look; the product's colours and faces only where the product is shown
+   (the design-system panel).
+   ========================================================================== */
+@font-face { font-family: Satoshi; src: url(../media/ui/fonts/Satoshi-Variable.woff2) format("woff2"); font-weight: 300 900; font-display: swap; }
+@font-face { font-family: Nippo; src: url(../media/ui/fonts/Nippo-Variable.woff2) format("woff2"); font-weight: 200 700; font-display: swap; }
+
+.uxc-meta { grid-template-columns: 1.5fr 0.9fr 1fr 1fr; }
+.uxc-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 32px; }
+.uxc-disc { max-width: 52ch; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.uxc-disc::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 9px; border-radius: 50%; background: var(--sig); vertical-align: 1px; }
+
+.uxc-sec { padding: clamp(56px, 10vh, 120px) var(--pad) 0; }
+.uxc-k { margin-bottom: 12px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+.uxc-lead { max-width: 62ch; margin-top: 26px; font-size: clamp(18px, 1.35vw, 23px); line-height: 1.45; text-wrap: pretty; }
+
+/* 01 problem & goal */
+.uxc-pg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); margin-top: 30px; }
+.uxc-pg p { font-size: clamp(18px, 1.35vw, 23px); line-height: 1.4; text-wrap: pretty; }
+.uxc-goal p { color: var(--text); font-weight: 600; }
+.uxc-goal .uxc-k { color: var(--rec); }
+.uxc-measures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); margin-top: clamp(36px, 6vh, 64px); }
+.uxc-measures li { display: grid; align-content: start; gap: 10px; padding: 22px 22px 24px; border: 1px solid var(--line); border-radius: 6px; }
+.uxc-measures b { color: var(--rec); font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 3.4vw, 60px); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.uxc-measures span { color: var(--muted); font-size: 15px; line-height: 1.4; }
+
+/* 02 research, 03 users */
+.uxc-grid { display: grid; gap: var(--gap); margin-top: 30px; }
+.uxc-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.uxc-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.uxc-card { display: grid; align-content: start; gap: 14px; padding: clamp(22px, 2vw, 34px); border: 1px solid var(--line); border-radius: 6px; background: rgba(242, 239, 234, 0.02); }
+.uxc-card h3 { font-weight: 700; font-size: clamp(22px, 1.8vw, 32px); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+.uxc-card p { color: rgba(242, 239, 234, 0.78); font-size: 16px; line-height: 1.55; text-wrap: pretty; }
+.uxc-card .uxc-tag { justify-self: start; padding: 5px 9px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11px; line-height: 1.2; letter-spacing: 0.08em; text-transform: uppercase; }
+.uxc-card.is-assume { border-style: dashed; border-color: var(--line-2); }
+.uxc-card.is-assume .uxc-tag, .uxc-persona .uxc-tag { border-color: var(--sig); color: var(--sig); }
+.uxc-persona blockquote { font-family: var(--f-serif); font-style: italic; font-size: clamp(20px, 1.5vw, 26px); line-height: 1.25; }
+.uxc-persona p b { display: block; margin-bottom: 4px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* 04 flow & IA */
+.uxc-fl { display: grid; grid-template-columns: minmax(240px, 0.32fr) minmax(0, 1fr); gap: clamp(24px, 3.5vw, 64px); align-items: start; margin-top: clamp(30px, 5vh, 56px); }
+.uxc-fl__t h3 { font-weight: 700; font-size: clamp(24px, 2.2vw, 38px); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+.uxc-fl__t p { margin-top: 14px; color: rgba(242, 239, 234, 0.78); font-size: 16px; line-height: 1.55; }
+.uxc-svg { overflow-x: auto; border-radius: 10px; scrollbar-width: thin; }
+.uxc-svg svg { display: block; width: 100%; min-width: 900px; max-width: 1600px; height: auto; }
+.uxc-svg:focus-visible, .uxc-tbl:focus-visible { outline: 2px solid var(--sig); outline-offset: 3px; }
+
+/* 05 wireframe -> final */
+.uxc-why { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
+.uxc-why b { color: var(--rec); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+.uxc-why ul { display: grid; gap: 10px; margin-top: 10px; }
+.uxc-why li { position: relative; padding-left: 18px; color: rgba(242, 239, 234, 0.82); font-size: 15.5px; line-height: 1.5; }
+.uxc-why li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 8px; height: 1px; background: var(--rec); }
+.uxc-pair { display: flex; gap: var(--gap); align-items: flex-start; }
+.uxc-pair > div { flex: var(--ar) 1 0%; min-width: 0; }
+.uxc-bd { margin-top: 0; width: 100%; }
+.uxc-pair__m .bd__label { top: 10px; padding: 4px 6px; font-size: 10px; }
+.uxc-pair__m .bd__label--l { left: 8px; }
+.uxc-pair__m .bd__label--r { right: 8px; }
+.uxc-cap { margin-top: 9px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* 06 design system: the product's own colours and faces, on its own night */
+.uxc-ds { display: grid; grid-template-columns: 0.9fr 1.3fr 1fr; gap: var(--gap); margin-top: 30px; }
+.uxc-ds__col { padding: clamp(20px, 2vw, 32px); border-radius: 10px; background: #060827; color: #F4F5FF; }
+.uxc-ds__col .uxc-k { color: #AEB3DE; }
+.uxc-ds__col .uxc-k ~ .uxc-k { margin-top: 30px; }
+.uxc-sws { display: grid; gap: 10px; }
+.uxc-sws li { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 12px; align-items: center; }
+.uxc-sw { grid-row: span 2; width: 38px; height: 38px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(214, 220, 255, 0.18); }
+.uxc-sws b { font-family: Satoshi, sans-serif; font-weight: 600; font-size: 15px; }
+.uxc-sws code { font-family: Satoshi, sans-serif; font-size: 13px; color: #AEB3DE; font-variant-numeric: tabular-nums; }
+.uxc-sws small { grid-column: 2 / -1; color: #7C82B8; font-size: 13px; }
+.uxc-spec { padding-bottom: 6px; }
+.uxc-spec__a { font-family: Nippo, sans-serif; font-weight: 600; font-size: clamp(30px, 2.6vw, 46px); line-height: 1; letter-spacing: -0.01em; }
+.uxc-spec__b { margin-top: 18px; font-family: Satoshi, sans-serif; font-weight: 600; font-size: clamp(20px, 1.6vw, 28px); font-variant-numeric: tabular-nums; }
+.uxc-spec__n { margin-top: 8px; color: #AEB3DE; font-family: Satoshi, sans-serif; font-size: 13.5px; }
+.uxc-odds { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.uxc-odds p { margin-top: 7px; color: #AEB3DE; font-family: Satoshi, sans-serif; font-size: 12px; text-align: center; }
+.uxc-od {
+  position: relative; display: grid; align-content: center; justify-items: center; gap: 1px; height: 52px; padding: 0 6px; border-radius: 12px;
+  background: #141A4E; color: #F4F5FF; font-family: Satoshi, sans-serif; font-variant-numeric: tabular-nums;
+}
+.uxc-od small { font-size: 11.5px; font-weight: 600; color: #AEB3DE; }
+.uxc-od b { font-size: 16px; font-weight: 600; line-height: 1.15; }
+.uxc-od.sel { background: #FF5CB8; color: #1A0420; }
+.uxc-od.sel small { color: rgba(26, 4, 32, 0.78); }
+.uxc-od::after { content: ""; position: absolute; right: 7px; top: 8px; border: 5px solid transparent; opacity: 0; }
+.uxc-od.up::after { border-bottom-color: #6DF2B0; border-top-width: 0; opacity: 1; }
+.uxc-od.dn::after { border-top-color: #FFD166; border-bottom-width: 0; opacity: 1; }
+.uxc-od.up, .uxc-od.dn { box-shadow: inset 0 0 0 1.5px rgba(214, 220, 255, 0.26); }
+.uxc-od.sus { background: transparent; box-shadow: inset 0 0 0 1px rgba(214, 220, 255, 0.12); color: #7C82B8; }
+.uxc-od.sus small { color: #7C82B8; }
+.uxc-note2 { margin-top: 18px; color: #AEB3DE; font-family: Satoshi, sans-serif; font-size: 14px; line-height: 1.5; }
+.uxc-ctr { display: grid; gap: 10px; }
+.uxc-ctr li { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 12px; align-items: center; font-family: Satoshi, sans-serif; }
+.uxc-aa { grid-row: span 2; display: grid; place-items: center; height: 40px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(214, 220, 255, 0.14); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+.uxc-ctr li > span:nth-child(2) { color: #AEB3DE; font-size: 13.5px; }
+.uxc-ctr b { grid-column: 2; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.uxc-ctr em { grid-column: 3; grid-row: 1 / span 2; padding: 3px 8px; border-radius: 999px; background: rgba(109, 242, 176, 0.14); color: #6DF2B0; font: normal 600 12px/1.3 Satoshi, sans-serif; }
+
+/* 07 responsible play */
+.uxc-rps { grid-template-columns: repeat(6, minmax(0, 1fr)); max-width: calc(6 * 390px + 5 * var(--gap)); }
+.uxc-rp figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.uxc-rp figcaption b { display: block; margin-bottom: 4px; color: var(--text); font-size: 15.5px; font-weight: 700; }
+.uxc-rp .g-open { border-radius: 10px; }
+
+/* 08 test plan */
+.uxc-tbl { margin-top: 30px; overflow-x: auto; }
+.uxc-tbl table { width: 100%; min-width: 560px; border-collapse: collapse; }
+.uxc-tbl th { padding: 0 16px 12px 0; border-bottom: 1px solid var(--line-2); color: var(--muted); text-align: left; font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+.uxc-tbl td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); font-size: clamp(16px, 1.15vw, 19px); line-height: 1.4; vertical-align: top; }
+.uxc-tbl td:first-child { width: 3.2em; color: var(--rec); font-variant-numeric: tabular-nums; }
+.uxc-tbl td:last-child { width: 40%; color: rgba(242, 239, 234, 0.78); }
+
+/* 09 result, 10 next time */
+.uxc-result { margin-top: clamp(56px, 10vh, 120px); }
+.uxc-try {
+  display: inline-flex; align-items: baseline; gap: 0.3em; margin-top: 26px; color: var(--rec);
+  font-weight: 900; font-stretch: 112%; font-size: clamp(44px, 7.4vw, 136px); line-height: 0.92; letter-spacing: -0.04em;
+  transition: color 0.25s;
+}
+.uxc-try span { transition: transform 0.4s var(--out); }
+.uxc-try:hover { color: var(--text); }
+.uxc-try:hover span { transform: translateX(0.12em); }
+.uxc-try:focus-visible { outline: 2px solid var(--sig); outline-offset: 6px; border-radius: 4px; }
+.uxc-mocks { margin-top: 40px; }
+.uxc-diff__h { grid-column: 1 / -1; }
+
+@media (max-width: 1279px) {
+  .uxc-ds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .uxc-ds__col:nth-child(2) { grid-column: 1 / -1; grid-row: 1; }
+}
+@media (max-width: 1023px) {
+  .uxc-meta { grid-template-columns: 1fr 1fr; }
+  .uxc-pg, .uxc-grid--3 { grid-template-columns: minmax(0, 1fr); }
+  .uxc-measures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .uxc-fl { grid-template-columns: minmax(0, 1fr); }
+  .uxc-rps { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 900px; }
+}
+@media (max-width: 767px) {
+  .uxc-meta > div:last-child { grid-column: auto; }
+  .uxc-grid--2 { grid-template-columns: minmax(0, 1fr); }
+  .uxc-measures li { padding: 16px; }
+  .uxc-pair { flex-wrap: wrap; }
+  .uxc-pair > .uxc-pair__d { flex: 1 1 100%; }
+  .uxc-pair > .uxc-pair__m { flex: 0 0 62%; margin-inline: auto; }
+  .uxc-ds { grid-template-columns: minmax(0, 1fr); }
+  .uxc-ds__col:nth-child(2) { grid-row: auto; }
+  .uxc-odds { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .uxc-rps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .uxc-cta .btn { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .uxc-try, .uxc-try span { transition: none; }
+}

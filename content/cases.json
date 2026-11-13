@@ -896,6 +896,432 @@
         "base": "media/labs/mascots/",
         "rig": "media/labs/mascots/rig.json"
       }
+    },
+    {
+      "slug": "apsis",
+      "format": "ux",
+      "title": "APSIS",
+      "kicker": "UX case study · Concept · 2026",
+      "line": "Live betting apps move the odds under your thumb, show the win before the risk and hide the limits. APSIS fixes all three inside the bet flow.",
+      "disclaimer": "Concept project — not a real product. No real-money gambling. Teams, players and odds are fictional; demo credits only.",
+      "meta": [
+        [
+          "Role",
+          "UX research, flows, UI design, design system, live prototype"
+        ],
+        [
+          "Duration",
+          "Concept sprint · 2026"
+        ],
+        [
+          "Platform",
+          "Web · desktop, tablet, phone"
+        ],
+        [
+          "Status",
+          "Concept, not a real product"
+        ]
+      ],
+      "skills": [
+        "UX research",
+        "Flows & IA",
+        "UI design",
+        "Design system",
+        "Prototyping"
+      ],
+      "prototype": "ui/apsis/",
+      "hero": [
+        {
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/match_uw.png",
+          "type": "image",
+          "label": "APSIS on a wide screen: a live match with the bet slip open"
+        }
+      ],
+      "og": "lobby_d",
+      "ux": [
+        {
+          "id": "lobby_d_wire",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/lobby_d_wire.png",
+          "type": "image",
+          "label": "Lobby, wireframe"
+        },
+        {
+          "id": "lobby_d",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/lobby_d.png",
+          "type": "image",
+          "label": "Lobby, final"
+        },
+        {
+          "id": "lobby_m_wire",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/lobby_m_wire.png",
+          "type": "image",
+          "label": "Lobby on a phone, wireframe"
+        },
+        {
+          "id": "lobby_m",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/lobby_m.png",
+          "type": "image",
+          "label": "Lobby on a phone, final"
+        },
+        {
+          "id": "match_d_wire",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/match_d_wire.png",
+          "type": "image",
+          "label": "Match with the bet slip, wireframe"
+        },
+        {
+          "id": "match_d",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/match_d.png",
+          "type": "image",
+          "label": "Match with the bet slip, final"
+        },
+        {
+          "id": "slip_m_wire",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/slip_m_wire.png",
+          "type": "image",
+          "label": "Bet slip on a phone, wireframe"
+        },
+        {
+          "id": "slip_m",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/slip_m.png",
+          "type": "image",
+          "label": "Bet slip on a phone, final"
+        },
+        {
+          "id": "limits_d_wire",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/limits_d_wire.png",
+          "type": "image",
+          "label": "Limits, wireframe"
+        },
+        {
+          "id": "limits_d",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/limits_d.png",
+          "type": "image",
+          "label": "Limits, final"
+        },
+        {
+          "id": "limits_m_wire",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/limits_m_wire.png",
+          "type": "image",
+          "label": "Limits on a phone, wireframe"
+        },
+        {
+          "id": "limits_m",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/limits_m.png",
+          "type": "image",
+          "label": "Limits on a phone, final"
+        },
+        {
+          "id": "state_chg",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/state_chg.png",
+          "type": "image",
+          "label": "Odds changed before the tap counted"
+        },
+        {
+          "id": "state_sus",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/state_sus.png",
+          "type": "image",
+          "label": "Market suspended"
+        },
+        {
+          "id": "state_lim",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/state_lim.png",
+          "type": "image",
+          "label": "Over today's limit"
+        },
+        {
+          "id": "state_rc",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/state_rc.png",
+          "type": "image",
+          "label": "Reality check"
+        },
+        {
+          "id": "bets_m",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/bets_m.png",
+          "type": "image",
+          "label": "My bets"
+        },
+        {
+          "id": "wallet_d",
+          "src": "PV/BOSQO/APSIS/07_Izvor/case/wallet_d.png",
+          "type": "image",
+          "label": "Wallet with demo credits"
+        },
+        {
+          "id": "mock_laptop",
+          "src": "PV/BOSQO/APSIS/04_Mockupi/APSIS_mock_laptop.jpg",
+          "type": "image",
+          "label": "APSIS lobby on a laptop"
+        },
+        {
+          "id": "mock_desk",
+          "src": "PV/BOSQO/APSIS/04_Mockupi/APSIS_mock_desk.jpg",
+          "type": "image",
+          "label": "Match on a wide screen, bet slip on the phone"
+        },
+        {
+          "id": "mock_phone",
+          "src": "PV/BOSQO/APSIS/04_Mockupi/APSIS_mock_phone_hand.jpg",
+          "type": "image",
+          "label": "APSIS lobby in the hand"
+        }
+      ],
+      "problem": {
+        "who": "People who bet on live matches from a phone: one hand, short bursts, attention split with the game.",
+        "today": "Odds refresh while the thumb is on its way, so the tap lands on a price nobody read. The slip shows the possible win in big type and the stake in small. Limits and breaks live four screens deep in settings, far from the money.",
+        "goal": "A bet in three taps that never lands at an unseen price, with the risk as loud as the win and the limits one tap from the balance.",
+        "measures_note": "Targets for a usability test, not results",
+        "measures": [
+          [
+            "≤ 3 taps",
+            "from odds to a placed single"
+          ],
+          [
+            "0",
+            "bets placed at odds the user did not see"
+          ],
+          [
+            "1 tap",
+            "from the balance to Limits"
+          ],
+          [
+            "AA",
+            "contrast on every number, on every screen"
+          ]
+        ]
+      },
+      "research": {
+        "note": "No interviews or usability tests were run for this concept. What follows is a heuristic review against Nielsen's ten heuristics, of patterns that live-betting interfaces commonly use, plus one assumption of my own. Each insight says which it is.",
+        "insights": [
+          {
+            "tag": "Heuristic review · error prevention",
+            "title": "The odds jump under the thumb",
+            "text": "Live prices refresh several times a minute and cells reflow when markets open or close. A tap meant for 1.85 can land on 1.67, or on the next market."
+          },
+          {
+            "tag": "Heuristic review · match with the real world",
+            "title": "The win is loud, the risk is small",
+            "text": "Possible returns get the biggest type on the slip; the stake, the amount you can actually lose, is a grey label beside the input."
+          },
+          {
+            "tag": "Heuristic review · user control",
+            "title": "Limits are four screens deep",
+            "text": "Deposit and time limits sit under Account, Settings, Responsible gambling, so the tools exist but are not where the decision is made."
+          },
+          {
+            "tag": "Assumption",
+            "title": "Neon costs legibility",
+            "text": "A futuristic look tends to put glow and gradients behind the numbers. I assume the odds have to win that fight on every screen, and kept the effects away from them."
+          }
+        ]
+      },
+      "personas": {
+        "note": "Proto-personas: assumptions to test, not research findings",
+        "items": [
+          {
+            "name": "The live-match regular",
+            "job": "When the game turns, I want to back what I just saw in seconds, so I don't miss the price.",
+            "needs": "Stable targets, one-handed reach, a slip that never covers the score."
+          },
+          {
+            "name": "The weekend multi builder",
+            "job": "When I plan Saturday, I want to stack picks and see the total odds and stake clearly, so I know what I'm risking.",
+            "needs": "Readable totals on a phone, easy removal, Singles beside Multi."
+          },
+          {
+            "name": "The careful one",
+            "job": "When I set a budget, I want the app to hold me to it without lectures, so betting stays fun.",
+            "needs": "The limit visible near the money, plain words, a break that is easy to take."
+          }
+        ]
+      },
+      "flow": {
+        "title": "Three taps, every exception in words",
+        "text": "From odds to a placed bet is three taps: odds, stake, place. Everything that can go wrong is checked before the last tap counts, and every exception has one way out that never places a bet by itself.",
+        "svg": "PV/BOSQO/APSIS/07_Izvor/ux/flow.svg"
+      },
+      "ia": {
+        "title": "The slip is one tap away, everywhere",
+        "text": "Five places, no deeper than two levels. The bet slip is not a page but a layer every screen can open, and Limits hangs off the balance, not off Settings.",
+        "svg": "PV/BOSQO/APSIS/07_Izvor/ux/ia.svg"
+      },
+      "screens": [
+        {
+          "skill": "Lobby",
+          "title": "Odds that *stay* put",
+          "text": "The first screen is the live list. Every match has the same three cells in the same place, so the eye and the thumb learn one target.",
+          "desk": [
+            "lobby_d_wire",
+            "lobby_d"
+          ],
+          "phone": [
+            "lobby_m_wire",
+            "lobby_m"
+          ],
+          "why": [
+            "Fixed 1 / X / 2 cells: a price change only changes colour and an arrow, never the layout.",
+            "The empty slip teaches the flow in one line: “Pick, stake, place: three taps.”",
+            "The balance sits inside a ring that fills as today's limit is used.",
+            "A “Concept · demo credits only” pill stays on screen, so a screenshot can't pass for a real product."
+          ]
+        },
+        {
+          "skill": "Match + bet slip",
+          "title": "The risk as *loud* as the win",
+          "text": "The slip opens beside the scoreboard on desktop and as a sheet on a phone, so the game never disappears behind it.",
+          "desk": [
+            "match_d_wire",
+            "match_d"
+          ],
+          "phone": [
+            "slip_m_wire",
+            "slip_m"
+          ],
+          "why": [
+            "“You can lose” sits above Returns, at the same size.",
+            "Quick stakes +5 / +10 / +25 / +50 for one thumb, no keyboard needed.",
+            "A limit bar shows the bet against today: “38.00 of 100.00 used · 58.00 after this bet”.",
+            "The button names the amount, so the last tap reads as a sentence."
+          ]
+        },
+        {
+          "skill": "Limits",
+          "title": "Limits beside the *money*",
+          "text": "Limits open with one tap on the balance from anywhere, and read as today's ring, not as a settings form.",
+          "desk": [
+            "limits_d_wire",
+            "limits_d"
+          ],
+          "phone": [
+            "limits_m_wire",
+            "limits_m"
+          ],
+          "why": [
+            "Lowering a limit applies at once; raising one takes 24 hours.",
+            "Reality check every 15, 30 or 60 minutes: time, staked and net, in plain numbers.",
+            "Take a break for 24 hours, 7 days or 30 days, two taps away.",
+            "This session's net is always shown, win or loss, without colour drama."
+          ]
+        }
+      ],
+      "system": {
+        "text": "Every colour, face and radius is named once, as a token. The odds button is the main component, and its states carry the whole live behaviour.",
+        "colors": [
+          [
+            "Night",
+            "#060827",
+            "background"
+          ],
+          [
+            "Surface",
+            "#141A4E",
+            "cards, odds"
+          ],
+          [
+            "Text",
+            "#F4F5FF",
+            "numbers, labels"
+          ],
+          [
+            "Muted",
+            "#AEB3DE",
+            "secondary text"
+          ],
+          [
+            "Pick",
+            "#FF5CB8",
+            "selected, primary action"
+          ],
+          [
+            "Live",
+            "#8FE3FF",
+            "live state"
+          ],
+          [
+            "Up",
+            "#6DF2B0",
+            "odds went up"
+          ],
+          [
+            "Down",
+            "#FFD166",
+            "odds went down"
+          ]
+        ],
+        "motion": "A price change is colour plus an arrow, never movement. With reduced motion the flash is off and the arrows stay."
+      },
+      "responsible": {
+        "text": "Responsible play is not a page here, it is the exceptions of the bet flow. Each one stops the bet, says what happened in plain words and offers one way out.",
+        "items": [
+          {
+            "id": "state_chg",
+            "title": "Odds changed",
+            "text": "The price moved before the tap counted: the new odds in amber, and nothing is placed until you accept them."
+          },
+          {
+            "id": "state_sus",
+            "title": "Market suspended",
+            "text": "The button goes dim and says why. You can wait or remove the pick."
+          },
+          {
+            "id": "state_lim",
+            "title": "Over today's limit",
+            "text": "It shows what is left and offers to set the stake to exactly that."
+          },
+          {
+            "id": "state_rc",
+            "title": "Reality check",
+            "text": "At your interval: time, staked and net. Take a break is as big as Keep going."
+          },
+          {
+            "id": "limits_m",
+            "title": "Limits",
+            "text": "Today as a ring, the daily limit, reality check and breaks on one screen."
+          },
+          {
+            "id": "bets_m",
+            "title": "My bets",
+            "text": "Open and settled bets show stake and returns side by side."
+          }
+        ]
+      },
+      "test": {
+        "text": "Five people who bet on sport at least monthly, 20 minutes each, remote, thinking aloud, on the live prototype with demo credits.",
+        "tasks": [
+          [
+            "Place a single on a live match",
+            "≤ 3 taps and under 10 s, for 4 of 5"
+          ],
+          [
+            "Odds change while the slip is open",
+            "0 bets placed at odds not seen"
+          ],
+          [
+            "Set a daily limit of 50 from the lobby",
+            "1 tap to Limits, for 4 of 5"
+          ],
+          [
+            "After placing, say what you could lose",
+            "4 of 5 name the stake"
+          ],
+          [
+            "Read the total odds of a multi on a phone",
+            "0 misreads"
+          ]
+        ]
+      },
+      "result": {
+        "text": "A working prototype of the whole flow: lobby, match, slip in single and multi, my bets, wallet with demo credits and Limits, with loading, empty, error, changed-odds, suspended and limit states, on desktop, tablet and phone, keyboard and reduced motion included.",
+        "mocks": [
+          "mock_laptop",
+          "mock_desk",
+          "mock_phone"
+        ]
+      },
+      "differently": [
+        "Run five short interviews before drawing a single screen, so the personas start as findings instead of assumptions.",
+        "Test the reality-check timing with real session lengths: an interval that interrupts too often gets dismissed without being read."
+      ]
     }
   ]
 }

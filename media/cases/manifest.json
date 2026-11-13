@@ -1182,5 +1182,294 @@
     ]
    }
   ]
+ },
+ "apsis": {
+  "hero": [
+   {
+    "w": 2100,
+    "h": 900,
+    "widths": [
+     800,
+     1600,
+     2100
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/af5c6771",
+    "label": "APSIS on a wide screen: a live match with the bet slip open",
+    "matte": false
+   }
+  ],
+  "rows": [],
+  "ux": [
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/79cfdb0f",
+    "label": "Lobby, wireframe",
+    "matte": false,
+    "id": "lobby_d_wire"
+   },
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/6a7f8ee7",
+    "label": "Lobby, final",
+    "matte": false,
+    "id": "lobby_d"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/3a15e914",
+    "label": "Lobby on a phone, wireframe",
+    "matte": false,
+    "id": "lobby_m_wire"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/65ee4064",
+    "label": "Lobby on a phone, final",
+    "matte": false,
+    "id": "lobby_m"
+   },
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/d33a2319",
+    "label": "Match with the bet slip, wireframe",
+    "matte": false,
+    "id": "match_d_wire"
+   },
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/e79351c1",
+    "label": "Match with the bet slip, final",
+    "matte": false,
+    "id": "match_d"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/bf194911",
+    "label": "Bet slip on a phone, wireframe",
+    "matte": false,
+    "id": "slip_m_wire"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/5d381b8f",
+    "label": "Bet slip on a phone, final",
+    "matte": false,
+    "id": "slip_m"
+   },
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/1d5744e6",
+    "label": "Limits, wireframe",
+    "matte": false,
+    "id": "limits_d_wire"
+   },
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/fd35a539",
+    "label": "Limits, final",
+    "matte": false,
+    "id": "limits_d"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/342d2bcf",
+    "label": "Limits on a phone, wireframe",
+    "matte": false,
+    "id": "limits_m_wire"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/92c1d565",
+    "label": "Limits on a phone, final",
+    "matte": false,
+    "id": "limits_m"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/30d5beeb",
+    "label": "Odds changed before the tap counted",
+    "matte": false,
+    "id": "state_chg"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/c1848c33",
+    "label": "Market suspended",
+    "matte": false,
+    "id": "state_sus"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/c5459a0f",
+    "label": "Over today's limit",
+    "matte": false,
+    "id": "state_lim"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/0b7b98a6",
+    "label": "Reality check",
+    "matte": false,
+    "id": "state_rc"
+   },
+   {
+    "w": 780,
+    "h": 1688,
+    "widths": [
+     780
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/0e0f56be",
+    "label": "My bets",
+    "matte": false,
+    "id": "bets_m"
+   },
+   {
+    "w": 2880,
+    "h": 1800,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/8ded3ea9",
+    "label": "Wallet with demo credits",
+    "matte": false,
+    "id": "wallet_d"
+   },
+   {
+    "w": 1456,
+    "h": 816,
+    "widths": [
+     800,
+     1456
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/38f86056",
+    "label": "APSIS lobby on a laptop",
+    "matte": false,
+    "id": "mock_laptop"
+   },
+   {
+    "w": 1456,
+    "h": 816,
+    "widths": [
+     800,
+     1456
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/44e90682",
+    "label": "Match on a wide screen, bet slip on the phone",
+    "matte": false,
+    "id": "mock_desk"
+   },
+   {
+    "w": 960,
+    "h": 1200,
+    "widths": [
+     800,
+     960
+    ],
+    "type": "image",
+    "url": "../../media/cases/apsis/1ea365f9",
+    "label": "APSIS lobby in the hand",
+    "matte": false,
+    "id": "mock_phone"
+   }
+  ]
  }
 }

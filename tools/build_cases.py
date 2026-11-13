@@ -253,7 +253,7 @@ def block_items(b):
 def all_media(m):
     return (m["hero"] + [i for r in m["rows"] for i in r] + [x for b in m.get("blocks", ()) for x in block_items(b)]
             + list(m.get("breakdown", ())) + [x for k in m.get("craft", ()) for r in k["rows"] for x in r]
-            + list(m.get("lab", ())))
+            + list(m.get("lab", ())) + list(m.get("ux", ())))
 
 
 def block_media(b, outdir, rel):
@@ -1275,6 +1275,263 @@ def render_story(c, i, cases, media):
 """)
 
 
+# ------------------------------------------------------------- UX case study
+# A case written as a UX study (format "ux"): problem, research, users, flows, wireframe to final,
+# system, the exceptions, a test plan and the result. It is reached from the Interfaces section,
+# so it does not count among the numbered cases of Selected work.
+def _lum(h):
+    f = lambda c: c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = (f(int(h[i:i + 2], 16) / 255) for i in (1, 3, 5))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def contrast(a, b):
+    la, lb = sorted((_lum(a), _lum(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+
+def ux_svg(path, key):
+    """A flow drawn as SVG, inline so its text stays text; its marker id is made unique on the page."""
+    s = open(resolve(path), encoding="utf-8").read()
+    s = re.sub(r"^<\?xml[^>]*>\s*", "", s.strip())
+    return s.replace('id="a"', f'id="{key}-a"').replace("url(#a)", f"url(#{key}-a)")
+
+
+def ux_wipe(wire, final, sizes):
+    w, h = biggest(final)
+    return (f'<div class="bd uxc-bd" style="--ar:{final["w"] / final["h"]:.4f};max-width:{w}px">'
+            f'{picture(final, sizes, "bd__img")}'
+            f'<div class="bd__before">{picture(wire, sizes, "bd__img")}</div>'
+            f'<span class="bd__line" aria-hidden="true"></span>'
+            f'<span class="bd__label bd__label--l">Wireframe</span><span class="bd__label bd__label--r">Final</span>'
+            f'<input class="bd__range" type="range" min="0" max="100" value="50" '
+            f'aria-label="Compare the wireframe and the final screen: {E(final["label"])}"></div>')
+
+
+def render_ux(c, cases, media):
+    R = "../../"
+    nxt = cases[0]
+    U = {x["id"]: x for x in media["ux"]}
+    hero = media["hero"]
+    h0 = hero[0]
+    cover = (f'<figure class="cover__item" style="--ar:{h0["w"] / h0["h"]:.4f};{cap_style(h0)}">'
+             f'{picture(h0, "100vw", eager=True)}<figcaption>{E(h0["label"])}</figcaption></figure>')
+    meta = "".join(f"<div><dt>{E(k)}</dt><dd>{E(v)}</dd></div>" for k, v in c["meta"])
+    skills = "".join(f"<li>{E(x)}</li>" for x in c["skills"])
+    proto = R + c["prototype"]
+
+    def head(n, label, id_=None):
+        i = f' id="{id_}"' if id_ else ""
+        return f'<div class="sec-head"><span class="sec-head__num">{n:02d}</span><span class="sec-head__label"{i}>{E(label)}</span></div>'
+
+    p = c["problem"]
+    measures = "".join(f'<li><b>{E(a)}</b><span>{E(b)}</span></li>' for a, b in p["measures"])
+    rs = c["research"]
+    insights = "".join(
+        f'<article class="uxc-card{" is-assume" if x["tag"] == "Assumption" else ""}">'
+        f'<p class="uxc-tag">{E(x["tag"])}</p><h3>{E(x["title"])}</h3><p>{E(x["text"])}</p></article>'
+        for x in rs["insights"])
+    ps = c["personas"]
+    personas = "".join(
+        f'<article class="uxc-card uxc-persona"><p class="uxc-tag">Proto-persona · assumption</p>'
+        f'<h3>{E(x["name"])}</h3><blockquote>{E(x["job"])}</blockquote>'
+        f'<p><b>Needs</b>{E(x["needs"])}</p></article>' for x in ps["items"])
+
+    screens = []
+    for j, s in enumerate(c["screens"]):
+        dw, df = (U[k] for k in s["desk"])
+        pw, pf = (U[k] for k in s["phone"])
+        why = "".join(f"<li>{E(x)}</li>" for x in s["why"])
+        screens.append(f"""
+      <article class="cr uxc-scr">
+        <header class="cr__head">
+          <p class="cr__skill"><span>{j + 1:02d}</span>{E(s['skill'])}</p>
+          <h3 class="cr__title">{rich(s['title'])}</h3>
+          <p class="cr__text">{E(s['text'])}</p>
+          <div class="uxc-why"><b>Why</b><ul>{why}</ul></div>
+        </header>
+        <div class="uxc-pair">
+          <div class="uxc-pair__d" style="--ar:{df['w'] / df['h']:.4f}">{ux_wipe(dw, df, "(min-width: 1024px) 44vw, 100vw")}<p class="uxc-cap">Desktop · drag to compare</p></div>
+          <div class="uxc-pair__m" style="--ar:{pf['w'] / pf['h']:.4f}">{ux_wipe(pw, pf, "(min-width: 1024px) 14vw, 62vw")}<p class="uxc-cap">Phone</p></div>
+        </div>
+      </article>""")
+
+    sy = c["system"]
+    swatches = "".join(
+        f'<li><span class="uxc-sw" style="background:{hx}"></span><b>{E(nm)}</b><code>{hx}</code><small>{E(role)}</small></li>'
+        for nm, hx, role in sy["colors"])
+    col = {nm: hx for nm, hx, _ in sy["colors"]}
+    pairs = [("Text", "Night"), ("Muted", "Surface"), ("Pick", "Night"), ("Live", "Night"), ("Up", "Surface"), ("Down", "Surface")]
+    ink = "#1A0420"
+    rows = []
+    for fg, bg in pairs:
+        r = contrast(col[fg], col[bg])
+        grade = "AAA" if r >= 7 else "AA" if r >= 4.5 else "AA large" if r >= 3 else "fails"
+        rows.append(f'<li><span class="uxc-aa" style="color:{col[fg]};background:{col[bg]}">1.85</span>'
+                    f'<span>{fg} on {bg}</span><b>{r:.1f} : 1</b><em>{grade}</em></li>')
+    r = contrast(ink, col["Pick"])
+    rows.append(f'<li><span class="uxc-aa" style="color:{ink};background:{col["Pick"]}">1.85</span>'
+                f'<span>Ink on Pick (selected)</span><b>{r:.1f} : 1</b><em>{"AAA" if r >= 7 else "AA"}</em></li>')
+    odds = [("", "1", "1.85", "Default"), ("sel", "1", "1.85", "Selected"), ("up", "X", "2.10", "Went up"),
+            ("dn", "2", "1.67", "Went down"), ("sus", "1", "1.92", "Suspended")]
+    odds_html = "".join(f'<li><span class="uxc-od{" " + k if k else ""}"><small>{a}</small><b>{b}</b></span><p>{E(t)}</p></li>'
+                        for k, a, b, t in odds)
+
+    rp = c["responsible"]
+    resp = []
+    for x in rp["items"]:
+        m = U[x["id"]]
+        resp.append(f'<figure class="uxc-rp" style="--ar:{m["w"] / m["h"]:.4f}">'
+                    f'<button class="g-open" type="button" data-full="{m["url"]}-{m["widths"][-1]}.webp" '
+                    f'data-cap="{E(x["title"])}" aria-label="Open — {E(x["title"])}">'
+                    f'{picture(m, "(min-width: 1024px) 15vw, (min-width: 768px) 30vw, 46vw")}</button>'
+                    f'<figcaption><b>{E(x["title"])}</b>{E(x["text"])}</figcaption></figure>')
+    t = c["test"]
+    tasks = "".join(f'<tr><td>{j + 1:02d}</td><td>{E(a)}</td><td>{E(b)}</td></tr>' for j, (a, b) in enumerate(t["tasks"]))
+    mocks = gallery_row([U[k] for k in c["result"]["mocks"]])
+    diff = "".join(f'<div class="story"><h3 class="story__label"><span>{j + 1:02d}</span> Next time</h3><p class="story__text">{E(x)}</p></div>'
+                   for j, x in enumerate(c["differently"]))
+    extra = f'\n  <link rel="stylesheet" href="{R}css/case.css">\n  <script src="{R}js/case.js" defer></script>'
+    og = og_image(c["slug"], [U[c["og"]]])
+
+    return (HEAD.format(title=E(c["title"]) + " — UX case study", desc=E(c["line"]), og=E(og), url=SITE + "work/" + c["slug"] + "/", R=R, extra=extra) + f"""
+<body class="page-case page-story page-ux">
+  <a class="skip" href="#case-main">Skip to content</a>
+  <div class="field" aria-hidden="true"></div>
+{TOPBAR.replace("{MARK}", MARK).replace("{R}", R)}
+
+  <main id="case-main">
+    <section class="case-hero cs-hero uxc-hero">
+      <div class="case-hero__top"><a class="back" href="{R}#interfaces">← Interfaces</a><span>UX case study</span></div>
+      <p class="eyebrow">{E(c['kicker'])}</p>
+      <h1 class="case-title">{E(c['title'])}</h1>
+      <div class="cs-hero__sub">
+        <p class="case-line">{E(c['line'])}</p>
+        <ul class="cs-skills" aria-label="Skills in this project">{skills}</ul>
+      </div>
+      <div class="uxc-cta">
+        <a class="btn btn--rec" href="{proto}">Try the prototype <span aria-hidden="true">→</span></a>
+        <p class="uxc-disc">{E(c['disclaimer'])}</p>
+      </div>
+      <dl class="case-meta cs-meta uxc-meta">{meta}</dl>
+    </section>
+
+    <section class="cover" id="cover" aria-label="Key visual">
+      {cover}
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux1">
+      {head(1, "Problem & goal", "ux1")}
+      <div class="uxc-pg">
+        <div><h2 class="uxc-k">Who</h2><p>{E(p['who'])}</p></div>
+        <div><h2 class="uxc-k">Today</h2><p>{E(p['today'])}</p></div>
+        <div class="uxc-goal"><h2 class="uxc-k">Goal</h2><p>{E(p['goal'])}</p></div>
+      </div>
+      <ul class="uxc-measures" aria-label="Measures">{measures}</ul>
+      <p class="case-note">{E(p['measures_note'])}</p>
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux2">
+      {head(2, "Research · what was really done", "ux2")}
+      <p class="uxc-lead">{E(rs['note'])}</p>
+      <div class="uxc-grid uxc-grid--2">{insights}</div>
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux3">
+      {head(3, "Users · jobs to be done", "ux3")}
+      <p class="case-note">{E(ps['note'])}</p>
+      <div class="uxc-grid uxc-grid--3">{personas}</div>
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux4">
+      {head(4, "Flow & information architecture", "ux4")}
+      <div class="uxc-fl">
+        <div class="uxc-fl__t"><h3>{E(c['flow']['title'])}</h3><p>{E(c['flow']['text'])}</p></div>
+        <div class="uxc-svg" tabindex="0" role="group" aria-label="Bet flow diagram, scrolls sideways on small screens">{ux_svg(c['flow']['svg'], 'flow')}</div>
+      </div>
+      <div class="uxc-fl">
+        <div class="uxc-fl__t"><h3>{E(c['ia']['title'])}</h3><p>{E(c['ia']['text'])}</p></div>
+        <div class="uxc-svg" tabindex="0" role="group" aria-label="Information architecture diagram, scrolls sideways on small screens">{ux_svg(c['ia']['svg'], 'ia')}</div>
+      </div>
+    </section>
+
+    <section class="cs-craft uxc-screens" aria-labelledby="ux5">
+      {head(5, "Wireframe → final · three key screens", "ux5")}{"".join(screens)}
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux6">
+      {head(6, "Design system", "ux6")}
+      <p class="uxc-lead">{E(sy['text'])}</p>
+      <div class="uxc-ds">
+        <div class="uxc-ds__col">
+          <h3 class="uxc-k">Colour tokens</h3>
+          <ul class="uxc-sws">{swatches}</ul>
+        </div>
+        <div class="uxc-ds__col">
+          <h3 class="uxc-k">Type</h3>
+          <div class="uxc-spec">
+            <p class="uxc-spec__a">Odds that stay put</p>
+            <p class="uxc-spec__n"><span>Nippo</span> titles · <span>Satoshi</span> interface and numbers</p>
+            <p class="uxc-spec__b">1.85 &nbsp;2.10 &nbsp;1.67 &nbsp;11.11 &nbsp;38.00 / 100.00</p>
+            <p class="uxc-spec__n">Tabular figures: odds line up and never shift when they change</p>
+          </div>
+          <h3 class="uxc-k">Odds button · the main component</h3>
+          <ul class="uxc-odds" aria-label="Odds button states">{odds_html}</ul>
+          <p class="uxc-note2">52 px tall, the whole cell is the target. {E(sy['motion'])}</p>
+        </div>
+        <div class="uxc-ds__col">
+          <h3 class="uxc-k">Contrast, measured (WCAG 2.2)</h3>
+          <ul class="uxc-ctr">{"".join(rows)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux7">
+      {head(7, "Responsible play · the exceptions", "ux7")}
+      <p class="uxc-lead">{E(rp['text'])}</p>
+      <div class="uxc-rps gallery">{"".join(resp)}</div>
+    </section>
+
+    <section class="uxc-sec" aria-labelledby="ux8">
+      {head(8, "What I'd test next", "ux8")}
+      <p class="uxc-lead">{E(t['text'])}</p>
+      <div class="uxc-tbl" tabindex="0" role="group" aria-label="Test tasks">
+        <table><thead><tr><th>#</th><th>Task</th><th>Pass when</th></tr></thead><tbody>{tasks}</tbody></table>
+      </div>
+      <p class="case-note">A plan, not results: no test has been run yet</p>
+    </section>
+
+    <section class="case-result uxc-result" aria-labelledby="ux9">
+      {head(9, "Result", "ux9")}
+      <a class="uxc-try" href="{proto}">Try the prototype <span aria-hidden="true">→</span></a>
+      <p class="result__text">{E(c['result']['text'])}</p>
+      <div class="gallery uxc-mocks">{mocks}</div>
+      <p class="case-note">{E(c['disclaimer'])}</p>
+    </section>
+
+    <section class="case-story cs-story uxc-diff" aria-labelledby="ux10">
+      <div class="uxc-diff__h">{head(10, "What I'd do differently", "ux10")}</div>{diff}
+    </section>
+
+    <a class="case-next" href="../{nxt['slug']}/">
+      <span class="case-next__bg" aria-hidden="true">{nxt['_next_bg']}</span>
+      <span class="case-next__label">Selected work · 01</span>
+      <span class="case-next__title">{E(nxt['title'])}</span>
+      <span class="case-next__line">{E(nxt['line'])}</span>
+    </a>
+{CONTACT}
+  </main>
+
+  <dialog class="lightbox" data-lightbox aria-label="Enlarged view">
+    <button class="player__close" type="button" data-close aria-label="Close">Close ✕</button>
+    <div class="lightbox__frame"></div>
+    <p class="lightbox__cap"></p>
+  </dialog>
+</body>
+</html>
+""")
+
+
 def main():
     data = json.load(open(os.path.join(ROOT, "content", "cases.json"), encoding="utf-8"))
     cases = data["cases"]
@@ -1297,6 +1554,8 @@ def main():
             m["lab"] = [media_for(x, outdir, rel) for x in c["lab"]["media"]]
         if c.get("craft"):
             m["craft"] = [{**k, "rows": [[media_for(x, outdir, rel) for x in r] for r in k["rows"]]} for k in c["craft"]]
+        if c.get("ux"):   # a UX study's screens, wireframes and mockups, picked by id
+            m["ux"] = [{**media_for(x, outdir, rel), "id": x["id"]} for x in c["ux"]]
         if c.get("breakdown"):
             b = c["breakdown"]
             m["breakdown"] = (media_for({"src": b["before"], "type": "image", "label": b["before_label"]}, outdir, rel),
@@ -1320,10 +1579,14 @@ def main():
                     os.remove(os.path.join(outdir, f))
         n_items = len(all_media(m)) - len(m["hero"])
         print(f"{slug:22s} hero={len(m['hero'])} items={n_items}")
-    for i, c in enumerate(cases):
+    nonux = [c for c in cases if c.get("format") != "ux"]   # the numbered cases of Selected work
+    for c in cases:
         d = os.path.join(ROOT, "work", c["slug"])
         os.makedirs(d, exist_ok=True)
-        page = (render_story if c.get("format") == "story" else render_case)(c, i, cases, allm[c["slug"]])
+        if c.get("format") == "ux":
+            page = render_ux(c, nonux, allm[c["slug"]])
+        else:
+            page = (render_story if c.get("format") == "story" else render_case)(c, nonux.index(c), nonux, allm[c["slug"]])
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(page)
 
     json.dump(allm, open(mpath, "w", encoding="utf-8"),
