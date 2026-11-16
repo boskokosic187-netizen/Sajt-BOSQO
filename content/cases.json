@@ -387,7 +387,7 @@
       "format": "story",
       "title": "FSU 2026",
       "kicker": "Campaigns & exhibition identities · Faculty of Contemporary Arts",
-      "line": "One academic year at an art school, told in the order it happened: enrol, study, exhibit, gather, make the news.",
+      "line": "One academic year at an art school, told in the order it happened: enrol, advertise, study, exhibit, gather, make the news.",
       "client": "FSU · Faculty of Contemporary Arts, Belgrade",
       "years": "2026",
       "role": "Art direction, design, motion",
@@ -396,6 +396,7 @@
         "Exhibition identity",
         "Poster design",
         "Campaigns",
+        "Meta ads",
         "Series systems",
         "Print"
       ],
@@ -403,7 +404,7 @@
       "idea": "Follow the year. It starts with a door and an invitation to walk through it, and every chapter after that gets its own world. The constant is the frame: FSU's type, yellow and voice, so eighty different pieces still read as one school.",
       "lab": {
         "type": "gallery",
-        "chapter": "Chapter three · exhibit · try it",
+        "chapter": "Chapter four · exhibit · try it",
         "kicker": "a year of shows",
         "title": "Walk *the gallery*",
         "line": "By October the gallery never stays empty. Drag to walk past a year of FSU exhibitions, or pick a poster from the row below.",
@@ -567,7 +568,81 @@
           ]
         },
         {
-          "chapter": "Chapter two · study",
+          "chapter": "Chapter two · advertise",
+          "skill": "Meta ads",
+          "title": "Then pay for *the reach*",
+          "text": "The campaigns that carry enrolment run as paid ads on Instagram and Facebook, so each one is built four times: story 9:16, feed 4:5, square and link 1.91:1. Every format is laid out again from the same picture, with the type inside Meta’s safe zones, never a crop of the square.",
+          "rows": [
+            [
+              {
+                "src": "PV/Bilbordi Novembar 2k26/FSU/FSU META/1080x1920.png",
+                "type": "image",
+                "label": "Pre-enrolment · story 9:16"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/FSU/FSU META/1080x1350.png",
+                "type": "image",
+                "label": "Feed 4:5"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/FSU/FSU META/1080x1080.png",
+                "type": "image",
+                "label": "Feed 1:1"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/FSU/FSU META/1200x628.png",
+                "type": "image",
+                "label": "Link 1.91:1"
+              }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Kreativne subote 2026/Post_1_Glavni vizual/Meta baneri/Meta_1080x1350.png",
+                "type": "image",
+                "label": "Creative Saturdays · 4:5"
+              },
+              {
+                "src": "PV/FSU/FSU Direktan upis bez prijemnog/00 Opsti/Meta/1080x1350.png",
+                "type": "image",
+                "label": "Direct entry · 4:5"
+              },
+              {
+                "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_00_Opsti_vizual/META_1080x1350.png",
+                "type": "image",
+                "label": "Costume Design MA · 4:5"
+              },
+              {
+                "src": "PV/FSU/FSU Remek-delo/Post_3_Mermer/FSU_Remek-delo_Post3-1080x1350.png",
+                "type": "image",
+                "label": "Masterpiece · 4:5"
+              }
+            ],
+            [
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/FSU/01 Black Friday/Feed 4x5.jpg",
+                "type": "image",
+                "label": "Black Friday · 4:5"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/FSU/02 Cyber Monday/Feed 4x5.jpg",
+                "type": "image",
+                "label": "Cyber Monday · 4:5"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/FSU/01 Black Friday/Story.jpg",
+                "type": "image",
+                "label": "Black Friday · story"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/FSU/02 Cyber Monday/Story.jpg",
+                "type": "image",
+                "label": "Cyber Monday · story"
+              }
+            ]
+          ]
+        },
+        {
+          "chapter": "Chapter three · study",
           "skill": "Programme series",
           "title": "One frame, *thirty-eight courses*",
           "text": "Then every programme has to explain itself, course by course. Contemporary Design MA: 38 posts where a pencil sketch turns into the finished space, each with its own accent colour. Costume Design MA keeps the frame and changes the costume, so a long series never feels like one post repeated.",
@@ -619,7 +694,7 @@
           ]
         },
         {
-          "chapter": "Chapter four · gather",
+          "chapter": "Chapter five · gather",
           "skill": "Events & open calls",
           "title": "Then fill *the building*",
           "text": "A school is also its nights and its Saturdays. The freshers’ party, painting under UV light, free workshops for teenagers and a Halloween corner each get their own mood, and the open calls that take students to bigger stages are staged as objects, not announcements.",
@@ -666,7 +741,7 @@
           ]
         },
         {
-          "chapter": "Chapter five · make the news",
+          "chapter": "Chapter six · make the news",
           "skill": "Editorial & news",
           "title": "And tell *everyone*",
           "text": "News posts are where a school’s feed usually goes grey. Here the headline lives inside the picture: a quote tucked behind her hair, “Hollywood” stacked behind his books, a name painted on a wall in Užice. Even a calendar day gets an idea: light through a prism, four ways to draw one head.",
@@ -731,6 +806,7 @@
       "flow": [
         "craft",
         "craft",
+        "craft",
         "lab",
         "craft",
         "craft"
@@ -749,7 +825,8 @@
         "Design systems",
         "Art direction",
         "Social content",
-        "Production at scale"
+        "Production at scale",
+        "Meta ads"
       ],
       "brief": "Education marketing runs on volume: dozens of programmes, careers and deadlines, each needing its own post, without the feed turning into a template graveyard.",
       "idea": "Give every series one strong signature, portrait, light and type, and let the system carry the repetition, so post 33 looks as considered as post 1.",
@@ -897,6 +974,79 @@
                 "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1200x630.png",
                 "type": "image",
                 "label": "ITHS · student app · Household Budget Manager"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Meta ads",
+          "title": "One campaign, *four formats*",
+          "text": "ITS advertises on Instagram and Facebook all year. Ten study programmes each get their own face and their own set of story, feed, square and link formats; pre-enrolment, the 20-year jubilee packages and Black Friday run on the same system. Every format is laid out again inside Meta’s safe zones, never cropped from the square.",
+          "rows": [
+            [
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1920.png",
+                "type": "image",
+                "label": "Pre-enrolment · story 9:16"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1350.png",
+                "type": "image",
+                "label": "Feed 4:5"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1080.png",
+                "type": "image",
+                "label": "Feed 1:1"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1200x628.png",
+                "type": "image",
+                "label": "Link 1.91:1"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
+                "type": "image",
+                "label": "Software Development · 4:5"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
+                "type": "image",
+                "label": "Data Science & AI"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_04_Digitalna_multimedija_OSS/meta/1080x1350.png",
+                "type": "image",
+                "label": "Digital Multimedia"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
+                "type": "image",
+                "label": "E-sport Management"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Mreze_Meta/Meta_1080x1350.png",
+                "type": "image",
+                "label": "20 jubilee packages · 4:5"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/ITS/01 Black Friday/Feed 4x5.jpg",
+                "type": "image",
+                "label": "Black Friday · 4:5"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/ITS/02 Cyber Monday/Feed 4x5.jpg",
+                "type": "image",
+                "label": "Cyber Monday · 4:5"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_08_Menadzment_u_IT/meta/1080x1350.png",
+                "type": "image",
+                "label": "IT Management · 4:5"
               }
             ]
           ]

@@ -813,7 +813,165 @@
     ]
    },
    {
-    "chapter": "Chapter two · study",
+    "chapter": "Chapter two · advertise",
+    "skill": "Meta ads",
+    "title": "Then pay for *the reach*",
+    "text": "The campaigns that carry enrolment run as paid ads on Instagram and Facebook, so each one is built four times: story 9:16, feed 4:5, square and link 1.91:1. Every format is laid out again from the same picture, with the type inside Meta’s safe zones, never a crop of the square.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/3d6aa411",
+       "label": "Pre-enrolment · story 9:16",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/6e157a4f",
+       "label": "Feed 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/d02cee3a",
+       "label": "Feed 1:1",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 628,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/3df2fb73",
+       "label": "Link 1.91:1",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/96855b71",
+       "label": "Creative Saturdays · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/0246c641",
+       "label": "Direct entry · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/87996914",
+       "label": "Costume Design MA · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/13c59339",
+       "label": "Masterpiece · 4:5",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/7381dc83",
+       "label": "Black Friday · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/668ad8e2",
+       "label": "Cyber Monday · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/95479ad8",
+       "label": "Black Friday · story",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/67a2865c",
+       "label": "Cyber Monday · story",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "chapter": "Chapter three · study",
     "skill": "Programme series",
     "title": "One frame, *thirty-eight courses*",
     "text": "Then every programme has to explain itself, course by course. Contemporary Design MA: 38 posts where a pencil sketch turns into the finished space, each with its own accent colour. Costume Design MA keeps the frame and changes the costume, so a long series never feels like one post repeated.",
@@ -921,7 +1079,7 @@
     ]
    },
    {
-    "chapter": "Chapter four · gather",
+    "chapter": "Chapter five · gather",
     "skill": "Events & open calls",
     "title": "Then fill *the building*",
     "text": "A school is also its nights and its Saturdays. The freshers’ party, painting under UV light, free workshops for teenagers and a Halloween corner each get their own mood, and the open calls that take students to bigger stages are staged as objects, not announcements.",
@@ -1017,7 +1175,7 @@
     ]
    },
    {
-    "chapter": "Chapter five · make the news",
+    "chapter": "Chapter six · make the news",
     "skill": "Editorial & news",
     "title": "And tell *everyone*",
     "text": "News posts are where a school’s feed usually goes grey. Here the headline lives inside the picture: a quote tucked behind her hair, “Hollywood” stacked behind his books, a name painted on a wall in Užice. Even a calendar day gets an idea: light through a prism, four ways to draw one head.",
@@ -1263,6 +1421,163 @@
        "type": "image",
        "url": "../../media/cases/series-at-scale/fdf0680f",
        "label": "ITHS · student app · Household Budget Manager",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Meta ads",
+    "title": "One campaign, *four formats*",
+    "text": "ITS advertises on Instagram and Facebook all year. Ten study programmes each get their own face and their own set of story, feed, square and link formats; pre-enrolment, the 20-year jubilee packages and Black Friday run on the same system. Every format is laid out again inside Meta’s safe zones, never cropped from the square.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/dba04309",
+       "label": "Pre-enrolment · story 9:16",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/92304edf",
+       "label": "Feed 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/1237a74e",
+       "label": "Feed 1:1",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 628,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/0274c1c5",
+       "label": "Link 1.91:1",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/4f4d0beb",
+       "label": "Software Development · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a9017513",
+       "label": "Data Science & AI",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/9a131277",
+       "label": "Digital Multimedia",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/8fb14acc",
+       "label": "E-sport Management",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/48e87fa3",
+       "label": "20 jubilee packages · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/9437533e",
+       "label": "Black Friday · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/ff0a2d33",
+       "label": "Cyber Monday · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/4f8abbb8",
+       "label": "IT Management · 4:5",
        "matte": false
       }
      ]
