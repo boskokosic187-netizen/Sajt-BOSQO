@@ -481,16 +481,42 @@
  "fsu-2026": {
   "hero": [
    {
-    "w": 2481,
-    "h": 1749,
+    "w": 1789,
+    "h": 2516,
     "widths": [
      800,
      1600,
-     2481
+     1789
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/247104fc",
-    "label": "Enrolment 2027/28 · flyer",
+    "url": "../../media/cases/fsu-2026/aa100770",
+    "label": "Meeting Points · poster A3",
+    "matte": false
+   },
+   {
+    "w": 1789,
+    "h": 2516,
+    "widths": [
+     800,
+     1600,
+     1789
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/06d01655",
+    "label": "Morning · poster A3",
+    "matte": false
+   },
+   {
+    "w": 3579,
+    "h": 5031,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/0bc5ba94",
+    "label": "The Art of Motion and Time · poster A3",
     "matte": false
    }
   ],
@@ -510,6 +536,19 @@
     "matte": false
    },
    {
+    "w": 2625,
+    "h": 3690,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/4258d803",
+    "label": "Propter Omnia",
+    "matte": false
+   },
+   {
     "w": 3578,
     "h": 5031,
     "widths": [
@@ -518,20 +557,34 @@
      2560
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/05af5e73",
+    "url": "../../media/cases/fsu-2026/f34541dc",
     "label": "Space in the Making",
     "matte": false
    },
    {
-    "w": 1080,
-    "h": 1080,
+    "w": 3579,
+    "h": 5031,
     "widths": [
      800,
-     1080
+     1600,
+     2560
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/2ac161c2",
-    "label": "Look Inside",
+    "url": "../../media/cases/fsu-2026/0bc5ba94",
+    "label": "The Art of Motion and Time",
+    "matte": false
+   },
+   {
+    "w": 3579,
+    "h": 5031,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/e9c42f62",
+    "label": "Only One Work · Hortus Deliciarum",
     "matte": false
    },
    {
@@ -548,18 +601,6 @@
     "matte": false
    },
    {
-    "w": 1080,
-    "h": 1080,
-    "widths": [
-     800,
-     1080
-    ],
-    "type": "image",
-    "url": "../../media/cases/fsu-2026/c6f62680",
-    "label": "Captured Moments",
-    "matte": false
-   },
-   {
     "w": 1789,
     "h": 2516,
     "widths": [
@@ -573,15 +614,29 @@
     "matte": false
    },
    {
-    "w": 1080,
-    "h": 1080,
+    "w": 2482,
+    "h": 3510,
     "widths": [
      800,
-     1080
+     1600,
+     2482
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/f4693a74",
+    "url": "../../media/cases/fsu-2026/a79b1cba",
     "label": "3:3 · My White Body",
+    "matte": false
+   },
+   {
+    "w": 3578,
+    "h": 5031,
+    "widths": [
+     800,
+     1600,
+     2560
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/e63ec159",
+    "label": "Before Dawn",
     "matte": false
    },
    {
@@ -605,21 +660,8 @@
      1080
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/e324804d",
-    "label": "Fluids",
-    "matte": false
-   },
-   {
-    "w": 3578,
-    "h": 5031,
-    "widths": [
-     800,
-     1600,
-     2560
-    ],
-    "type": "image",
-    "url": "../../media/cases/fsu-2026/e63ec159",
-    "label": "Before Dawn",
+    "url": "../../media/cases/fsu-2026/2ac161c2",
+    "label": "Look Inside",
     "matte": false
    },
    {
@@ -630,8 +672,8 @@
      1080
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/967ad7ae",
-    "label": "Re-Harmony",
+    "url": "../../media/cases/fsu-2026/55b904f6",
+    "label": "Gallery Plus · Selected Exhibitors",
     "matte": false
    },
    {
@@ -655,8 +697,8 @@
      1080
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/561faafa",
-    "label": "Creative Saturdays",
+    "url": "../../media/cases/fsu-2026/e324804d",
+    "label": "Fluids",
     "matte": false
    },
    {
@@ -667,16 +709,29 @@
      1080
     ],
     "type": "image",
-    "url": "../../media/cases/fsu-2026/c2a501f6",
-    "label": "Mental Health Matters",
+    "url": "../../media/cases/fsu-2026/c6f62680",
+    "label": "Captured Moments",
+    "matte": false
+   },
+   {
+    "w": 1080,
+    "h": 1080,
+    "widths": [
+     800,
+     1080
+    ],
+    "type": "image",
+    "url": "../../media/cases/fsu-2026/967ad7ae",
+    "label": "Re-Harmony",
     "matte": false
    }
   ],
   "craft": [
    {
-    "skill": "Campaigns",
-    "title": "One door, *three stories*",
-    "text": "FSU Doors: “Create it. Move it. What did you open?” Three posts that work alone and read as one campaign in the grid.",
+    "chapter": "Chapter one · enrol",
+    "skill": "Enrolment campaigns",
+    "title": "First, open *the door*",
+    "text": "The year starts with one question: why here? FSU Doors answers in three posts, “Create it. Move it. What did you open?”, that work alone and read as one campaign in the grid. The same promise then travels to direct entry without an exam, the first-stroke series and the printed flyer.",
     "rows": [
      [
       {
@@ -688,7 +743,7 @@
        ],
        "type": "image",
        "url": "../../media/cases/fsu-2026/624d7a1d",
-       "label": "Post 1 · feed 1:1",
+       "label": "Doors · post 1",
        "matte": false
       },
       {
@@ -700,7 +755,7 @@
        ],
        "type": "image",
        "url": "../../media/cases/fsu-2026/06f1efd8",
-       "label": "Post 2 · feed 1:1",
+       "label": "Doors · post 2",
        "matte": false
       },
       {
@@ -712,16 +767,56 @@
        ],
        "type": "image",
        "url": "../../media/cases/fsu-2026/1daa3146",
-       "label": "Post 3 · feed 1:1",
+       "label": "Doors · post 3",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/403a93f0",
+       "label": "Enrol without an entrance exam",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/acd9af54",
+       "label": "Masterpiece · the first stroke",
+       "matte": false
+      },
+      {
+       "w": 2481,
+       "h": 1749,
+       "widths": [
+        800,
+        1600,
+        2481
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/247104fc",
+       "label": "Enrolment 2027/28 · flyer A5",
        "matte": false
       }
      ]
     ]
    },
    {
+    "chapter": "Chapter two · study",
     "skill": "Programme series",
-    "title": "One template, *thirty courses*",
-    "text": "Costume Design MA: a key visual and a post per course. The frame stays, the costume and the colour change, so thirty posts never feel like one post thirty times.",
+    "title": "One frame, *thirty-eight courses*",
+    "text": "Then every programme has to explain itself, course by course. Contemporary Design MA: 38 posts where a pencil sketch turns into the finished space, each with its own accent colour. Costume Design MA keeps the frame and changes the costume, so a long series never feels like one post repeated.",
     "rows": [
      [
       {
@@ -732,8 +827,58 @@
         1080
        ],
        "type": "image",
+       "url": "../../media/cases/fsu-2026/c406661d",
+       "label": "Contemporary Design MA · 01 / 38",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/f5b2b373",
+       "label": "07 / 38",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/5e1d29d1",
+       "label": "13 / 38",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/aacaf49e",
+       "label": "31 / 38",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
        "url": "../../media/cases/fsu-2026/0ead1907",
-       "label": "Key visual",
+       "label": "Costume Design MA · key visual",
        "matte": false
       },
       {
@@ -768,43 +913,188 @@
         1080
        ],
        "type": "image",
-       "url": "../../media/cases/fsu-2026/6e220164",
-       "label": "Course 03",
+       "url": "../../media/cases/fsu-2026/078d4260",
+       "label": "Graphic Design BA",
        "matte": false
       }
      ]
     ]
    },
    {
-    "skill": "Print & presentation",
-    "title": "From A5 flyers to *lecture halls*",
-    "text": "The enrolment flyer, the study-programme presentation and the social set come from one source, so the school looks the same in your hand and on the big screen.",
+    "chapter": "Chapter four · gather",
+    "skill": "Events & open calls",
+    "title": "Then fill *the building*",
+    "text": "A school is also its nights and its Saturdays. The freshers’ party, painting under UV light, free workshops for teenagers and a Halloween corner each get their own mood, and the open calls that take students to bigger stages are staged as objects, not announcements.",
     "rows": [
      [
       {
-       "w": 2481,
-       "h": 1749,
-       "widths": [
-        800,
-        1600,
-        2481
-       ],
-       "type": "image",
-       "url": "../../media/cases/fsu-2026/247104fc",
-       "label": "Flyer A5, front",
-       "matte": false
-      },
-      {
-       "w": 1920,
+       "w": 1080,
        "h": 1080,
        "widths": [
         800,
-        1600,
-        1920
+        1080
        ],
        "type": "image",
-       "url": "../../media/cases/fsu-2026/1b4fc720",
-       "label": "Slide 1",
+       "url": "../../media/cases/fsu-2026/8e1e0157",
+       "label": "Freshers’ party",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/bad4ad44",
+       "label": "UV Art Night",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/561faafa",
+       "label": "Creative Saturdays",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/da6efdc2",
+       "label": "Halloween corner",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/d5463322",
+       "label": "Imagine Cup 2027",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/aa46514c",
+       "label": "Sony World Photography · Student",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/02b58d88",
+       "label": "Schneider Electric Video Contest",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "chapter": "Chapter five · make the news",
+    "skill": "Editorial & news",
+    "title": "And tell *everyone*",
+    "text": "News posts are where a school’s feed usually goes grey. Here the headline lives inside the picture: a quote tucked behind her hair, “Hollywood” stacked behind his books, a name painted on a wall in Užice. Even a calendar day gets an idea: light through a prism, four ways to draw one head.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/086aef0d",
+       "label": "Interview · Grazia",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/48011f3e",
+       "label": "Interview · BIZLife",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/58a5ac2f",
+       "label": "Award · City of Užice",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/feb9e176",
+       "label": "World Science Day",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/1438b8a6",
+       "label": "International Day for Tolerance",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/695bca1e",
+       "label": "EU Code Week",
        "matte": false
       }
      ]

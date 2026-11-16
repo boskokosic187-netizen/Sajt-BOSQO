@@ -2661,7 +2661,7 @@ html.js .about:not(.is-on) .marquee__track, .marquee:hover .marquee__track { ani
 .cover__item figcaption { position: absolute; left: 14px; bottom: 12px; padding: 5px 8px; border-radius: 3px; background: rgba(10, 10, 11, 0.75); color: var(--text); }
 .cover__item figcaption.is-right { left: auto; right: 14px; } /* the picture has its own type bottom left */
 .cover.is-trio { display: flex; justify-content: center; gap: var(--gap); }
-.cover.is-trio .cover__item { flex: 0 0 auto; height: min(78vh, 760px); }
+.cover.is-trio .cover__item { flex: 0 0 auto; height: min(78vh, 760px, calc((100vw - 2 * var(--pad) - 2 * var(--gap)) / var(--sum, 1))); } /* --sum: the three ratios added up, so the row never runs past the screen */
 
 .case-story, .case-system { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 80px); padding: clamp(80px, 13vh, 150px) var(--pad); }
 .story__label { display: flex; gap: 12px; margin-bottom: 20px; color: var(--muted); font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12.5px;  letter-spacing: 0.08em; text-transform: uppercase; }

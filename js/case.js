@@ -667,7 +667,7 @@
      Until the visitor takes over, it walks on its own, one piece at a time. */
   function gallery(el) {
     const room = $('.gw__room', el), track = $('.gw__track', el), pieces = $$('.gw__piece', el);
-    const iOut = $('[data-gw-i]', el), tOut = $('[data-gw-t]', el);
+    const iOut = $('[data-gw-i]', el), tOut = $('[data-gw-t]', el), thumbs = $$('.gw__thumb', el), rail = $('.gw__rail', el);
     let x = 0, cur = -1, raf = 0, auto = 0, touched = false, cs = [];
     const measure = () => { cs = pieces.map((p) => p.offsetLeft + p.offsetWidth / 2); };
     const mid = () => room.clientWidth / 2;
@@ -685,6 +685,9 @@
       if (k !== cur) {
         cur = k;
         pieces.forEach((p, j) => p.classList.toggle('is-lit', j === k));
+        thumbs.forEach((t, j) => t.classList.toggle('is-on', j === k));
+        // the lit thumbnail stays in view (the rail scrolls, the page does not)
+        if (thumbs[k] && rail) rail.scrollTo({ left: thumbs[k].offsetLeft - rail.clientWidth / 2 + thumbs[k].offsetWidth / 2, behavior: reduce ? 'auto' : 'smooth' });
         iOut.textContent = String(k + 1).padStart(2, '0');
         tOut.textContent = $('.gw__label b', pieces[k]).textContent;
         // the next two pictures load before you get there
@@ -705,17 +708,19 @@
       raf = requestAnimationFrame(step);
     }
     function take() { touched = true; clearInterval(auto); el.classList.add('is-used'); }
-    let x0 = null, start = 0, vx = 0, lx = 0, lt = 0;
+    let x0 = null, start = 0, vx = 0, lx = 0, lt = 0, moved = 0, hit = null;
     room.addEventListener('pointerdown', (e) => {
       take();
       cancelAnimationFrame(raf);
-      x0 = e.clientX; start = x; lx = e.clientX; lt = performance.now(); vx = 0;
+      x0 = e.clientX; start = x; lx = e.clientX; lt = performance.now(); vx = 0; moved = 0;
+      hit = e.target.closest('.gw__piece');
       room.classList.add('is-dragging');
       if (e.pointerType !== 'touch') room.setPointerCapture(e.pointerId);
     });
     room.addEventListener('pointermove', (e) => {
       if (x0 === null) return;
       setX(start + (e.clientX - x0));
+      moved = Math.max(moved, Math.abs(e.clientX - x0));
       const now = performance.now();
       vx = (e.clientX - lx) / Math.max(1, now - lt); lx = e.clientX; lt = now;
     });
@@ -723,11 +728,14 @@
       if (x0 === null) return;
       x0 = null;
       room.classList.remove('is-dragging');
+      // a tap on a piece walks to it; a drag lands where the throw would
+      if (moved < 6 && hit) { goTo(pieces.indexOf(hit)); return; }
       goTo(nearestTo(clampX(x + vx * 260)), 650); // where the throw would land, then the nearest piece
     };
     room.addEventListener('pointerup', end);
     room.addEventListener('pointercancel', end);
     $$('[data-step]', el).forEach((b) => b.addEventListener('click', () => { take(); goTo(cur + +b.dataset.step); }));
+    thumbs.forEach((t) => t.addEventListener('click', () => { take(); goTo(+t.dataset.go); }));
     el.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') { take(); goTo(cur + 1); }
       if (e.key === 'ArrowLeft') { take(); goTo(cur - 1); }

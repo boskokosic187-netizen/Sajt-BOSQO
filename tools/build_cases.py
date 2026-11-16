@@ -980,6 +980,11 @@ def lab_gallery(c, lab, R, media):
             f'<span class="gw__frame">{picture(m, "(min-width: 768px) 22vw, 50vw", alt=it["title"])}</span>'
             f'<figcaption class="gw__label"><b>{E(it["title"])}</b><span>{E(it["meta"])}</span></figcaption></figure>')
     n = len(pieces)
+    # the whole wall at a glance: a thumbnail per piece, a tap walks to it
+    rail = "".join(
+        f'<button class="gw__thumb" type="button" role="listitem" data-go="{j}" style="--ar:{m["w"] / m["h"]:.4f}" '
+        f'aria-label="{E(it["title"])}"><img src="{m["url"]}-{m["widths"][0]}.webp" alt="" loading="lazy" decoding="async"></button>'
+        for j, (it, m) in enumerate(zip(lab["media"], media["lab"])))
     return f"""
       <div class="gw" data-lab="gallery" data-n="{n}">
         <div class="db__head">
@@ -996,6 +1001,7 @@ def lab_gallery(c, lab, R, media):
           <p class="gw__now" aria-live="polite"><b data-gw-i>01</b><span>/ {n:02d}</span><em data-gw-t>{E(lab['media'][0]['title'])}</em></p>
           <button class="gw__btn" type="button" data-step="1" aria-label="Next piece">→</button>
         </div>
+        <div class="gw__rail" role="list" aria-label="Every piece on the wall">{rail}</div>
       </div>"""
 
 
@@ -1187,6 +1193,7 @@ def render_story(c, i, cases, media):
     skills = "".join(f"<li>{E(x)}</li>" for x in c["skills"])
     lab = c["lab"]
     lab_html = LABS[lab["type"]](c, lab, R, media)
+    flow = c.get("flow")   # chapters in the order of the story, e.g. ["craft", "craft", "lab", "craft"]
     craft = []
     for j, k in enumerate(media["craft"]):
         # "one_row": a set (one format per school) stays a single row on phones too
@@ -1194,7 +1201,7 @@ def render_story(c, i, cases, media):
         craft.append(f"""
       <article class="cr">
         <header class="cr__head">
-          <p class="cr__skill"><span>{j + 1:02d}</span>{E(k['skill'])}</p>
+          <p class="cr__skill">{"" if flow else f"<span>{j + 1:02d}</span>"}{E(k['skill'])}</p>
           <h3 class="cr__title">{rich(k['title'])}</h3>
           <p class="cr__text">{E(k['text'])}</p>
         </header>
@@ -1206,7 +1213,42 @@ def render_story(c, i, cases, media):
     # the key visual: a still (or three side by side), or a live stage built for the case;
     # "hero" stays the still for the share image and the next-case strip either way
     stage = (STAGES[c["stage"]](c, R) if c.get("stage") else
-             f'    <section class="cover{" is-trio" if trio else ""}" id="cover" aria-label="Key visual">\n      {cover}\n    </section>')
+             f'    <section class="cover{" is-trio" if trio else ""}" id="cover" aria-label="Key visual" style="--sum:{sum(m["w"] / m["h"] for m in hero):.4f}">\n      {cover}\n    </section>')
+
+    def lab_sec(num, label):
+        return f"""
+    <section class="cs-lab cs-lab--{lab['type']}" id="lab" aria-labelledby="lab-t">
+      <div class="sec-head"><span class="sec-head__num">{num}</span><span class="sec-head__label">{label}</span></div>{lab_html}
+      <p class="lab__why"><b>Why it matters</b>{E(lab['why'])}</p>
+    </section>
+"""
+    if flow:
+        # every chapter is a numbered section of its own; "chapter" is its line in the section head
+        parts, ci, sec = [], 0, 3
+        for step in flow:
+            if step == "lab":
+                parts.append(lab_sec(f"{sec:02d}", E(lab.get("chapter") or "Try it · " + lab["kicker"])))
+            else:
+                k = c["craft"][ci]
+                parts.append(f"""
+    <section class="cs-craft cs-chapter">
+      <div class="sec-head"><span class="sec-head__num">{sec:02d}</span><span class="sec-head__label">{E(k.get('chapter') or k['skill'])}</span></div>{craft[ci]}
+    </section>
+""")
+                ci += 1
+            sec += 1
+        if note:
+            parts.append(f'    <section class="cs-craft cs-chapter">{note}</section>\n')
+        body = "".join(parts)
+        res_num = f"{sec:02d}"
+    else:
+        body = lab_sec("03", f"Try it · {E(lab['kicker'])}") + f"""
+    <section class="cs-craft" aria-labelledby="craft-t">
+      <div class="sec-head"><span class="sec-head__num">04</span><span class="sec-head__label" id="craft-t">The craft · {len(craft)} skills, shown</span></div>{"".join(craft)}
+      {note}
+    </section>
+"""
+        res_num = "05"
 
     return (HEAD.format(title=E(c["title"]), desc=E(c["line"]), og=E(og_image(c["slug"], hero)), url=SITE + "work/" + c["slug"] + "/", R=R, extra=extra) + f"""
 <body class="page-case page-story">
@@ -1239,18 +1281,9 @@ def render_story(c, i, cases, media):
       </div>
     </section>
 
-    <section class="cs-lab cs-lab--{lab['type']}" id="lab" aria-labelledby="lab-t">
-      <div class="sec-head"><span class="sec-head__num">03</span><span class="sec-head__label">Try it · {E(lab['kicker'])}</span></div>{lab_html}
-      <p class="lab__why"><b>Why it matters</b>{E(lab['why'])}</p>
-    </section>
-
-    <section class="cs-craft" aria-labelledby="craft-t">
-      <div class="sec-head"><span class="sec-head__num">04</span><span class="sec-head__label" id="craft-t">The craft · {len(craft)} skills, shown</span></div>{"".join(craft)}
-      {note}
-    </section>
-
+{body}
     <section class="case-result">
-      <div class="sec-head"><span class="sec-head__num">05</span><span class="sec-head__label">Result</span></div>
+      <div class="sec-head"><span class="sec-head__num">{res_num}</span><span class="sec-head__label">Result</span></div>
       <p class="result__big">{E(c['result_big'])}{result_mascot(c, R)}</p>
       <p class="result__label">{E(c['result_label'])}</p>
       <p class="result__text">{E(c['result'])}</p>

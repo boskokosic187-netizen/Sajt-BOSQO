@@ -387,25 +387,27 @@
       "format": "story",
       "title": "FSU 2026",
       "kicker": "Campaigns & exhibition identities · Faculty of Contemporary Arts",
-      "line": "An art school, art-directed: 30+ campaigns, exhibitions and events in one year.",
+      "line": "One academic year at an art school, told in the order it happened: enrol, study, exhibit, gather, make the news.",
       "client": "FSU · Faculty of Contemporary Arts, Belgrade",
       "years": "2026",
       "role": "Art direction, design, motion",
       "skills": [
-        "Exhibition identity",
         "Art direction",
+        "Exhibition identity",
         "Poster design",
         "Campaigns",
+        "Series systems",
         "Print"
       ],
-      "brief": "People judge an art faculty by its own posters. Every exhibition, lecture and enrolment deadline needed an identity good enough to hang in its own gallery.",
-      "idea": "Every show gets its own concept. The constant is the frame: FSU's typographic system, so twenty different worlds still read as one school.",
+      "brief": "People judge an art faculty by its own posters. Every enrolment deadline, course, exhibition and night out needed a visual good enough to hang in the school's own gallery.",
+      "idea": "Follow the year. It starts with a door and an invitation to walk through it, and every chapter after that gets its own world. The constant is the frame: FSU's type, yellow and voice, so eighty different pieces still read as one school.",
       "lab": {
         "type": "gallery",
+        "chapter": "Chapter three · exhibit · try it",
         "kicker": "a year of shows",
         "title": "Walk *the gallery*",
-        "line": "So we hung them in one. Drag to walk past a year of FSU exhibitions, talks and nights, each with an identity of its own.",
-        "why": "Range inside one brand: every world is different, and every one is clearly FSU.",
+        "line": "By October the gallery never stays empty. Drag to walk past a year of FSU exhibitions, or pick a poster from the row below.",
+        "why": "Range inside one brand: every show is its own world, and every one is clearly FSU.",
         "media": [
           {
             "src": "PV/FSU/FSU Tacke susreta/Poster.tif",
@@ -415,46 +417,60 @@
             "meta": "Student exhibition · poster A3"
           },
           {
-            "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_2_Perspektiva/FSU_Prostor_u_nastajanju_R2-Poster_A3.tif",
+            "src": "S/_izvori/fsu/propter-omnia-poster.png",
+            "type": "image",
+            "label": "Propter Omnia",
+            "title": "Propter Omnia",
+            "meta": "Ivana Smiljanić · poster A3"
+          },
+          {
+            "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_1_Osnova/FSU_Prostor_u_nastajanju_R1-Poster_A3.tif",
             "type": "image",
             "label": "Space in the Making",
             "title": "Space in the Making",
-            "meta": "Exhibition · poster A3"
+            "meta": "Interior design show · poster A3"
           },
           {
-            "src": "PV/FSU/FSU Nina Nedic Zavirite unutra/DM.png",
+            "src": "PV/FSU/FSU Izlozba GMS Umetnost pokreta i vremena/Poster_A3.tif",
             "type": "image",
-            "label": "Look Inside",
-            "title": "Look Inside",
-            "meta": "Solo exhibition · Nina Nedić"
+            "label": "The Art of Motion and Time",
+            "title": "The Art of Motion and Time",
+            "meta": "School exhibition · poster A3"
+          },
+          {
+            "src": "PV/FSU/FSU Samo jedan rad/Posteri/Poster_Ana-Belosevic-Velican.tif",
+            "type": "image",
+            "label": "Only One Work · Hortus Deliciarum",
+            "title": "Only One Work · Hortus Deliciarum",
+            "meta": "One author a day · poster"
           },
           {
             "src": "PV/FSU/FSU Pogled iz blizine/Poster.tif",
             "type": "image",
             "label": "A Closer Look",
             "title": "A Closer Look",
-            "meta": "Exhibition · poster A3"
-          },
-          {
-            "src": "PV/FSU/FSU Nikola Stankovic Uhvaceni trenuci/DM.png",
-            "type": "image",
-            "label": "Captured Moments",
-            "title": "Captured Moments",
-            "meta": "Photography · Nikola Stanković"
+            "meta": "Fashion exhibition · poster A3"
           },
           {
             "src": "PV/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
             "type": "image",
             "label": "Morning",
             "title": "Morning",
-            "meta": "Exhibition · poster A3"
+            "meta": "Visual arts exhibition · poster A3"
           },
           {
-            "src": "PV/FSU/FSU Tri naprema tri - Telo moje belo/DM.png",
+            "src": "PV/FSU/FSU Tri naprema tri - Telo moje belo/plakat_QR.jpg",
             "type": "image",
             "label": "3:3 · My White Body",
             "title": "3:3 · My White Body",
-            "meta": "Concert & exhibition"
+            "meta": "Group exhibition · poster"
+          },
+          {
+            "src": "PV/FSU/FSU Milica Stojkovic Pre svitanja/Poster_A3.tif",
+            "type": "image",
+            "label": "Before Dawn",
+            "title": "Before Dawn",
+            "meta": "Milica Stojković · poster A3"
           },
           {
             "src": "PV/FSU/FSU Samo jedan rad/Posteri/Poster_Zajednicko.tif",
@@ -464,25 +480,18 @@
             "meta": "Group show, 13 authors · poster"
           },
           {
-            "src": "PV/FSU/FSU Marija Djuric Fluidi/Post_2_Otvorena/dm.png",
+            "src": "PV/FSU/FSU Nina Nedic Zavirite unutra/DM.png",
             "type": "image",
-            "label": "Fluids",
-            "title": "Fluids",
-            "meta": "Solo exhibition · Marija Đurić"
+            "label": "Look Inside",
+            "title": "Look Inside",
+            "meta": "Solo exhibition · Nina Nedić"
           },
           {
-            "src": "PV/FSU/FSU Milica Stojkovic Pre svitanja/Poster_A3.tif",
+            "src": "PV/FSU/FSU Galerija Plus Izabrani izlagaci/DM.png",
             "type": "image",
-            "label": "Before Dawn",
-            "title": "Before Dawn",
-            "meta": "Exhibition · Milica Stojković"
-          },
-          {
-            "src": "PV/FSU/FSU Re-Harmony/DM.png",
-            "type": "image",
-            "label": "Re-Harmony",
-            "title": "Re-Harmony",
-            "meta": "European project"
+            "label": "Gallery Plus · Selected Exhibitors",
+            "title": "Gallery Plus · Selected Exhibitors",
+            "meta": "Four shows for 2026"
           },
           {
             "src": "PV/FSU/FSU Samo jedan rad/Posteri/Poster_Katia-Shneider.tif",
@@ -492,56 +501,104 @@
             "meta": "Author poster"
           },
           {
-            "src": "PV/FSU/FSU Kreativne subote 2026/Post_1_Glavni vizual/DM.png",
+            "src": "PV/FSU/FSU Marija Djuric Fluidi/Post_2_Otvorena/dm.png",
             "type": "image",
-            "label": "Creative Saturdays",
-            "title": "Creative Saturdays",
-            "meta": "Art workshops for teens"
+            "label": "Fluids",
+            "title": "Fluids",
+            "meta": "Solo exhibition · Marija Đurić"
           },
           {
-            "src": "PV/FSU/FSU Znacaj mentalnog zdravlja/DM.png",
+            "src": "PV/FSU/FSU Nikola Stankovic Uhvaceni trenuci/DM.png",
             "type": "image",
-            "label": "Mental Health Matters",
-            "title": "Mental Health Matters",
-            "meta": "Talk"
+            "label": "Captured Moments",
+            "title": "Captured Moments",
+            "meta": "Photography · Nikola Stanković"
+          },
+          {
+            "src": "PV/FSU/FSU Re-Harmony/DM.png",
+            "type": "image",
+            "label": "Re-Harmony",
+            "title": "Re-Harmony",
+            "meta": "European project"
           }
         ]
       },
       "craft": [
         {
-          "skill": "Campaigns",
-          "title": "One door, *three stories*",
-          "text": "FSU Doors: “Create it. Move it. What did you open?” Three posts that work alone and read as one campaign in the grid.",
+          "chapter": "Chapter one · enrol",
+          "skill": "Enrolment campaigns",
+          "title": "First, open *the door*",
+          "text": "The year starts with one question: why here? FSU Doors answers in three posts, “Create it. Move it. What did you open?”, that work alone and read as one campaign in the grid. The same promise then travels to direct entry without an exam, the first-stroke series and the printed flyer.",
           "rows": [
             [
               {
                 "src": "PV/FSU/FSU Doors/Post_1_Stvaraj_je/FSU_Doors_Post1-1080x1080.png",
                 "type": "image",
-                "label": "Post 1 · feed 1:1"
+                "label": "Doors · post 1"
               },
               {
                 "src": "PV/FSU/FSU Doors/Post_2_Pokreni/FSU_Doors_Post2-1080x1080.png",
                 "type": "image",
-                "label": "Post 2 · feed 1:1"
+                "label": "Doors · post 2"
               },
               {
                 "src": "PV/FSU/FSU Doors/Post_3_Otvorio/FSU_Doors_Post3-1080x1080.png",
                 "type": "image",
-                "label": "Post 3 · feed 1:1"
+                "label": "Doors · post 3"
+              }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Direktan upis bez prijemnog/00 Opsti/DM.png",
+                "type": "image",
+                "label": "Enrol without an entrance exam"
+              },
+              {
+                "src": "PV/FSU/FSU Remek-delo/Post_1_Prvi_potez/FSU_Remek-delo_Post1-1080x1080.png",
+                "type": "image",
+                "label": "Masterpiece · the first stroke"
+              },
+              {
+                "src": "PV/FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg",
+                "type": "image",
+                "label": "Enrolment 2027/28 · flyer A5"
               }
             ]
           ]
         },
         {
+          "chapter": "Chapter two · study",
           "skill": "Programme series",
-          "title": "One template, *thirty courses*",
-          "text": "Costume Design MA: a key visual and a post per course. The frame stays, the costume and the colour change, so thirty posts never feel like one post thirty times.",
+          "title": "One frame, *thirty-eight courses*",
+          "text": "Then every programme has to explain itself, course by course. Contemporary Design MA: 38 posts where a pencil sketch turns into the finished space, each with its own accent colour. Costume Design MA keeps the frame and changes the costume, so a long series never feels like one post repeated.",
           "rows": [
+            [
+              {
+                "src": "PV/FSU/FSU MAS Savremeni dizajn/Post_01_Koncept_art/DM.png",
+                "type": "image",
+                "label": "Contemporary Design MA · 01 / 38"
+              },
+              {
+                "src": "PV/FSU/FSU MAS Savremeni dizajn/Post_07_3D_modelovanje_i_animacija/DM.png",
+                "type": "image",
+                "label": "07 / 38"
+              },
+              {
+                "src": "PV/FSU/FSU MAS Savremeni dizajn/Post_13_Transmedijalni_dizajn_i_razvoj_igara_1/DM.png",
+                "type": "image",
+                "label": "13 / 38"
+              },
+              {
+                "src": "PV/FSU/FSU MAS Savremeni dizajn/Post_31_Teorija_umetnosti_procesi_digitalizacije_i_AI/DM.png",
+                "type": "image",
+                "label": "31 / 38"
+              }
+            ],
             [
               {
                 "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_00_Opsti_vizual/DM.png",
                 "type": "image",
-                "label": "Key visual"
+                "label": "Costume Design MA · key visual"
               },
               {
                 "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_01_Modni_dizajn/DM.png",
@@ -554,42 +611,129 @@
                 "label": "Course 02"
               },
               {
-                "src": "PV/FSU/FSU Master Dizajn kostima Awareness/Post_03_Odevne_forme_i_aksesoari_1/DM.png",
+                "src": "PV/FSU/FSU Graficki Dizajn/FSU_Graficki_Dizajn_Post1-1080x1080.png",
                 "type": "image",
-                "label": "Course 03"
+                "label": "Graphic Design BA"
               }
             ]
           ]
         },
         {
-          "skill": "Print & presentation",
-          "title": "From A5 flyers to *lecture halls*",
-          "text": "The enrolment flyer, the study-programme presentation and the social set come from one source, so the school looks the same in your hand and on the big screen.",
+          "chapter": "Chapter four · gather",
+          "skill": "Events & open calls",
+          "title": "Then fill *the building*",
+          "text": "A school is also its nights and its Saturdays. The freshers’ party, painting under UV light, free workshops for teenagers and a Halloween corner each get their own mood, and the open calls that take students to bigger stages are staged as objects, not announcements.",
           "rows": [
             [
               {
-                "src": "PV/FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg",
+                "src": "PV/FSU/FSU Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/DM.png",
                 "type": "image",
-                "label": "Flyer A5, front"
+                "label": "Freshers’ party"
               },
               {
-                "src": "PV/FSU/FSU Studijski programi/Slajdovi_1920x1080/FSU_Studijski_programi_Slajd01-1920x1080.png",
+                "src": "PV/FSU/FSU UV Art Night/DM.png",
                 "type": "image",
-                "label": "Slide 1"
+                "label": "UV Art Night"
+              },
+              {
+                "src": "PV/FSU/FSU Kreativne subote 2026/Post_1_Glavni vizual/DM.png",
+                "type": "image",
+                "label": "Creative Saturdays"
+              },
+              {
+                "src": "PV/FSU/FSU Halloween kutak/DM.png",
+                "type": "image",
+                "label": "Halloween corner"
+              }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Imagine Cup 2027/DM.png",
+                "type": "image",
+                "label": "Imagine Cup 2027"
+              },
+              {
+                "src": "PV/FSU/FSU Sony World Photography Student 2027/DM.png",
+                "type": "image",
+                "label": "Sony World Photography · Student"
+              },
+              {
+                "src": "PV/FSU/FSU Schneider Electric Video Contest/DM.png",
+                "type": "image",
+                "label": "Schneider Electric Video Contest"
+              }
+            ]
+          ]
+        },
+        {
+          "chapter": "Chapter five · make the news",
+          "skill": "Editorial & news",
+          "title": "And tell *everyone*",
+          "text": "News posts are where a school’s feed usually goes grey. Here the headline lives inside the picture: a quote tucked behind her hair, “Hollywood” stacked behind his books, a name painted on a wall in Užice. Even a calendar day gets an idea: light through a prism, four ways to draw one head.",
+          "rows": [
+            [
+              {
+                "src": "PV/FSU/FSU Andjela Rajic Grazia/DM.png",
+                "type": "image",
+                "label": "Interview · Grazia"
+              },
+              {
+                "src": "PV/FSU/FSU Stevan Aleksic BIZLife/DM.png",
+                "type": "image",
+                "label": "Interview · BIZLife"
+              },
+              {
+                "src": "PV/FSU/FSU Plaketa grada Uzica Brankica Todorovic/DM.png",
+                "type": "image",
+                "label": "Award · City of Užice"
+              }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Svetski dan nauke za mir i razvoj/DM.png",
+                "type": "image",
+                "label": "World Science Day"
+              },
+              {
+                "src": "PV/FSU/FSU Dan tolerancije 2026/DM.png",
+                "type": "image",
+                "label": "International Day for Tolerance"
+              },
+              {
+                "src": "PV/FSU/FSU EU Code Week 2026/DM.png",
+                "type": "image",
+                "label": "EU Code Week"
               }
             ]
           ]
         }
       ],
-      "result_big": "30+",
-      "result_label": "identities in one academic year",
-      "result": "Across print, social, email, web and gallery walls: each one its own world, all of them clearly FSU.",
+      "result_big": "80+",
+      "result_label": "projects in one academic year",
+      "result": "Across print, social, email, web and gallery walls: from the first enrolment post to the last exhibition poster, each one its own world and all of them clearly FSU.",
       "hero": [
         {
-          "src": "PV/FSU/FSU Flajeri Upis 2027-28/FSU/prednja.jpg",
+          "src": "PV/FSU/FSU Tacke susreta/Poster.tif",
           "type": "image",
-          "label": "Enrolment 2027/28 · flyer"
+          "label": "Meeting Points · poster A3"
+        },
+        {
+          "src": "PV/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
+          "type": "image",
+          "label": "Morning · poster A3"
+        },
+        {
+          "src": "PV/FSU/FSU Izlozba GMS Umetnost pokreta i vremena/Poster_A3.tif",
+          "type": "image",
+          "label": "The Art of Motion and Time · poster A3"
         }
+      ],
+      "flow": [
+        "craft",
+        "craft",
+        "lab",
+        "craft",
+        "craft"
       ]
     },
     {
