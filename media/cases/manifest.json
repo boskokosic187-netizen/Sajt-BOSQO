@@ -1075,6 +1075,56 @@
        "label": "Graphic Design BA",
        "matte": false
       }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/56e500ef",
+       "label": "Creative Communications MA · POV",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/2f6b9f5f",
+       "label": "“AI works. You lead.”",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/940b806c",
+       "label": "Alumni Spotlight · carousel",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/c624d267",
+       "label": "Meet the author · carousel",
+       "matte": false
+      }
      ]
     ]
    },
@@ -1171,6 +1221,56 @@
        "label": "Schneider Electric Video Contest",
        "matte": false
       }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/b9b72b4c",
+       "label": "Porsche SCG · lobby art competition",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/bfaeb942",
+       "label": "Spirit of Belgrade · photo contest",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/6c537c05",
+       "label": "Orientation Day",
+       "matte": false
+      },
+      {
+       "w": 1140,
+       "h": 780,
+       "widths": [
+        800,
+        1140
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/ce43970a",
+       "label": "Online Fashion Week",
+       "matte": false
+      }
      ]
     ]
    },
@@ -1253,6 +1353,94 @@
        "type": "image",
        "url": "../../media/cases/fsu-2026/695bca1e",
        "label": "EU Code Week",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/87e20843",
+       "label": "Climate coalition coordinator",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/986ea518",
+       "label": "Plenary talk in Arad",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/67b11d78",
+       "label": "Zlatibor Edu Forum · award",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/bb4ae23e",
+       "label": "Armistice Day",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/67f72d1c",
+       "label": "Book launch · architecture",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/506bb70d",
+       "label": "Arts Thread · student shortlist",
+       "matte": false
+      },
+      {
+       "w": 1140,
+       "h": 780,
+       "widths": [
+        800,
+        1140
+       ],
+       "type": "image",
+       "url": "../../media/cases/fsu-2026/795df069",
+       "label": "Open call · young artists",
        "matte": false
       }
      ]
@@ -1578,6 +1766,320 @@
        "type": "image",
        "url": "../../media/cases/series-at-scale/4f8abbb8",
        "label": "IT Management · 4:5",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "ITS · key visuals",
+    "title": "A number you can *walk around*",
+    "text": "Between the series, ITS news gets one idea per post. Pass rates are built as objects in the scene: a 3D ring around the student, vinyl on a glass wall, digits behind an exploded camera, a red 100% standing on the floor. The same thinking carries the calendar days and the open calls.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/13e167eb",
+       "label": "Annual pass rate · 89.33%",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/2cad8084",
+       "label": "Master’s pass rate · 91.23%",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/5e6fd66b",
+       "label": "Bachelor pass rate · 76.30%",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/74880815",
+       "label": "Employer survey · 100%",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/b1ba9c3a",
+       "label": "Students choose · AI detection desk",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/1455c622",
+       "label": "World Science Day",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a6bd8c90",
+       "label": "International Day for Tolerance",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/2e3d4703",
+       "label": "Master’s pass rate · 91.94%",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/be09fd34",
+       "label": "Halloween · Say BOO!",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/abc78feb",
+       "label": "Sony World Photography · Student",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a8b9e2c5",
+       "label": "Schneider Electric Video Contest",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/78fbe537",
+       "label": "EVTA round table",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "ITHS · key visuals",
+    "title": "A high school with *its own voice*",
+    "text": "ITHS speaks to fifteen-year-olds and to their parents, so every post starts from a line they would repeat: “School ends at 14:30. That’s it. Really.” A former pupil comes back as a teacher on a red-pen worksheet, a poetry contest is written in a journal, a charity tournament is painted on the court.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/95f657c5",
+       "label": "School ends at 14:30",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/d5659131",
+       "label": "AI programme · think with AI",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/3dd4f670",
+       "label": "Former pupil, future teacher",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/56f69a33",
+       "label": "Pupils’ poetry meetings",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a7649bb9",
+       "label": "International Day for Tolerance",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/50467d93",
+       "label": "Children’s Week",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/9d6b1252",
+       "label": "Charity football tournament",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/226173a6",
+       "label": "Student app · Pythagoras’ workshop",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/dfa54727",
+       "label": "Volleyball · Zemun champions",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/57c1a3cf",
+       "label": "Air-XR · Antalya mobility",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/7f3e2099",
+       "label": "PeerCo · final conference, Burgos",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/1f7339c9",
+       "label": "Maths Super Mario",
        "matte": false
       }
      ]

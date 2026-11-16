@@ -690,6 +690,28 @@
                 "type": "image",
                 "label": "Graphic Design BA"
               }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Master kreativne komunikacije/FSU_Master-kreativne-komunikacije-1080x1080.png",
+                "type": "image",
+                "label": "Creative Communications MA · POV"
+              },
+              {
+                "src": "PV/FSU/FSU AI ne moze da napravi strategiju/DM.png",
+                "type": "image",
+                "label": "“AI works. You lead.”"
+              },
+              {
+                "src": "PV/FSU/FSU Alumni Spotlight/Bojan-Antonijevic/slajd_01.png",
+                "type": "image",
+                "label": "Alumni Spotlight · carousel"
+              },
+              {
+                "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_01.png",
+                "type": "image",
+                "label": "Meet the author · carousel"
+              }
             ]
           ]
         },
@@ -737,6 +759,28 @@
                 "type": "image",
                 "label": "Schneider Electric Video Contest"
               }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Porsche SCG vest/DM.png",
+                "type": "image",
+                "label": "Porsche SCG · lobby art competition"
+              },
+              {
+                "src": "PV/FSU/FSU_DuhBeograda/video/FSU_DuhBeograda_1080x1080_poster.png",
+                "type": "image",
+                "label": "Spirit of Belgrade · photo contest"
+              },
+              {
+                "src": "PV/FSU/FSU Orientation Day 2026/FSU_Orientation_Day_2026_DM-1080x1080.png",
+                "type": "image",
+                "label": "Orientation Day"
+              },
+              {
+                "src": "PV/FSU/FSU Online Fashion Week 2026/mejl (veca rezolucija).png",
+                "type": "image",
+                "label": "Online Fashion Week"
+              }
             ]
           ]
         },
@@ -778,6 +822,45 @@
                 "src": "PV/FSU/FSU EU Code Week 2026/DM.png",
                 "type": "image",
                 "label": "EU Code Week"
+              }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Brankica Todorovic Education for Climate Coalition/DM.png",
+                "type": "image",
+                "label": "Climate coalition coordinator"
+              },
+              {
+                "src": "PV/FSU/FSU Vest Arad/DM.png",
+                "type": "image",
+                "label": "Plenary talk in Arad"
+              },
+              {
+                "src": "PV/FSU/FSU Zahvalnica Zlatibor Edu Forum/DM.png",
+                "type": "image",
+                "label": "Zlatibor Edu Forum · award"
+              },
+              {
+                "src": "PV/FSU/FSU ITS Neradni dan Dan primirja/DM.png",
+                "type": "image",
+                "label": "Armistice Day"
+              }
+            ],
+            [
+              {
+                "src": "PV/FSU/FSU Istorija i teorija arhitekture i grada/FSU_Istorija-i-teorija-arhitekture-1080x1080.png",
+                "type": "image",
+                "label": "Book launch · architecture"
+              },
+              {
+                "src": "PV/FSU/FSU Jovana Macanovic Arts Thread/FSU_Jovana_Macanovic_Arts_Thread_DM-1080x1080.png",
+                "type": "image",
+                "label": "Arts Thread · student shortlist"
+              },
+              {
+                "src": "PV/FSU/FSU Konkurs Godisnja izlozba mladih 2026/mejl (veca rezolucija).png",
+                "type": "image",
+                "label": "Open call · young artists"
               }
             ]
           ]
@@ -1047,6 +1130,152 @@
                 "src": "PV/ITS/ITS Studijski programi i moduli/Post_08_Menadzment_u_IT/meta/1080x1350.png",
                 "type": "image",
                 "label": "IT Management · 4:5"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "ITS · key visuals",
+          "title": "A number you can *walk around*",
+          "text": "Between the series, ITS news gets one idea per post. Pass rates are built as objects in the scene: a 3D ring around the student, vinyl on a glass wall, digits behind an exploded camera, a red 100% standing on the floor. The same thinking carries the calendar days and the open calls.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITS/ITS Godisnja analiza prolaznosti/DM.png",
+                "type": "image",
+                "label": "Annual pass rate · 89.33%"
+              },
+              {
+                "src": "PV/ITS/ITS Master prolaznost Oktobar 2/DM.png",
+                "type": "image",
+                "label": "Master’s pass rate · 91.23%"
+              },
+              {
+                "src": "PV/ITS/ITS Osnovne studije prolaznost/DM.png",
+                "type": "image",
+                "label": "Bachelor pass rate · 76.30%"
+              },
+              {
+                "src": "PV/ITS/ITS 100 posto anketiranih poslodavaca/DM.png",
+                "type": "image",
+                "label": "Employer survey · 100%"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Studenti biraju znanje i interesovanja/DM.png",
+                "type": "image",
+                "label": "Students choose · AI detection desk"
+              },
+              {
+                "src": "PV/ITS/ITS Svetski dan nauke za mir i razvoj/DM.png",
+                "type": "image",
+                "label": "World Science Day"
+              },
+              {
+                "src": "PV/ITS/ITS Dan tolerancije 2026/DM.png",
+                "type": "image",
+                "label": "International Day for Tolerance"
+              },
+              {
+                "src": "PV/ITS/ITS Master prolaznost oktobarski rok/DM.png",
+                "type": "image",
+                "label": "Master’s pass rate · 91.94%"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Halloween Say BOO/DM.png",
+                "type": "image",
+                "label": "Halloween · Say BOO!"
+              },
+              {
+                "src": "PV/ITS/ITS Sony World Photography Student 2027/DM.png",
+                "type": "image",
+                "label": "Sony World Photography · Student"
+              },
+              {
+                "src": "PV/ITS/ITS Schneider Electric Video Contest/DM.png",
+                "type": "image",
+                "label": "Schneider Electric Video Contest"
+              },
+              {
+                "src": "PV/ITS/ITS EVTA Age Management/DM.png",
+                "type": "image",
+                "label": "EVTA round table"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "ITHS · key visuals",
+          "title": "A high school with *its own voice*",
+          "text": "ITHS speaks to fifteen-year-olds and to their parents, so every post starts from a line they would repeat: “School ends at 14:30. That’s it. Really.” A former pupil comes back as a teacher on a red-pen worksheet, a poetry contest is written in a journal, a charity tournament is painted on the court.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITHS/ITHS Skola se zavrsava u 14.30/DM.png",
+                "type": "image",
+                "label": "School ends at 14:30"
+              },
+              {
+                "src": "PV/ITHS/ITHS AI program/DM.png",
+                "type": "image",
+                "label": "AI programme · think with AI"
+              },
+              {
+                "src": "PV/ITHS/ITHS Bivsi ucenik buduci nastavnik/DM.png",
+                "type": "image",
+                "label": "Former pupil, future teacher"
+              },
+              {
+                "src": "PV/ITHS/ITHS Dacki pesnicki susreti 2026/DM.png",
+                "type": "image",
+                "label": "Pupils’ poetry meetings"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Dan tolerancije 2026/DM.png",
+                "type": "image",
+                "label": "International Day for Tolerance"
+              },
+              {
+                "src": "PV/ITHS/ITHS Decija nedelja/ITHS_Decija-nedelja_1080x1080.png",
+                "type": "image",
+                "label": "Children’s Week"
+              },
+              {
+                "src": "PV/ITHS/ITHS Humanitarni turnir mali fudbal/DM.png",
+                "type": "image",
+                "label": "Charity football tournament"
+              },
+              {
+                "src": "PV/ITHS/ITHS Ucenicke aplikacije/Pitagorina radionica/DM.png",
+                "type": "image",
+                "label": "Student app · Pythagoras’ workshop"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Odbojka prvaci opstine Zemun/DM.png",
+                "type": "image",
+                "label": "Volleyball · Zemun champions"
+              },
+              {
+                "src": "PV/ITHS/ITHS Air-XR Antalija/DM.png",
+                "type": "image",
+                "label": "Air-XR · Antalya mobility"
+              },
+              {
+                "src": "PV/ITHS/ITHS Erasmus PeerCo Zavrsna konferencija Burgos/DM.png",
+                "type": "image",
+                "label": "PeerCo · final conference, Burgos"
+              },
+              {
+                "src": "PV/ITHS/ITHS Matematicki Super Mario/ITHS_Matematicki-Super-Mario_DM-1080x1080.png",
+                "type": "image",
+                "label": "Maths Super Mario"
               }
             ]
           ]
