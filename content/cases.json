@@ -136,6 +136,238 @@
       },
       "craft": [
         {
+          "skill": "Billboards",
+          "title": "A new board, *every month*",
+          "text": "Each month the group booked the same boards across Belgrade and changed the message: pre-enrolment, a new course, a spring intake, a programme for career changers. The red and the two crests stay, so a driver knows the school before reading a word. Every board went to print in 8×3, 4×3 and 5×2.6 metres, with a LED animation and a social set.",
+          "rows": [
+            [
+              {
+                "src": "A/ITS/Bilbordi Oktobar/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · October 2025 · “The IT high school and college” · 8×3 m"
+              }
+            ],
+            [
+              {
+                "src": "A/ITS/Bilbordi Novembar/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · November 2025 · pre-enrolment"
+              },
+              {
+                "src": "A/ITS/Bilbordi Decembar/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · December 2025 · pre-enrolment"
+              }
+            ],
+            [
+              {
+                "src": "A/ITS/Februar bilbordi/8x3.tif",
+                "type": "image",
+                "label": "ITS · February 2026 · “Future IT engineers”"
+              },
+              {
+                "src": "A/ITS/Februar bilbordi/ITHS/8x3.tif",
+                "type": "image",
+                "label": "ITHS · February 2026 · “Modern economics in an IT school”"
+              }
+            ],
+            [
+              {
+                "src": "A/ITS/Mart bilbordi/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · March 2026 · spring pre-enrolment"
+              },
+              {
+                "src": "A/ITS/Mart bilbordi/Prekvalifikacija/8x3.tif",
+                "type": "image",
+                "label": "ITS · March 2026 · retraining programmes"
+              }
+            ],
+            [
+              {
+                "src": "A/ITS/Bilbordi April/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · April 2026 · “AI: from zero to hero”"
+              },
+              {
+                "src": "A/ITS/Bilbord Maj/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · May 2026 · school day"
+              }
+            ],
+            [
+              {
+                "src": "A/ITS/Bilbord Jul/8x3.tif",
+                "type": "image",
+                "label": "ITS + ITHS · July 2026 · “The future is now”"
+              },
+              {
+                "src": "A/ITS/Ekonomski tehnicar, bilbord/8x3.tif",
+                "type": "image",
+                "label": "ITHS · 2026 · new course: economics technician"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "ITS · web banners",
+          "title": "The college, *one banner at a time*",
+          "text": "Between two billboards the college still has news every week: pass rates, competitions, study programmes, a freshers’ party. Each one gets a 1200×630 banner for the site and a square for the feed. The numbers are built into the scene, on a wall, a staircase or a ring around a student, so a statistic reads like a headline.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITS/ITS Godisnja analiza prolaznosti/SAJT.png",
+                "type": "image",
+                "label": "ITS · annual pass rate · 89.33% as a ring around the student"
+              },
+              {
+                "src": "PV/ITS/ITS 100 posto anketiranih poslodavaca/SAJT.png",
+                "type": "image",
+                "label": "ITS · “100% of surveyed employers”"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Osnovne studije prolaznost/SAJT.png",
+                "type": "image",
+                "label": "ITS · bachelor pass rates · numbers behind an exploded camera"
+              },
+              {
+                "src": "PV/ITS/ITS Master prolaznost Oktobar 2/SAJT.png",
+                "type": "image",
+                "label": "ITS · master pass rate · 91.23% on a glass wall"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Master prolaznost oktobarski rok/SAJT.png",
+                "type": "image",
+                "label": "ITS · master pass rate · last year’s number on the stairs"
+              },
+              {
+                "src": "PV/ITS/ITS Studenti biraju znanje i interesovanja/SAJT.png",
+                "type": "image",
+                "label": "ITS · “Students choose knowledge and interests”"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1200x630.png",
+                "type": "image",
+                "label": "ITS · study programme · Software development"
+              },
+              {
+                "src": "PV/ITS/ITS Sta radi zanimanja/27_Sta_radi_veb_urednik/SAJT.png",
+                "type": "image",
+                "label": "ITS · “What does a web editor do?” · careers series"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Sony World Photography Student 2027/SAJT.png",
+                "type": "image",
+                "label": "ITS · Sony World Photography Awards · “Journeys”"
+              },
+              {
+                "src": "PV/ITS/ITS Schneider Electric Video Contest/SAJT.png",
+                "type": "image",
+                "label": "ITS · Schneider Electric video contest · “A new vision of energy”"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Svetski dan nauke za mir i razvoj/SAJT.png",
+                "type": "image",
+                "label": "ITS · World Science Day · “Technology changes the world”"
+              },
+              {
+                "src": "PV/ITS/Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/SAJT.png",
+                "type": "image",
+                "label": "ITS · freshers’ party · 18 October"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "ITHS · web banners",
+          "title": "The high school, *in its own red*",
+          "text": "A high school talks to teenagers and to their parents at once. Student apps get the app’s own colours, school trips get boarding passes and pins on a map, an anniversary gets a candle on a cake. The red and the crest hold it together.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITHS/ITHS 15 godina zajednickog rasta/SAJT.png",
+                "type": "image",
+                "label": "ITHS · “15 years of growing together”"
+              },
+              {
+                "src": "PV/ITHS/ITHS Dacki pesnicki susreti 2026/SAJT.png",
+                "type": "image",
+                "label": "ITHS · student poetry contest · the title written in the journal"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Humanitarni turnir mali fudbal/SAJT.png",
+                "type": "image",
+                "label": "ITHS · charity football tournament · “Small football, big heart”"
+              },
+              {
+                "src": "PV/ITHS/ITHS Bivsi ucenik buduci nastavnik/SAJT.png",
+                "type": "image",
+                "label": "ITHS · a former student returns as a teacher"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Air-XR Antalija/SAJT.png",
+                "type": "image",
+                "label": "ITHS · Air-XR mobility in Antalya · day one"
+              },
+              {
+                "src": "PV/ITHS/ITHS Erasmus PeerCo Zavrsna konferencija Burgos/SAJT.png",
+                "type": "image",
+                "label": "ITHS · Erasmus+ PeerCo · final conference in Burgos"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Bebras USA takmicenje/SAJT.png",
+                "type": "image",
+                "label": "ITHS · Bebras USA informatics competition"
+              },
+              {
+                "src": "PV/ITHS/ITHS Ucenicke aplikacije/Pitagorina radionica/SAJT.png",
+                "type": "image",
+                "label": "ITHS · student app · Pythagoras’ workshop"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Konjicki klub/SAJT.png",
+                "type": "image",
+                "label": "ITHS · student app · riding club"
+              },
+              {
+                "src": "PV/ITHS/ITHS Matematicki Super Mario/ITHS_Matematicki-Super-Mario_SAJT-1200x630.png",
+                "type": "image",
+                "label": "ITHS · a maths lesson played as a platform game"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Decija nedelja/ITHS_Decija-nedelja_1200x630.png",
+                "type": "image",
+                "label": "ITHS · Children’s Week · “Love and respect”"
+              },
+              {
+                "src": "PV/ITHS/ITHS Svetski dan mentalnog zdravlja/SAJT.png",
+                "type": "image",
+                "label": "ITHS · World Mental Health Day"
+              }
+            ]
+          ]
+        },
+        {
           "skill": "Art direction",
           "title": "Twenty years, *twenty* prizes",
           "text": "ITS turned twenty, so the enrolment offer became twenty jubilee packages: the lowest fees of the year plus tech or sports gear. A giant 20 carries the headphones, the sneakers and the price, and the gift box comes back as a printed voucher with a satin ribbon. One key visual, every format in the same week.",

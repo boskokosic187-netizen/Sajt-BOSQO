@@ -79,6 +79,494 @@
   ],
   "craft": [
    {
+    "skill": "Billboards",
+    "title": "A new board, *every month*",
+    "text": "Each month the group booked the same boards across Belgrade and changed the message: pre-enrolment, a new course, a spring intake, a programme for career changers. The red and the two crests stay, so a driver knows the school before reading a word. Every board went to print in 8×3, 4×3 and 5×2.6 metres, with a LED animation and a social set.",
+    "rows": [
+     [
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/fb553508",
+       "label": "ITS + ITHS · October 2025 · “The IT high school and college” · 8×3 m",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/2950f3ef",
+       "label": "ITS + ITHS · November 2025 · pre-enrolment",
+       "matte": false
+      },
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/c1c6eefc",
+       "label": "ITS + ITHS · December 2025 · pre-enrolment",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/39251a5a",
+       "label": "ITS · February 2026 · “Future IT engineers”",
+       "matte": false
+      },
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/ca39e162",
+       "label": "ITHS · February 2026 · “Modern economics in an IT school”",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/6dbddfac",
+       "label": "ITS + ITHS · March 2026 · spring pre-enrolment",
+       "matte": false
+      },
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/ba59d532",
+       "label": "ITS · March 2026 · retraining programmes",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/d42d1f84",
+       "label": "ITS + ITHS · April 2026 · “AI: from zero to hero”",
+       "matte": false
+      },
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/9457fdad",
+       "label": "ITS + ITHS · May 2026 · school day",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/e1debef2",
+       "label": "ITS + ITHS · July 2026 · “The future is now”",
+       "matte": false
+      },
+      {
+       "w": 2400,
+       "h": 900,
+       "widths": [
+        800,
+        1600,
+        2400
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/6eb2417f",
+       "label": "ITHS · 2026 · new course: economics technician",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "ITS · web banners",
+    "title": "The college, *one banner at a time*",
+    "text": "Between two billboards the college still has news every week: pass rates, competitions, study programmes, a freshers’ party. Each one gets a 1200×630 banner for the site and a square for the feed. The numbers are built into the scene, on a wall, a staircase or a ring around a student, so a statistic reads like a headline.",
+    "rows": [
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/0e50a81a",
+       "label": "ITS · annual pass rate · 89.33% as a ring around the student",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/ce8b7380",
+       "label": "ITS · “100% of surveyed employers”",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/c267ad87",
+       "label": "ITS · bachelor pass rates · numbers behind an exploded camera",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/47a6b4b7",
+       "label": "ITS · master pass rate · 91.23% on a glass wall",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/15e69dc3",
+       "label": "ITS · master pass rate · last year’s number on the stairs",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/75cc7723",
+       "label": "ITS · “Students choose knowledge and interests”",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/c5453286",
+       "label": "ITS · study programme · Software development",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/6a75da78",
+       "label": "ITS · “What does a web editor do?” · careers series",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/2dfa76ed",
+       "label": "ITS · Sony World Photography Awards · “Journeys”",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/27e94ca6",
+       "label": "ITS · Schneider Electric video contest · “A new vision of energy”",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/b9c6e621",
+       "label": "ITS · World Science Day · “Technology changes the world”",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/a4dac058",
+       "label": "ITS · freshers’ party · 18 October",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "ITHS · web banners",
+    "title": "The high school, *in its own red*",
+    "text": "A high school talks to teenagers and to their parents at once. Student apps get the app’s own colours, school trips get boarding passes and pins on a map, an anniversary gets a candle on a cake. The red and the crest hold it together.",
+    "rows": [
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/88de4955",
+       "label": "ITHS · “15 years of growing together”",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/0359e664",
+       "label": "ITHS · student poetry contest · the title written in the journal",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/845f7925",
+       "label": "ITHS · charity football tournament · “Small football, big heart”",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/2f2a7201",
+       "label": "ITHS · a former student returns as a teacher",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/ddb3b692",
+       "label": "ITHS · Air-XR mobility in Antalya · day one",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/264ca7a4",
+       "label": "ITHS · Erasmus+ PeerCo · final conference in Burgos",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/0f862fbd",
+       "label": "ITHS · Bebras USA informatics competition",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/374187a8",
+       "label": "ITHS · student app · Pythagoras’ workshop",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/dbf97f88",
+       "label": "ITHS · student app · riding club",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/c9397a90",
+       "label": "ITHS · a maths lesson played as a platform game",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/3127b4be",
+       "label": "ITHS · Children’s Week · “Love and respect”",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 630,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/live-on-the-streets/c45e27db",
+       "label": "ITHS · World Mental Health Day",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
     "skill": "Art direction",
     "title": "Twenty years, *twenty* prizes",
     "text": "ITS turned twenty, so the enrolment offer became twenty jubilee packages: the lowest fees of the year plus tech or sports gear. A giant 20 carries the headphones, the sneakers and the price, and the gift box comes back as a printed voucher with a satin ribbon. One key visual, every format in the same week.",
