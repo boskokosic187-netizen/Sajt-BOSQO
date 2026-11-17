@@ -490,7 +490,7 @@
   function setupJumps() {
     const lazy = $$('main > section').filter((s) => getComputedStyle(s).contentVisibility === 'auto');
     if (!lazy.length) return;
-    let ride = 0;
+    let ride = 0, tOut = 0, tIn = 0;
     document.addEventListener('click', (e) => {
       if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = e.target.closest && e.target.closest('a[href^="#"]');
@@ -499,24 +499,31 @@
       if (!el || !el.matches('main > section')) return;
       e.preventDefault();
       const me = ++ride;
-      lazy.forEach((s) => (s.style.contentVisibility = 'visible'));
-      const go = () => scrollTo({ top: Math.round(el.getBoundingClientRect().top + scrollY), behavior: reduceMotion ? 'auto' : 'smooth' });
-      go();
+      // the cut: a veil closes over the page, the page jumps under it, then a scan line runs
+      // down and the section rises into place as the veil lifts (css: .jumpveil, .jumpline).
+      // The jump itself is instant, so there is no long scroll past everything in between
+      const land = () => {
+        lazy.forEach((s) => (s.style.contentVisibility = 'visible'));
+        for (let i = 0; i < 2; i++) scrollTo({ top: Math.round(el.getBoundingClientRect().top + scrollY), behavior: 'instant' });
+      };
+      const settle = () => { if (me === ride) lazy.forEach((s) => (s.style.contentVisibility = '')); };
       if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
-      let left = 2, timer = 0;
-      const end = () => {
-        if (me !== ride) return;
-        removeEventListener('scrollend', end);
-        clearTimeout(timer);
-        const off = Math.abs(el.getBoundingClientRect().top) > 2 && Math.ceil(scrollY) < document.documentElement.scrollHeight - innerHeight;
-        if (off && left--) { go(); wait(); return; }
-        lazy.forEach((s) => (s.style.contentVisibility = ''));
-      };
-      const wait = () => {
-        if ('onscrollend' in window) addEventListener('scrollend', end);
-        timer = setTimeout(end, 1800); // a jump of zero never ends a scroll
-      };
-      wait();
+      clearTimeout(tOut); clearTimeout(tIn);
+      $$('.jump-target').forEach((x) => x.classList.remove('jump-target'));
+      root.classList.remove('is-jump-in');
+      if (lite) { land(); requestAnimationFrame(settle); return; }
+      root.classList.add('is-jump-out');
+      tOut = setTimeout(() => {
+        land();
+        el.classList.add('jump-target');
+        root.classList.remove('is-jump-out');
+        root.classList.add('is-jump-in');
+        tIn = setTimeout(() => {
+          root.classList.remove('is-jump-in');
+          el.classList.remove('jump-target');
+          settle();
+        }, 850);
+      }, 210);
     });
   }
 

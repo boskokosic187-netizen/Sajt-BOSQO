@@ -574,6 +574,101 @@
                 "type": "image",
                 "label": "AI Game Predictor · the cast explains the product"
               }
+            ],
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Monday.webp",
+                "type": "image",
+                "label": "Introducing the AI game predictor"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Join-AI-testing.webp",
+                "type": "image",
+                "label": "Join AI testing"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/19-2.webp",
+                "type": "image",
+                "label": "AI sports engine incoming"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/1_1 (1).webp",
+                "type": "image",
+                "label": "March Madness"
+              }
+            ],
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Fusion.webp",
+                "type": "image",
+                "label": "Fusion · two Ballies make a third"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/26-sept.webp",
+                "type": "image",
+                "label": "Player vs player"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Thursday.webp",
+                "type": "image",
+                "label": "Sponsored tournament"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/4-Aug.webp",
+                "type": "image",
+                "label": "Join & win"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Launch graphics",
+          "title": "A launch, staged like *a drop*",
+          "text": "Token launches, season passes and airdrops are announcements with nothing to photograph. Each one gets an object to look at instead: a coin lifting off, a rocket on the pad, a pass burning through orbit, medals falling like comets.",
+          "rows": [
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/BALL-ETH.webp",
+                "type": "image",
+                "label": "$BALL launch on ETH"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Friday (1).webp",
+                "type": "image",
+                "label": "$BALL · launch confirmed"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Season-12.webp",
+                "type": "image",
+                "label": "Season 12"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Season-11.webp",
+                "type": "image",
+                "label": "Season 11 · crossover pass"
+              }
+            ],
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/4/Ball-post-4.webp",
+                "type": "image",
+                "label": "Airdrop distribution"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/4/4.webp",
+                "type": "image",
+                "label": "IDO bonus for badge minters"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/Rewards-discord.webp",
+                "type": "image",
+                "label": "World Series rewards"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/18-2.webp",
+                "type": "image",
+                "label": "AI meets sports"
+              }
             ]
           ]
         },
@@ -597,6 +692,28 @@
                 "src": "S/_stari-sajt/assets/BALLIES/4/2000_vince_carter.webp",
                 "type": "image",
                 "label": "Defy gravity · Vince Carter, 2000"
+              }
+            ],
+            [
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/brown-vs-gravity.webp",
+                "type": "image",
+                "label": "Brown vs Gravity · match-day key art"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/4/You-vs-Ai.webp",
+                "type": "image",
+                "label": "You vs AI"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/19-11.webp",
+                "type": "image",
+                "label": "Sportsbooks vs Ballies"
+              },
+              {
+                "src": "S/_stari-sajt/assets/BALLIES/2/h2h.webp",
+                "type": "image",
+                "label": "Head-to-head challenge"
               }
             ]
           ]

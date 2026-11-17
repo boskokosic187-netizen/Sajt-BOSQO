@@ -916,6 +916,216 @@
        "label": "AI Game Predictor · the cast explains the product",
        "matte": false
       }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/2d1e0fef",
+       "label": "Introducing the AI game predictor",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/dd83fe20",
+       "label": "Join AI testing",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/9d824e94",
+       "label": "AI sports engine incoming",
+       "matte": false
+      },
+      {
+       "w": 2160,
+       "h": 2160,
+       "widths": [
+        800,
+        1600,
+        2160
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/2ca1adb1",
+       "label": "March Madness",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/4e17de1f",
+       "label": "Fusion · two Ballies make a third",
+       "matte": false
+      },
+      {
+       "w": 1024,
+       "h": 1024,
+       "widths": [
+        800,
+        1024
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/38e48b6d",
+       "label": "Player vs player",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/ce6a6145",
+       "label": "Sponsored tournament",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/c9f29463",
+       "label": "Join & win",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Launch graphics",
+    "title": "A launch, staged like *a drop*",
+    "text": "Token launches, season passes and airdrops are announcements with nothing to photograph. Each one gets an object to look at instead: a coin lifting off, a rocket on the pad, a pass burning through orbit, medals falling like comets.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/0b280749",
+       "label": "$BALL launch on ETH",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/1cd8c9e7",
+       "label": "$BALL · launch confirmed",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/d75e2138",
+       "label": "Season 12",
+       "matte": false
+      },
+      {
+       "w": 1500,
+       "h": 1500,
+       "widths": [
+        800,
+        1500
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/834b87e6",
+       "label": "Season 11 · crossover pass",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 2000,
+       "h": 2000,
+       "widths": [
+        800,
+        1600,
+        2000
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/b823a573",
+       "label": "Airdrop distribution",
+       "matte": false
+      },
+      {
+       "w": 2000,
+       "h": 2000,
+       "widths": [
+        800,
+        1600,
+        2000
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/683c294a",
+       "label": "IDO bonus for badge minters",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/8b79109e",
+       "label": "World Series rewards",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/e919cdd6",
+       "label": "AI meets sports",
+       "matte": false
+      }
      ]
     ]
    },
@@ -959,6 +1169,56 @@
        "type": "image",
        "url": "../../media/cases/ballies/76a1b5c9",
        "label": "Defy gravity · Vince Carter, 2000",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1082,
+       "h": 1080,
+       "widths": [
+        800,
+        1082
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/f7ef9cb5",
+       "label": "Brown vs Gravity · match-day key art",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/e2d19a54",
+       "label": "You vs AI",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/b06a9eb2",
+       "label": "Sportsbooks vs Ballies",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/ballies/41686f2c",
+       "label": "Head-to-head challenge",
        "matte": false
       }
      ]

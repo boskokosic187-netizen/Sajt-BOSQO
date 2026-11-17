@@ -3460,6 +3460,24 @@ html.vt-open::view-transition-old(root) { animation: vtWallIn 0.8s cubic-bezier(
 html.vt-open::view-transition-new(root) { animation: projFade 0.5s ease-out 0.24s both; }
 html.vt-close::view-transition-old(root) { animation: vtFadeOut 0.28s ease-in both; }
 html.vt-close::view-transition-new(root) { animation: vtWallOut 0.75s cubic-bezier(0.2, 0.75, 0.12, 1) both; transform-origin: var(--tx, 50%) var(--ty, 50%); }
+/* the jump (a link to a section of this page, js: setupJumps): no long scroll. A veil closes
+   over the page in a fifth of a second, the page jumps under it, then a scan line runs down the
+   screen and the section rises into place as the veil lifts; the top bar stays where it is.
+   No view transition here: its snapshots crashed the renderer when leaving Process */
+.jumpveil {
+  position: fixed; inset: 0; z-index: 38; pointer-events: none; opacity: 0; background: var(--bg);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.06s;
+}
+html.is-jump-out .jumpveil { opacity: 1; transition: opacity 0.2s cubic-bezier(0.4, 0, 1, 1); }
+.jumpline {
+  position: fixed; z-index: 39; left: 0; right: 0; top: 0; height: 2px; pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--sig) 18%, #fff 50%, var(--sig) 82%, transparent);
+  box-shadow: 0 0 18px 2px color-mix(in srgb, var(--sig) 70%, transparent), 0 0 80px 14px color-mix(in srgb, var(--sig) 28%, transparent);
+}
+html.is-jump-in .jumpline { animation: jumpScan 0.7s cubic-bezier(0.5, 0, 0.2, 1) both; }
+html.is-jump-in .jump-target { animation: jumpRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes jumpScan { from { transform: translateY(0); opacity: 0; } 12% { opacity: 1; } 85% { opacity: 1; } to { transform: translateY(100vh); opacity: 0; } }
+@keyframes jumpRise { from { transform: translateY(36px); } }
 html.vt-open::view-transition-group(take) { animation-duration: 0.8s; animation-timing-function: cubic-bezier(0.22, 0.8, 0.12, 1); }
 html.vt-close::view-transition-group(take) { animation-duration: 0.65s; animation-timing-function: cubic-bezier(0.3, 0.7, 0.1, 1); }
 html:is(.vt-open, .vt-close)::view-transition-old(take), html:is(.vt-open, .vt-close)::view-transition-new(take) { height: 100%; object-fit: cover; }
