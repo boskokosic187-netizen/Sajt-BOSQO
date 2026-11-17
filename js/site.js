@@ -8,6 +8,24 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const root = document.documentElement;
+
+  /* a page from the browser's cache that is older than the one on the server reloads itself.
+     The server sends no cache rule for html, so a browser may keep showing a visitor (and the
+     author, right after a deploy) yesterday's page. One HEAD request per view; the page reloads
+     at most once for each server version */
+  (() => {
+    if (!/^https?:$/.test(location.protocol)) return;
+    const check = () => fetch(location.pathname, { method: 'HEAD', cache: 'no-store' }).then((r) => {
+      const srv = Date.parse(r.headers.get('last-modified') || ''), mine = Date.parse(document.lastModified);
+      if (!r.ok || !srv || !mine || srv - mine < 5000) return;
+      const key = 'fresh:' + location.pathname + ':' + srv;
+      try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) { return; }
+      location.reload();
+    }).catch(() => {});
+    check();
+    addEventListener('pageshow', (e) => { if (e.persisted) check(); });
+  })();
+
   const LOOPS = 'media/loops/';
   const FX = new URL('../media/fx/', document.currentScript.src).href; // works from case pages too
   const CASES = {

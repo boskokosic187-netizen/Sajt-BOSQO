@@ -124,8 +124,8 @@
   position: relative; height: min(70vh, 720px, 118vw); aspect-ratio: var(--ar); cursor: pointer;
   transform-style: preserve-3d; transition: transform 1.1s var(--out);
 }
-.mx__layer { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 1.1s var(--out), opacity 0.3s; pointer-events: none; }
-.mx__layer img { position: absolute; display: block; max-width: none; height: auto; pointer-events: none; }
+.mx__layer { position: absolute; inset: 0; transform-style: preserve-3d; transform: translateZ(calc(var(--i) * 0.6px)); transition: transform 1.1s var(--out), opacity 0.3s; pointer-events: none; } /* a hair apart in depth even when closed, so the ten planes never fight over which is in front */
+.mx__layer img { position: absolute; display: block; max-width: none; height: auto; pointer-events: none; will-change: transform; } /* will-change: drawn once at full size, so the stack closing back from 0.54 shows the whole sharp picture at once, not a soft one that repaints piece by piece */
 .mx__layer[data-l="0"] img { border-radius: 17px; }
 .mx__art.is-pre .mx__layer { opacity: 0; }
 .mx__art.is-focus .mx__layer:not(.is-hot) { opacity: 0.38; }
@@ -162,7 +162,7 @@
 .mx__card.is-exploded .mx__art { transform: translate(6%, 17%) rotateX(58deg) rotateZ(-38deg) scale(0.54); cursor: default; }
 .mx__card.is-exploded .mx__layer { transform: translateZ(calc(var(--i) * 50px)); }
 .mx__card.is-exploded .mx__layer:not([data-l="0"])::before { /* the plane each layer sits on */
-  content: ""; position: absolute; inset: 0; border-radius: 17px; border: 1.5px solid rgba(242, 239, 234, 0.2); background: rgba(242, 239, 234, 0.025);
+  content: ""; position: absolute; inset: 0; border-radius: 17px; border: 1.5px solid rgba(242, 239, 234, 0.2); background: rgba(242, 239, 234, 0.025); transform: translateZ(-2px); /* under its picture: two planes at the same depth cut each other in half */
 }
 .mx__card.is-exploded .mx__lt { opacity: 1; transform: rotateZ(38deg) rotateX(-58deg); transition-delay: 0.35s; }
 .mx__card.is-exploded .mx__cap { opacity: 0; }
