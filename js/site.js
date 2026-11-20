@@ -30,7 +30,7 @@
   const FX = new URL('../media/fx/', document.currentScript.src).href; // works from case pages too
   const CASES = {
     live: 'live-on-the-streets', ballies: 'ballies',
-    fsu: 'fsu-2026', series: 'series-at-scale', babyboo: 'baby-boo',
+    fsu: 'fsu-2026', series: 'series-at-scale', babyboo: 'baby-boo', apsis: 'apsis',
   };
 
   const mqDesktop = matchMedia('(min-width: 768px)');

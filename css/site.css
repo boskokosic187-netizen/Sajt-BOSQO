@@ -3266,7 +3266,7 @@ html.cues [data-cue="panel"].is-cued > * { animation: cueRise 0.7s var(--out) ca
 .tile.p10 { grid-column: 15 / span 2; grid-row: 5; }
 .tile.q1 { grid-column: 15 / span 2; grid-row: 3; }
 /* the older work around them is the standby wall: dimmed, lit up again under the cursor */
-.wall__grid > .tile:not(.s) > img, .wall__grid > .tile:not(.s) > picture { filter: brightness(0.32) saturate(0.5); transition: filter 0.3s; }
+.wall__grid > .tile:not(.s) > img, .wall__grid > .tile:not(.s) > picture { filter: brightness(0.46) saturate(0.75); transition: filter 0.3s; }
 .wall__grid > .tile:not(.s):hover > img, .wall__grid > .tile:not(.s):hover > picture { filter: none; }
 @media (min-width: 768px) and (max-aspect-ratio: 1/1) {
   .tile.p0 { grid-column: 3 / span 6; grid-row: 3 / span 3; }
