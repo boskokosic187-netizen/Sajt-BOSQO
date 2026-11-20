@@ -1,0 +1,56 @@
+@font-face{font-family:Supreme;src:url(Supreme-Extrabold.woff2);font-weight:800}
+@font-face{font-family:Supreme;src:url(Supreme-Bold.woff2);font-weight:700}
+@font-face{font-family:Tanker;src:url(Tanker-Regular.woff2)}
+@font-face{font-family:GS;src:url(GeneralSans-Light.woff2);font-weight:300}
+@font-face{font-family:GS;src:url(GeneralSans-Semibold.woff2);font-weight:600}
+@font-face{font-family:AnyW;src:url(anybody-wide.woff)}
+*{box-sizing:border-box;margin:0}
+body{background:#111;display:flex;flex-wrap:wrap;gap:40px;padding:40px;align-items:flex-start}
+
+/* ---------- the ON AIR channel card: one template for every project ---------- */
+.card{--a:#fff;position:relative;overflow:hidden;container-type:size;background:#06070a;isolation:isolate;flex:none}
+.card>*{position:absolute}
+.bg{inset:0;width:100%;height:100%;object-fit:cover}
+.glow{inset:0;background:radial-gradient(60% 55% at var(--gx,50%) var(--gy,60%),var(--a),transparent 70%);mix-blend-mode:screen;opacity:var(--go,.45)}
+.shade{inset:0;background:linear-gradient(180deg,rgba(4,5,8,.55) 0,rgba(4,5,8,0) 22%,rgba(4,5,8,0) 58%,rgba(4,5,8,.82) 100%)}
+.logo{left:50%;transform:translateX(-50%);color:#fff;line-height:.8;white-space:nowrap;text-align:center;
+  filter:drop-shadow(0 .6cqmin 2.4cqmin rgba(0,0,0,.45))}
+.logo svg{display:block;width:100%;height:auto}
+.subj{bottom:0;left:50%;transform:translateX(-50%);
+  filter:drop-shadow(0 0 .5cqmin var(--a)) drop-shadow(0 2cqmin 4cqmin rgba(0,0,0,.55))}
+.grain{inset:-50%;width:200%;height:200%;opacity:.13;mix-blend-mode:overlay;pointer-events:none}
+
+/* pieces */
+.print{left:50%;border:.8cqmin solid #fff;box-shadow:0 3cqmin 6cqmin rgba(0,0,0,.6)}
+.ring{aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:.9cqmin solid #FF3DCB;
+  box-shadow:0 0 3cqmin #FF3DCB,inset 0 0 3cqmin #FF3DCB}
+.art{inset:0;width:100%;height:100%;overflow:visible}
+.stage{inset:0;perspective:90cqw}
+.board{position:absolute;aspect-ratio:1152/540;transform-style:preserve-3d;background:#000;padding:.5cqmin;
+  box-shadow:0 0 3cqmin rgba(255,210,63,.35),0 0 .6cqmin rgba(255,255,255,.4)}
+.board img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.15) brightness(1.08)}
+.board::after{content:"";position:absolute;inset:.5cqmin;background:repeating-linear-gradient(90deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px),
+  repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+
+/* chrome: only on the proof sheet (the site draws it live) */
+body:not(.show-chrome) .chrome{display:none}
+.chrome{inset:0;pointer-events:none}
+.chrome>*{position:absolute}
+.safe{inset:4.2cqmin}
+.safe i{position:absolute;width:4.5cqmin;height:4.5cqmin;border:0 solid rgba(255,255,255,.75)}
+.safe i:nth-child(1){left:0;top:0;border-width:2px 0 0 2px}
+.safe i:nth-child(2){right:0;top:0;border-width:2px 2px 0 0}
+.safe i:nth-child(3){left:0;bottom:0;border-width:0 0 2px 2px}
+.safe i:nth-child(4){right:0;bottom:0;border-width:0 2px 2px 0}
+.bug{left:7cqmin;top:7cqmin;display:flex;align-items:stretch;font:700 calc(4px + 2.6cqmin)/1 Supreme;letter-spacing:.08em;color:#fff}
+.bug b{background:var(--a);color:var(--on,#000);padding:.75cqmin 1.1cqmin .6cqmin;font-weight:800}
+.bug span{background:rgba(0,0,0,.45);backdrop-filter:blur(6px);padding:.75cqmin 1.2cqmin .6cqmin}
+.fmt{right:7cqmin;top:7cqmin;font:700 calc(4px + 2.6cqmin)/1 Supreme;letter-spacing:.1em;color:#fff;display:flex;gap:1cqmin;align-items:center}
+.fmt::before{content:"";width:1.6cqmin;height:1.6cqmin;border-radius:50%;background:#FF3D2E;box-shadow:0 0 1.6cqmin #FF3D2E}
+.low{left:7cqmin;right:7cqmin;bottom:6.6cqmin;color:#fff}
+.low p{font:700 calc(4px + 2.6cqmin)/1.15 Supreme;letter-spacing:.12em;text-transform:uppercase;opacity:.92}
+.low .bar{margin-top:1.6cqmin;height:.7cqmin;background:rgba(255,255,255,.22);position:relative}
+.low .bar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--p,38%);background:var(--a);box-shadow:0 0 1.5cqmin var(--a)}
+.light .safe i{border-color:rgba(20,20,24,.6)}
+.light .fmt,.light .low{color:#17161C}
+.light .low .bar{background:rgba(0,0,0,.18)}

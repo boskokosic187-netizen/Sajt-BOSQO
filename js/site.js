@@ -845,7 +845,7 @@
       let v = ownVideo(t);
       if (!v) {
         v = makeVideo(LOOPS + t.dataset.video + '.mp4');
-        v.addEventListener('playing', () => t.classList.add('has-video'), { once: true });
+        v.addEventListener('playing', () => t.classList.add('has-video'));
         t.appendChild(v);
       }
       return v;
@@ -861,7 +861,7 @@
       t.classList.add('is-tally');
       flashStatic(t);
     }
-    const goOff = (t) => { const v = ownVideo(t); if (v) v.pause(); };
+    const goOff = (t) => { const v = ownVideo(t); if (v) v.pause(); t.classList.remove('has-video'); }; // off air, the channel card is back
 
     /* every cut gets a burst of TV static (one shared 30 KB clip) */
     let staticV = null, staticTile = null, staticT = 0;

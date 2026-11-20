@@ -26,6 +26,11 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Supreme (Indian Type Foundry, Fontshare, ITF Free Font License: media/fonts/ITF_FFL-Supreme.txt):
+   the channel chrome on the wall screens. Official WOFF2, not subset or converted. */
+@font-face { font-family: "Supreme"; font-weight: 700; font-display: swap; src: url(../media/fonts/Supreme-Bold.woff2) format("woff2"); }
+@font-face { font-family: "Supreme"; font-weight: 800; font-display: swap; src: url(../media/fonts/Supreme-Extrabold.woff2) format("woff2"); }
+
 :root {
   --bg: #0a0a0b;
   --bg-2: #121214;
@@ -228,8 +233,9 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .tile.w { grid-column: span 4; }
 .tile.v { grid-row: span 4; }
 .tile.xl { grid-column: span 4; grid-row: span 4; }
+.tile { container-type: size; } /* the channel chrome is sized in cqmin of its screen */
 .tile img, .tile video, .tile picture { width: 100%; height: 100%; object-fit: cover; }
-.tile video { position: absolute; inset: 0; opacity: 0; }
+.tile video { position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s; }
 .tile.has-video video { opacity: 1; }
 .tile::after { /* frame + tally light */
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
@@ -3268,6 +3274,47 @@ html.cues [data-cue="panel"].is-cued > * { animation: cueRise 0.7s var(--out) ca
 /* the older work around them is the standby wall: dimmed, lit up again under the cursor */
 .wall__grid > .tile:not(.s) > img, .wall__grid > .tile:not(.s) > picture { filter: brightness(0.46) saturate(0.75); transition: filter 0.3s; }
 .wall__grid > .tile:not(.s):hover > img, .wall__grid > .tile:not(.s):hover > picture { filter: none; }
+
+/* ---------- the ON AIR channel card: every wall screen is a channel. The card image is the art
+   (tools/cards), this is the live chrome over it: safe-area ticks, channel bug, format, kicker and bar.
+   When the loop plays the format turns LIVE; off air the card is back. ---------- */
+.ch { position: absolute; inset: 0; z-index: 2; pointer-events: none; color: #fff;
+  font: 700 calc(4px + 2.6cqmin)/1 "Supreme", var(--f-label), sans-serif; letter-spacing: 0.08em; transition: opacity 0.3s; }
+.ch > * { position: absolute; }
+.ch__safe { inset: 4.2cqmin; }
+.ch__safe i { position: absolute; width: 4.5cqmin; height: 4.5cqmin; border: 0 solid rgba(255, 255, 255, 0.75); }
+.ch__safe i:nth-child(1) { left: 0; top: 0; border-width: 1.5px 0 0 1.5px; }
+.ch__safe i:nth-child(2) { right: 0; top: 0; border-width: 1.5px 1.5px 0 0; }
+.ch__safe i:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 1.5px 1.5px; }
+.ch__safe i:nth-child(4) { right: 0; bottom: 0; border-width: 0 1.5px 1.5px 0; }
+.ch__bug { left: 7cqmin; top: 7cqmin; display: flex; white-space: nowrap; }
+.ch__bug b { background: var(--a); color: var(--on, #000); padding: 0.75cqmin 1.1cqmin 0.6cqmin; font-weight: 800; }
+.ch__bug span { background: rgba(0, 0, 0, 0.45); padding: 0.75cqmin 1.2cqmin 0.6cqmin; }
+.ch__fmt { right: 7cqmin; top: 7cqmin; display: flex; gap: 1cqmin; align-items: center; letter-spacing: 0.1em;
+  text-shadow: 0 0 1cqmin rgba(0, 0, 0, 0.5); }
+.ch__fmt::before { content: ""; width: 1.6cqmin; height: 1.6cqmin; border-radius: 50%; background: #ff3d2e; box-shadow: 0 0 1.6cqmin #ff3d2e; }
+.tile.has-video .ch__fmt { font-size: 0; }
+.tile.has-video .ch__fmt::after { content: "LIVE"; font-size: calc(4px + 2.6cqmin); }
+.ch__low { left: 7cqmin; right: 7cqmin; bottom: 6.6cqmin; transition: opacity 0.2s; }
+.ch__kick { display: block; line-height: 1.15; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.92;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 0 1cqmin rgba(0, 0, 0, 0.45); }
+.ch__bar { display: block; margin-top: 1.6cqmin; height: 0.7cqmin; min-height: 2px; background: rgba(255, 255, 255, 0.22); position: relative; overflow: hidden; }
+.ch__bar::after { content: ""; position: absolute; inset: 0; background: var(--a); box-shadow: 0 0 1.5cqmin var(--a);
+  transform-origin: 0 50%; transform: scaleX(calc(var(--p, 38%) / 100%)); }
+/* light cards (dark art on a pale field) take dark chrome, until the loop plays over them */
+.tile:not(.has-video) .ch--light .ch__safe i { border-color: rgba(20, 20, 24, 0.6); }
+.tile:not(.has-video) .ch--light .ch__fmt, .tile:not(.has-video) .ch--light .ch__low { color: #17161c; text-shadow: none; }
+.tile:not(.has-video) .ch--light .ch__bar { background: rgba(0, 0, 0, 0.18); }
+/* the small project screens (2x1, 1x2) keep only the bug and the format */
+.tile.p1 .ch__low, .tile.p2 .ch__low, .tile.p3 .ch__low, .tile.p4 .ch__low, .tile.p5 .ch__low, .tile.p6 .ch__low,
+.tile.p7 .ch__low, .tile.p8 .ch__low, .tile.p9 .ch__low, .tile.p10 .ch__low, .tile.q1 .ch__low { display: none; }
+.tile.p3 .ch__bug span, .tile.p4 .ch__bug span, .tile.p7 .ch__bug span, .tile.p8 .ch__bug span { display: none; }
+/* the on-air label moves to the bottom and takes the place of the kicker while it shows */
+.tile::before { top: auto; bottom: 10px; transform: translateY(4px); }
+.tile.is-tally .ch__low, .tile[data-hold] .ch__low { opacity: 0; }
+/* the standby wall's chrome dims with its art */
+.wall__grid > .tile:not(.s) > .ch { opacity: 0.55; }
+.wall__grid > .tile:not(.s):hover > .ch { opacity: 1; }
 @media (min-width: 768px) and (max-aspect-ratio: 1/1) {
   .tile.p0 { grid-column: 3 / span 6; grid-row: 3 / span 3; }
   .tile.p3 { grid-column: 9; grid-row: 3 / span 2; }
