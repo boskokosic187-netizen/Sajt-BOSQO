@@ -60,6 +60,8 @@ header{display:grid;gap:22px}
 .player video{width:100%;aspect-ratio:16/9;display:block;background:#000534;border-radius:14px;border:1px solid var(--line)}
 .player .cap{max-width:none;font-size:17px}
 .player .cap b{font-weight:600}
+.hist .eyebrow{color:var(--c-ist)}
+.hist .player video{border-top:5px solid var(--c-ist)}
 
 /* segmentation */
 .segs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;counter-reset:s}
@@ -176,6 +178,16 @@ footer{color:var(--muted);font-size:14px}
   </div>
 </section>
 
+<section class="s-ist hist">
+  <span class="eyebrow">Primer za istoriju</span>
+  <h2>Prvi srpski ustanak, na mapi i kroz vreme</h2>
+  <p>Kratak primer od 20 sekundi, bez zvuka, samo da se vidi kako bi izgledala animacija za predmet koji se uči kroz mapu i redosled događaja. Rađen je na nivou Pro, u boji predviđenoj za istoriju.</p>
+  <div class="player">
+    <video controls muted loop playsinline preload="metadata" poster="poster-istorija.jpg" src="triangl-istorija.mp4"></video>
+    <p class="cap">Mapa Beogradskog pašaluka crta se reku po reku. Ustanak kreće iz Orašca, preko Mišara do oslobođenog Beograda, a kamera prati svaki događaj. Vremenska linija ispod mape ide od 1804. do 1813, a lekcija se zatvara kratkim „Zapamti“ sa tri ključne godine.</p>
+  </div>
+</section>
+
 <section>
   <span class="eyebrow">Kako delimo jedno predavanje</span>
   <h2>Jedno predavanje, devet lekcija</h2>
@@ -221,7 +233,7 @@ footer{color:var(--muted);font-size:14px}
       </ul>
     </article>
     <article class="tier">
-      <div class="head"><h3>Plus</h3><span class="tag">primer na zahtev</span></div>
+      <div class="head"><h3>Plus</h3><span class="tag">primer za istoriju</span></div>
       <p class="fit">Za gradivo koje se razume kroz sliku, mapu i vreme.</p>
       <ul>
         <li>Sve iz nivoa Standard</li>
@@ -339,7 +351,7 @@ footer{color:var(--muted);font-size:14px}
         <li>Ličnosti kao ilustrovani portreti u Triangl stilu</li>
         <li>Uzrok i posledica kao šema koja se gradi dok profesor priča</li>
       </ul>
-      <p class="ex"><b>Primer lekcije:</b> Prvi srpski ustanak. Na mapi Beogradskog pašaluka pojavljuju se mesta bitaka redom, a vremenska linija ide od 1804. do 1813.</p>
+      <p class="ex"><b>Primer lekcije:</b> Prvi srpski ustanak. Na mapi Beogradskog pašaluka pojavljuju se mesta bitaka redom, a vremenska linija ide od 1804. do 1813. Kratak primer ove animacije je gore na strani.</p>
     </article>
 
   </div>
