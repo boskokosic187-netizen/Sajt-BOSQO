@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 90%27%3E%3Cpath d=%27M50 2 98 88H2Z%27 fill=%27%23FE852C%27/%3E%3C/svg%3E">
+<title>Triangl animirana predavanja</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
+<style>
+*{box-sizing:border-box}body{margin:0;-webkit-font-smoothing:antialiased}img,video{max-width:100%}
+/* Layout: one calm column like a lesson sheet; the subject plan is the main moment, one card per subject with its own color. */
+:root{
+  --paper:#FBF8F3; --surface:#FFFFFF; --ink:#000534; --muted:#5A5E78; --line:#E7E1D8;
+  --orange:#FE852C; --orange-ink:#C2560A; --tint:#FFE2C8;
+  --c-srp:#4D5BD6; --c-mat:#FE852C; --c-fiz:#1E9BD7; --c-hem:#9B4DCA; --c-bio:#2F9E5B; --c-geo:#22A893; --c-ist:#B5653A;
+  --f-display:"Lexend",system-ui,sans-serif; --f-body:"Lexend",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#060A2E; --surface:#0E1342; --ink:#F4F1EC; --muted:#A6A9C4; --line:#252B5E;
+  --orange:#FE852C; --orange-ink:#FFA463; --tint:#3A2A2A;
+  --c-srp:#8E98F0; --c-mat:#FE852C; --c-fiz:#5BC0F0; --c-hem:#C58BEB; --c-bio:#5CC985; --c-geo:#4CC9B2; --c-ist:#E0935F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#060A2E; --surface:#0E1342; --ink:#F4F1EC; --muted:#A6A9C4; --line:#252B5E;
+  --orange:#FE852C; --orange-ink:#FFA463; --tint:#3A2A2A;
+  --c-srp:#8E98F0; --c-mat:#FE852C; --c-fiz:#5BC0F0; --c-hem:#C58BEB; --c-bio:#5CC985; --c-geo:#4CC9B2; --c-ist:#E0935F; color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font:300 17px/1.6 var(--f-body);}
+.wrap{max-width:1080px;margin:0 auto;padding-block:56px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:72px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5.4vw,58px);letter-spacing:-.02em}
+h2{font-size:clamp(24px,3vw,32px);letter-spacing:-.01em}
+h3{font-size:20px}
+p{margin:0;max-width:64ch}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-ink)}
+.lead{font-size:20px;color:var(--muted);max-width:58ch}
+section{display:grid;gap:22px}
+.num{font-variant-numeric:tabular-nums}
+.note{font-size:14.5px;color:var(--muted)}
+
+/* header */
+header{display:grid;gap:22px}
+.mark{width:54px;height:47px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;color:var(--muted);font-size:15px}
+.facts b{color:var(--ink);font-weight:500}
+
+/* done list */
+.done{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.done div{display:grid;gap:6px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0}
+.done b{font-weight:600;font-size:17px}
+.done span{font-size:15px;color:var(--muted)}
+.done .big{font-size:30px;font-weight:600;letter-spacing:-.02em;color:var(--orange-ink);font-variant-numeric:tabular-nums;line-height:1.1}
+
+/* player */
+.player{display:grid;gap:14px}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:14px;max-width:520px}
+.tabs button{font:500 17px/1 var(--f-body);color:var(--muted);background:transparent;border:0;border-radius:9px;min-height:48px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--orange);color:#000534;font-weight:600}
+.tabs button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.player video{width:100%;aspect-ratio:16/9;display:block;background:#000534;border-radius:14px;border:1px solid var(--line)}
+.player .cap{max-width:none;font-size:17px}
+.player .cap b{font-weight:600}
+
+/* segmentation */
+.segs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;counter-reset:s}
+.seg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;font-weight:400}
+.seg::before{counter-increment:s;content:counter(s);font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;min-width:1.2em}
+.seg.on{border-color:var(--orange);background:var(--tint)}
+.seg.on::before{color:var(--orange-ink)}
+.seg small{grid-column:2;font-size:13px;color:var(--orange-ink);font-weight:500;margin-top:-6px}
+
+/* levels */
+.tiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:12px;align-content:start;min-width:0}
+.tier .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.tier .tag{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--tint);color:var(--orange-ink)}
+.tier .fit{font-size:14px;color:var(--muted)}
+.tier ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15.5px}
+.tier li{display:grid;grid-template-columns:18px 1fr;gap:8px}
+.tier li::before{content:"";width:9px;height:9px;margin-top:8px;border-radius:2px;background:var(--line)}
+.tier li.plus::before{background:var(--orange)}
+
+/* subjects */
+.subjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.subj{--c:var(--orange);background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:16px;padding:22px 24px 24px;display:grid;gap:14px;align-content:start;min-width:0}
+.subj.wide{grid-column:1/-1}
+.subj .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.subj .tri{width:18px;height:16px;background:var(--c);clip-path:polygon(50% 0,100% 100%,0 100%);flex:none}
+.subj h3{flex:1 1 auto}
+.subj .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:13px}
+.subj .meta span{padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.subj .meta span.lvl{border-color:var(--c);color:var(--ink);font-weight:500}
+.subj p{font-size:15.5px}
+.subj ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:15px}
+.subj li{display:grid;grid-template-columns:16px 1fr;gap:8px}
+.subj li::before{content:"";width:8px;height:8px;margin-top:8px;border-radius:2px;background:var(--c)}
+.subj .ex{font-size:14.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.subj .ex b{color:var(--ink);font-weight:500}
+.s-srp{--c:var(--c-srp)} .s-mat{--c:var(--c-mat)} .s-fiz{--c:var(--c-fiz)} .s-hem{--c:var(--c-hem)}
+.s-bio{--c:var(--c-bio)} .s-geo{--c:var(--c-geo)} .s-ist{--c:var(--c-ist)}
+
+/* phases & process */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.step{display:grid;gap:8px;align-content:start;padding-top:14px;border-top:2px solid var(--ink);min-width:0}
+.step b{font-weight:600}
+.step .when{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-ink)}
+.step p{font-size:15px;color:var(--muted)}
+
+.terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 40px;margin:0}
+.terms div{display:grid;gap:4px;padding-block:12px;border-bottom:1px solid var(--line)}
+.terms dt{font-weight:500}
+.terms dd{margin:0;color:var(--muted);font-size:15.5px}
+footer{color:var(--muted);font-size:14px}
+
+@media (max-width:860px){
+  .done{grid-template-columns:1fr 1fr}
+  .tiers,.subjects{grid-template-columns:1fr}
+  .segs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .done,.segs,.steps,.terms{grid-template-columns:1fr}
+  .wrap{gap:56px;padding-block:36px 56px}
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+<header>
+  <svg class="mark" viewBox="-8 -8 216 190" aria-hidden="true">
+    <path d="M100 0 L150 86.6 L50 86.6 Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" transform="matrix(.84 0 0 .84 16 9.2)"/>
+    <path d="M50 86.6 L100 173.2 L0 173.2 Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" transform="matrix(.84 0 0 .84 8 23.1)"/>
+    <path d="M150 86.6 L200 173.2 L100 173.2 Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" transform="matrix(.84 0 0 .84 24 23.1)"/>
+    <path d="M50 86.6 L150 86.6 L100 173.2 Z" fill="#FE852C" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" transform="matrix(.84 0 0 .84 16 18.5)"/>
+  </svg>
+  <span class="eyebrow">Ponuda za Triangl · novembar 2026</span>
+  <h1>Animirana predavanja za malu maturu</h1>
+  <p class="lead">Glas profesora ostaje. Umesto rukopisa na tabletu, svaki zadatak dobija čistu animaciju u bojama Triangla, bez praznog hoda, podeljenu na kratke lekcije koje drže pažnju.</p>
+  <div class="facts">
+    <span><b class="num">110</b> predavanja od po sat vremena</span>
+    <span><b class="num">7</b> predmeta</span>
+    <span><b>oko 770</b> kratkih lekcija</span>
+    <span><b>oko 4</b> meseca za ceo program</span>
+  </div>
+</header>
+
+<section>
+  <span class="eyebrow">Šta smo do sada uradili</span>
+  <h2>Jedno vaše predavanje, obrađeno od početka do kraja</h2>
+  <p>Uzeli smo deo predavanja iz matematike, kakav je snimljen na tabletu, i animirali ga na tri nivoa, onako kako predlažemo za ceo program.</p>
+  <div class="done">
+    <div><span class="big">9 → 5 min</span><b>Isečen prazan hod</b><span>Pauze, ponavljanja i traženje olovke su izbačeni. Sve što profesorka kaže ostalo je u istom redosledu.</span></div>
+    <div><span class="big">3 modela</span><b>Animacija prati račun</b><span>Trake, mreža kockica i kružni dijagram crtaju se tačno u trenutku kad profesorka objašnjava zadatak.</span></div>
+    <div><span class="big">3 nivoa</span><b>Ista lekcija tri puta</b><span>Light, Standard i Pro na istom glasu, da razliku vidite na istom zadatku.</span></div>
+    <div><span class="big">0 rukopisa</span><b>Nova slika</b><span>Rukopis je zamenjen tipografijom, modelima i ilustracijama koji prate govor u sekundu.</span></div>
+    <div><span class="big">SRT</span><b>Titlovi na srpskom</b><span>Ispisani prema govoru, kao poseban fajl uz video.</span></div>
+    <div><span class="big">9 lekcija</span><b>Predlog podele</b><span>Celo predavanje „Matematika, 2. deo“ podeljeno je na kratke lekcije sa naslovima.</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Primeri koje ste dobili</span>
+  <h2>Razlomci u zadacima sa tekstom</h2>
+  <p>Izaberite nivo i pustite video.</p>
+  <div class="player">
+    <div class="tabs" role="tablist" aria-label="Nivo obrade">
+      <button role="tab" aria-selected="false" data-v="light">Light</button>
+      <button role="tab" aria-selected="true" data-v="standard">Standard</button>
+      <button role="tab" aria-selected="false" data-v="pro">Pro</button>
+    </div>
+    <video id="vid" controls playsinline preload="metadata" poster="poster-standard.jpg" src="triangl-standard.mp4"></video>
+    <p class="cap" id="cap"></p>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Kako delimo jedno predavanje</span>
+  <h2>Jedno predavanje, devet lekcija</h2>
+  <p>Ovako bi izgledala podela predavanja „Matematika, 2. deo, prvi vikend“. Svaka lekcija je zaseban video od 3 do 7 minuta, sa sopstvenim naslovom, da učenik lako nađe baš ono što mu treba.</p>
+  <div class="segs">
+    <div class="seg">Zapis brojeva rečima</div>
+    <div class="seg">Razlomak i decimalni zapis</div>
+    <div class="seg">Brojevna prava</div>
+    <div class="seg">Zaokruži tačan odgovor</div>
+    <div class="seg">Deo od broja</div>
+    <div class="seg">Procenti</div>
+    <div class="seg">Negativni brojevi</div>
+    <div class="seg">Poređenje brojeva</div>
+    <div class="seg on">Razlomci u zadacima sa tekstom<small>lekcija iz primera</small></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Šta sve može da se uradi</span>
+  <h2>Četiri nivoa obrade</h2>
+  <p>Ne traži svaki predmet istu količinu animacije. Nivo biramo prema tome koliko crteža, mapa i modela gradivo zaista traži, a može se menjati za svaki predmet posebno.</p>
+  <div class="tiers">
+    <article class="tier">
+      <div class="head"><h3>Light</h3><span class="tag">primer na snimku</span></div>
+      <p class="fit">Za gradivo koje se uči kroz pravila i primere.</p>
+      <ul>
+        <li>Sečenje praznog hoda i podela na lekcije</li>
+        <li>Originalni glas profesora, sinhronizovan sa slikom</li>
+        <li>Pravila, primeri i rešenja ispisani čistom tipografijom, u ritmu govora</li>
+        <li>Triangl uvod, odjava i naslov svake lekcije</li>
+        <li>Titlovi na srpskom</li>
+      </ul>
+    </article>
+    <article class="tier">
+      <div class="head"><h3>Standard</h3><span class="tag">primer na snimku</span></div>
+      <p class="fit">Za zadatke koji se rešavaju korak po korak.</p>
+      <ul>
+        <li>Sve iz nivoa Light</li>
+        <li class="plus">Vizuelni model za svaki zadatak: trake, mreže, dijagrami, brojevne prave, grafikoni, šeme ogleda</li>
+        <li class="plus">Isticanje ključnih reči i podataka dok se izgovaraju</li>
+        <li class="plus">Koraci rešavanja i traka napretka kroz lekciju</li>
+        <li class="plus">Završni odgovor jasno izdvojen</li>
+      </ul>
+    </article>
+    <article class="tier">
+      <div class="head"><h3>Plus</h3><span class="tag">primer na zahtev</span></div>
+      <p class="fit">Za gradivo koje se razume kroz sliku, mapu i vreme.</p>
+      <ul>
+        <li>Sve iz nivoa Standard</li>
+        <li class="plus">Animirane mape: granice, reke, putevi, kretanje vojski i naroda</li>
+        <li class="plus">Vremenske linije sa godinama, ličnostima i događajima</li>
+        <li class="plus">Ilustracije pojmova: ćelija, organi, reljef, građevine, predmeti epohe</li>
+        <li class="plus">Poređenja i tabele koje se grade korak po korak</li>
+      </ul>
+    </article>
+    <article class="tier">
+      <div class="head"><h3>Pro</h3><span class="tag">primer na snimku</span></div>
+      <p class="fit">Za probne lekcije, promociju platforme i najvažnije teme.</p>
+      <ul>
+        <li>Sve iz nivoa Standard ili Plus</li>
+        <li class="plus">Ilustrovani likovi i predmeti iz zadataka</li>
+        <li class="plus">Muzika i zvučni efekti ispod glasa</li>
+        <li class="plus">Kviz „Pauziraj i reši“ na kraju lekcije</li>
+        <li class="plus">Kratka vertikalna verzija za Instagram i TikTok</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Plan po predmetu</span>
+  <h2>Šta predlažemo za svaki predmet</h2>
+  <p>Svaki predmet dobija svoju boju unutar Triangl identiteta i nivo obrade koji odgovara gradivu. Primeri tema su iz programa za malu maturu.</p>
+  <div class="subjects">
+
+    <article class="subj s-mat">
+      <div class="top"><span class="tri"></span><h3>Matematika</h3></div>
+      <div class="meta"><span class="num">30 predavanja</span><span>oko 210 lekcija</span><span class="lvl">Standard</span></div>
+      <p>Najveći predmet i onaj na kom su urađeni primeri. Svaki zadatak dobija model koji se crta dok profesor objašnjava, pa učenik vidi zašto je rezultat tačan.</p>
+      <ul>
+        <li>Razlomci i procenti kao trake i mreže kockica</li>
+        <li>Brojevna prava i koordinatni sistem koji se crtaju korak po korak</li>
+        <li>Geometrijske figure i konstrukcije sa obeleženim stranicama i uglovima</li>
+        <li>Jednačine u kojima se svaki korak prebacivanja vidi</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Pitagorina teorema. Kvadrati nad stranicama se crtaju i upoređuju, pa se formula pojavljuje tek kad je slika jasna.</p>
+    </article>
+
+    <article class="subj s-srp">
+      <div class="top"><span class="tri"></span><h3>Srpski jezik i književnost</h3></div>
+      <div class="meta"><span class="num">30 predavanja</span><span>oko 210 lekcija</span><span class="lvl">Light</span></div>
+      <p>Gradivo je u pravilima, primerima i tekstu, pa je čista tipografija ovde najjasnija. Akcenat je na obeležavanju delova reči i rečenice bojom.</p>
+      <ul>
+        <li>Pravilo kao naslov, pa primeri rečenica ispod njega</li>
+        <li>Nastavci, akcenti i službe reči obeleženi bojom u trenutku kad se pominju</li>
+        <li>Tabele promene po padežima i glagolskim oblicima koje se popunjavaju</li>
+        <li>Stihovi i odlomci sa istaknutim stilskim figurama</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Padeži. Ista imenica prolazi kroz svih sedam padeža, uz pitanje i nastavak u boji za svaki.</p>
+    </article>
+
+    <article class="subj s-fiz">
+      <div class="top"><span class="tri"></span><h3>Fizika</h3></div>
+      <div class="meta"><span class="num">10 predavanja</span><span>oko 70 lekcija</span><span class="lvl">Standard</span></div>
+      <p>Fizika se razume kad se pojava vidi. Ogledi koje profesor opisuje postaju jednostavne šeme koje se pokreću.</p>
+      <ul>
+        <li>Sile kao strelice koje rastu, slažu se i poništavaju</li>
+        <li>Grafici puta i brzine koji se crtaju dok telo ide</li>
+        <li>Strujna kola sa sijalicama koje se pale</li>
+        <li>Jedinice i pretvaranje mernih jedinica istaknuti u svakom zadatku</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Ravnomerno kretanje. Automobil se kreće po putu, a ispod njega se istovremeno crta grafik puta u vremenu.</p>
+    </article>
+
+    <article class="subj s-hem">
+      <div class="top"><span class="tri"></span><h3>Hemija</h3></div>
+      <div class="meta"><span class="num">10 predavanja</span><span>oko 70 lekcija</span><span class="lvl">Standard</span></div>
+      <p>Hemija dobija modele atoma i molekula i jednačine koje se izjednačavaju pred učenikom, umesto ispisanih formula.</p>
+      <ul>
+        <li>Modeli atoma sa elektronima po ljuskama</li>
+        <li>Molekuli kao kuglice koje se razdvajaju i spajaju u reakciji</li>
+        <li>Izjednačavanje jednačina korak po korak, sa brojem atoma na obe strane</li>
+        <li>Periodni sistem sa istaknutom grupom ili periodom o kojoj se govori</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Sagorevanje metana. Molekuli metana i kiseonika se razlažu i slažu u ugljen-dioksid i vodu, a jednačina se izjednačava paralelno.</p>
+    </article>
+
+    <article class="subj s-bio">
+      <div class="top"><span class="tri"></span><h3>Biologija</h3></div>
+      <div class="meta"><span class="num">10 predavanja</span><span>oko 70 lekcija</span><span class="lvl">Plus</span></div>
+      <p>Biologija se uči kroz građu i procese. Ilustracije u Triangl stilu zamenjuju crteže iz udžbenika, a procesi se pokreću.</p>
+      <ul>
+        <li>Ćelija, organi i sistemi organa sa delovima koji se obeležavaju redom</li>
+        <li>Procesi kao kratke animacije: fotosinteza, disanje, krvotok</li>
+        <li>Lanci ishrane i podela živog sveta kao šema koja raste</li>
+        <li>Poređenja, na primer biljna i životinjska ćelija jedna pored druge</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Građa ćelije. Ćelija se otvara sloj po sloj, a svaka organela se istakne kad je profesor pomene.</p>
+    </article>
+
+    <article class="subj s-geo">
+      <div class="top"><span class="tri"></span><h3>Geografija</h3></div>
+      <div class="meta"><span class="num">10 predavanja</span><span>oko 70 lekcija</span><span class="lvl">Plus</span></div>
+      <p>Geografija se gotovo cela odvija na mapi. Predlažemo jednu mapu u Triangl stilu koja se kroz sve lekcije zumira, boji i dopunjuje.</p>
+      <ul>
+        <li>Mape Srbije, Evrope i sveta sa granicama, rekama i gradovima koji se pojavljuju redom</li>
+        <li>Reljef i visine kao slojevi boje</li>
+        <li>Klimatski dijagrami i grafici stanovništva</li>
+        <li>Kretanje Zemlje, smena godišnjih doba i vremenske zone</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Reke Srbije. Dunav, Sava i Morava se ucrtavaju od izvora do ušća, sa slivovima u boji.</p>
+    </article>
+
+    <article class="subj s-ist wide">
+      <div class="top"><span class="tri"></span><h3>Istorija</h3></div>
+      <div class="meta"><span class="num">10 predavanja</span><span>oko 70 lekcija</span><span class="lvl">Plus</span></div>
+      <p>Istorija se pamti kroz redosled i mesto. Svaka lekcija ima vremensku liniju koja se nastavlja iz prethodne i mapu na kojoj se događaji odvijaju.</p>
+      <ul>
+        <li>Vremenska linija sa godinama, ličnostima i događajima, zajednička za ceo predmet</li>
+        <li>Mape bitaka, ustanaka i promena granica, sa kretanjem vojski</li>
+        <li>Ličnosti kao ilustrovani portreti u Triangl stilu</li>
+        <li>Uzrok i posledica kao šema koja se gradi dok profesor priča</li>
+      </ul>
+      <p class="ex"><b>Primer lekcije:</b> Prvi srpski ustanak. Na mapi Beogradskog pašaluka pojavljuju se mesta bitaka redom, a vremenska linija ide od 1804. do 1813.</p>
+    </article>
+
+  </div>
+  <p class="note">Broj lekcija je procena prema prvom predavanju, oko sedam lekcija na sat snimka. Tačnu podelu predlažemo za svako predavanje posebno.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Predlog redosleda</span>
+  <h2>Ceo program za oko četiri meseca</h2>
+  <div class="steps">
+    <div class="step"><span class="when">Prve 2 nedelje</span><b>Probna tura</b><p>10 predavanja iz matematike na nivou Standard i primer nivoa Plus za geografiju ili istoriju. Potvrđujemo izgled pre nastavka.</p></div>
+    <div class="step"><span class="when">Mesec 1 i 2</span><b>Matematika i srpski</b><p>Ostatak dva najveća predmeta, koji čine više od pola programa.</p></div>
+    <div class="step"><span class="when">Mesec 3</span><b>Fizika i hemija</b><p>Isti nivo kao matematika, pa koriste već napravljene modele i grafike.</p></div>
+    <div class="step"><span class="when">Mesec 4</span><b>Biologija, geografija, istorija</b><p>Mape, ilustracije i vremenske linije, uz primer koji ste već odobrili.</p></div>
+  </div>
+  <p class="note">Redosled predmeta možete promeniti, na primer da prvo ide ono što je učenicima potrebno pred ispit. Predlažemo i oko 10 predavanja na nivou Pro, za besplatne probne lekcije i promociju.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Uz svaki video</span>
+  <h2>Šta je uključeno</h2>
+  <dl class="terms">
+    <div><dt>Naslovna sličica</dt><dd>Za svaku lekciju, u istom stilu, spremna za platformu.</dd></div>
+    <div><dt>Boja po predmetu</dt><dd>Svaki predmet ima svoju boju unutar Triangl identiteta, da se učenik lako snađe.</dd></div>
+    <div><dt>Titlovi</dt><dd>Na srpskom, kao poseban SRT fajl uz svaki video.</dd></div>
+    <div><dt>Ispravke</dt><dd>Jedan krug ispravki po lekciji.</dd></div>
+    <div><dt>Provera tačnosti</dt><dd>Svaki račun, godina i naziv se proverava pre isporuke.</dd></div>
+    <div><dt>Primer pre obaveze</dt><dd>Čim pošaljete jedan snimak iz geografije ili istorije, pravimo primer nivoa Plus.</dd></div>
+  </dl>
+</section>
+
+<section>
+  <span class="eyebrow">Tok rada</span>
+  <h2>Od snimka do objave</h2>
+  <div class="steps">
+    <div class="step"><b>Snimak</b><p>Šaljete snimak predavanja kakav jeste, sa tableta i mikrofona.</p></div>
+    <div class="step"><b>Podela</b><p>Predlažemo podelu na lekcije i naslove. Vi potvrđujete.</p></div>
+    <div class="step"><b>Animacija</b><p>Svaka lekcija se animira u Triangl stilu i proverava tačnost.</p></div>
+    <div class="step"><b>Isporuka</b><p>Gotov video u Full HD, sa titlovima, spreman za platformu.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Rokovi i isporuka</span>
+  <h2>Kako sarađujemo</h2>
+  <dl class="terms">
+    <div><dt>Isporuka po turama</dt><dd>Predavanja isporučujemo u turama od po 10, redosledom koji vi odredite.</dd></div>
+    <div><dt>Bez vezivanja</dt><dd>Posle svake ture možete zastati ili promeniti nivo za sledeći predmet.</dd></div>
+    <div><dt>Tempo</dt><dd>6 do 8 predavanja nedeljno.</dd></div>
+    <div><dt>Format</dt><dd>MP4, 1920×1080, 30 fps, plus titlovi u SRT fajlu.</dd></div>
+    <div><dt>Prava</dt><dd>Svi gotovi video-materijali su vaši, bez ograničenja u korišćenju.</dd></div>
+    <div><dt>Glas profesora</dt><dd>Koristi se samo snimak koji pošaljete. Izbacuje se samo prazan hod, a sve što profesor kaže ostaje.</dd></div>
+  </dl>
+</section>
+
+<footer>Finansijski deo ponude šaljemo posebno.</footer>
+</div>
+<script>
+(function(){
+  var V = {
+    light:    {src:"triangl-light.mp4", poster:"poster-light.jpg", cap:"<b>Light.</b> Tekst zadatka i račun ispisani čistom tipografijom, red po red, kako profesorka govori."},
+    standard: {src:"triangl-standard.mp4", poster:"poster-standard.jpg", cap:"<b>Standard.</b> Tri zadatka, tri vizuelna modela: trake, mreža kockica i kružni dijagram. Ključni podaci se ističu dok se izgovaraju, a koraci rešavanja se vide sve vreme."},
+    pro:      {src:"triangl-pro.mp4", poster:"poster-pro.jpg", cap:"<b>Pro.</b> Sve iz Standarda, uz ilustrovane likove i predmete iz zadataka, muziku i zvučne efekte i kviz „Pauziraj i reši“ na kraju."}
+  };
+  var vid = document.getElementById("vid"), cap = document.getElementById("cap");
+  var tabs = [].slice.call(document.querySelectorAll(".tabs button"));
+  function pick(k, play){
+    tabs.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.v === k ? "true" : "false"); });
+    cap.innerHTML = V[k].cap;
+    if (vid.getAttribute("src") !== V[k].src) { vid.pause(); vid.poster = V[k].poster; vid.src = V[k].src; vid.load(); }
+    if (play) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function(){}); }
+  }
+  tabs.forEach(function(b){ b.addEventListener("click", function(){ pick(b.dataset.v, true); }); });
+  pick("standard", false);
+})();
+</script>
+
+</body>
+</html>
