@@ -20,7 +20,7 @@ ul { list-style: none; }
 
 /* head: the site's dark studio. Two lights (rec orange, aurora teal), a fine grid that fades
    out, and the portrait in a viewfinder frame */
-.head { position: relative; height: 52mm; background: #09090a; color: var(--paper); padding: 8.5mm 12mm 0 12mm; overflow: hidden; }
+.head { position: relative; height: 48mm; background: #09090a; color: var(--paper); padding: 15mm 12mm 0 12mm; overflow: hidden; }
 .head::before { content: ""; position: absolute; inset: 0;
   background:
     radial-gradient(62mm 40mm at 86% 112%, rgba(255, 77, 31, 0.62), transparent 72%),
@@ -33,7 +33,7 @@ ul { list-style: none; }
 .head__top { color: rgba(246, 243, 238, 0.66); }
 .head__top b { color: var(--rec); font-weight: 600; }
 .head__top i { display: inline-block; width: 1.8mm; height: 1.8mm; margin-right: 1.6mm; border-radius: 50%; background: var(--rec); box-shadow: 0 0 2.4mm var(--rec); }
-h1 { margin-top: 7.4mm; font-weight: 800; font-stretch: 125%; font-size: 31pt; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
+h1 { margin-top: 0; font-weight: 800; font-stretch: 125%; font-size: 31pt; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
 .role { margin-top: 2.8mm; font: italic 400 15pt/1 "Instrument Serif", serif; color: rgba(246, 243, 238, 0.94); }
 .role b { font: 600 7.4pt/1 "Archivo", sans-serif; font-stretch: 80%; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(246, 243, 238, 0.62); margin-left: 3mm; vertical-align: 1.1mm; }
 .shot { position: absolute; z-index: 2; right: 12mm; top: 5.5mm; width: 32.8mm; height: 41mm; padding: 0.9mm; border-radius: 3.6mm; background: linear-gradient(160deg, rgba(246, 243, 238, 0.5), rgba(246, 243, 238, 0.08) 45%, rgba(255, 77, 31, 0.75)); box-shadow: 0 4mm 10mm rgba(0, 0, 0, 0.5); }
@@ -47,7 +47,7 @@ h1 { margin-top: 7.4mm; font-weight: 800; font-stretch: 125%; font-size: 31pt; l
 
 .body { display: grid; grid-template-columns: 60mm 1fr; gap: 0 7mm; padding: 5.5mm 12mm 0 12mm; }
 /* section heads: a number tab and a full rule, so the page reads at a glance */
-h2 { display: flex; align-items: stretch; margin-bottom: 2.4mm; border-bottom: 0.5mm solid var(--ink); font-stretch: 112%; font-weight: 800; font-size: 8.6pt; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; }
+h2 { display: flex; align-items: stretch; margin-bottom: 2.4mm; padding-bottom: 1.3mm; border-bottom: 0.5mm solid var(--ink); font-stretch: 112%; font-weight: 800; font-size: 8.6pt; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; }
 h2 span { display: grid; place-items: center; min-width: 6.4mm; margin-right: 2.4mm; padding: 1.5mm 1.2mm 1.2mm; background: var(--ink); color: var(--paper); font-stretch: 80%; font-weight: 700; font-size: 7.2pt; letter-spacing: 0.04em; border-radius: 1mm 1mm 0 0; }
 h2 em { align-self: center; font-style: normal; }
 section + section { margin-top: 5.4mm; }
@@ -97,7 +97,6 @@ section + section { margin-top: 5.4mm; }
 </head>
 <body>
 <header class="head">
-  <div class="head__top lbl"><i></i><b>On air</b> &nbsp;·&nbsp; Curriculum vitae &nbsp;·&nbsp; 2026</div>
   <h1>Boško Kosić</h1>
   <p class="role">Visual &amp; Motion Designer <b>Design · Motion · UI/UX · AI video</b></p>
   <figure class="shot"><img src="photo.jpg" alt="Boško Kosić"></figure>
@@ -105,14 +104,14 @@ section + section { margin-top: 5.4mm; }
 <ul class="strip">
   <li><span class="lbl">Portfolio</span><b><a href="https://bosko.trif.rs/">bosko.trif.rs</a></b></li>
   <li><span class="lbl">Email</span><a href="mailto:boskokosic187@gmail.com">boskokosic187@gmail.com</a></li>
-  <li><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/">in/boško-kosić</a></li>
-  <li><span class="lbl">Based</span><span>Belgrade, Serbia · open worldwide</span></li>
+  <li><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/">in/boško-kosić-37aa8925a</a></li>
+  <li><span class="lbl">Remote</span><span>Belgrade · CET (UTC+1)</span></li>
 </ul>
 
 <div class="body">
   <aside class="side">
     <section>
-      <h2><span>01</span><em>In numbers</em></h2>
+      <h2><em>In numbers</em></h2>
       <ul class="nums">
         <li><b>5<i>+</i></b><span>years in design &amp; motion</span></li>
         <li><b>50<i>+</i></b><span>billboards live in Belgrade</span></li>
@@ -120,7 +119,7 @@ section + section { margin-top: 5.4mm; }
       </ul>
     </section>
     <section>
-      <h2><span>02</span><em>What I do</em></h2>
+      <h2><em>What I do</em></h2>
       <div class="grp"><span class="lbl">Design</span>
         <ul class="tags"><li class="hot">Campaigns &amp; key visuals</li><li class="hot">UI/UX design</li><li>Brand systems</li><li>Billboards &amp; DOOH</li><li>Key art &amp; compositing</li><li>Social content at scale</li><li>Character design</li></ul></div>
       <div class="grp"><span class="lbl">Motion &amp; AI</span>
@@ -129,20 +128,23 @@ section + section { margin-top: 5.4mm; }
         <ul class="tags"><li class="hot">HTML &amp; CSS</li><li>JavaScript</li><li>Web design</li><li>Interactive prototypes</li></ul></div>
     </section>
     <section>
-      <h2><span>03</span><em>Toolkit</em></h2>
-      <ul class="tags">
-        <li>Photoshop</li><li>Illustrator</li><li>After Effects</li><li>Premiere Pro</li><li>InDesign</li><li>Figma</li><li>Midjourney</li><li>AI video tools</li><li>HTML / CSS / JS</li><li>Python</li><li>Blender (learning)</li>
-      </ul>
+      <h2><em>Toolkit</em></h2>
+      <div class="grp"><span class="lbl">Design &amp; motion</span>
+        <ul class="tags"><li>Photoshop</li><li>Illustrator</li><li>After Effects</li><li>Premiere Pro</li><li>InDesign</li><li>Figma</li></ul></div>
+      <div class="grp"><span class="lbl">AI</span>
+        <ul class="tags"><li class="hot">Midjourney</li><li class="hot">Higgsfield</li><li>Nano Banana</li><li>ChatGPT Images</li><li>ElevenLabs</li><li>Freepik</li></ul></div>
+      <div class="grp"><span class="lbl">Code &amp; automation</span>
+        <ul class="tags"><li class="hot">Claude Code</li><li>Python</li><li>HTML / CSS / JS</li></ul></div>
     </section>
     <section>
-      <h2><span>04</span><em>Education</em></h2>
+      <h2><em>Education</em></h2>
       <ul class="plain">
         <li><b>Master’s, Digital Communication &amp; Multimedia</b><small>ITS Belgrade · in progress</small></li>
         <li><b>B.Sc. Computer Multimedia Engineering</b><small>ITS Belgrade · 2022</small></li>
       </ul>
     </section>
     <section>
-      <h2><span>05</span><em>Languages</em></h2>
+      <h2><em>Languages</em></h2>
       <ul class="plain two">
         <li><b>Serbian</b><small>Native</small></li>
         <li><b>English</b><small>Professional</small></li>
@@ -155,15 +157,17 @@ section + section { margin-top: 5.4mm; }
       <p class="lead">Designer who animates, <em>animator who designs.</em> Five-plus years of shipping work that has to perform: <b>campaigns, motion, UI/UX and AI video</b>, from a social post to a city billboard. I take an idea to every format it needs, and I can build it in HTML and CSS myself.</p>
     </section>
     <section>
-      <h2><span>06</span><em>Experience</em></h2>
+      <h2><em>Experience</em></h2>
       <div class="job">
         <time>2024 — now</time>
-        <div><h3>Campaign &amp; Motion Designer <span>· ITS · ITHS · FSU, Belgrade</span></h3>
+        <div><h3>Campaign &amp; Motion Designer <span>· Private education group (IT college, art faculty, IT high school), Belgrade</span></h3>
           <ul>
             <li>Concept, design, animation and delivery of <b>50+ billboards and DOOH screens</b> across Belgrade, each shipped with its social, web and email set.</li>
             <li>Enrolment campaigns for three schools at once: one message, three identities.</li>
-            <li>Art direction for the Faculty of Contemporary Arts: <b>30+ campaign, exhibition and event identities</b> in one academic year.</li>
+            <li>Art direction for the Faculty of Contemporary Arts: <b>80+ campaign, exhibition and event identities</b> in one academic year.</li>
             <li>Content systems for social: <b>eight series, 330+ assets</b>, built so post 33 looks as considered as post 1.</li>
+            <li>Paid social creatives for Meta (feed, story, reels), every element inside the placement safe zones.</li>
+            <li>Advanced <b>Claude Code</b> user: my own production pipelines and Python scripts that render and export every format and size from one master file.</li>
           </ul></div>
       </div>
       <div class="job">
@@ -199,9 +203,9 @@ section + section { margin-top: 5.4mm; }
       </div>
     </section>
     <section>
-      <h2><span>07</span><em>Clients &amp; brands</em></h2>
+      <h2><em>Clients &amp; brands</em></h2>
       <ul class="cl">
-        <li>Faculty of Contemporary Arts</li><li>Information Technology School</li><li>IT High School</li><li>LINK Group</li><li>Ballies</li><li>BeClutch</li><li>Wall Street Games</li><li>Baby Boo</li><li>micro1</li><li>ArmaBeton</li><li>Telegraf</li><li>InnovNation</li><li>KUN Podcast</li><li>VK Blog</li><li>Kultura Barbershop</li>
+        <li>Faculty of Contemporary Arts</li><li>Information Technology School</li><li>IT High School</li><li>Ballies</li><li>Wall Street Games</li><li>BeClutch</li><li>Baby Boo</li><li>Telegraf</li><li>micro1</li>
       </ul>
     </section>
   </main>
