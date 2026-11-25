@@ -1057,6 +1057,29 @@
       $$('.row__media').forEach((m) => io.observe(m));
     }
 
+    /* the Spec lab: a card plays its loop while it is in view, on any screen */
+    let specReady = false;
+    function setupSpecLab() {
+      if (specReady || lite || !('IntersectionObserver' in window)) return;
+      specReady = true;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          const img = en.target.querySelector('img[data-vsrc]');
+          if (!img) return;
+          let v = en.target.querySelector('video');
+          if (en.isIntersecting) {
+            if (!v) {
+              v = makeVideo(LOOPS + img.dataset.vsrc + '.mp4');
+              v.addEventListener('playing', () => en.target.classList.add('has-video'), { once: true });
+              en.target.appendChild(v);
+            }
+            play(v);
+          } else if (v) v.pause();
+        });
+      }, { threshold: 0.4 });
+      $$('.spec__media').forEach((m) => io.observe(m));
+    }
+
     /* desktop: the work cards. One card at a time is on air, like a director cutting between
        sources: it plays its loop while the others rest on a still. Pointing at a card cuts to
        it; the director carries on from there. Only while the cards are on screen. */
@@ -1991,7 +2014,7 @@
       // the screens start playing 0.9 s after the page has loaded, and never before the intro is
       // over: the first videos start decoding once the iris has closed, not while it moves
       const settled = new Promise((r) => setTimeout(r, reduceMotion ? 0 : 900));
-      Promise.all([settled, introDone.then(() => new Promise((r) => setTimeout(r, introPlayed ? 250 : 0)))]).then(() => { startDirector(); setupFeed(); });
+      Promise.all([settled, introDone.then(() => new Promise((r) => setTimeout(r, introPlayed ? 250 : 0)))]).then(() => { startDirector(); setupFeed(); setupSpecLab(); });
       const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1500));
       setTimeout(() => idle(() => { reelReady = true; startMobileReel(); }, { timeout: 3000 }), 900);
     });

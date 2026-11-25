@@ -36,6 +36,11 @@ ONLY_PAGES = "--pages" in sys.argv
 BUILT = {}   # url -> media info from the last build (media/cases/manifest.json)
 
 
+def long_title(c):
+    """a one-word title of nine letters or more (HAMMERLING) is set smaller on a phone so it fits whole"""
+    return " case-title--long" if max(len(w) for w in c["title"].split()) >= 9 else ""
+
+
 def resolve(src):
     for k, v in PREFIX.items():
         if src.startswith(k):
@@ -98,9 +103,10 @@ def video_widths(w, h):
     return out
 
 
-def build_video(src, base, start=0.0, dur=None):
+def build_video(src, base, start=0.0, dur=None, audio=False):
     """base.mp4 at the first width, base-<w>.mp4 for the bigger ones; a poster for the first
-    and the biggest (the next-case strip shows the biggest)."""
+    and the biggest (the next-case strip shows the biggest). "audio": the film keeps its sound
+    (an ad whose sound the visitor can turn on); every other film is silent."""
     w, h, d = probe(src)
     dur = min(dur or 16, d - start)
     widths = video_widths(w, h)
@@ -110,7 +116,8 @@ def build_video(src, base, start=0.0, dur=None):
             continue
         crf = "29" if j == 0 else "30"   # a bigger frame hides a little more compression
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{dur:.2f}", "-i", src,
-             "-an", "-r", "25", "-vf", f"scale={tw}:-2", "-c:v", "libx264", "-profile:v", "high",
+             *(["-c:a", "aac", "-b:a", "96k", "-ac", "2"] if audio else ["-an"]),
+             "-r", "25", "-vf", f"scale={tw}:-2", "-c:v", "libx264", "-profile:v", "high",
              "-pix_fmt", "yuv420p", "-crf", crf, "-preset", "slow", "-movflags", "+faststart",
              name + ".mp4"])
         if j == 0 or j == len(widths) - 1:
@@ -127,14 +134,15 @@ def build_video(src, base, start=0.0, dur=None):
 
 def media_for(item, outdir, rel):
     src = resolve(item["src"])
-    key = hashlib.sha1(item["src"].encode("utf-8")).hexdigest()[:8]
+    # a film with its sound is another file than the same film silent
+    key = hashlib.sha1((item["src"] + ("#audio" if item.get("audio") else "")).encode("utf-8")).hexdigest()[:8]
     base = os.path.join(outdir, key)
     url = rel + key
     built_only = ONLY_PAGES or not os.path.exists(src)   # archived originals keep their built media
     if built_only and url in BUILT:   # its size as recorded when it was built
         info = dict(BUILT[url])
     elif item["type"] == "video":
-        info = {"type": "video"} if built_only else build_video(src, base, item.get("start", 0), item.get("dur"))
+        info = {"type": "video"} if built_only else build_video(src, base, item.get("start", 0), item.get("dur"), item.get("audio", False))
         if built_only:
             pw, ph = Image.open(base + ".webp").size
             old = BUILT.get(url, {})
@@ -671,7 +679,7 @@ def render_case(c, i, cases, media):
     <section class="case-hero">
       <div class="case-hero__top"><a class="back" href="{R}#work">← All work</a><span>Case {num} / {n:02d}</span></div>
       <p class="eyebrow">{E(c['kicker'])}</p>
-      <h1 class="case-title">{E(c['title'])}</h1>
+      <h1 class="case-title{long_title(c)}">{E(c['title'])}</h1>
       <p class="case-line">{E(c['line'])}</p>
       <dl class="case-meta">{meta}</dl>
     </section>
@@ -1088,7 +1096,44 @@ def result_mascot(c, R):
     return mascot(a, R + m["base"], tag="span", extra=' data-zo-solo')
 
 
-LABS = {"mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub, "flip": lab_flip, "gallery": lab_gallery,
+def lab_hooks(c, lab, R, media):
+    """Switch the hook: one ad, three openings. The first two seconds differ, the rest is the
+    same film, so a switch plays the new opening from the top and the body carries on."""
+    hooks = lab["hooks"]
+    vids = "".join(
+        f'<video class="hk__v{" is-on" if j == 0 else ""}" muted playsinline preload="{"auto" if j == 0 else "none"}" '
+        f'poster="{m["url"]}.webp" width="{m["w"]}" height="{m["h"]}" data-hk-v="{j}" '
+        f'data-srcs="{video_srcs(m)}" aria-label="{E(m["label"])}"></video>'
+        for j, m in enumerate(media["lab"]))
+    btns = "".join(
+        f'<button class="hk__b{" is-on" if j == 0 else ""}" type="button" data-hk="{j}" aria-pressed="{"true" if j == 0 else "false"}">'
+        f'<span class="hk__k">{E(h["key"])}</span><span class="hk__t"><em>{E(h["kind"])}</em>“{E(h["text"])}”</span></button>'
+        for j, h in enumerate(hooks))
+    cut = lab.get("cut", 2)
+    dur = lab.get("dur", 15)
+    return f"""
+      <div class="sc hk" data-lab="hooks" data-cut="{cut}" data-dur="{dur}" style="--hk:{lab.get('accent', '#ffcf5a')}">
+        <div class="sc__copy">
+          <h2 class="lab__title" id="lab-t">{rich(lab['title'])}</h2>
+          <p class="lab__line">{E(lab['line'])}</p>
+          <div class="hk__list" role="group" aria-label="Pick the opening">{btns}</div>
+          <div class="hk__meter" aria-hidden="true">
+            <div class="hk__bar"><span class="hk__seg hk__seg--hook" style="--w:{cut / dur:.4f}"><i data-hk-p0></i></span><span class="hk__seg"><i data-hk-p1></i></span></div>
+            <p class="hk__legend"><span><b>0–{cut} s</b> the hook you picked</span><span><b>{cut}–{dur} s</b> the same for all three</span></p>
+          </div>
+          <div class="mx__act">
+            <button class="mx__orig" type="button" data-hk-sound aria-pressed="false">Sound on</button>
+          </div>
+        </div>
+        <div class="sc__stage">
+          <div class="sc__frame hk__frame" style="--ar:{media['lab'][0]['w'] / media['lab'][0]['h']:.4f}">{vids}
+            <span class="sc__hint" aria-hidden="true"><i>↺</i>Pick a hook, the ad starts over</span>
+          </div>
+        </div>
+      </div>"""
+
+
+LABS = {"hooks": lab_hooks, "mixer": lab_mixer, "driveby": lab_driveby, "loupe": lab_loupe, "scrub": lab_scrub, "flip": lab_flip, "gallery": lab_gallery,
         "mascots": lab_mascots}
 
 
@@ -1262,8 +1307,8 @@ def render_story(c, i, cases, media):
   <main id="case-main">
     <section class="case-hero cs-hero">
       <div class="case-hero__top"><a class="back" href="{R}#work">← All work</a><span>Case {num} / {n:02d}</span></div>
-      <p class="eyebrow">{E(c['kicker'])}</p>
-      <h1 class="case-title">{E(c['title'])}</h1>
+      <p class="eyebrow">{E(c['kicker'])}{'<span class="cs-spec">Concept / spec</span>' if c.get('spec') else ''}</p>
+      <h1 class="case-title{long_title(c)}">{E(c['title'])}</h1>
       <div class="cs-hero__sub">
         <p class="case-line">{E(c['line'])}</p>
         <ul class="cs-skills" aria-label="Skills in this project">{skills}</ul>
@@ -1439,8 +1484,8 @@ def render_ux(c, cases, media):
   <main id="case-main">
     <section class="case-hero cs-hero uxc-hero">
       <div class="case-hero__top"><a class="back" href="{R}#interfaces">← Interfaces</a><span>UX case study</span></div>
-      <p class="eyebrow">{E(c['kicker'])}</p>
-      <h1 class="case-title">{E(c['title'])}</h1>
+      <p class="eyebrow">{E(c['kicker'])}{'<span class="cs-spec">Concept / spec</span>' if c.get('spec') else ''}</p>
+      <h1 class="case-title{long_title(c)}">{E(c['title'])}</h1>
       <div class="cs-hero__sub">
         <p class="case-line">{E(c['line'])}</p>
         <ul class="cs-skills" aria-label="Skills in this project">{skills}</ul>

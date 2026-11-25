@@ -2,6 +2,328 @@
   "_readme": "Source of truth for case-study pages. Paths: PV/ = Desktop/Production Visuals, D/ = Desktop, S/ = this repo. Run: python -I tools/build_cases.py",
   "cases": [
     {
+      "slug": "hammerling",
+      "format": "story",
+      "spec": true,
+      "title": "HAMMERLING",
+      "kicker": "UA creative · Merge game",
+      "line": "A fifteen-second ad for a merge game: three openings to test, one tower to build, every placement cut from one master.",
+      "client": "Self-initiated · fictional game",
+      "years": "2026",
+      "role": "Concept, art direction, AI generation, animation, sound, all formats",
+      "skills": [
+        "UA creative",
+        "Hook testing",
+        "Art direction",
+        "AI production",
+        "Motion design",
+        "Multi-format delivery"
+      ],
+      "brief": "Mobile games buy their players with short ads, and the first two seconds decide whether anyone stays. A merge game needs an opening that stops the thumb and a body that shows the game feels good to play.",
+      "idea": "A small blacksmith builds a tower floor by floor. Merge three ingots into a sword, three swords into a legend, and the tower grows with every merge. Three openings, one about failure, one about satisfaction, one about the character, run into the same film, so a test measures only the hook.",
+      "lab": {
+        "type": "hooks",
+        "kicker": "three openings, one film",
+        "title": "Switch *the hook*",
+        "line": "The first two seconds are the only thing that changes. Pick an opening and the ad starts over; from second two on, all three are the same film.",
+        "why": "Testing hooks on the same body tells you what stops the scroll, because nothing else in the ad changes.",
+        "accent": "#FFB43A",
+        "cut": 2,
+        "dur": 15,
+        "hooks": [
+          {
+            "key": "A",
+            "kind": "Failure",
+            "text": "Only 2% pass level 7."
+          },
+          {
+            "key": "B",
+            "kind": "Satisfaction",
+            "text": "Merge 3. Forge a legend."
+          },
+          {
+            "key": "C",
+            "kind": "Character",
+            "text": "Help me finish the tower."
+          }
+        ],
+        "media": [
+          {
+            "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_A_9x16_master.mp4",
+            "type": "video",
+            "label": "Hook A · 9:16 · 15 s",
+            "audio": true
+          },
+          {
+            "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_B_9x16_master.mp4",
+            "type": "video",
+            "label": "Hook B · 9:16 · 15 s",
+            "audio": true
+          },
+          {
+            "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_C_9x16_master.mp4",
+            "type": "video",
+            "label": "Hook C · 9:16 · 15 s",
+            "audio": true
+          }
+        ]
+      },
+      "craft": [
+        {
+          "skill": "Hook testing",
+          "title": "Three ways to *stop the thumb*",
+          "text": "Failure, satisfaction, character: three openings that test three different reasons to stay. Each makes its promise in under two seconds, then hands over to the same gameplay.",
+          "rows": [
+            [
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_A_1x1_master.mp4",
+                "type": "video",
+                "label": "Hook A · 1:1"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_B_1x1_master.mp4",
+                "type": "video",
+                "label": "Hook B · 1:1"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_C_1x1_master.mp4",
+                "type": "video",
+                "label": "Hook C · 1:1"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Multi-format delivery",
+          "title": "Every placement *from one master*",
+          "text": "9:16 for Stories, Reels and TikTok, 4:5 and 1:1 for feeds, 16:9 for YouTube and in-app. Each format is laid out again, not cropped, so the line and the button always sit in the safe area.",
+          "rows": [
+            [
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_B_4x5_master.mp4",
+                "type": "video",
+                "label": "Hook B · 4:5"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_C_16x9_master.mp4",
+                "type": "video",
+                "label": "Hook C · 16:9"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Art direction",
+          "title": "Gameplay you can *read in a second*",
+          "text": "Big pieces, one merge per beat, a floor for every merge, then the whole tower lights up gold before the button. The end card asks once: Play free.",
+          "rows": [
+            [
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/05_web/still_A_6.png",
+                "type": "image",
+                "label": "Merging · the tower grows"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/05_web/still_A_10.5.png",
+                "type": "image",
+                "label": "The tower lights up"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/HAMMERLING/05_web/still_A_13.5.png",
+                "type": "image",
+                "label": "End card · Play free"
+              }
+            ]
+          ]
+        }
+      ],
+      "result_big": "12",
+      "result_label": "ads from one master",
+      "result": "Three hooks in four formats, fifteen seconds each, ready to run against each other on every placement.",
+      "hero": [
+        {
+          "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_A_9x16_master.mp4",
+          "type": "video",
+          "label": "Hook A · “Only 2% pass level 7.” · 9:16",
+          "audio": true
+        },
+        {
+          "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_B_9x16_master.mp4",
+          "type": "video",
+          "label": "Hook B · “Merge 3. Forge a legend.” · 9:16",
+          "audio": true
+        },
+        {
+          "src": "PV/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_C_9x16_master.mp4",
+          "type": "video",
+          "label": "Hook C · “Help me finish the tower.” · 9:16",
+          "audio": true
+        }
+      ],
+      "problem_short": "The first two seconds of a game ad decide whether anyone stays, so the opening has to be tested, not guessed."
+    },
+    {
+      "slug": "lanternfin",
+      "format": "story",
+      "spec": true,
+      "title": "LANTERNFIN",
+      "kicker": "UA creative · Arcade fishing game",
+      "line": "A fifteen-second ad for an arcade fishing game: three openings to test, one dive to the bottom, every placement cut from one master.",
+      "client": "Self-initiated · fictional game",
+      "years": "2026",
+      "role": "Concept, art direction, AI video, animation, sound, all formats",
+      "skills": [
+        "UA creative",
+        "Hook testing",
+        "Art direction",
+        "AI video",
+        "Motion design",
+        "Multi-format delivery"
+      ],
+      "brief": "An arcade fishing game lives on one pull: the deeper you go, the rarer the catch. The ad has to sell that feeling in fifteen seconds, and the first two have to stop the scroll.",
+      "idea": "An otter captain lowers a glowing lure into the abyss. The depth counter jumps zone by zone, every zone gives a rarer fish, and a legendary lantern-fish waits at the bottom. Three openings, failure, satisfaction and character, run into the same dive.",
+      "lab": {
+        "type": "hooks",
+        "kicker": "three openings, one film",
+        "title": "Switch *the hook*",
+        "line": "The first two seconds are the only thing that changes. Pick an opening and the dive starts over; from second two on, all three are the same film.",
+        "why": "Testing hooks on the same body tells you what stops the scroll, because nothing else in the ad changes.",
+        "accent": "#3EE6FF",
+        "cut": 2,
+        "dur": 15,
+        "hooks": [
+          {
+            "key": "A",
+            "kind": "Failure",
+            "text": "Nobody reaches the bottom."
+          },
+          {
+            "key": "B",
+            "kind": "Satisfaction",
+            "text": "How deep can you go?"
+          },
+          {
+            "key": "C",
+            "kind": "Character",
+            "text": "I lost my lantern down there. Help me?"
+          }
+        ],
+        "media": [
+          {
+            "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_A_9x16_master.mp4",
+            "type": "video",
+            "label": "Hook A · 9:16 · 15 s",
+            "audio": true
+          },
+          {
+            "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_B_9x16_master.mp4",
+            "type": "video",
+            "label": "Hook B · 9:16 · 15 s",
+            "audio": true
+          },
+          {
+            "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_C_9x16_master.mp4",
+            "type": "video",
+            "label": "Hook C · 9:16 · 15 s",
+            "audio": true
+          }
+        ]
+      },
+      "craft": [
+        {
+          "skill": "Hook testing",
+          "title": "Three ways to *stop the thumb*",
+          "text": "A line that snaps, a fish out of the dark, an otter asking for help: three openings that test three different reasons to stay, then hand over to the same dive.",
+          "rows": [
+            [
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_A_1x1_master.mp4",
+                "type": "video",
+                "label": "Hook A · 1:1"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_B_1x1_master.mp4",
+                "type": "video",
+                "label": "Hook B · 1:1"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_C_1x1_master.mp4",
+                "type": "video",
+                "label": "Hook C · 1:1"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Multi-format delivery",
+          "title": "Every placement *from one master*",
+          "text": "9:16 for Stories, Reels and TikTok, 4:5 and 1:1 for feeds, 16:9 for YouTube and in-app. Each format is laid out again, so the otter, the counter and the button never fight for the same spot.",
+          "rows": [
+            [
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_A_4x5_master.mp4",
+                "type": "video",
+                "label": "Hook A · 4:5"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_B_16x9_master.mp4",
+                "type": "video",
+                "label": "Hook B · 16:9"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "AI video",
+          "title": "Generated life, *animated game*",
+          "text": "The living shots, the otter, the boat and the fish of the abyss, are generated video. The counter, the rare cards, the type and the button are animated on top, so the game stays sharp and readable.",
+          "rows": [
+            [
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/05_web/still_A_6.png",
+                "type": "image",
+                "label": "The dive · depth counter"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/05_web/still_A_10.5.png",
+                "type": "image",
+                "label": "The captain"
+              },
+              {
+                "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/05_web/still_A_13.5.png",
+                "type": "image",
+                "label": "End card · Play free"
+              }
+            ]
+          ]
+        }
+      ],
+      "result_big": "12",
+      "result_label": "ads from one master",
+      "result": "Three hooks in four formats, fifteen seconds each, ready to run against each other on every placement.",
+      "hero": [
+        {
+          "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_A_9x16_master.mp4",
+          "type": "video",
+          "label": "Hook A · “Nobody reaches the bottom.” · 9:16",
+          "audio": true
+        },
+        {
+          "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_B_9x16_master.mp4",
+          "type": "video",
+          "label": "Hook B · “How deep can you go?” · 9:16",
+          "audio": true
+        },
+        {
+          "src": "PV/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_C_9x16_master.mp4",
+          "type": "video",
+          "label": "Hook C · “I lost my lantern down there. Help me?” · 9:16",
+          "audio": true
+        }
+      ],
+      "problem_short": "The first two seconds of a game ad decide whether anyone stays, so the opening has to be tested, not guessed."
+    },
+    {
       "slug": "live-on-the-streets",
       "format": "story",
       "title": "Live on the Streets",
@@ -418,6 +740,470 @@
         }
       ],
       "problem_short": "Three schools chasing teenagers and parents in a loud city, a new campaign almost every month, and a driver gives a billboard three seconds."
+    },
+    {
+      "slug": "series-at-scale",
+      "format": "story",
+      "title": "Series at Scale",
+      "kicker": "Content systems · ITS · ITHS",
+      "line": "Eight series, 330+ assets, one system: careers, programmes, AI prompts, student apps and events.",
+      "client": "ITS · Information Technology School · ITHS · IT High School",
+      "years": "2026",
+      "role": "Art direction, design system, production",
+      "skills": [
+        "Design systems",
+        "Art direction",
+        "Social content",
+        "Production at scale",
+        "Meta ads"
+      ],
+      "brief": "Education marketing runs on volume: dozens of programmes, careers and deadlines, each needing its own post, without the feed turning into a template graveyard.",
+      "idea": "Give every series one strong signature, portrait, light and type, and let the system carry the repetition, so post 33 looks as considered as post 1.",
+      "lab": {
+        "type": "flip",
+        "kicker": "the system holds still",
+        "title": "Flip *the series*",
+        "line": "Thirty-three careers, one layout. Drag across the post to flip through them: the person and the title change, nothing else moves.",
+        "why": "A system is what lets a small team publish every day and still look art-directed.",
+        "base": "media/labs/careers/",
+        "alt": "What does a … do? A career series for ITS: one portrait and one title per post",
+        "names": [
+          "What does a Build/Release Engineer do?",
+          "What does a Technical Writer do?",
+          "What does a 3D Scanning & Modelling Specialist do?",
+          "What does a Project Analyst do?",
+          "What does a Technical Configuration Manager do?",
+          "What does a Freelance Software Specialist do?",
+          "What does a Production Associate do?",
+          "What does an E-Government Specialist do?",
+          "What does an E-Banking Officer do?",
+          "What does a Business Process Engineer do?",
+          "What does a Business Process Organisation Manager do?",
+          "What does a Business Analyst do?",
+          "What does a Project Development Manager do?",
+          "What does an IT Consultant do?",
+          "What does a Head of Sales do?",
+          "What does a Sales Engineer do?",
+          "What does an IT Key Account Manager do?",
+          "What does a Business Systems Analyst do?",
+          "What does a Product Owner do?",
+          "What does a Solution Manager do?",
+          "What does an IT Procurement Specialist do?",
+          "What does a Technology Manager do?",
+          "What does a Business Software Consultant do?",
+          "What does a SAP Specialist do?",
+          "What does a SAP Consultant do?",
+          "What does an ERP Consultant do?",
+          "What does a Web Editor do?",
+          "What does a Financial Software Consultant do?",
+          "What does a Business Strategy Specialist do?",
+          "What does a Target Client Analyst do?",
+          "What does an IT Controlling Associate do?",
+          "What does a Business Systems Development Engineer do?",
+          "What does an IT Manager do?"
+        ],
+        "margin": 0.045,
+        "zones": [
+          [
+            0.045,
+            0.035,
+            0.345,
+            0.13,
+            "Logo · fixed"
+          ],
+          [
+            0.17,
+            0.0,
+            0.83,
+            0.58,
+            "Portrait · same light, same crop"
+          ],
+          [
+            0.045,
+            0.6,
+            0.9,
+            0.955,
+            "Title · bottom-anchored, 2–3 lines"
+          ]
+        ]
+      },
+      "craft": [
+        {
+          "skill": "Design systems",
+          "title": "Ten programmes, *every format*",
+          "text": "Each study programme gets one cinematic signature, then the grid rebuilds it for story, feed and website without losing the picture.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1920.png",
+                "type": "image",
+                "label": "Software Development · story 9:16"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
+                "type": "image",
+                "label": "Software Development · feed 4:5"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1080x1080.png",
+                "type": "image",
+                "label": "Software Development · feed 1:1"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Carousels",
+          "title": "117 slides that *teach*",
+          "text": "ChatGPT Commands: nine carousels, one prompt per slide. A strict type system keeps long, practical text calm enough to read in a feed.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/Naslovna.png",
+                "type": "image",
+                "label": "Cover"
+              },
+              {
+                "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/1.png",
+                "type": "image",
+                "label": "Command 1"
+              },
+              {
+                "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/2.png",
+                "type": "image",
+                "label": "Command 2"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Meta ads",
+          "title": "One campaign, *four formats*",
+          "text": "ITS advertises on Instagram and Facebook all year. Ten study programmes each get their own face and their own set of story, feed, square and link formats; pre-enrolment, the 20-year jubilee packages and Black Friday run on the same system. Every format is laid out again inside Meta’s safe zones, never cropped from the square.",
+          "rows": [
+            [
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1920.png",
+                "type": "image",
+                "label": "Pre-enrolment · story 9:16"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1350.png",
+                "type": "image",
+                "label": "Feed 4:5"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1080.png",
+                "type": "image",
+                "label": "Feed 1:1"
+              },
+              {
+                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1200x628.png",
+                "type": "image",
+                "label": "Link 1.91:1"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
+                "type": "image",
+                "label": "Software Development · 4:5"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
+                "type": "image",
+                "label": "Data Science & AI"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_04_Digitalna_multimedija_OSS/meta/1080x1350.png",
+                "type": "image",
+                "label": "Digital Multimedia"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
+                "type": "image",
+                "label": "E-sport Management"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Mreze_Meta/Meta_1080x1350.png",
+                "type": "image",
+                "label": "20 jubilee packages · 4:5"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/ITS/01 Black Friday/Feed 4x5.jpg",
+                "type": "image",
+                "label": "Black Friday · 4:5"
+              },
+              {
+                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/ITS/02 Cyber Monday/Feed 4x5.jpg",
+                "type": "image",
+                "label": "Cyber Monday · 4:5"
+              },
+              {
+                "src": "PV/ITS/ITS Studijski programi i moduli/Post_08_Menadzment_u_IT/meta/1080x1350.png",
+                "type": "image",
+                "label": "IT Management · 4:5"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "ITS · key visuals",
+          "title": "A number you can *walk around*",
+          "text": "Between the series, ITS news gets one idea per post. Pass rates are built as objects in the scene: a 3D ring around the student, vinyl on a glass wall, digits behind an exploded camera, a red 100% standing on the floor. The same thinking carries the calendar days and the open calls.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITS/ITS Godisnja analiza prolaznosti/DM.png",
+                "type": "image",
+                "label": "Annual pass rate · 89.33%"
+              },
+              {
+                "src": "PV/ITS/ITS Master prolaznost Oktobar 2/DM.png",
+                "type": "image",
+                "label": "Master’s pass rate · 91.23%"
+              },
+              {
+                "src": "PV/ITS/ITS Osnovne studije prolaznost/DM.png",
+                "type": "image",
+                "label": "Bachelor pass rate · 76.30%"
+              },
+              {
+                "src": "PV/ITS/ITS 100 posto anketiranih poslodavaca/DM.png",
+                "type": "image",
+                "label": "Employer survey · 100%"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Studenti biraju znanje i interesovanja/DM.png",
+                "type": "image",
+                "label": "Students choose · AI detection desk"
+              },
+              {
+                "src": "PV/ITS/ITS Svetski dan nauke za mir i razvoj/DM.png",
+                "type": "image",
+                "label": "World Science Day"
+              },
+              {
+                "src": "PV/ITS/ITS Dan tolerancije 2026/DM.png",
+                "type": "image",
+                "label": "International Day for Tolerance"
+              },
+              {
+                "src": "PV/ITS/ITS Master prolaznost oktobarski rok/DM.png",
+                "type": "image",
+                "label": "Master’s pass rate · 91.94%"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITS/ITS Halloween Say BOO/DM.png",
+                "type": "image",
+                "label": "Halloween · Say BOO!"
+              },
+              {
+                "src": "PV/ITS/ITS Sony World Photography Student 2027/DM.png",
+                "type": "image",
+                "label": "Sony World Photography · Student"
+              },
+              {
+                "src": "PV/ITS/ITS Schneider Electric Video Contest/DM.png",
+                "type": "image",
+                "label": "Schneider Electric Video Contest"
+              },
+              {
+                "src": "PV/ITS/ITS EVTA Age Management/DM.png",
+                "type": "image",
+                "label": "EVTA round table"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "ITHS · key visuals",
+          "title": "A high school with *its own voice*",
+          "text": "ITHS speaks to fifteen-year-olds and to their parents, so every post starts from a line they would repeat: “School ends at 14:30. That’s it. Really.” A former pupil comes back as a teacher on a red-pen worksheet, a poetry contest is written in a journal, a charity tournament is painted on the court.",
+          "rows": [
+            [
+              {
+                "src": "PV/ITHS/ITHS Skola se zavrsava u 14.30/DM.png",
+                "type": "image",
+                "label": "School ends at 14:30"
+              },
+              {
+                "src": "PV/ITHS/ITHS AI program/DM.png",
+                "type": "image",
+                "label": "AI programme · think with AI"
+              },
+              {
+                "src": "PV/ITHS/ITHS Dan tolerancije 2026/DM.png",
+                "type": "image",
+                "label": "International Day for Tolerance"
+              },
+              {
+                "src": "PV/ITHS/ITHS Decija nedelja/ITHS_Decija-nedelja_1080x1080.png",
+                "type": "image",
+                "label": "Children’s Week"
+              }
+            ],
+            [
+              {
+                "src": "PV/ITHS/ITHS Humanitarni turnir mali fudbal/DM.png",
+                "type": "image",
+                "label": "Charity football tournament"
+              },
+              {
+                "src": "PV/ITHS/ITHS Ucenicke aplikacije/Pitagorina radionica/DM.png",
+                "type": "image",
+                "label": "Student app · Pythagoras’ workshop"
+              }
+            ]
+          ]
+        }
+      ],
+      "result_big": "330+",
+      "result_label": "assets in one consistent system",
+      "result": "A feed that looks art-directed post after post, and a production speed that keeps up with the academic calendar.",
+      "hero": [
+        {
+          "src": "PV/ITS/ITS Sta radi zanimanja/12_Sta_radi_poslovni_analiticar/SAJT.png",
+          "type": "image",
+          "label": "What does a … do? · Business analyst · 1200×630"
+        }
+      ],
+      "problem_short": "Dozens of programmes, careers and deadlines, each needing its own post, without the feed turning into a template graveyard."
+    },
+    {
+      "slug": "baby-boo",
+      "format": "story",
+      "title": "Baby Boo",
+      "kicker": "AI product campaign · Natural cosmetics",
+      "line": "Product films and stills without a studio, and a cast of hand-drawn friends from the labels that comes to life.",
+      "client": "Baby Boo · natural cosmetics, made by moms",
+      "years": "2026",
+      "role": "Concept, art direction, generation, character animation, edit, finishing",
+      "skills": [
+        "Art direction",
+        "AI production",
+        "Product film",
+        "Character animation",
+        "Concept stills",
+        "Edit & grade"
+      ],
+      "brief": "Premium films and stills for a small natural-cosmetics brand. No studio, no crew, no shoot day, and the jar has to look exactly like the one on the shelf.",
+      "idea": "Direct it like a commercial shoot: the label stays true to the real product, the honey pours on cue, the bees sit in shallow focus. And the friends drawn on the labels get a life of their own: one ink line, cut into parts, so every one of them can move.",
+      "lab": {
+        "type": "mascots",
+        "kicker": "the friends from the labels",
+        "title": "Wake the *cast*",
+        "line": "Every jar has a friend on its label, drawn by hand in one ink line and cut into parts so it can move. Tap one to wake it, or run bath time for all five.",
+        "why": "A mascot that moves works everywhere: a sticker, a loading screen, the next film. Drawn once, it keeps paying back.",
+        "base": "media/labs/mascots/",
+        "rig": "media/labs/mascots/rig.json"
+      },
+      "craft": [
+        {
+          "skill": "Art direction",
+          "title": "Product-true, *frame by frame*",
+          "text": "Label, mascot, cap and proportions stay true to the real jar in every frame, so the stills can sell the product, not just a mood.",
+          "rows": [
+            [
+              {
+                "src": "D/Ai Baby Boo/Gotove/Manuka.png",
+                "type": "image",
+                "label": "Manuka Honey · hero still"
+              },
+              {
+                "src": "D/Ai Baby Boo/Gotove/Elephant.png",
+                "type": "image",
+                "label": "Cottonseed wash · hero still"
+              },
+              {
+                "src": "D/Ai Baby Boo/macadamia.png",
+                "type": "image",
+                "label": "Macadamia · hero still"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Concept stills",
+          "title": "One bold idea *per still*",
+          "text": "Break the glass in case of a sudden voyage. A claw machine full of jars. A carousel of giraffes. Each launch got one idea strong enough to post on its own.",
+          "rows": [
+            [
+              {
+                "src": "D/Ai Baby Boo/Break-glass.png",
+                "type": "image",
+                "label": "Break glass in case of a sudden voyage"
+              },
+              {
+                "src": "D/Ai Baby Boo/Masina.png",
+                "type": "image",
+                "label": "Claw machine"
+              },
+              {
+                "src": "D/Ai Baby Boo/zirafe.png",
+                "type": "image",
+                "label": "Carousel"
+              },
+              {
+                "src": "D/Ai Baby Boo/Zec-i-zirafa.png",
+                "type": "image",
+                "label": "Spring"
+              }
+            ]
+          ]
+        },
+        {
+          "skill": "Product film",
+          "title": "Cut like a *commercial*",
+          "text": "Vertical first, timed to the beat, graded as one spot: the pilot runs as a 9:16 for Reels and TikTok with a 4K master for the web.",
+          "rows": [
+            [
+              {
+                "src": "D/Ai Baby Boo/Gotove/med 4.mp4",
+                "type": "video",
+                "label": "Manuka Honey · the pour, 9:16"
+              },
+              {
+                "src": "D/BabyBoo/Montenegro/Montenegro.mp4",
+                "type": "video",
+                "label": "Montenegro · mascot animation"
+              }
+            ]
+          ]
+        }
+      ],
+      "result_big": "0",
+      "result_label": "studio days",
+      "result": "Vertical-first product films for Reels and TikTok, a 4K master for the web and a library of concept stills for every launch.",
+      "hero": [
+        {
+          "src": "PV/Baby Boo/Manuka Honey Pilot/BabyBoo_ManukaHoney_Pilot-1080x1920.mp4",
+          "type": "video",
+          "label": "Manuka Honey · pilot film"
+        },
+        {
+          "src": "D/Ai Baby Boo/Valentines.mp4",
+          "type": "video",
+          "label": "Valentine's · product film"
+        },
+        {
+          "src": "D/Ai Baby Boo/Slon.mp4",
+          "type": "video",
+          "label": "Elephant · product film"
+        }
+      ],
+      "result_mascot": {
+        "key": "koala",
+        "base": "media/labs/mascots/",
+        "rig": "media/labs/mascots/rig.json"
+      },
+      "problem_short": "Premium films and stills with no studio, no crew and no shoot day, and the jar has to look exactly like the one on the shelf."
     },
     {
       "slug": "ballies",
@@ -994,470 +1780,6 @@
         "craft"
       ],
       "problem_short": "An art faculty is judged by its own posters, and every deadline, course, exhibition and night out needed one good enough for its own gallery."
-    },
-    {
-      "slug": "series-at-scale",
-      "format": "story",
-      "title": "Series at Scale",
-      "kicker": "Content systems · ITS · ITHS",
-      "line": "Eight series, 330+ assets, one system: careers, programmes, AI prompts, student apps and events.",
-      "client": "ITS · Information Technology School · ITHS · IT High School",
-      "years": "2026",
-      "role": "Art direction, design system, production",
-      "skills": [
-        "Design systems",
-        "Art direction",
-        "Social content",
-        "Production at scale",
-        "Meta ads"
-      ],
-      "brief": "Education marketing runs on volume: dozens of programmes, careers and deadlines, each needing its own post, without the feed turning into a template graveyard.",
-      "idea": "Give every series one strong signature, portrait, light and type, and let the system carry the repetition, so post 33 looks as considered as post 1.",
-      "lab": {
-        "type": "flip",
-        "kicker": "the system holds still",
-        "title": "Flip *the series*",
-        "line": "Thirty-three careers, one layout. Drag across the post to flip through them: the person and the title change, nothing else moves.",
-        "why": "A system is what lets a small team publish every day and still look art-directed.",
-        "base": "media/labs/careers/",
-        "alt": "What does a … do? A career series for ITS: one portrait and one title per post",
-        "names": [
-          "What does a Build/Release Engineer do?",
-          "What does a Technical Writer do?",
-          "What does a 3D Scanning & Modelling Specialist do?",
-          "What does a Project Analyst do?",
-          "What does a Technical Configuration Manager do?",
-          "What does a Freelance Software Specialist do?",
-          "What does a Production Associate do?",
-          "What does an E-Government Specialist do?",
-          "What does an E-Banking Officer do?",
-          "What does a Business Process Engineer do?",
-          "What does a Business Process Organisation Manager do?",
-          "What does a Business Analyst do?",
-          "What does a Project Development Manager do?",
-          "What does an IT Consultant do?",
-          "What does a Head of Sales do?",
-          "What does a Sales Engineer do?",
-          "What does an IT Key Account Manager do?",
-          "What does a Business Systems Analyst do?",
-          "What does a Product Owner do?",
-          "What does a Solution Manager do?",
-          "What does an IT Procurement Specialist do?",
-          "What does a Technology Manager do?",
-          "What does a Business Software Consultant do?",
-          "What does a SAP Specialist do?",
-          "What does a SAP Consultant do?",
-          "What does an ERP Consultant do?",
-          "What does a Web Editor do?",
-          "What does a Financial Software Consultant do?",
-          "What does a Business Strategy Specialist do?",
-          "What does a Target Client Analyst do?",
-          "What does an IT Controlling Associate do?",
-          "What does a Business Systems Development Engineer do?",
-          "What does an IT Manager do?"
-        ],
-        "margin": 0.045,
-        "zones": [
-          [
-            0.045,
-            0.035,
-            0.345,
-            0.13,
-            "Logo · fixed"
-          ],
-          [
-            0.17,
-            0.0,
-            0.83,
-            0.58,
-            "Portrait · same light, same crop"
-          ],
-          [
-            0.045,
-            0.6,
-            0.9,
-            0.955,
-            "Title · bottom-anchored, 2–3 lines"
-          ]
-        ]
-      },
-      "craft": [
-        {
-          "skill": "Design systems",
-          "title": "Ten programmes, *every format*",
-          "text": "Each study programme gets one cinematic signature, then the grid rebuilds it for story, feed and website without losing the picture.",
-          "rows": [
-            [
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1920.png",
-                "type": "image",
-                "label": "Software Development · story 9:16"
-              },
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
-                "type": "image",
-                "label": "Software Development · feed 4:5"
-              },
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/ITS_Programi_02_Razvoj_softvera-1080x1080.png",
-                "type": "image",
-                "label": "Software Development · feed 1:1"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "Carousels",
-          "title": "117 slides that *teach*",
-          "text": "ChatGPT Commands: nine carousels, one prompt per slide. A strict type system keeps long, practical text calm enough to read in a feed.",
-          "rows": [
-            [
-              {
-                "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/Naslovna.png",
-                "type": "image",
-                "label": "Cover"
-              },
-              {
-                "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/1.png",
-                "type": "image",
-                "label": "Command 1"
-              },
-              {
-                "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/2.png",
-                "type": "image",
-                "label": "Command 2"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "Meta ads",
-          "title": "One campaign, *four formats*",
-          "text": "ITS advertises on Instagram and Facebook all year. Ten study programmes each get their own face and their own set of story, feed, square and link formats; pre-enrolment, the 20-year jubilee packages and Black Friday run on the same system. Every format is laid out again inside Meta’s safe zones, never cropped from the square.",
-          "rows": [
-            [
-              {
-                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1920.png",
-                "type": "image",
-                "label": "Pre-enrolment · story 9:16"
-              },
-              {
-                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1350.png",
-                "type": "image",
-                "label": "Feed 4:5"
-              },
-              {
-                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1080x1080.png",
-                "type": "image",
-                "label": "Feed 1:1"
-              },
-              {
-                "src": "PV/Bilbordi Novembar 2k26/ITS/ITS META/1200x628.png",
-                "type": "image",
-                "label": "Link 1.91:1"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
-                "type": "image",
-                "label": "Software Development · 4:5"
-              },
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
-                "type": "image",
-                "label": "Data Science & AI"
-              },
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_04_Digitalna_multimedija_OSS/meta/1080x1350.png",
-                "type": "image",
-                "label": "Digital Multimedia"
-              },
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
-                "type": "image",
-                "label": "E-sport Management"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITS/ITS 20 godina Jubilarni paketi/Mreze_Meta/Meta_1080x1350.png",
-                "type": "image",
-                "label": "20 jubilee packages · 4:5"
-              },
-              {
-                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/ITS/01 Black Friday/Feed 4x5.jpg",
-                "type": "image",
-                "label": "Black Friday · 4:5"
-              },
-              {
-                "src": "PV/NAT/Black Friday Cyber Monday 2026/BF CM 2026 vizuali/ITS/02 Cyber Monday/Feed 4x5.jpg",
-                "type": "image",
-                "label": "Cyber Monday · 4:5"
-              },
-              {
-                "src": "PV/ITS/ITS Studijski programi i moduli/Post_08_Menadzment_u_IT/meta/1080x1350.png",
-                "type": "image",
-                "label": "IT Management · 4:5"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "ITS · key visuals",
-          "title": "A number you can *walk around*",
-          "text": "Between the series, ITS news gets one idea per post. Pass rates are built as objects in the scene: a 3D ring around the student, vinyl on a glass wall, digits behind an exploded camera, a red 100% standing on the floor. The same thinking carries the calendar days and the open calls.",
-          "rows": [
-            [
-              {
-                "src": "PV/ITS/ITS Godisnja analiza prolaznosti/DM.png",
-                "type": "image",
-                "label": "Annual pass rate · 89.33%"
-              },
-              {
-                "src": "PV/ITS/ITS Master prolaznost Oktobar 2/DM.png",
-                "type": "image",
-                "label": "Master’s pass rate · 91.23%"
-              },
-              {
-                "src": "PV/ITS/ITS Osnovne studije prolaznost/DM.png",
-                "type": "image",
-                "label": "Bachelor pass rate · 76.30%"
-              },
-              {
-                "src": "PV/ITS/ITS 100 posto anketiranih poslodavaca/DM.png",
-                "type": "image",
-                "label": "Employer survey · 100%"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITS/ITS Studenti biraju znanje i interesovanja/DM.png",
-                "type": "image",
-                "label": "Students choose · AI detection desk"
-              },
-              {
-                "src": "PV/ITS/ITS Svetski dan nauke za mir i razvoj/DM.png",
-                "type": "image",
-                "label": "World Science Day"
-              },
-              {
-                "src": "PV/ITS/ITS Dan tolerancije 2026/DM.png",
-                "type": "image",
-                "label": "International Day for Tolerance"
-              },
-              {
-                "src": "PV/ITS/ITS Master prolaznost oktobarski rok/DM.png",
-                "type": "image",
-                "label": "Master’s pass rate · 91.94%"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITS/ITS Halloween Say BOO/DM.png",
-                "type": "image",
-                "label": "Halloween · Say BOO!"
-              },
-              {
-                "src": "PV/ITS/ITS Sony World Photography Student 2027/DM.png",
-                "type": "image",
-                "label": "Sony World Photography · Student"
-              },
-              {
-                "src": "PV/ITS/ITS Schneider Electric Video Contest/DM.png",
-                "type": "image",
-                "label": "Schneider Electric Video Contest"
-              },
-              {
-                "src": "PV/ITS/ITS EVTA Age Management/DM.png",
-                "type": "image",
-                "label": "EVTA round table"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "ITHS · key visuals",
-          "title": "A high school with *its own voice*",
-          "text": "ITHS speaks to fifteen-year-olds and to their parents, so every post starts from a line they would repeat: “School ends at 14:30. That’s it. Really.” A former pupil comes back as a teacher on a red-pen worksheet, a poetry contest is written in a journal, a charity tournament is painted on the court.",
-          "rows": [
-            [
-              {
-                "src": "PV/ITHS/ITHS Skola se zavrsava u 14.30/DM.png",
-                "type": "image",
-                "label": "School ends at 14:30"
-              },
-              {
-                "src": "PV/ITHS/ITHS AI program/DM.png",
-                "type": "image",
-                "label": "AI programme · think with AI"
-              },
-              {
-                "src": "PV/ITHS/ITHS Dan tolerancije 2026/DM.png",
-                "type": "image",
-                "label": "International Day for Tolerance"
-              },
-              {
-                "src": "PV/ITHS/ITHS Decija nedelja/ITHS_Decija-nedelja_1080x1080.png",
-                "type": "image",
-                "label": "Children’s Week"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Humanitarni turnir mali fudbal/DM.png",
-                "type": "image",
-                "label": "Charity football tournament"
-              },
-              {
-                "src": "PV/ITHS/ITHS Ucenicke aplikacije/Pitagorina radionica/DM.png",
-                "type": "image",
-                "label": "Student app · Pythagoras’ workshop"
-              }
-            ]
-          ]
-        }
-      ],
-      "result_big": "330+",
-      "result_label": "assets in one consistent system",
-      "result": "A feed that looks art-directed post after post, and a production speed that keeps up with the academic calendar.",
-      "hero": [
-        {
-          "src": "PV/ITS/ITS Sta radi zanimanja/12_Sta_radi_poslovni_analiticar/SAJT.png",
-          "type": "image",
-          "label": "What does a … do? · Business analyst · 1200×630"
-        }
-      ],
-      "problem_short": "Dozens of programmes, careers and deadlines, each needing its own post, without the feed turning into a template graveyard."
-    },
-    {
-      "slug": "baby-boo",
-      "format": "story",
-      "title": "Baby Boo",
-      "kicker": "AI product campaign · Natural cosmetics",
-      "line": "Product films and stills without a studio, and a cast of hand-drawn friends from the labels that comes to life.",
-      "client": "Baby Boo · natural cosmetics, made by moms",
-      "years": "2026",
-      "role": "Concept, art direction, generation, character animation, edit, finishing",
-      "skills": [
-        "Art direction",
-        "AI production",
-        "Product film",
-        "Character animation",
-        "Concept stills",
-        "Edit & grade"
-      ],
-      "brief": "Premium films and stills for a small natural-cosmetics brand. No studio, no crew, no shoot day, and the jar has to look exactly like the one on the shelf.",
-      "idea": "Direct it like a commercial shoot: the label stays true to the real product, the honey pours on cue, the bees sit in shallow focus. And the friends drawn on the labels get a life of their own: one ink line, cut into parts, so every one of them can move.",
-      "lab": {
-        "type": "mascots",
-        "kicker": "the friends from the labels",
-        "title": "Wake the *cast*",
-        "line": "Every jar has a friend on its label, drawn by hand in one ink line and cut into parts so it can move. Tap one to wake it, or run bath time for all five.",
-        "why": "A mascot that moves works everywhere: a sticker, a loading screen, the next film. Drawn once, it keeps paying back.",
-        "base": "media/labs/mascots/",
-        "rig": "media/labs/mascots/rig.json"
-      },
-      "craft": [
-        {
-          "skill": "Art direction",
-          "title": "Product-true, *frame by frame*",
-          "text": "Label, mascot, cap and proportions stay true to the real jar in every frame, so the stills can sell the product, not just a mood.",
-          "rows": [
-            [
-              {
-                "src": "D/Ai Baby Boo/Gotove/Manuka.png",
-                "type": "image",
-                "label": "Manuka Honey · hero still"
-              },
-              {
-                "src": "D/Ai Baby Boo/Gotove/Elephant.png",
-                "type": "image",
-                "label": "Cottonseed wash · hero still"
-              },
-              {
-                "src": "D/Ai Baby Boo/macadamia.png",
-                "type": "image",
-                "label": "Macadamia · hero still"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "Concept stills",
-          "title": "One bold idea *per still*",
-          "text": "Break the glass in case of a sudden voyage. A claw machine full of jars. A carousel of giraffes. Each launch got one idea strong enough to post on its own.",
-          "rows": [
-            [
-              {
-                "src": "D/Ai Baby Boo/Break-glass.png",
-                "type": "image",
-                "label": "Break glass in case of a sudden voyage"
-              },
-              {
-                "src": "D/Ai Baby Boo/Masina.png",
-                "type": "image",
-                "label": "Claw machine"
-              },
-              {
-                "src": "D/Ai Baby Boo/zirafe.png",
-                "type": "image",
-                "label": "Carousel"
-              },
-              {
-                "src": "D/Ai Baby Boo/Zec-i-zirafa.png",
-                "type": "image",
-                "label": "Spring"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "Product film",
-          "title": "Cut like a *commercial*",
-          "text": "Vertical first, timed to the beat, graded as one spot: the pilot runs as a 9:16 for Reels and TikTok with a 4K master for the web.",
-          "rows": [
-            [
-              {
-                "src": "D/Ai Baby Boo/Gotove/med 4.mp4",
-                "type": "video",
-                "label": "Manuka Honey · the pour, 9:16"
-              },
-              {
-                "src": "D/BabyBoo/Montenegro/Montenegro.mp4",
-                "type": "video",
-                "label": "Montenegro · mascot animation"
-              }
-            ]
-          ]
-        }
-      ],
-      "result_big": "0",
-      "result_label": "studio days",
-      "result": "Vertical-first product films for Reels and TikTok, a 4K master for the web and a library of concept stills for every launch.",
-      "hero": [
-        {
-          "src": "PV/Baby Boo/Manuka Honey Pilot/BabyBoo_ManukaHoney_Pilot-1080x1920.mp4",
-          "type": "video",
-          "label": "Manuka Honey · pilot film"
-        },
-        {
-          "src": "D/Ai Baby Boo/Valentines.mp4",
-          "type": "video",
-          "label": "Valentine's · product film"
-        },
-        {
-          "src": "D/Ai Baby Boo/Slon.mp4",
-          "type": "video",
-          "label": "Elephant · product film"
-        }
-      ],
-      "result_mascot": {
-        "key": "koala",
-        "base": "media/labs/mascots/",
-        "rig": "media/labs/mascots/rig.json"
-      },
-      "problem_short": "Premium films and stills with no studio, no crew and no shoot day, and the jar has to look exactly like the one on the shelf."
     },
     {
       "slug": "apsis",

@@ -1,4 +1,524 @@
 {
+ "hammerling": {
+  "hero": [
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1043,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/hammerling/4092ab0d",
+    "label": "Hook A · “Only 2% pass level 7.” · 9:16",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1052,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/hammerling/efb2ef80",
+    "label": "Hook B · “Merge 3. Forge a legend.” · 9:16",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1003,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/hammerling/cbe7c439",
+    "label": "Hook C · “Help me finish the tower.” · 9:16",
+    "matte": false
+   }
+  ],
+  "rows": [],
+  "lab": [
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1043,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/hammerling/4092ab0d",
+    "label": "Hook A · 9:16 · 15 s",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1052,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/hammerling/efb2ef80",
+    "label": "Hook B · 9:16 · 15 s",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1003,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/hammerling/cbe7c439",
+    "label": "Hook C · 9:16 · 15 s",
+    "matte": false
+   }
+  ],
+  "craft": [
+   {
+    "skill": "Hook testing",
+    "title": "Three ways to *stop the thumb*",
+    "text": "Failure, satisfaction, character: three openings that test three different reasons to stay. Each makes its promise in under two seconds, then hands over to the same gameplay.",
+    "rows": [
+     [
+      {
+       "w": 720,
+       "h": 720,
+       "kb": 1007,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/hammerling/eb48b068",
+       "label": "Hook A · 1:1",
+       "matte": false
+      },
+      {
+       "w": 720,
+       "h": 720,
+       "kb": 990,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/hammerling/3b9ddab8",
+       "label": "Hook B · 1:1",
+       "matte": false
+      },
+      {
+       "w": 720,
+       "h": 720,
+       "kb": 899,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/hammerling/5bd17862",
+       "label": "Hook C · 1:1",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Multi-format delivery",
+    "title": "Every placement *from one master*",
+    "text": "9:16 for Stories, Reels and TikTok, 4:5 and 1:1 for feeds, 16:9 for YouTube and in-app. Each format is laid out again, not cropped, so the line and the button always sit in the safe area.",
+    "rows": [
+     [
+      {
+       "w": 720,
+       "h": 900,
+       "kb": 1116,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1350
+       ],
+       "type": "video",
+       "url": "../../media/cases/hammerling/9bf5d3b3",
+       "label": "Hook B · 4:5",
+       "matte": false
+      },
+      {
+       "w": 960,
+       "h": 540,
+       "kb": 757,
+       "vw": [
+        960,
+        1600,
+        1920
+       ],
+       "big": [
+        1920,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/hammerling/4f15cf5c",
+       "label": "Hook C · 16:9",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Art direction",
+    "title": "Gameplay you can *read in a second*",
+    "text": "Big pieces, one merge per beat, a floor for every merge, then the whole tower lights up gold before the button. The end card asks once: Play free.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/hammerling/a14faebf",
+       "label": "Merging · the tower grows",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/hammerling/81b140ea",
+       "label": "The tower lights up",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/hammerling/36d94964",
+       "label": "End card · Play free",
+       "matte": false
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "lanternfin": {
+  "hero": [
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1879,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/lanternfin/69da1b75",
+    "label": "Hook A · “Nobody reaches the bottom.” · 9:16",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 2492,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/lanternfin/c798b2e5",
+    "label": "Hook B · “How deep can you go?” · 9:16",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1929,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/lanternfin/36ca3c96",
+    "label": "Hook C · “I lost my lantern down there. Help me?” · 9:16",
+    "matte": false
+   }
+  ],
+  "rows": [],
+  "lab": [
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1879,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/lanternfin/69da1b75",
+    "label": "Hook A · 9:16 · 15 s",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 2492,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/lanternfin/c798b2e5",
+    "label": "Hook B · 9:16 · 15 s",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 1929,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/lanternfin/36ca3c96",
+    "label": "Hook C · 9:16 · 15 s",
+    "matte": false
+   }
+  ],
+  "craft": [
+   {
+    "skill": "Hook testing",
+    "title": "Three ways to *stop the thumb*",
+    "text": "A line that snaps, a fish out of the dark, an otter asking for help: three openings that test three different reasons to stay, then hand over to the same dive.",
+    "rows": [
+     [
+      {
+       "w": 720,
+       "h": 720,
+       "kb": 1641,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/lanternfin/368024f8",
+       "label": "Hook A · 1:1",
+       "matte": false
+      },
+      {
+       "w": 720,
+       "h": 720,
+       "kb": 2088,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/lanternfin/a6fb619f",
+       "label": "Hook B · 1:1",
+       "matte": false
+      },
+      {
+       "w": 720,
+       "h": 720,
+       "kb": 1713,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/lanternfin/7bb43fcc",
+       "label": "Hook C · 1:1",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Multi-format delivery",
+    "title": "Every placement *from one master*",
+    "text": "9:16 for Stories, Reels and TikTok, 4:5 and 1:1 for feeds, 16:9 for YouTube and in-app. Each format is laid out again, so the otter, the counter and the button never fight for the same spot.",
+    "rows": [
+     [
+      {
+       "w": 720,
+       "h": 900,
+       "kb": 1996,
+       "vw": [
+        720,
+        1080
+       ],
+       "big": [
+        1080,
+        1350
+       ],
+       "type": "video",
+       "url": "../../media/cases/lanternfin/e8597f51",
+       "label": "Hook A · 4:5",
+       "matte": false
+      },
+      {
+       "w": 960,
+       "h": 540,
+       "kb": 1914,
+       "vw": [
+        960,
+        1600,
+        1920
+       ],
+       "big": [
+        1920,
+        1080
+       ],
+       "type": "video",
+       "url": "../../media/cases/lanternfin/094822dd",
+       "label": "Hook B · 16:9",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "AI video",
+    "title": "Generated life, *animated game*",
+    "text": "The living shots, the otter, the boat and the fish of the abyss, are generated video. The counter, the rare cards, the type and the button are animated on top, so the game stays sharp and readable.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/lanternfin/54f70636",
+       "label": "The dive · depth counter",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/lanternfin/598eb841",
+       "label": "The captain",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/lanternfin/34c552bf",
+       "label": "End card · Play free",
+       "matte": false
+      }
+     ]
+    ]
+   }
+  ]
+ },
  "live-on-the-streets": {
   "hero": [
    {
@@ -623,6 +1143,715 @@
        "type": "image",
        "url": "../../media/cases/live-on-the-streets/7b02f4a5",
        "label": "ITHS · free AI course · “use AI” crossed out: “think with AI”",
+       "matte": false
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "series-at-scale": {
+  "hero": [
+   {
+    "w": 1200,
+    "h": 630,
+    "widths": [
+     800,
+     1200
+    ],
+    "type": "image",
+    "url": "../../media/cases/series-at-scale/2e8b9508",
+    "label": "What does a … do? · Business analyst · 1200×630",
+    "matte": false
+   }
+  ],
+  "rows": [],
+  "craft": [
+   {
+    "skill": "Design systems",
+    "title": "Ten programmes, *every format*",
+    "text": "Each study programme gets one cinematic signature, then the grid rebuilds it for story, feed and website without losing the picture.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/b643ac48",
+       "label": "Software Development · story 9:16",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/4f4d0beb",
+       "label": "Software Development · feed 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/ce99325a",
+       "label": "Software Development · feed 1:1",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Carousels",
+    "title": "117 slides that *teach*",
+    "text": "ChatGPT Commands: nine carousels, one prompt per slide. A strict type system keeps long, practical text calm enough to read in a feed.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/90057a3f",
+       "label": "Cover",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/2b306ec3",
+       "label": "Command 1",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/f2c19543",
+       "label": "Command 2",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Meta ads",
+    "title": "One campaign, *four formats*",
+    "text": "ITS advertises on Instagram and Facebook all year. Ten study programmes each get their own face and their own set of story, feed, square and link formats; pre-enrolment, the 20-year jubilee packages and Black Friday run on the same system. Every format is laid out again inside Meta’s safe zones, never cropped from the square.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1920,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/dba04309",
+       "label": "Pre-enrolment · story 9:16",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/92304edf",
+       "label": "Feed 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/1237a74e",
+       "label": "Feed 1:1",
+       "matte": false
+      },
+      {
+       "w": 1200,
+       "h": 628,
+       "widths": [
+        800,
+        1200
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/0274c1c5",
+       "label": "Link 1.91:1",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/4f4d0beb",
+       "label": "Software Development · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a9017513",
+       "label": "Data Science & AI",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/9a131277",
+       "label": "Digital Multimedia",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/8fb14acc",
+       "label": "E-sport Management",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/48e87fa3",
+       "label": "20 jubilee packages · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/9437533e",
+       "label": "Black Friday · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/ff0a2d33",
+       "label": "Cyber Monday · 4:5",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1350,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/4f8abbb8",
+       "label": "IT Management · 4:5",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "ITS · key visuals",
+    "title": "A number you can *walk around*",
+    "text": "Between the series, ITS news gets one idea per post. Pass rates are built as objects in the scene: a 3D ring around the student, vinyl on a glass wall, digits behind an exploded camera, a red 100% standing on the floor. The same thinking carries the calendar days and the open calls.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/13e167eb",
+       "label": "Annual pass rate · 89.33%",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/2cad8084",
+       "label": "Master’s pass rate · 91.23%",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/5e6fd66b",
+       "label": "Bachelor pass rate · 76.30%",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/74880815",
+       "label": "Employer survey · 100%",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/b1ba9c3a",
+       "label": "Students choose · AI detection desk",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/1455c622",
+       "label": "World Science Day",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a6bd8c90",
+       "label": "International Day for Tolerance",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/2e3d4703",
+       "label": "Master’s pass rate · 91.94%",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/be09fd34",
+       "label": "Halloween · Say BOO!",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/abc78feb",
+       "label": "Sony World Photography · Student",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a8b9e2c5",
+       "label": "Schneider Electric Video Contest",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/78fbe537",
+       "label": "EVTA round table",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "ITHS · key visuals",
+    "title": "A high school with *its own voice*",
+    "text": "ITHS speaks to fifteen-year-olds and to their parents, so every post starts from a line they would repeat: “School ends at 14:30. That’s it. Really.” A former pupil comes back as a teacher on a red-pen worksheet, a poetry contest is written in a journal, a charity tournament is painted on the court.",
+    "rows": [
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/95f657c5",
+       "label": "School ends at 14:30",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/d5659131",
+       "label": "AI programme · think with AI",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/a7649bb9",
+       "label": "International Day for Tolerance",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/50467d93",
+       "label": "Children’s Week",
+       "matte": false
+      }
+     ],
+     [
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/9d6b1252",
+       "label": "Charity football tournament",
+       "matte": false
+      },
+      {
+       "w": 1080,
+       "h": 1080,
+       "widths": [
+        800,
+        1080
+       ],
+       "type": "image",
+       "url": "../../media/cases/series-at-scale/226173a6",
+       "label": "Student app · Pythagoras’ workshop",
+       "matte": false
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "baby-boo": {
+  "hero": [
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 339,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/baby-boo/ed696b69",
+    "label": "Manuka Honey · pilot film",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 197,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/baby-boo/26f17ae0",
+    "label": "Valentine's · product film",
+    "matte": false
+   },
+   {
+    "w": 540,
+    "h": 960,
+    "kb": 292,
+    "vw": [
+     540,
+     1080
+    ],
+    "big": [
+     1080,
+     1920
+    ],
+    "type": "video",
+    "url": "../../media/cases/baby-boo/3772d45e",
+    "label": "Elephant · product film",
+    "matte": false
+   }
+  ],
+  "rows": [],
+  "craft": [
+   {
+    "skill": "Art direction",
+    "title": "Product-true, *frame by frame*",
+    "text": "Label, mascot, cap and proportions stay true to the real jar in every frame, so the stills can sell the product, not just a mood.",
+    "rows": [
+     [
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/ec7cd41b",
+       "label": "Manuka Honey · hero still",
+       "matte": false
+      },
+      {
+       "w": 1152,
+       "h": 2048,
+       "widths": [
+        800,
+        1152
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/beef3cd5",
+       "label": "Cottonseed wash · hero still",
+       "matte": false
+      },
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/b11c9114",
+       "label": "Macadamia · hero still",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Concept stills",
+    "title": "One bold idea *per still*",
+    "text": "Break the glass in case of a sudden voyage. A claw machine full of jars. A carousel of giraffes. Each launch got one idea strong enough to post on its own.",
+    "rows": [
+     [
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/662f78ef",
+       "label": "Break glass in case of a sudden voyage",
+       "matte": false
+      },
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/d2b2570e",
+       "label": "Claw machine",
+       "matte": false
+      },
+      {
+       "w": 893,
+       "h": 1600,
+       "widths": [
+        800,
+        893
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/d6feabfa",
+       "label": "Carousel",
+       "matte": false
+      },
+      {
+       "w": 900,
+       "h": 1600,
+       "widths": [
+        800,
+        900
+       ],
+       "type": "image",
+       "url": "../../media/cases/baby-boo/f064f492",
+       "label": "Spring",
+       "matte": false
+      }
+     ]
+    ]
+   },
+   {
+    "skill": "Product film",
+    "title": "Cut like a *commercial*",
+    "text": "Vertical first, timed to the beat, graded as one spot: the pilot runs as a 9:16 for Reels and TikTok with a 4K master for the web.",
+    "rows": [
+     [
+      {
+       "w": 540,
+       "h": 960,
+       "kb": 294,
+       "vw": [
+        540,
+        720
+       ],
+       "big": [
+        720,
+        1280
+       ],
+       "type": "video",
+       "url": "../../media/cases/baby-boo/2ed6683a",
+       "label": "Manuka Honey · the pour, 9:16",
+       "matte": false
+      },
+      {
+       "w": 540,
+       "h": 960,
+       "kb": 289,
+       "vw": [
+        540,
+        1080
+       ],
+       "big": [
+        1080,
+        1920
+       ],
+       "type": "video",
+       "url": "../../media/cases/baby-boo/fcc10112",
+       "label": "Montenegro · mascot animation",
        "matte": false
       }
      ]
@@ -1655,715 +2884,6 @@
        "type": "image",
        "url": "../../media/cases/fsu-2026/795df069",
        "label": "Open call · young artists",
-       "matte": false
-      }
-     ]
-    ]
-   }
-  ]
- },
- "series-at-scale": {
-  "hero": [
-   {
-    "w": 1200,
-    "h": 630,
-    "widths": [
-     800,
-     1200
-    ],
-    "type": "image",
-    "url": "../../media/cases/series-at-scale/2e8b9508",
-    "label": "What does a … do? · Business analyst · 1200×630",
-    "matte": false
-   }
-  ],
-  "rows": [],
-  "craft": [
-   {
-    "skill": "Design systems",
-    "title": "Ten programmes, *every format*",
-    "text": "Each study programme gets one cinematic signature, then the grid rebuilds it for story, feed and website without losing the picture.",
-    "rows": [
-     [
-      {
-       "w": 1080,
-       "h": 1920,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/b643ac48",
-       "label": "Software Development · story 9:16",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/4f4d0beb",
-       "label": "Software Development · feed 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/ce99325a",
-       "label": "Software Development · feed 1:1",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "Carousels",
-    "title": "117 slides that *teach*",
-    "text": "ChatGPT Commands: nine carousels, one prompt per slide. A strict type system keeps long, practical text calm enough to read in a feed.",
-    "rows": [
-     [
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/90057a3f",
-       "label": "Cover",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/2b306ec3",
-       "label": "Command 1",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/f2c19543",
-       "label": "Command 2",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "Meta ads",
-    "title": "One campaign, *four formats*",
-    "text": "ITS advertises on Instagram and Facebook all year. Ten study programmes each get their own face and their own set of story, feed, square and link formats; pre-enrolment, the 20-year jubilee packages and Black Friday run on the same system. Every format is laid out again inside Meta’s safe zones, never cropped from the square.",
-    "rows": [
-     [
-      {
-       "w": 1080,
-       "h": 1920,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/dba04309",
-       "label": "Pre-enrolment · story 9:16",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/92304edf",
-       "label": "Feed 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/1237a74e",
-       "label": "Feed 1:1",
-       "matte": false
-      },
-      {
-       "w": 1200,
-       "h": 628,
-       "widths": [
-        800,
-        1200
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/0274c1c5",
-       "label": "Link 1.91:1",
-       "matte": false
-      }
-     ],
-     [
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/4f4d0beb",
-       "label": "Software Development · 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/a9017513",
-       "label": "Data Science & AI",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/9a131277",
-       "label": "Digital Multimedia",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/8fb14acc",
-       "label": "E-sport Management",
-       "matte": false
-      }
-     ],
-     [
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/48e87fa3",
-       "label": "20 jubilee packages · 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/9437533e",
-       "label": "Black Friday · 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/ff0a2d33",
-       "label": "Cyber Monday · 4:5",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1350,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/4f8abbb8",
-       "label": "IT Management · 4:5",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "ITS · key visuals",
-    "title": "A number you can *walk around*",
-    "text": "Between the series, ITS news gets one idea per post. Pass rates are built as objects in the scene: a 3D ring around the student, vinyl on a glass wall, digits behind an exploded camera, a red 100% standing on the floor. The same thinking carries the calendar days and the open calls.",
-    "rows": [
-     [
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/13e167eb",
-       "label": "Annual pass rate · 89.33%",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/2cad8084",
-       "label": "Master’s pass rate · 91.23%",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/5e6fd66b",
-       "label": "Bachelor pass rate · 76.30%",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/74880815",
-       "label": "Employer survey · 100%",
-       "matte": false
-      }
-     ],
-     [
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/b1ba9c3a",
-       "label": "Students choose · AI detection desk",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/1455c622",
-       "label": "World Science Day",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/a6bd8c90",
-       "label": "International Day for Tolerance",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/2e3d4703",
-       "label": "Master’s pass rate · 91.94%",
-       "matte": false
-      }
-     ],
-     [
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/be09fd34",
-       "label": "Halloween · Say BOO!",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/abc78feb",
-       "label": "Sony World Photography · Student",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/a8b9e2c5",
-       "label": "Schneider Electric Video Contest",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/78fbe537",
-       "label": "EVTA round table",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "ITHS · key visuals",
-    "title": "A high school with *its own voice*",
-    "text": "ITHS speaks to fifteen-year-olds and to their parents, so every post starts from a line they would repeat: “School ends at 14:30. That’s it. Really.” A former pupil comes back as a teacher on a red-pen worksheet, a poetry contest is written in a journal, a charity tournament is painted on the court.",
-    "rows": [
-     [
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/95f657c5",
-       "label": "School ends at 14:30",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/d5659131",
-       "label": "AI programme · think with AI",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/a7649bb9",
-       "label": "International Day for Tolerance",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/50467d93",
-       "label": "Children’s Week",
-       "matte": false
-      }
-     ],
-     [
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/9d6b1252",
-       "label": "Charity football tournament",
-       "matte": false
-      },
-      {
-       "w": 1080,
-       "h": 1080,
-       "widths": [
-        800,
-        1080
-       ],
-       "type": "image",
-       "url": "../../media/cases/series-at-scale/226173a6",
-       "label": "Student app · Pythagoras’ workshop",
-       "matte": false
-      }
-     ]
-    ]
-   }
-  ]
- },
- "baby-boo": {
-  "hero": [
-   {
-    "w": 540,
-    "h": 960,
-    "kb": 339,
-    "vw": [
-     540,
-     1080
-    ],
-    "big": [
-     1080,
-     1920
-    ],
-    "type": "video",
-    "url": "../../media/cases/baby-boo/ed696b69",
-    "label": "Manuka Honey · pilot film",
-    "matte": false
-   },
-   {
-    "w": 540,
-    "h": 960,
-    "kb": 197,
-    "vw": [
-     540,
-     1080
-    ],
-    "big": [
-     1080,
-     1920
-    ],
-    "type": "video",
-    "url": "../../media/cases/baby-boo/26f17ae0",
-    "label": "Valentine's · product film",
-    "matte": false
-   },
-   {
-    "w": 540,
-    "h": 960,
-    "kb": 292,
-    "vw": [
-     540,
-     1080
-    ],
-    "big": [
-     1080,
-     1920
-    ],
-    "type": "video",
-    "url": "../../media/cases/baby-boo/3772d45e",
-    "label": "Elephant · product film",
-    "matte": false
-   }
-  ],
-  "rows": [],
-  "craft": [
-   {
-    "skill": "Art direction",
-    "title": "Product-true, *frame by frame*",
-    "text": "Label, mascot, cap and proportions stay true to the real jar in every frame, so the stills can sell the product, not just a mood.",
-    "rows": [
-     [
-      {
-       "w": 900,
-       "h": 1600,
-       "widths": [
-        800,
-        900
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/ec7cd41b",
-       "label": "Manuka Honey · hero still",
-       "matte": false
-      },
-      {
-       "w": 1152,
-       "h": 2048,
-       "widths": [
-        800,
-        1152
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/beef3cd5",
-       "label": "Cottonseed wash · hero still",
-       "matte": false
-      },
-      {
-       "w": 900,
-       "h": 1600,
-       "widths": [
-        800,
-        900
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/b11c9114",
-       "label": "Macadamia · hero still",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "Concept stills",
-    "title": "One bold idea *per still*",
-    "text": "Break the glass in case of a sudden voyage. A claw machine full of jars. A carousel of giraffes. Each launch got one idea strong enough to post on its own.",
-    "rows": [
-     [
-      {
-       "w": 900,
-       "h": 1600,
-       "widths": [
-        800,
-        900
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/662f78ef",
-       "label": "Break glass in case of a sudden voyage",
-       "matte": false
-      },
-      {
-       "w": 900,
-       "h": 1600,
-       "widths": [
-        800,
-        900
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/d2b2570e",
-       "label": "Claw machine",
-       "matte": false
-      },
-      {
-       "w": 893,
-       "h": 1600,
-       "widths": [
-        800,
-        893
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/d6feabfa",
-       "label": "Carousel",
-       "matte": false
-      },
-      {
-       "w": 900,
-       "h": 1600,
-       "widths": [
-        800,
-        900
-       ],
-       "type": "image",
-       "url": "../../media/cases/baby-boo/f064f492",
-       "label": "Spring",
-       "matte": false
-      }
-     ]
-    ]
-   },
-   {
-    "skill": "Product film",
-    "title": "Cut like a *commercial*",
-    "text": "Vertical first, timed to the beat, graded as one spot: the pilot runs as a 9:16 for Reels and TikTok with a 4K master for the web.",
-    "rows": [
-     [
-      {
-       "w": 540,
-       "h": 960,
-       "kb": 294,
-       "vw": [
-        540,
-        720
-       ],
-       "big": [
-        720,
-        1280
-       ],
-       "type": "video",
-       "url": "../../media/cases/baby-boo/2ed6683a",
-       "label": "Manuka Honey · the pour, 9:16",
-       "matte": false
-      },
-      {
-       "w": 540,
-       "h": 960,
-       "kb": 289,
-       "vw": [
-        540,
-        1080
-       ],
-       "big": [
-        1080,
-        1920
-       ],
-       "type": "video",
-       "url": "../../media/cases/baby-boo/fcc10112",
-       "label": "Montenegro · mascot animation",
        "matte": false
       }
      ]

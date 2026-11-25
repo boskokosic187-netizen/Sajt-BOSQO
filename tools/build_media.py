@@ -40,6 +40,9 @@ VIDEOS = [
     ("bb-med", DESK + "Ai Baby Boo/Gotove/med 4.mp4", 4, None),
     ("bb-slon", DESK + "Ai Baby Boo/Slon.mp4", 4, None),
     ("its-reklama", DESK + "ITS/Animirana reklama/Animacija.mp4", 4, None),
+    # spec game ads (Concept / spec): the hook, then the game
+    ("hammerling", PV + "BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_C_9x16_master.mp4", 4, 0),
+    ("lanternfin", PV + "BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_B_9x16_master.mp4", 4, 1.2),
     # seamless 4 s masters made for the wall (start 0, full length); -v is its own vertical cut
     ("struja", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_16x9.mp4", 4, 0),
     ("struja-v", PV + "BOSQO/STRUJA/06_Web/media/STRUJA_loop_9x16.mp4", 4, 0),

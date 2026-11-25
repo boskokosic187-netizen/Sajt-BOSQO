@@ -113,6 +113,20 @@ CARDS = {
         "ITS/ITS Studijski programi i moduli/Post_02_Razvoj_softvera/meta/1080x1350.png",
         "ITS/ITS Studijski programi i moduli/Post_10_Menadzment_u_e-sportu/meta/1080x1350.png",
         "ITS/ITS Studijski programi i moduli/Post_08_Menadzment_u_IT/meta/1080x1350.png"], height=0.54, top=0.06, step=0.22, turn=5, drop=0.02)),
+    "hammerling": dict(size=(1800, 940), colour="#FFB43A", fan=dict(files=[
+        "BOSQO/SPEC_UA/HAMMERLING/05_web/still_A_1.2.png",
+        "BOSQO/SPEC_UA/HAMMERLING/05_web/still_A_6.png",
+        "BOSQO/SPEC_UA/HAMMERLING/05_web/still_C_1.2.png",
+        "BOSQO/SPEC_UA/HAMMERLING/05_web/still_A_10.5.png",
+        "BOSQO/SPEC_UA/HAMMERLING/05_web/still_B_1.2.png",
+        ], height=0.8, top=0.07, step=0.15, turn=5, drop=0.015)),
+    "lanternfin": dict(size=(1800, 940), colour="#3EE6FF", fan=dict(files=[
+        "BOSQO/SPEC_UA/LANTERNFIN/05_web/still_A_1.2.png",
+        "BOSQO/SPEC_UA/LANTERNFIN/05_web/still_A_6.png",
+        "BOSQO/SPEC_UA/LANTERNFIN/05_web/still_B_1.2.png",
+        "BOSQO/SPEC_UA/LANTERNFIN/05_web/still_A_10.5.png",
+        "BOSQO/SPEC_UA/LANTERNFIN/05_web/still_C_1.2.png",
+        ], height=0.8, top=0.07, step=0.15, turn=5, drop=0.015)),
     "baby-boo": dict(size=(1800, 940), colour="#ffa53b", fan=dict(files=[
         "baby-boo/d2b2570e-900.webp", "baby-boo/b11c9114-900.webp", "baby-boo/662f78ef-900.webp", "baby-boo/ec7cd41b-900.webp",
         "baby-boo/beef3cd5-1152.webp", "baby-boo/d6feabfa-893.webp", "baby-boo/f064f492-900.webp"],

@@ -1129,7 +1129,73 @@
   }
   $$('[data-stage="mint"]').forEach(mintStage);
 
-  const LABS = { mixer, driveby, loupe, scrub, flip: scrub, gallery, mascots };
+  /* ------------------------------------------------------------ Switch the hook
+     One ad, three openings: the first two seconds differ, the rest is the same film. A pick
+     plays that opening from the top; the bar fills the hook, then the body all three share.
+     When an ad ends the next opening plays. Sound stays off until the visitor turns it on. */
+  function hooks(el) {
+    const vids = $$('[data-hk-v]', el), btns = $$('[data-hk]', el);
+    const p0 = $('[data-hk-p0]', el), p1 = $('[data-hk-p1]', el), snd = $('[data-hk-sound]', el);
+    const cut = +el.dataset.cut || 2, dur = +el.dataset.dur || 15;
+    let cur = 0, raf = 0, sound = false, onScreen = false;
+    const playV = (v) => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    // the smallest file that covers the frame (the frame's own width, sharp on a dense screen)
+    const pick = (v) => {
+      if (v.getAttribute('src')) return;
+      const list = v.dataset.srcs.split(',').map((x) => x.trim().split(/\s+/));
+      const need = v.getBoundingClientRect().width * Math.min(devicePixelRatio || 1, 2) * 0.98;
+      const k = list.findIndex((x) => +x[1] >= need);
+      v.preload = 'auto';
+      v.src = list[k < 0 ? list.length - 1 : k][0];
+    };
+    const paint = () => {
+      const t = vids[cur].currentTime || 0;
+      p0.style.transform = `scaleX(${Math.min(1, t / cut).toFixed(4)})`;
+      p1.style.transform = `scaleX(${Math.max(0, Math.min(1, (t - cut) / (dur - cut))).toFixed(4)})`;
+    };
+    const loop = () => { paint(); raf = onScreen ? requestAnimationFrame(loop) : 0; };
+    function show(j, user) {
+      cur = j;
+      const v = vids[j];
+      pick(v);
+      vids.forEach((o, k) => {
+        o.classList.toggle('is-on', k === j);
+        o.muted = k !== j || !sound;
+        if (k !== j) o.pause();
+      });
+      btns.forEach((b, k) => { b.classList.toggle('is-on', k === j); b.setAttribute('aria-pressed', String(k === j)); });
+      v.currentTime = 0;
+      if (user) el.classList.add('is-used');
+      if (onScreen && (user || !reduce)) playV(v);
+      paint();
+    }
+    btns.forEach((b) => b.addEventListener('click', () => show(+b.dataset.hk, true)));
+    vids.forEach((v, k) => v.addEventListener('ended', () => { if (k === cur) show((cur + 1) % vids.length, false); }));
+    // the other openings load once the first one plays, so a switch is instant
+    vids[0].addEventListener('playing', () => vids.forEach(pick), { once: true });
+    snd.addEventListener('click', () => {
+      sound = !sound;
+      vids[cur].muted = !sound;
+      snd.textContent = sound ? 'Sound off' : 'Sound on';
+      snd.setAttribute('aria-pressed', String(sound));
+      if (sound && vids[cur].paused) playV(vids[cur]);
+    });
+    // a click on the film itself pauses it or plays it on
+    $('.hk__frame', el).addEventListener('click', () => {
+      const v = vids[cur];
+      if (v.paused) playV(v); else v.pause();
+      el.classList.add('is-used');
+    });
+    pick(vids[0]);
+    if (!('IntersectionObserver' in window)) { onScreen = true; show(0, false); loop(); return; }
+    new IntersectionObserver((en) => en.forEach((e) => {
+      onScreen = e.isIntersecting;
+      if (onScreen) { if (!reduce) playV(vids[cur]); if (!raf) loop(); }
+      else vids[cur].pause();
+    }), { threshold: 0.35 }).observe(el);
+  }
+
+  const LABS = { hooks, mixer, driveby, loupe, scrub, flip: scrub, gallery, mascots };
   $$('[data-lab]').forEach((el) => {
     const f = LABS[el.dataset.lab];
     if (f) whenNear(el, () => f(el));

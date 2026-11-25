@@ -644,5 +644,29 @@
    "mp4": 118,
    "webp": 32
   }
+ },
+ "hammerling": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/SPEC_UA/HAMMERLING/03_render/HAMMERLING_C_9x16_master.mp4",
+  "start": 0,
+  "len": 4,
+  "w": 540,
+  "h": 960,
+  "kb": {
+   "mp4": 196,
+   "webp": 32
+  }
+ },
+ "lanternfin": {
+  "type": "video",
+  "src": "D:/Desktop/Production Visuals/BOSQO/SPEC_UA/LANTERNFIN/03_render/LANTERNFIN_B_9x16_master.mp4",
+  "start": 1.2,
+  "len": 4,
+  "w": 540,
+  "h": 960,
+  "kb": {
+   "mp4": 557,
+   "webp": 40
+  }
  }
 }
