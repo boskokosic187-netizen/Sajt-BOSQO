@@ -13,8 +13,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 // the HTML is written outside the repo, so the site's fonts are linked by absolute file URL
 const FONTS = pathToFileURL(join(ROOT, 'media/fonts')).href;
 
-// Change here once the custom LinkedIn URL exists (e.g. linkedin.com/in/boskokosic).
-const LINKEDIN = { href: 'https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/', text: 'linkedin.com/in/boško-kosić-37aa8925a' };
+// Custom LinkedIn URL (set 25.11.2026).
+const LINKEDIN = { href: 'https://www.linkedin.com/in/boskokosic/', text: 'linkedin.com/in/boskokosic' };
 
 // ---------- shared facts (only what Boško's CV, site and projects already state) ----------
 const B = {
