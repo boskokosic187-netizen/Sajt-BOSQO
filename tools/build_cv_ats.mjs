@@ -1,5 +1,7 @@
 // ATS-friendly CVs: one column, standard headings, no photo, text in reading order.
-// One data set, four role variants -> media/cv/ats/Bosko-Kosic-CV-<role>.pdf (+ the HTML in tools/cv/ats/).
+// One data set, four role variants -> _Karijera/CV/ATS (za prijave preko forme)/Bosko-Kosic-CV-<role>.pdf,
+// HTML + PNG previews in _Karijera/CV/_ats-pregled. Kept OUT of the repo on purpose: the whole repo is served
+// as the site, and the site carries only the one general CV (media/cv/Bosko-Kosic-CV.pdf).
 // usage: node tools/build_cv_ats.mjs        (needs Chrome; GPU stays on)
 import { spawn } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -8,6 +10,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+// the HTML is written outside the repo, so the site's fonts are linked by absolute file URL
+const FONTS = pathToFileURL(join(ROOT, 'media/fonts')).href;
 
 // Change here once the custom LinkedIn URL exists (e.g. linkedin.com/in/boskokosic).
 const LINKEDIN = { href: 'https://www.linkedin.com/in/bo%C5%A1ko-kosi%C4%87-37aa8925a/', text: 'linkedin.com/in/boško-kosić-37aa8925a' };
@@ -73,8 +77,8 @@ function html(v) {
 <title>Boško Kosić — ${esc(v.title)} — CV</title>
 <meta name="author" content="Boško Kosić">
 <style>
-@font-face { font-family: "Archivo"; font-weight: 300 900; font-stretch: 62% 125%; src: url(../../../media/fonts/archivo-v25-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF; }
-@font-face { font-family: "Archivo"; font-weight: 300 900; font-stretch: 62% 125%; src: url(../../../media/fonts/archivo-v25-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212; }
+@font-face { font-family: "Archivo"; font-weight: 300 900; font-stretch: 62% 125%; src: url(${FONTS}/archivo-v25-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Archivo"; font-weight: 300 900; font-stretch: 62% 125%; src: url(${FONTS}/archivo-v25-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212; }
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -137,7 +141,8 @@ let id = 0; const pend = new Map();
 ws.addEventListener('message', (e) => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); } });
 const send = (method, params = {}) => new Promise((r) => { const i = ++id; pend.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
 
-const HTML_DIR = join(ROOT, 'tools/cv/ats'); const OUT = join(ROOT, 'media/cv/ats');
+const KARIJERA = 'D:/Desktop/Production Visuals/_Karijera/CV';
+const HTML_DIR = join(KARIJERA, '_ats-pregled'); const OUT = join(KARIJERA, 'ATS (za prijave preko forme)');
 mkdirSync(HTML_DIR, { recursive: true }); mkdirSync(OUT, { recursive: true });
 await send('Page.enable');
 await send('Emulation.setDeviceMetricsOverride', { width: 794, height: 1123, deviceScaleFactor: 2, mobile: false });
