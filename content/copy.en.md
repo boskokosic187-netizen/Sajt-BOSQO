@@ -29,9 +29,9 @@ Status pill: **● Available, Q4 2026**
 
 ## Hero (desktop)
 
-- **Eyebrow:** VISUAL & MOTION DESIGNER, BELGRADE · WORKING WORLDWIDE
+- **Eyebrow:** MOTION & AI CREATIVE DESIGNER · LIVE FROM BELGRADE · WORKING WORLDWIDE
 - **H1:** Boško Kosić
-- **Statement:** I design campaigns, key art and motion that make people stop, on their screens and on the street.
+- **Statement:** I make ads and motion that work in a second — every hook, variant and format, from one idea.
 - **Proof row:**
   - **50+** billboards across Belgrade
   - **3 yrs** shaping a Web3 sports brand
@@ -44,8 +44,8 @@ Status pill: **● Available, Q4 2026**
 ## Hero (mobile)
 
 - Boško / Kosić
-- Visual & Motion Designer
-- Campaigns, key art & motion that make people stop.
+- Motion & AI Creative Designer
+- I make ads and motion that work in a second — every hook, variant and format, from one idea.
 - ▶ Watch reel · Work ↓
 
 ---
