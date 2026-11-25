@@ -14,7 +14,8 @@
   font-family: var(--f-label); font-stretch: 80%; font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
 }
 .cs-skills li:first-child { border-color: transparent; background: var(--rec); color: #000; }
-.cs-meta { grid-template-columns: 1fr 0.6fr 1.6fr; margin-top: 44px; }
+.cs-meta { grid-template-columns: 1fr 1.6fr 1.3fr 0.9fr; margin-top: 44px; }
+.cs-meta dd b { color: var(--rec); font-weight: 700; }
 
 /* ---- the lab: one interactive piece, on its own stage ---- */
 .cs-lab {
@@ -202,8 +203,8 @@
 }
 @media (max-width: 767px) {
   .cs-hero__sub { margin-top: 20px; }
-  .cs-meta { grid-template-columns: 1fr 1fr; }
-  .cs-meta > div:last-child { grid-column: 1 / -1; }
+  .cs-meta, .uxc-meta { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .cs-meta > div:last-child { grid-column: auto; }
   .mx__pick { grid-template-columns: 38px 60px minmax(0, 1fr) auto; gap: 10px; min-height: 46px; }
   .mx__th { width: 38px; height: 38px; }
   .mx__v { font-size: 15px; }
@@ -914,7 +915,7 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
 @font-face { font-family: Satoshi; src: url(../media/ui/fonts/Satoshi-Variable.woff2) format("woff2"); font-weight: 300 900; font-display: swap; }
 @font-face { font-family: Nippo; src: url(../media/ui/fonts/Nippo-Variable.woff2) format("woff2"); font-weight: 200 700; font-display: swap; }
 
-.uxc-meta { grid-template-columns: 1.5fr 0.9fr 1fr 1fr; }
+.uxc-meta { grid-template-columns: 1.1fr 1.5fr 1.5fr 0.9fr; }
 .uxc-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 32px; }
 .uxc-disc { max-width: 52ch; color: var(--muted); font-size: 14px; line-height: 1.45; }
 .uxc-disc::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 9px; border-radius: 50%; background: var(--sig); vertical-align: 1px; }
@@ -1040,13 +1041,14 @@ html.cues .mint img { animation: none !important; } /* the cue opens the stage; 
   .uxc-ds__col:nth-child(2) { grid-column: 1 / -1; grid-row: 1; }
 }
 @media (max-width: 1023px) {
-  .uxc-meta { grid-template-columns: 1fr 1fr; }
+  .uxc-meta, .cs-meta { grid-template-columns: 1fr 1fr; }
   .uxc-pg, .uxc-grid--3 { grid-template-columns: minmax(0, 1fr); }
   .uxc-measures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .uxc-fl { grid-template-columns: minmax(0, 1fr); }
   .uxc-rps { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 900px; }
 }
 @media (max-width: 767px) {
+  .uxc-meta, .cs-meta { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .uxc-meta > div:last-child { grid-column: auto; }
   .uxc-grid--2 { grid-template-columns: minmax(0, 1fr); }
   .uxc-measures li { padding: 16px; }

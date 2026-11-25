@@ -481,7 +481,7 @@ TOPBAR = """
       <a href="{R}#about">About</a>
       <a class="topnav__cta" href="#contact">Contact</a>
     </nav>
-    <a class="status" href="#contact"><i class="status__dot"></i>Available — Q4 2026</a>
+    <a class="status" href="#contact"><i class="status__dot"></i>Available now<span class="hide-m"> · remote</span></a>
     <span class="topbar__tc" data-tc aria-hidden="true">00:00:00:00</span>
   </header>"""
 
@@ -602,6 +602,7 @@ CONTACT = """
       <footer class="foot">
         <span>Designed, animated &amp; coded by Boško Kosić</span>
         <span>Belgrade · © 2026</span>
+        <span class="foot__legal">All brands and trademarks belong to their owners. Client work shown with permission, for portfolio purposes. Film posters are unofficial fan art.</span>
         <a class="foot__top" href="#">Back to top <i aria-hidden="true">↑</i></a>
       </footer>
     </section>"""
@@ -609,7 +610,7 @@ CONTACT = """
 
 AVATAR = open(os.path.join(ROOT, "media", "brand", "avatar.svg"), encoding="utf-8").read().strip().replace('role="img" aria-label="Boško Kosić"', 'aria-hidden="true" focusable="false"')
 MARK = ('<a class="mark" href="{R}" aria-label="Boško Kosić — home"><span class="mark__av">' + AVATAR +
-        '</span><span class="mark__txt"><b>Boško Kosić</b><small>Visual &amp; Motion Designer</small></span></a>')
+        '</span><span class="mark__txt"><b>Boško Kosić</b><small>Motion &amp; AI Creative Designer</small></span></a>')
 
 
 def render_case(c, i, cases, media):
@@ -1187,9 +1188,11 @@ def render_story(c, i, cases, media):
         + (f'<figcaption>{E(m["label"])}</figcaption>' if m["label"] else "") + '</figure>'
         for m in hero)
     og = h0["url"] + (".webp" if h0["type"] == "video" else f"-{h0['widths'][-1]}.webp")
-    meta = (f'<div><dt>Client</dt><dd>{E(c["client"])}</dd></div>'
-            f'<div><dt>Year</dt><dd>{E(c["years"])}</dd></div>'
-            f'<div><dt>Role</dt><dd>{E(c["role"])}</dd></div>')
+    # Role · Problem · Result first, so a reader who only scans the top still gets the case
+    meta = (f'<div><dt>Role</dt><dd>{E(c["role"])}</dd></div>'
+            f'<div><dt>Problem</dt><dd>{E(c["problem_short"])}</dd></div>'
+            f'<div><dt>Result</dt><dd><b>{E(c["result_big"])}</b> {E(c["result_label"])}</dd></div>'
+            f'<div><dt>Client · Year</dt><dd>{E(c["client"])}<br>{E(c["years"])}</dd></div>')
     skills = "".join(f"<li>{E(x)}</li>" for x in c["skills"])
     lab = c["lab"]
     lab_html = LABS[lab["type"]](c, lab, R, media)

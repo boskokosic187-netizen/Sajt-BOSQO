@@ -268,7 +268,7 @@ def q1():
             el("player_m.png", "height:120cqh;bottom:-12cqh") + SHADE)
 
 
-# ------------------------------------------------------------------ the 38 cards, in wall order
+# ------------------------------------------------------------------ the 36 cards, in wall order
 # (id, slot class or None, shape, project, art html, extra style vars, tone)
 def cards():
     C = [
@@ -299,7 +299,6 @@ def cards():
         ("ballies-ambassadors", None, "w", "ballies", ballies("w", "purple", [7, 8, 9]), "--go:.45", "dark"),
         ("bb-manuka", None, "v", "babyboo", babyboo("v", ("#7a4a0c", "#2e1a08", "#0b0704"), "manuka_cut.png", manuka_still=True), "--gy:34%;--go:.6", "dark"),
         ("ballies-edelman", None, "tile", "ballies", ballies("tile", "teal", [10]), "--go:.45", "dark"),
-        ("fsu-propter", None, "tile", "fsu", fsu("tile", "fsu-propter.jpg", pfx="f4"), "--go:.3", "dark"),
         ("apsis-desk", None, "w", "apsis", apsis("desk", "a1"), "--gx:17%;--gy:52%;--go:.3", "dark"),
         ("bb-claw", None, "tile", "babyboo", babyboo("tile", ("#f59ac0", "#a8406e", "#2a0b1a"), "bb-claw.png", "rgba(255,170,210,.4)"), "--a:#ff9ccc;--go:.4", "dark"),
         ("ballies-mint", None, "w", "ballies", ballies("w", "mint", [11, 12]), "--go:.4", "dark"),
@@ -310,13 +309,12 @@ def cards():
         ("fsu-motion", None, "v", "fsu", fsu("v", "fsu-motion.jpg", pfx="f5"), "--go:.3", "dark"),
         ("ballies-metacourt", None, "w", "ballies", ballies("w", "gold", [18, 19, 20]), "--a:#ffd27a;--go:.4", "dark"),
         ("fsu-harmony", None, "tile", "fsu", fsu("tile", "fsu-harmony.jpg", square=True, pfx="f6"), "--go:.3", "dark"),
-        ("fsu-closer", None, "v", "fsu", fsu("v", "fsu-closer.jpg", pfx="f7"), "--go:.3", "dark"),
     ]
     return C
 
 
 KICK = {"deadair": "Short film · Trailer", "bigger": "Animated short", "jurassic": "Fan poster · Unofficial",
-        "interstellar": "Motion poster", "babyboo": "Product film · Manuka honey", "struja": "Living identity",
+        "interstellar": "Fan art · Motion poster", "babyboo": "Product film · Manuka honey", "struja": "Living identity",
         "halfcourt": "Broadcast identity", "accord": "Fragrance identity", "ballies": "Character series · Web3 sports",
         "umbra": "Living identity", "live": "LED boards · Billboards", "apsis": "Sportsbook UX · concept"}
 

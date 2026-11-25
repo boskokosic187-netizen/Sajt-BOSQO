@@ -1058,6 +1058,7 @@ html.js .reel__ticker:not(.is-run) .reel__run, .reel__ticker:hover .reel__run { 
 .foot__top i { font-style: normal; transition: translate 0.3s var(--out); }
 .foot__top:hover { color: var(--rec); }
 .foot__top:hover i { translate: 0 -3px; }
+.foot__legal { order: 9; flex-basis: 100%; font-size: 0.78em; line-height: 1.5; opacity: 0.75; }
 
 /* wide screens: the menu's Contact lands on one full screen, footer included; the board takes
    all of it, the monitor growing into whatever the letter and the cards leave */

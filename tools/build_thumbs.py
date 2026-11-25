@@ -104,10 +104,9 @@ CARDS = {
         B + "ACCORD/02_Posteri/ACCORD_poster_00_the_chord.jpg"], height=0.56, top=0.06, step=0.215, turn=5, drop=0.02)),
     "fsu-2026": dict(size=(1500, 940), colour="#ffd21f", fan=dict(files=[
         F + "FSU Prostor u nastajanju/Resenje_1_Osnova/FSU_Prostor_u_nastajanju_R1-Poster_A3.tif",
-        F + "FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
         F + "FSU Tacke susreta/Poster.tif",
         F + "FSU Izlozba GMS Umetnost pokreta i vremena/Poster_A3.tif",
-        ROOT + "/_izvori/fsu/propter-omnia-poster.png"], height=0.56, top=0.06, step=0.2, turn=5, drop=0.02)),
+        F + "FSU Samo jedan rad/Posteri/Poster_Zajednicko.tif"], height=0.56, top=0.06, step=0.2, turn=5, drop=0.02)),
     "series-at-scale": dict(size=(1200, 940), colour="#b28cff", fan=dict(files=[
         "ITS/ITS Studijski programi i moduli/Post_03_Nauka_o_podacima_i_VI/meta/1080x1350.png",
         "ITS/ITS Studijski programi i moduli/Post_04_Digitalna_multimedija_OSS/meta/1080x1350.png",

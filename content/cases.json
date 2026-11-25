@@ -295,62 +295,14 @@
           "rows": [
             [
               {
-                "src": "PV/ITHS/ITHS 15 godina zajednickog rasta/SAJT.png",
-                "type": "image",
-                "label": "ITHS · “15 years of growing together”"
-              },
-              {
-                "src": "PV/ITHS/ITHS Dacki pesnicki susreti 2026/SAJT.png",
-                "type": "image",
-                "label": "ITHS · student poetry contest · the title written in the journal"
-              }
-            ],
-            [
-              {
                 "src": "PV/ITHS/ITHS Humanitarni turnir mali fudbal/SAJT.png",
                 "type": "image",
                 "label": "ITHS · charity football tournament · “Small football, big heart”"
               },
               {
-                "src": "PV/ITHS/ITHS Bivsi ucenik buduci nastavnik/SAJT.png",
-                "type": "image",
-                "label": "ITHS · a former student returns as a teacher"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Air-XR Antalija/SAJT.png",
-                "type": "image",
-                "label": "ITHS · Air-XR mobility in Antalya · day one"
-              },
-              {
-                "src": "PV/ITHS/ITHS Erasmus PeerCo Zavrsna konferencija Burgos/SAJT.png",
-                "type": "image",
-                "label": "ITHS · Erasmus+ PeerCo · final conference in Burgos"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Bebras USA takmicenje/SAJT.png",
-                "type": "image",
-                "label": "ITHS · Bebras USA informatics competition"
-              },
-              {
                 "src": "PV/ITHS/ITHS Ucenicke aplikacije/Pitagorina radionica/SAJT.png",
                 "type": "image",
                 "label": "ITHS · student app · Pythagoras’ workshop"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Konjicki klub/SAJT.png",
-                "type": "image",
-                "label": "ITHS · student app · riding club"
-              },
-              {
-                "src": "PV/ITHS/ITHS Matematicki Super Mario/ITHS_Matematicki-Super-Mario_SAJT-1200x630.png",
-                "type": "image",
-                "label": "ITHS · a maths lesson played as a platform game"
               }
             ],
             [
@@ -447,21 +399,9 @@
                 "label": "ITHS · “School ends at 14:30. That’s it. Really.”"
               },
               {
-                "src": "PV/ITHS/ITHS Powerlifting srebro/ITHS_Powerlifting-srebro_1080x1080.png",
-                "type": "image",
-                "label": "ITHS · “Silver” · a national powerlifting medal"
-              }
-            ],
-            [
-              {
                 "src": "PV/ITHS/ITHS AI program/SAJT.png",
                 "type": "image",
                 "label": "ITHS · free AI course · “use AI” crossed out: “think with AI”"
-              },
-              {
-                "src": "PV/ITHS/ITHS Odbojka prvaci opstine Zemun/DM.png",
-                "type": "image",
-                "label": "ITHS · “Champions” · Zemun volleyball title"
               }
             ]
           ]
@@ -476,7 +416,8 @@
           "type": "video",
           "label": "FSU · Nov 2026 · Pre-enrolment 2027/28 · DOOH 1152×540"
         }
-      ]
+      ],
+      "problem_short": "Three schools chasing teenagers and parents in a loud city, a new campaign almost every month, and a driver gives a billboard three seconds."
     },
     {
       "slug": "ballies",
@@ -679,28 +620,6 @@
           "rows": [
             [
               {
-                "src": "S/_stari-sajt/assets/BALLIES/4/kobe.webp",
-                "type": "image",
-                "label": "Kobe vs Limits · legends series"
-              },
-              {
-                "src": "S/_stari-sajt/assets/BALLIES/4/edelman-vs-gravity.webp",
-                "type": "image",
-                "label": "Edelman vs Gravity · match-day key art"
-              },
-              {
-                "src": "S/_stari-sajt/assets/BALLIES/4/2000_vince_carter.webp",
-                "type": "image",
-                "label": "Defy gravity · Vince Carter, 2000"
-              }
-            ],
-            [
-              {
-                "src": "S/_stari-sajt/assets/BALLIES/2/brown-vs-gravity.webp",
-                "type": "image",
-                "label": "Brown vs Gravity · match-day key art"
-              },
-              {
                 "src": "S/_stari-sajt/assets/BALLIES/4/You-vs-Ai.webp",
                 "type": "image",
                 "label": "You vs AI"
@@ -729,7 +648,8 @@
           "type": "image",
           "label": ""
         }
-      ]
+      ],
+      "problem_short": "A sports prediction app needed a face: not one mascot but a roster fans could own, trade and play with, strong enough to front every launch for years."
     },
     {
       "slug": "fsu-2026",
@@ -767,13 +687,6 @@
             "meta": "Student exhibition · poster A3"
           },
           {
-            "src": "S/_izvori/fsu/propter-omnia-poster.png",
-            "type": "image",
-            "label": "Propter Omnia",
-            "title": "Propter Omnia",
-            "meta": "Ivana Smiljanić · poster A3"
-          },
-          {
             "src": "PV/FSU/FSU Prostor u nastajanju/Resenje_1_Osnova/FSU_Prostor_u_nastajanju_R1-Poster_A3.tif",
             "type": "image",
             "label": "Space in the Making",
@@ -788,41 +701,6 @@
             "meta": "School exhibition · poster A3"
           },
           {
-            "src": "PV/FSU/FSU Samo jedan rad/Posteri/Poster_Ana-Belosevic-Velican.tif",
-            "type": "image",
-            "label": "Only One Work · Hortus Deliciarum",
-            "title": "Only One Work · Hortus Deliciarum",
-            "meta": "One author a day · poster"
-          },
-          {
-            "src": "PV/FSU/FSU Pogled iz blizine/Poster.tif",
-            "type": "image",
-            "label": "A Closer Look",
-            "title": "A Closer Look",
-            "meta": "Fashion exhibition · poster A3"
-          },
-          {
-            "src": "PV/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
-            "type": "image",
-            "label": "Morning",
-            "title": "Morning",
-            "meta": "Visual arts exhibition · poster A3"
-          },
-          {
-            "src": "PV/FSU/FSU Tri naprema tri - Telo moje belo/plakat_QR.jpg",
-            "type": "image",
-            "label": "3:3 · My White Body",
-            "title": "3:3 · My White Body",
-            "meta": "Group exhibition · poster"
-          },
-          {
-            "src": "PV/FSU/FSU Milica Stojkovic Pre svitanja/Poster_A3.tif",
-            "type": "image",
-            "label": "Before Dawn",
-            "title": "Before Dawn",
-            "meta": "Milica Stojković · poster A3"
-          },
-          {
             "src": "PV/FSU/FSU Samo jedan rad/Posteri/Poster_Zajednicko.tif",
             "type": "image",
             "label": "Only One Work",
@@ -830,39 +708,11 @@
             "meta": "Group show, 13 authors · poster"
           },
           {
-            "src": "PV/FSU/FSU Nina Nedic Zavirite unutra/DM.png",
-            "type": "image",
-            "label": "Look Inside",
-            "title": "Look Inside",
-            "meta": "Solo exhibition · Nina Nedić"
-          },
-          {
             "src": "PV/FSU/FSU Galerija Plus Izabrani izlagaci/DM.png",
             "type": "image",
             "label": "Gallery Plus · Selected Exhibitors",
             "title": "Gallery Plus · Selected Exhibitors",
             "meta": "Four shows for 2026"
-          },
-          {
-            "src": "PV/FSU/FSU Samo jedan rad/Posteri/Poster_Katia-Shneider.tif",
-            "type": "image",
-            "label": "Only One Work · Katia Shneider",
-            "title": "Only One Work · Katia Shneider",
-            "meta": "Author poster"
-          },
-          {
-            "src": "PV/FSU/FSU Marija Djuric Fluidi/Post_2_Otvorena/dm.png",
-            "type": "image",
-            "label": "Fluids",
-            "title": "Fluids",
-            "meta": "Solo exhibition · Marija Đurić"
-          },
-          {
-            "src": "PV/FSU/FSU Nikola Stankovic Uhvaceni trenuci/DM.png",
-            "type": "image",
-            "label": "Captured Moments",
-            "title": "Captured Moments",
-            "meta": "Photography · Nikola Stanković"
           },
           {
             "src": "PV/FSU/FSU Re-Harmony/DM.png",
@@ -1050,16 +900,6 @@
                 "src": "PV/FSU/FSU AI ne moze da napravi strategiju/DM.png",
                 "type": "image",
                 "label": "“AI works. You lead.”"
-              },
-              {
-                "src": "PV/FSU/FSU Alumni Spotlight/Bojan-Antonijevic/slajd_01.png",
-                "type": "image",
-                "label": "Alumni Spotlight · carousel"
-              },
-              {
-                "src": "PV/FSU/FSU Upoznaj autora/Dragana-Gledja/slajd_01.png",
-                "type": "image",
-                "label": "Meet the author · carousel"
               }
             ]
           ]
@@ -1072,33 +912,6 @@
           "rows": [
             [
               {
-                "src": "PV/FSU/FSU Brucosijada i Alumni Club Night 2026 - nova komunikacija/Post_1_Brucosijada/DM.png",
-                "type": "image",
-                "label": "Freshers’ party"
-              },
-              {
-                "src": "PV/FSU/FSU UV Art Night/DM.png",
-                "type": "image",
-                "label": "UV Art Night"
-              },
-              {
-                "src": "PV/FSU/FSU Kreativne subote 2026/Post_1_Glavni vizual/DM.png",
-                "type": "image",
-                "label": "Creative Saturdays"
-              },
-              {
-                "src": "PV/FSU/FSU Halloween kutak/DM.png",
-                "type": "image",
-                "label": "Halloween corner"
-              }
-            ],
-            [
-              {
-                "src": "PV/FSU/FSU Imagine Cup 2027/DM.png",
-                "type": "image",
-                "label": "Imagine Cup 2027"
-              },
-              {
                 "src": "PV/FSU/FSU Sony World Photography Student 2027/DM.png",
                 "type": "image",
                 "label": "Sony World Photography · Student"
@@ -1107,9 +920,7 @@
                 "src": "PV/FSU/FSU Schneider Electric Video Contest/DM.png",
                 "type": "image",
                 "label": "Schneider Electric Video Contest"
-              }
-            ],
-            [
+              },
               {
                 "src": "PV/FSU/FSU Porsche SCG vest/DM.png",
                 "type": "image",
@@ -1119,11 +930,6 @@
                 "src": "PV/FSU/FSU_DuhBeograda/video/FSU_DuhBeograda_1080x1080_poster.png",
                 "type": "image",
                 "label": "Spirit of Belgrade · photo contest"
-              },
-              {
-                "src": "PV/FSU/FSU Orientation Day 2026/FSU_Orientation_Day_2026_DM-1080x1080.png",
-                "type": "image",
-                "label": "Orientation Day"
               },
               {
                 "src": "PV/FSU/FSU Online Fashion Week 2026/mejl (veca rezolucija).png",
@@ -1141,50 +947,6 @@
           "rows": [
             [
               {
-                "src": "PV/FSU/FSU Andjela Rajic Grazia/DM.png",
-                "type": "image",
-                "label": "Interview · Grazia"
-              },
-              {
-                "src": "PV/FSU/FSU Stevan Aleksic BIZLife/DM.png",
-                "type": "image",
-                "label": "Interview · BIZLife"
-              },
-              {
-                "src": "PV/FSU/FSU Plaketa grada Uzica Brankica Todorovic/DM.png",
-                "type": "image",
-                "label": "Award · City of Užice"
-              }
-            ],
-            [
-              {
-                "src": "PV/FSU/FSU Svetski dan nauke za mir i razvoj/DM.png",
-                "type": "image",
-                "label": "World Science Day"
-              },
-              {
-                "src": "PV/FSU/FSU Dan tolerancije 2026/DM.png",
-                "type": "image",
-                "label": "International Day for Tolerance"
-              },
-              {
-                "src": "PV/FSU/FSU EU Code Week 2026/DM.png",
-                "type": "image",
-                "label": "EU Code Week"
-              }
-            ],
-            [
-              {
-                "src": "PV/FSU/FSU Brankica Todorovic Education for Climate Coalition/DM.png",
-                "type": "image",
-                "label": "Climate coalition coordinator"
-              },
-              {
-                "src": "PV/FSU/FSU Vest Arad/DM.png",
-                "type": "image",
-                "label": "Plenary talk in Arad"
-              },
-              {
                 "src": "PV/FSU/FSU Zahvalnica Zlatibor Edu Forum/DM.png",
                 "type": "image",
                 "label": "Zlatibor Edu Forum · award"
@@ -1193,18 +955,11 @@
                 "src": "PV/FSU/FSU ITS Neradni dan Dan primirja/DM.png",
                 "type": "image",
                 "label": "Armistice Day"
-              }
-            ],
-            [
+              },
               {
                 "src": "PV/FSU/FSU Istorija i teorija arhitekture i grada/FSU_Istorija-i-teorija-arhitekture-1080x1080.png",
                 "type": "image",
                 "label": "Book launch · architecture"
-              },
-              {
-                "src": "PV/FSU/FSU Jovana Macanovic Arts Thread/FSU_Jovana_Macanovic_Arts_Thread_DM-1080x1080.png",
-                "type": "image",
-                "label": "Arts Thread · student shortlist"
               },
               {
                 "src": "PV/FSU/FSU Konkurs Godisnja izlozba mladih 2026/mejl (veca rezolucija).png",
@@ -1225,11 +980,6 @@
           "label": "Meeting Points · poster A3"
         },
         {
-          "src": "PV/FSU/FSU Jutro/Post_1_Najava/FSU_Jutro_Poster_A3.tif",
-          "type": "image",
-          "label": "Morning · poster A3"
-        },
-        {
           "src": "PV/FSU/FSU Izlozba GMS Umetnost pokreta i vremena/Poster_A3.tif",
           "type": "image",
           "label": "The Art of Motion and Time · poster A3"
@@ -1242,7 +992,8 @@
         "lab",
         "craft",
         "craft"
-      ]
+      ],
+      "problem_short": "An art faculty is judged by its own posters, and every deadline, course, exhibition and night out needed one good enough for its own gallery."
     },
     {
       "slug": "series-at-scale",
@@ -1375,37 +1126,6 @@
                 "src": "PV/ITS/ChatGPT Commands Karuseli/01 Sales & Marketing Strategy/2.png",
                 "type": "image",
                 "label": "Command 2"
-              }
-            ]
-          ]
-        },
-        {
-          "skill": "Series templates",
-          "title": "One template, *every student*",
-          "text": "When an ITHS student ships an app, the school posts it that week: the student’s name, the app on a phone and a colour of its own, on one template that never needs a redesign.",
-          "rows": [
-            [
-              {
-                "src": "PV/ITHS/ITHS Calories Tracker/ITHS_Calories-Tracker_1200x630.png",
-                "type": "image",
-                "label": "ITHS · student app · Calories Tracker"
-              },
-              {
-                "src": "PV/ITHS/ITHS NailBook/ITHS_NailBook_1080x1080.png",
-                "type": "image",
-                "label": "ITHS · student app · NailBook"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Sapa/ITHS_Sapa_1080x1080.png",
-                "type": "image",
-                "label": "ITHS · student app · Sapa"
-              },
-              {
-                "src": "PV/ITHS/ITHS Menadzer kucnog budzeta/ITHS_Menadzer-kucnog-budzeta_1200x630.png",
-                "type": "image",
-                "label": "ITHS · student app · Household Budget Manager"
               }
             ]
           ]
@@ -1573,18 +1293,6 @@
                 "label": "AI programme · think with AI"
               },
               {
-                "src": "PV/ITHS/ITHS Bivsi ucenik buduci nastavnik/DM.png",
-                "type": "image",
-                "label": "Former pupil, future teacher"
-              },
-              {
-                "src": "PV/ITHS/ITHS Dacki pesnicki susreti 2026/DM.png",
-                "type": "image",
-                "label": "Pupils’ poetry meetings"
-              }
-            ],
-            [
-              {
                 "src": "PV/ITHS/ITHS Dan tolerancije 2026/DM.png",
                 "type": "image",
                 "label": "International Day for Tolerance"
@@ -1593,7 +1301,9 @@
                 "src": "PV/ITHS/ITHS Decija nedelja/ITHS_Decija-nedelja_1080x1080.png",
                 "type": "image",
                 "label": "Children’s Week"
-              },
+              }
+            ],
+            [
               {
                 "src": "PV/ITHS/ITHS Humanitarni turnir mali fudbal/DM.png",
                 "type": "image",
@@ -1603,28 +1313,6 @@
                 "src": "PV/ITHS/ITHS Ucenicke aplikacije/Pitagorina radionica/DM.png",
                 "type": "image",
                 "label": "Student app · Pythagoras’ workshop"
-              }
-            ],
-            [
-              {
-                "src": "PV/ITHS/ITHS Odbojka prvaci opstine Zemun/DM.png",
-                "type": "image",
-                "label": "Volleyball · Zemun champions"
-              },
-              {
-                "src": "PV/ITHS/ITHS Air-XR Antalija/DM.png",
-                "type": "image",
-                "label": "Air-XR · Antalya mobility"
-              },
-              {
-                "src": "PV/ITHS/ITHS Erasmus PeerCo Zavrsna konferencija Burgos/DM.png",
-                "type": "image",
-                "label": "PeerCo · final conference, Burgos"
-              },
-              {
-                "src": "PV/ITHS/ITHS Matematicki Super Mario/ITHS_Matematicki-Super-Mario_DM-1080x1080.png",
-                "type": "image",
-                "label": "Maths Super Mario"
               }
             ]
           ]
@@ -1639,7 +1327,8 @@
           "type": "image",
           "label": "What does a … do? · Business analyst · 1200×630"
         }
-      ]
+      ],
+      "problem_short": "Dozens of programmes, careers and deadlines, each needing its own post, without the feed turning into a template graveyard."
     },
     {
       "slug": "baby-boo",
@@ -1767,7 +1456,8 @@
         "key": "koala",
         "base": "media/labs/mascots/",
         "rig": "media/labs/mascots/rig.json"
-      }
+      },
+      "problem_short": "Premium films and stills with no studio, no crew and no shoot day, and the jar has to look exactly like the one on the shelf."
     },
     {
       "slug": "apsis",
@@ -1782,12 +1472,12 @@
           "UX research, flows, UI design, design system, live prototype"
         ],
         [
-          "Duration",
-          "Concept sprint · 2026"
+          "Problem",
+          "Odds jump under the thumb, the win is loud and the risk is small, and the limits sit four screens deep."
         ],
         [
-          "Platform",
-          "Web · desktop, tablet, phone"
+          "Result",
+          "A working prototype of the whole bet flow on desktop, tablet and phone, every exception state included."
         ],
         [
           "Status",
